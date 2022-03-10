@@ -1,0 +1,1 @@
+#include "SRS22Common.cuh"

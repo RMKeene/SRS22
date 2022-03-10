@@ -116,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -139,13 +140,47 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Brain.h" />
+    <ClInclude Include="ClassPredefines.h" />
+    <ClInclude Include="ConceptState.h" />
+    <ClInclude Include="ConnectivityTriple.h" />
+    <ClInclude Include="FastRand.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GoodnessFunction.h" />
+    <ClInclude Include="IO\ScreenInput.h" />
+    <ClInclude Include="MatchSelector.h" />
+    <ClInclude Include="Pattern.h" />
+    <ClInclude Include="PatternConnection.h" />
+    <ClInclude Include="PatternMatchingSystem.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Reaper.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ScreenIn.h" />
     <ClInclude Include="SRS22.h" />
+    <ClInclude Include="SRSUnit.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="tinyfloat.h" />
+    <ClInclude Include="TransformFunction.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="Brain.cpp" />
+    <ClCompile Include="ConceptState.cpp" />
+    <ClCompile Include="ConnectivityTriple.cpp" />
+    <ClCompile Include="FastRand.cpp" />
+    <ClCompile Include="GoodnessFunction.cpp" />
+    <ClCompile Include="IO\ScreenInput.cpp" />
+    <ClCompile Include="MatchSelector.cpp" />
+    <ClCompile Include="Pattern.cpp" />
+    <ClCompile Include="PatternConnection.cpp" />
+    <ClCompile Include="PatternMatchingSystem.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Reaper.cpp" />
+    <ClCompile Include="ScreenIn.cpp" />
     <ClCompile Include="SRS22.cpp" />
+    <ClCompile Include="SRSUnit.cpp" />
+    <ClCompile Include="tinyfloat.cpp" />
+    <ClCompile Include="TransformFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SRS22.rc" />
