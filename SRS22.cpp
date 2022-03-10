@@ -3,6 +3,7 @@
 
 #include "framework.h"
 #include "SRS22.h"
+#include "IO/ScreenInput.h"
 
 #define MAX_LOADSTRING 100
 
@@ -16,6 +17,8 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+SRS22::Brain GlobalBrain;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -40,8 +43,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_SRS22));
 
-    MSG msg;
+    GlobalBrain.Init();
 
+    MSG msg;
     // Main message loop:
     while (GetMessage(&msg, nullptr, 0, 0))
     {
@@ -51,6 +55,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
     }
+
+    GlobalBrain.Shutdown();
 
     return (int) msg.wParam;
 }
@@ -133,6 +139,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+                break;
+            case ID_TEST_SCREENSHOT:
+                GlobalBrain.TakeScreenSnapshot();
                 break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);

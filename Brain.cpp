@@ -2,6 +2,7 @@
 #include "Brain.h"
 #include "SRSUnit.h"
 #include "FastRand.h"
+#include <tchar.h>
 
 namespace SRS22 {
 	using namespace std;
@@ -54,7 +55,8 @@ namespace SRS22 {
 	}
 
 	void Brain::Init() {
-
+		screenInput.Init();
+		PostCreateAllSRSUnits();
 	}
 
 	void Brain::Shutdown() {
@@ -62,13 +64,16 @@ namespace SRS22 {
 	}
 
 	void Brain::UnitTest() {
-		int w = screenInput.GetScreenWidth();
-		int h = screenInput.GetScreenHeight();
-		printf("Screen %d x %d\n", w, h);
+
 	}
 
 	void Brain::PostCreateAllSRSUnits() {
 		for (auto u : conceptMaps)
 			u->PostCreate(*this);
+	}
+
+	void Brain::TakeScreenSnapshot() {
+		screenInput.TakeScreenSnapshot();
+		// screenInput.DumpCurrentScreenSnapshot(_T("test.bmp"));
 	}
 }

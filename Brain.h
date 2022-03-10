@@ -25,6 +25,9 @@ namespace SRS22 {
 
 		ScreenInput screenInput;
 
+		/// <summary>
+		/// Called just before Win Main Message Loop starts iterating.
+		/// </summary>
 		void Init();
 		void Shutdown();
 		void UnitTest();
@@ -37,6 +40,8 @@ namespace SRS22 {
 		std::optional<PatternConnection> GetRandomNeuron(shared_ptr<SRSUnit> origin);
 
 		void PostCreateAllSRSUnits();
+
+		void TakeScreenSnapshot();
 	};
 
 }
