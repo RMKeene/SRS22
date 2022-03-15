@@ -3,7 +3,7 @@
 
 #include "framework.h"
 #include "SRS22.h"
-#include "IO/ScreenInput.h"
+#include "HardwareIO/ScreenInputIO.h"
 
 #define MAX_LOADSTRING 100
 

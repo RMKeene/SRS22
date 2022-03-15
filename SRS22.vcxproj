@@ -147,7 +147,9 @@
     <ClInclude Include="FastRand.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GoodnessFunction.h" />
-    <ClInclude Include="IO\ScreenInput.h" />
+    <ClInclude Include="HardwareIO\AudioCaptureIO.h" />
+    <ClInclude Include="HardwareIO\IOCommon.h" />
+    <ClInclude Include="HardwareIO\ScreenInputIO.h" />
     <ClInclude Include="Maps\ScreenIn.h" />
     <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="Pattern.h" />
@@ -169,7 +171,9 @@
     <ClCompile Include="ConnectivityTriple.cpp" />
     <ClCompile Include="FastRand.cpp" />
     <ClCompile Include="GoodnessFunction.cpp" />
-    <ClCompile Include="IO\ScreenInput.cpp" />
+    <ClCompile Include="HardwareIO\AudioCaptureIO.cpp" />
+    <ClCompile Include="HardwareIO\IOCommon.cpp" />
+    <ClCompile Include="HardwareIO\ScreenInputIO.cpp" />
     <ClCompile Include="Maps\ScreenIn.cpp" />
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="Pattern.cpp" />

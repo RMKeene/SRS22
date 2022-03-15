@@ -16,14 +16,14 @@
     <Filter Include="Header Files\Maps">
       <UniqueIdentifier>{ba7e705f-336a-4ea0-9fbe-098168d526bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\IO">
-      <UniqueIdentifier>{c9d25649-0188-4ce3-843a-c58679c1a6ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\IO">
-      <UniqueIdentifier>{fe3f2daa-6f55-46b7-a394-f0bdd51a7ae4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Maps">
       <UniqueIdentifier>{ebc04acb-41d8-4be5-951f-455a0baa2e2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HardwareIO">
+      <UniqueIdentifier>{c9d25649-0188-4ce3-843a-c58679c1a6ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HardwareIO">
+      <UniqueIdentifier>{fe3f2daa-6f55-46b7-a394-f0bdd51a7ae4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,9 +38,6 @@
     </ClInclude>
     <ClInclude Include="SRS22.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IO\ScreenInput.h">
-      <Filter>Header Files\IO</Filter>
     </ClInclude>
     <ClInclude Include="Brain.h">
       <Filter>Header Files</Filter>
@@ -90,13 +87,19 @@
     <ClInclude Include="Maps\ScreenIn.h">
       <Filter>Header Files\Maps</Filter>
     </ClInclude>
+    <ClInclude Include="HardwareIO\ScreenInputIO.h">
+      <Filter>Header Files\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\AudioCaptureIO.h">
+      <Filter>Header Files\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\IOCommon.h">
+      <Filter>Header Files\HardwareIO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRS22.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IO\ScreenInput.cpp">
-      <Filter>Source Files\IO</Filter>
     </ClCompile>
     <ClCompile Include="AssemblyInfo.cpp">
       <Filter>Source Files</Filter>
@@ -145,6 +148,15 @@
     </ClCompile>
     <ClCompile Include="Maps\ScreenIn.cpp">
       <Filter>Source Files\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\AudioCaptureIO.cpp">
+      <Filter>Source Files\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\ScreenInputIO.cpp">
+      <Filter>Source Files\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\IOCommon.cpp">
+      <Filter>Source Files\HardwareIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

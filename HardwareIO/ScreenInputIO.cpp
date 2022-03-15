@@ -1,9 +1,9 @@
 #include "../pch.h"
-#include "ScreenInput.h"
+#include "ScreenInputIO.h"
 
 namespace SRS22 {
 
-	ScreenInput::ScreenInput() {
+	ScreenInputIO::ScreenInputIO() {
 		HDC hScreenDC = GetDC(nullptr);
 		w = GetDeviceCaps(hScreenDC, HORZRES);
 		h = GetDeviceCaps(hScreenDC, VERTRES);
@@ -12,35 +12,42 @@ namespace SRS22 {
 		DeleteDC(hScreenDC);
 	}
 
-	ScreenInput::~ScreenInput() {
+	ScreenInputIO::~ScreenInputIO() {
 		if (snapshotData) {
 			DeleteObject(snapshotData);
 			DeleteObject(snapshotDataHeaderDIB);
 		}
 	}
 
-	void ScreenInput::Init() {
+	bool ScreenInputIO::Init() {
 		HDC hScreenDC = GetDC(nullptr);
 		w = GetDeviceCaps(hScreenDC, HORZRES);
 		h = GetDeviceCaps(hScreenDC, VERTRES);
 		DeleteDC(hScreenDC);
+		return true;
 	}
 
-	int ScreenInput::GetScreenWidth() {
+	void ScreenInputIO::Shutdown() {
+		if (snapshotData) {
+			DeleteObject(snapshotData);
+		}
+	}
+
+	int ScreenInputIO::GetScreenWidth() {
 		HDC hScreenDC = GetDC(nullptr);
 		int width = GetDeviceCaps(hScreenDC, HORZRES);
 		DeleteDC(hScreenDC);
 		return width;
 	}
 
-	int ScreenInput::GetScreenHeight() {
+	int ScreenInputIO::GetScreenHeight() {
 		HDC hScreenDC = GetDC(nullptr);
 		int height = GetDeviceCaps(hScreenDC, VERTRES);
 		DeleteDC(hScreenDC);
 		return height;
 	}
 
-	BITMAPINFOHEADER ScreenInput::CreateBitmapHeader(int width, int height)
+	BITMAPINFOHEADER ScreenInputIO::CreateBitmapHeader(int width, int height)
 	{
 		BITMAPINFOHEADER  bi;
 
@@ -60,7 +67,7 @@ namespace SRS22 {
 		return bi;
 	}
 
-	bool ScreenInput::TakeScreenSnapshot() {
+	bool ScreenInputIO::TakeScreenSnapshot() {
 		// get full screen device context.
 		HDC hwindowDC = GetDC(nullptr);
 		HDC hwindowCompatibleDC = CreateCompatibleDC(hwindowDC);
@@ -94,7 +101,7 @@ namespace SRS22 {
 		return true;
 	}
 
-	PBITMAPINFO ScreenInput::CreateBitmapInfoStruct(HBITMAP hBmp)
+	PBITMAPINFO ScreenInputIO::CreateBitmapInfoStruct(HBITMAP hBmp)
 	{
 		BITMAP bmp;
 		PBITMAPINFO pbmi;
@@ -163,7 +170,7 @@ namespace SRS22 {
 		return pbmi;
 	}
 
-	int ScreenInput::CreateBMPFile(LPTSTR pszFile, PBITMAPINFO pbi,
+	int ScreenInputIO::CreateBMPFile(LPTSTR pszFile, PBITMAPINFO pbi,
 		HBITMAP hBMP, HDC hDC)
 	{
 		HANDLE hf;                 // file handle  
@@ -242,7 +249,7 @@ namespace SRS22 {
 		return 0;
 	}
 
-	void ScreenInput::DumpCurrentScreenSnapshot(LPCTSTR fname) {
+	void ScreenInputIO::DumpCurrentScreenSnapshot(LPCTSTR fname) {
 		HDC hDC = GetDC(nullptr);
 		PBITMAPINFO bi = CreateBitmapInfoStruct(snapshotData);
 		CreateBMPFile((LPTSTR)fname, bi, snapshotData, hDC);

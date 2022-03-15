@@ -1,9 +1,10 @@
 #pragma once
 #include <windows.h>
+#include "IOCommon.h"
 
 namespace SRS22 {
 
-	class ScreenInput
+	class ScreenInputIO : IOCommon
 	{
 		BITMAPINFOHEADER CreateBitmapHeader(int width, int height);
 		// From Microsoft's web site for more generic image dump.
@@ -19,10 +20,11 @@ namespace SRS22 {
 		HANDLE snapshotDataHeaderDIB = NULL;
 		std::recursive_mutex snapshotDataLock;
 
-		ScreenInput();
-		~ScreenInput();
+		ScreenInputIO();
+		~ScreenInputIO();
 
-		void Init();
+		virtual bool Init();
+		virtual void Shutdown();
 
 		int GetScreenWidth();
 		int GetScreenHeight();

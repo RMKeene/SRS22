@@ -5,7 +5,8 @@
 #include <list>
 #include <string>
 #include "SRSUnit.h"
-#include "IO/ScreenInput.h"
+#include "HardwareIO/ScreenInputIO.h"
+#include "HardwareIO/AudioCaptureIO.h"
 
 namespace SRS22 {
 	using namespace std;
@@ -23,7 +24,8 @@ namespace SRS22 {
 		float maxNearDistance = 50.0f;
 		float minFarDistance = 100.0f;
 
-		ScreenInput screenInput;
+		ScreenInputIO screenInput;
+		AudioCaptureIO audioInput;
 
 		/// <summary>
 		/// Called just before Win Main Message Loop starts iterating.

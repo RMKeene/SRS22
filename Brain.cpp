@@ -56,11 +56,13 @@ namespace SRS22 {
 
 	void Brain::Init() {
 		screenInput.Init();
+		audioInput.Init();
 		PostCreateAllSRSUnits();
 	}
 
 	void Brain::Shutdown() {
-
+		screenInput.Shutdown();
+		audioInput.Shutdown();
 	}
 
 	void Brain::UnitTest() {
@@ -74,6 +76,6 @@ namespace SRS22 {
 
 	void Brain::TakeScreenSnapshot() {
 		screenInput.TakeScreenSnapshot();
-		// screenInput.DumpCurrentScreenSnapshot(_T("test.bmp"));
+		//screenInput.DumpCurrentScreenSnapshot(_T("test.bmp"));
 	}
 }
