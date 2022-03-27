@@ -7,7 +7,40 @@
 #ifndef PCH_H
 #define PCH_H
 
-#include <json/json.h>
+#define _CRT_SECURE_NO_WARNINGS
+
+// This gives one common place to define MS windows values. 
+#define WIN32_LEAN_AND_MEAN
+
+#ifndef __wtypes_h__
+#include <wtypes.h>
+#endif
+
+#ifndef __WINDEF_
+#include <windef.h>
+#endif
+
+#include "wx/setup.h"
+// add headers that you want to pre-compile here
+#include "wx/wxprec.h"
+// for all others, include the necessary headers
+#ifndef WX_PRECOMP
+#include "wx/app.h"
+#include "wx/log.h"
+#include "wx/frame.h"
+#include "wx/panel.h"
+#include "wx/stattext.h"
+#include "wx/menu.h"
+#include "wx/layout.h"
+#include "wx/msgdlg.h"
+#include "wx/icon.h"
+#include "wx/button.h"
+#include "wx/sizer.h"
+#include "wx/textctrl.h"
+#include "wx/settings.h"
+#endif
+
+#include <nlohmann/json.hpp>
 #include <list>
 #include <map>
 #include <memory>
@@ -15,6 +48,5 @@
 #include <optional>
 #include <string>
 #include <utility>
-
 
 #endif //PCH_H

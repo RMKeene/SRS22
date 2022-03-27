@@ -14,20 +14,20 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Header Files\Maps">
-      <UniqueIdentifier>{ba7e705f-336a-4ea0-9fbe-098168d526bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Maps">
-      <UniqueIdentifier>{ebc04acb-41d8-4be5-951f-455a0baa2e2c}</UniqueIdentifier>
+      <UniqueIdentifier>{09344d02-bdde-4d6f-a680-1300e094d74d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\HardwareIO">
-      <UniqueIdentifier>{c9d25649-0188-4ce3-843a-c58679c1a6ab}</UniqueIdentifier>
+      <UniqueIdentifier>{1bf68f56-b9ad-470c-9918-d17e48f1dc8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Maps">
+      <UniqueIdentifier>{2775dcd0-14b5-43ff-91b3-3e3f8e632441}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\HardwareIO">
-      <UniqueIdentifier>{fe3f2daa-6f55-46b7-a394-f0bdd51a7ae4}</UniqueIdentifier>
+      <UniqueIdentifier>{d04a2130-8ce0-4214-8f24-61fb4df79212}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
+    <ClInclude Include="SRS22.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
@@ -36,127 +36,28 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRS22.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Brain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ClassPredefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConceptState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectivityTriple.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FastRand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GoodnessFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MatchSelector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pattern.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PatternConnection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PatternMatchingSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Reaper.h">
+    <ClInclude Include="SRS22UIgen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRSUnit.h">
+    <ClInclude Include="MonitorFrame.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyfloat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps\ScreenIn.h">
-      <Filter>Header Files\Maps</Filter>
-    </ClInclude>
-    <ClInclude Include="HardwareIO\ScreenInputIO.h">
-      <Filter>Header Files\HardwareIO</Filter>
-    </ClInclude>
-    <ClInclude Include="HardwareIO\AudioCaptureIO.h">
-      <Filter>Header Files\HardwareIO</Filter>
-    </ClInclude>
-    <ClInclude Include="HardwareIO\IOCommon.h">
-      <Filter>Header Files\HardwareIO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRS22.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AssemblyInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Brain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConceptState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectivityTriple.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FastRand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GoodnessFunction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MatchSelector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Pattern.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PatternConnection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PatternMatchingSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Reaper.cpp">
+    <ClCompile Include="SRS22UIgen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRSUnit.cpp">
+    <ClCompile Include="MonitorFrame.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyfloat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformFunction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Maps\ScreenIn.cpp">
-      <Filter>Source Files\Maps</Filter>
-    </ClCompile>
-    <ClCompile Include="HardwareIO\AudioCaptureIO.cpp">
-      <Filter>Source Files\HardwareIO</Filter>
-    </ClCompile>
-    <ClCompile Include="HardwareIO\ScreenInputIO.cpp">
-      <Filter>Source Files\HardwareIO</Filter>
-    </ClCompile>
-    <ClCompile Include="HardwareIO\IOCommon.cpp">
-      <Filter>Source Files\HardwareIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,11 +66,86 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
+    <Image Include="res\file_view.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="SRS22.ico">
+    <Image Include="res\file_view_hc.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\class_view.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\class_view_hc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\fileview.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\fileview_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\classview.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\classview_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\explorer.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\explorer_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\sort.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\sort_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\menuimages.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\menuimages_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\output_wnd.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\output_wnd_hc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\properties_wnd.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\properties_wnd_hc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\properties.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\properties_hc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\userimages.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\SRS22Doc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\SRS22.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\SRS22.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
