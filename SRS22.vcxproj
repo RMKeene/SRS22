@@ -198,12 +198,17 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ini.h" />
     <ClInclude Include="MonitorFrame.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="SRS22.h" />
     <ClInclude Include="SRS22UIgen.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TopTextFrame.h" />
+    <ClInclude Include="TopVideoFrame.h" />
+    <ClInclude Include="WhiteboardFrame.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp" />
@@ -213,8 +218,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SRS22.cpp" />
     <ClCompile Include="SRS22UIgen.cpp" />
+    <ClCompile Include="TopTextFrame.cpp" />
+    <ClCompile Include="TopVideoFrame.cpp" />
+    <ClCompile Include="WhiteboardFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SRS22.rc" />
@@ -255,6 +264,7 @@
     <Import Project="packages\nlohmann.json.decomposed.3.10.4\build\native\nlohmann.json.decomposed.targets" Condition="Exists('packages\nlohmann.json.decomposed.3.10.4\build\native\nlohmann.json.decomposed.targets')" />
     <Import Project="packages\wxWidgets.3.1.5.1\build\wxWidgets.targets" Condition="Exists('packages\wxWidgets.3.1.5.1\build\wxWidgets.targets')" />
     <Import Project="packages\wxWidgetsTemplate.2.5.3\build\wxWidgetsTemplate.targets" Condition="Exists('packages\wxWidgetsTemplate.2.5.3\build\wxWidgetsTemplate.targets')" />
+    <Import Project="packages\boost.1.78.0\build\boost.targets" Condition="Exists('packages\boost.1.78.0\build\boost.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -265,5 +275,6 @@
     <Error Condition="!Exists('packages\wxWidgets.3.1.5.1\build\wxWidgets.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\wxWidgets.3.1.5.1\build\wxWidgets.targets'))" />
     <Error Condition="!Exists('packages\wxWidgetsTemplate.2.5.3\build\wxWidgetsTemplate.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\wxWidgetsTemplate.2.5.3\build\wxWidgetsTemplate.props'))" />
     <Error Condition="!Exists('packages\wxWidgetsTemplate.2.5.3\build\wxWidgetsTemplate.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\wxWidgetsTemplate.2.5.3\build\wxWidgetsTemplate.targets'))" />
+    <Error Condition="!Exists('packages\boost.1.78.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost.1.78.0\build\boost.targets'))" />
   </Target>
 </Project>

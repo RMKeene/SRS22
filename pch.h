@@ -49,4 +49,6 @@
 #include <string>
 #include <utility>
 
+#include "ini.h"
+
 #endif //PCH_H

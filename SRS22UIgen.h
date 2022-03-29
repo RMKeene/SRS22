@@ -10,20 +10,18 @@
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
-#include <wx/panel.h>
-#include <wx/gdicmn.h>
-#include <wx/font.h>
-#include <wx/colour.h>
-#include <wx/settings.h>
 #include <wx/string.h>
-#include <wx/sizer.h>
-#include <wx/frame.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/menu.h>
+#include <wx/gdicmn.h>
+#include <wx/font.h>
+#include <wx/colour.h>
+#include <wx/settings.h>
 #include <wx/tglbtn.h>
 #include <wx/button.h>
+#include <wx/sizer.h>
 #include <wx/statbox.h>
 #include <wx/stattext.h>
 #include <wx/choice.h>
@@ -31,27 +29,11 @@
 #include <wx/statline.h>
 #include <wx/statbmp.h>
 #include <wx/richtext/richtextctrl.h>
+#include <wx/frame.h>
+#include <wx/panel.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class TopVideoFrameGen
-///////////////////////////////////////////////////////////////////////////////
-class TopVideoFrameGen : public wxFrame 
-{
-	private:
-	
-	protected:
-		wxPanel* TopVideoPanel;
-	
-	public:
-		
-		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 620,474 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-		
-		~TopVideoFrameGen();
-	
-};
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MonitorFrameGen
@@ -65,6 +47,9 @@ class MonitorFrameGen : public wxFrame
 		wxMenu* m_menu5;
 		wxToggleButton* RunButton;
 		wxButton* MonitorStepButton;
+		wxButton* saveLayoutButton;
+		wxButton* reloadLayoutButton;
+		wxButton* resetLayoutButton;
 		wxStaticText* m_staticText91;
 		wxChoice* AudioInChoiceDropbox;
 		wxStaticText* m_staticText181;
@@ -87,6 +72,9 @@ class MonitorFrameGen : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnRunToggleButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStep( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSaveLayoutButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnReloadLayoutButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnResetLayoutButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioInDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioVolumeIn( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
@@ -96,9 +84,31 @@ class MonitorFrameGen : public wxFrame
 	
 	public:
 		
-		MonitorFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Monitor - Debug"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1189,739 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MonitorFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Monitor - Debug"), const wxPoint& pos = wxPoint( -1,-1 ), const wxSize& size = wxSize( 2400,1000 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~MonitorFrameGen();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class TopVideoFrameGen
+///////////////////////////////////////////////////////////////////////////////
+class TopVideoFrameGen : public wxFrame 
+{
+	private:
+	
+	protected:
+		wxPanel* TopVideoPanel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		
+	
+	public:
+		
+		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 453,351 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		
+		~TopVideoFrameGen();
 	
 };
 
@@ -116,32 +126,38 @@ class TopTextFrameGen : public wxFrame
 		wxRichTextCtrl* TextOutRichText;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnTextInClearButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTextOutClearButton( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
 		
-		TopTextFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22-Text"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1006,700 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		TopTextFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22-Text"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 499,651 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~TopTextFrameGen();
 	
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class SRSWhiteboardGen
+/// Class WhiteboardFrameGen
 ///////////////////////////////////////////////////////////////////////////////
-class SRSWhiteboardGen : public wxFrame 
+class WhiteboardFrameGen : public wxFrame 
 {
 	private:
 	
 	protected:
+		wxPanel* whiteboardCanvas;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		
 	
 	public:
 		
-		SRSWhiteboardGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS - Whiteboard"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 799,625 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		WhiteboardFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS - Whiteboard"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 727,517 ), long style = wxCAPTION|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
-		~SRSWhiteboardGen();
+		~WhiteboardFrameGen();
 	
 };
 

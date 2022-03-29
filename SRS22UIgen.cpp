@@ -9,30 +9,9 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-TopVideoFrameGen::TopVideoFrameGen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
-{
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-	
-	wxBoxSizer* bSizer13;
-	bSizer13 = new wxBoxSizer( wxVERTICAL );
-	
-	TopVideoPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	bSizer13->Add( TopVideoPanel, 1, wxEXPAND | wxALL, 5 );
-	
-	
-	this->SetSizer( bSizer13 );
-	this->Layout();
-	
-	this->Centre( wxBOTH );
-}
-
-TopVideoFrameGen::~TopVideoFrameGen()
-{
-}
-
 MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->SetSizeHints( wxSize( 500,500 ), wxDefaultSize );
 	
 	MonitorFrameMenuBar = new wxMenuBar( 0 );
 	m_menu5 = new wxMenu();
@@ -68,6 +47,21 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	MonitorStepButton = new wxButton( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Step"), wxDefaultPosition, wxDefaultSize, 0 );
 	MonitorControl->Add( MonitorStepButton, 0, wxALL, 5 );
+	
+	wxStaticBoxSizer* sbSizer8;
+	sbSizer8 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Window Layout") ), wxHORIZONTAL );
+	
+	saveLayoutButton = new wxButton( sbSizer8->GetStaticBox(), wxID_ANY, wxT("Save"), wxDefaultPosition, wxDefaultSize, 0 );
+	sbSizer8->Add( saveLayoutButton, 0, wxALL, 5 );
+	
+	reloadLayoutButton = new wxButton( sbSizer8->GetStaticBox(), wxID_ANY, wxT("Reload"), wxDefaultPosition, wxDefaultSize, 0 );
+	sbSizer8->Add( reloadLayoutButton, 0, wxALL, 5 );
+	
+	resetLayoutButton = new wxButton( sbSizer8->GetStaticBox(), wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
+	sbSizer8->Add( resetLayoutButton, 0, wxALL, 5 );
+	
+	
+	MonitorControl->Add( sbSizer8, 0, wxEXPAND, 5 );
 	
 	
 	bSizer3->Add( MonitorControl, 0, wxEXPAND, 5 );
@@ -190,7 +184,7 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	MonitorLogSubframe = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("Log") ), wxVERTICAL );
 	
 	MonitorLogSubframe->SetMinSize( wxSize( -1,400 ) ); 
-	LogRichText = new wxRichTextCtrl( MonitorLogSubframe->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0|wxVSCROLL|wxHSCROLL|wxNO_BORDER|wxWANTS_CHARS );
+	LogRichText = new wxRichTextCtrl( MonitorLogSubframe->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxVSCROLL|wxHSCROLL|wxNO_BORDER|wxWANTS_CHARS );
 	MonitorLogSubframe->Add( LogRichText, 1, wxEXPAND | wxALL, 5 );
 	
 	
@@ -205,6 +199,9 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	// Connect Events
 	RunButton->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRunToggleButton ), NULL, this );
 	MonitorStepButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnStep ), NULL, this );
+	saveLayoutButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnSaveLayoutButton ), NULL, this );
+	reloadLayoutButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnReloadLayoutButton ), NULL, this );
+	resetLayoutButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnResetLayoutButton ), NULL, this );
 	AudioInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
@@ -233,6 +230,9 @@ MonitorFrameGen::~MonitorFrameGen()
 	// Disconnect Events
 	RunButton->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRunToggleButton ), NULL, this );
 	MonitorStepButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnStep ), NULL, this );
+	saveLayoutButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnSaveLayoutButton ), NULL, this );
+	reloadLayoutButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnReloadLayoutButton ), NULL, this );
+	resetLayoutButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnResetLayoutButton ), NULL, this );
 	AudioInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
@@ -257,15 +257,42 @@ MonitorFrameGen::~MonitorFrameGen()
 	
 }
 
+TopVideoFrameGen::TopVideoFrameGen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxSize( 200,200 ), wxDefaultSize );
+	
+	wxBoxSizer* bSizer13;
+	bSizer13 = new wxBoxSizer( wxVERTICAL );
+	
+	TopVideoPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxSize( 256,256 ), wxTAB_TRAVERSAL );
+	bSizer13->Add( TopVideoPanel, 1, wxEXPAND | wxALL, 5 );
+	
+	
+	this->SetSizer( bSizer13 );
+	this->Layout();
+	
+	this->Centre( wxBOTH );
+	
+	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( TopVideoFrameGen::OnClose ) );
+}
+
+TopVideoFrameGen::~TopVideoFrameGen()
+{
+	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( TopVideoFrameGen::OnClose ) );
+	
+}
+
 TopTextFrameGen::TopTextFrameGen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->SetSizeHints( wxSize( 400,400 ), wxDefaultSize );
 	
 	wxBoxSizer* bSizer13;
 	bSizer13 = new wxBoxSizer( wxVERTICAL );
 	
 	wxStaticBoxSizer* sbSizer9;
-	sbSizer9 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("In") ), wxVERTICAL );
+	sbSizer9 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("In") ), wxHORIZONTAL );
 	
 	TextInClearButton = new wxButton( sbSizer9->GetStaticBox(), wxID_ANY, wxT("Clear"), wxDefaultPosition, wxDefaultSize, 0 );
 	sbSizer9->Add( TextInClearButton, 0, wxALL, 2 );
@@ -277,7 +304,7 @@ TopTextFrameGen::TopTextFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	bSizer13->Add( sbSizer9, 1, wxEXPAND, 2 );
 	
 	wxStaticBoxSizer* sbSizer10;
-	sbSizer10 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("Out") ), wxVERTICAL );
+	sbSizer10 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("Out") ), wxHORIZONTAL );
 	
 	TextOutClearButton1 = new wxButton( sbSizer10->GetStaticBox(), wxID_ANY, wxT("Clear"), wxDefaultPosition, wxDefaultSize, 0 );
 	sbSizer10->Add( TextOutClearButton1, 0, wxALL, 2 );
@@ -295,6 +322,7 @@ TopTextFrameGen::TopTextFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( TopTextFrameGen::OnClose ) );
 	TextInClearButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TopTextFrameGen::OnTextInClearButton ), NULL, this );
 	TextOutClearButton1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TopTextFrameGen::OnTextOutClearButton ), NULL, this );
 }
@@ -302,19 +330,37 @@ TopTextFrameGen::TopTextFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 TopTextFrameGen::~TopTextFrameGen()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( TopTextFrameGen::OnClose ) );
 	TextInClearButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TopTextFrameGen::OnTextInClearButton ), NULL, this );
 	TextOutClearButton1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TopTextFrameGen::OnTextOutClearButton ), NULL, this );
 	
 }
 
-SRSWhiteboardGen::SRSWhiteboardGen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+WhiteboardFrameGen::WhiteboardFrameGen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->SetSizeHints( wxSize( 400,400 ), wxDefaultSize );
 	
+	wxBoxSizer* bSizer8;
+	bSizer8 = new wxBoxSizer( wxVERTICAL );
+	
+	whiteboardCanvas = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	whiteboardCanvas->SetBackgroundColour( wxColour( 255, 255, 255 ) );
+	
+	bSizer8->Add( whiteboardCanvas, 1, wxEXPAND | wxALL, 5 );
+	
+	
+	this->SetSizer( bSizer8 );
+	this->Layout();
 	
 	this->Centre( wxBOTH );
+	
+	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( WhiteboardFrameGen::OnClose ) );
 }
 
-SRSWhiteboardGen::~SRSWhiteboardGen()
+WhiteboardFrameGen::~WhiteboardFrameGen()
 {
+	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( WhiteboardFrameGen::OnClose ) );
+	
 }
