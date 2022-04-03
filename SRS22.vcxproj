@@ -208,6 +208,14 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TopTextFrame.h" />
     <ClInclude Include="TopVideoFrame.h" />
+    <ClInclude Include="ui\ColorSquare16Black.bmp.h" />
+    <ClInclude Include="ui\ColorSquare16Blue.bmp.h" />
+    <ClInclude Include="ui\ColorSquare16Cyan.bmp.h" />
+    <ClInclude Include="ui\ColorSquare16Green.bmp.h" />
+    <ClInclude Include="ui\ColorSquare16Magenta.bmp.h" />
+    <ClInclude Include="ui\ColorSquare16Red.bmp.h" />
+    <ClInclude Include="ui\ColorSquare16White.bmp.h" />
+    <ClInclude Include="ui\ColorSquare16Yellow.bmp.h" />
     <ClInclude Include="WhiteboardFrame.h" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +237,10 @@
     <ResourceCompile Include="SRS22.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Images\ColorSquare16White.png" />
+    <Image Include="Images\WhiteSquare.bmp" />
+    <Image Include="Images\WhiteSquare.png" />
+    <Image Include="res\bitmap1.bmp" />
     <Image Include="res\classview.bmp" />
     <Image Include="res\classview_hc.bmp" />
     <Image Include="res\class_view.ico" />

@@ -7,6 +7,15 @@
 
 #include "SRS22UIgen.h"
 
+#include "ui/ColorSquare16Black.bmp.h"
+#include "ui/ColorSquare16Blue.bmp.h"
+#include "ui/ColorSquare16Cyan.bmp.h"
+#include "ui/ColorSquare16Green.bmp.h"
+#include "ui/ColorSquare16Magenta.bmp.h"
+#include "ui/ColorSquare16Red.bmp.h"
+#include "ui/ColorSquare16White.bmp.h"
+#include "ui/ColorSquare16Yellow.bmp.h"
+
 ///////////////////////////////////////////////////////////////////////////
 
 MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
@@ -341,12 +350,42 @@ WhiteboardFrameGen::WhiteboardFrameGen( wxWindow* parent, wxWindowID id, const w
 	this->SetSizeHints( wxSize( 400,400 ), wxDefaultSize );
 	
 	wxBoxSizer* bSizer8;
-	bSizer8 = new wxBoxSizer( wxVERTICAL );
+	bSizer8 = new wxBoxSizer( wxHORIZONTAL );
 	
 	whiteboardCanvas = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	whiteboardCanvas->SetBackgroundColour( wxColour( 255, 255, 255 ) );
 	
 	bSizer8->Add( whiteboardCanvas, 1, wxEXPAND | wxALL, 5 );
+	
+	wxStaticBoxSizer* sbSizer9;
+	sbSizer9 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("Pens") ), wxVERTICAL );
+	
+	WhiteButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16White_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
+	sbSizer9->Add( WhiteButton, 0, wxALL, 5 );
+	
+	BlackButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16Black_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
+	sbSizer9->Add( BlackButton, 0, wxALL, 5 );
+	
+	RedButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16Red_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
+	sbSizer9->Add( RedButton, 0, wxALL, 5 );
+	
+	GreenButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16Green_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
+	sbSizer9->Add( GreenButton, 0, wxALL, 5 );
+	
+	BlueButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16Blue_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
+	sbSizer9->Add( BlueButton, 0, wxALL, 5 );
+	
+	YellowButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16Yellow_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
+	sbSizer9->Add( YellowButton, 0, wxALL, 5 );
+	
+	CyanButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16Cyan_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
+	sbSizer9->Add( CyanButton, 0, wxALL, 5 );
+	
+	MagentaButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16Magenta_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
+	sbSizer9->Add( MagentaButton, 0, wxALL, 5 );
+	
+	
+	bSizer8->Add( sbSizer9, 0, wxEXPAND, 5 );
 	
 	
 	this->SetSizer( bSizer8 );
@@ -356,11 +395,27 @@ WhiteboardFrameGen::WhiteboardFrameGen( wxWindow* parent, wxWindowID id, const w
 	
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( WhiteboardFrameGen::OnClose ) );
+	WhiteButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnWhiteButton ), NULL, this );
+	BlackButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnBlackButton ), NULL, this );
+	RedButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnRedButton ), NULL, this );
+	GreenButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnGreenButton ), NULL, this );
+	BlueButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnBlueButton ), NULL, this );
+	YellowButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnYellowButton ), NULL, this );
+	CyanButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnCyanButton ), NULL, this );
+	MagentaButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnMagentaButton ), NULL, this );
 }
 
 WhiteboardFrameGen::~WhiteboardFrameGen()
 {
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( WhiteboardFrameGen::OnClose ) );
+	WhiteButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnWhiteButton ), NULL, this );
+	BlackButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnBlackButton ), NULL, this );
+	RedButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnRedButton ), NULL, this );
+	GreenButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnGreenButton ), NULL, this );
+	BlueButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnBlueButton ), NULL, this );
+	YellowButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnYellowButton ), NULL, this );
+	CyanButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnCyanButton ), NULL, this );
+	MagentaButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnMagentaButton ), NULL, this );
 	
 }

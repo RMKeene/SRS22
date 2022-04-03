@@ -1,90 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Maps">
+    <Filter Include="Source">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source\Maps">
       <UniqueIdentifier>{09344d02-bdde-4d6f-a680-1300e094d74d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\HardwareIO">
+    <Filter Include="Source\HardwareIO">
       <UniqueIdentifier>{1bf68f56-b9ad-470c-9918-d17e48f1dc8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Maps">
-      <UniqueIdentifier>{2775dcd0-14b5-43ff-91b3-3e3f8e632441}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\HardwareIO">
-      <UniqueIdentifier>{d04a2130-8ce0-4214-8f24-61fb4df79212}</UniqueIdentifier>
+    <Filter Include="Source\ui">
+      <UniqueIdentifier>{54725829-135e-46f1-8605-508354ea553b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRS22.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="SRS22UIgen.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="MonitorFrame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="TopTextFrame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="WhiteboardFrame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="TopVideoFrame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="ini.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Settings.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorSquare16Black.bmp.h">
+      <Filter>Source\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorSquare16Blue.bmp.h">
+      <Filter>Source\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorSquare16Cyan.bmp.h">
+      <Filter>Source\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorSquare16Green.bmp.h">
+      <Filter>Source\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorSquare16Magenta.bmp.h">
+      <Filter>Source\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorSquare16Red.bmp.h">
+      <Filter>Source\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorSquare16White.bmp.h">
+      <Filter>Source\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorSquare16Yellow.bmp.h">
+      <Filter>Source\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SRS22.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MonitorFrame.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRS22UIgen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MonitorFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TopTextFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WhiteboardFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TopVideoFrame.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Settings.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SRS22.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SRS22UIgen.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TopTextFrame.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TopVideoFrame.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="WhiteboardFrame.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +183,18 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\Toolbar256.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\WhiteSquare.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\ColorSquare16White.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\WhiteSquare.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

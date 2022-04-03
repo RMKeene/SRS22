@@ -31,6 +31,7 @@
 #include <wx/richtext/richtextctrl.h>
 #include <wx/frame.h>
 #include <wx/panel.h>
+#include <wx/bmpbuttn.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -106,7 +107,7 @@ class TopVideoFrameGen : public wxFrame
 	
 	public:
 		
-		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 453,351 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,512 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~TopVideoFrameGen();
 	
@@ -133,7 +134,7 @@ class TopTextFrameGen : public wxFrame
 	
 	public:
 		
-		TopTextFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22-Text"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 499,651 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		TopTextFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22-Text"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,650 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~TopTextFrameGen();
 	
@@ -148,14 +149,30 @@ class WhiteboardFrameGen : public wxFrame
 	
 	protected:
 		wxPanel* whiteboardCanvas;
+		wxBitmapButton* WhiteButton;
+		wxBitmapButton* BlackButton;
+		wxBitmapButton* RedButton;
+		wxBitmapButton* GreenButton;
+		wxBitmapButton* BlueButton;
+		wxBitmapButton* YellowButton;
+		wxBitmapButton* CyanButton;
+		wxBitmapButton* MagentaButton;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnWhiteButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBlackButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRedButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnGreenButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBlueButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnYellowButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCyanButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMagentaButton( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
 		
-		WhiteboardFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS - Whiteboard"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 727,517 ), long style = wxCAPTION|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		WhiteboardFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS - Whiteboard"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,500 ), long style = wxCAPTION|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~WhiteboardFrameGen();
 	
