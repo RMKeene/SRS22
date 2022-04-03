@@ -3,8 +3,6 @@
 //
 #pragma once
 
-#include "pch.h"
-
 #include "SRS22UIgen.h"
 #include "MonitorFrame.h"
 #include "TopTextFrame.h"

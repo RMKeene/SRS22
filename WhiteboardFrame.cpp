@@ -1,9 +1,8 @@
-#include "pch.h"
 #include "WhiteboardFrame.h"
 
 WhiteboardFrame::WhiteboardFrame(wxWindow* parent) :
 	WhiteboardFrameGen(parent) {
-	wxBitmap bm = wxBitmap(wxT("IDB_WHITEBMP16"), wxBITMAP_TYPE_RESOURCE);
+
 }
 
 WhiteboardFrame::~WhiteboardFrame() {

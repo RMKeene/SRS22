@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "TopTextFrame.h"
 
 TopTextFrame::TopTextFrame(wxWindow* parent) :

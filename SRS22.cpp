@@ -2,7 +2,6 @@
 // SRS22.cpp : Defines the class behaviors for the application.
 //
 
-#include "pch.h"
 #include "SRS22.h"
 #include "ini.h"
 #include "Settings.h"

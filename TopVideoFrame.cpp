@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "TopVideoFrame.h"
 
 TopVideoFrame::TopVideoFrame(wxWindow* parent) :
