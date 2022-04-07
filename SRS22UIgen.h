@@ -160,6 +160,14 @@ class WhiteboardFrameGen : public wxFrame
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardEraseBackground( wxEraseEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardKillFocus( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardLeaveWindow( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardLeftDown( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardLeftUp( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardMotion( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnWhiteButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBlackButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRedButton( wxCommandEvent& event ) { event.Skip(); }
