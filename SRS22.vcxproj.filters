@@ -77,6 +77,9 @@
     <ClInclude Include="ui\ColorSquare16Yellow.bmp.h">
       <Filter>Source\ui</Filter>
     </ClInclude>
+    <ClInclude Include="canvas.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -101,6 +104,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="WhiteboardFrame.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="canvas.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

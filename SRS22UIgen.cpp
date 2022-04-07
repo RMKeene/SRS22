@@ -349,13 +349,7 @@ WhiteboardFrameGen::WhiteboardFrameGen( wxWindow* parent, wxWindowID id, const w
 {
 	this->SetSizeHints( wxSize( 400,400 ), wxDefaultSize );
 	
-	wxBoxSizer* bSizer8;
-	bSizer8 = new wxBoxSizer( wxHORIZONTAL );
-	
-	whiteboardCanvas = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	whiteboardCanvas->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-	
-	bSizer8->Add( whiteboardCanvas, 1, wxEXPAND | wxALL, 5 );
+	WhiteboardHorizPanel = new wxBoxSizer( wxHORIZONTAL );
 	
 	wxStaticBoxSizer* sbSizer9;
 	sbSizer9 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("Pens") ), wxVERTICAL );
@@ -384,25 +378,24 @@ WhiteboardFrameGen::WhiteboardFrameGen( wxWindow* parent, wxWindowID id, const w
 	MagentaButton = new wxBitmapButton( sbSizer9->GetStaticBox(), wxID_ANY, ColorSquare16Magenta_bmp_to_wx_bitmap(), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
 	sbSizer9->Add( MagentaButton, 0, wxALL, 5 );
 	
+	ClearButton = new wxButton( sbSizer9->GetStaticBox(), wxID_ANY, wxT("C"), wxDefaultPosition, wxSize( 25,25 ), 0 );
+	ClearButton->SetFont( wxFont( 8, 70, 90, 92, false, wxT("Arial") ) );
+	ClearButton->SetMinSize( wxSize( 25,25 ) );
+	ClearButton->SetMaxSize( wxSize( 25,25 ) );
 	
-	bSizer8->Add( sbSizer9, 0, wxEXPAND, 5 );
+	sbSizer9->Add( ClearButton, 0, wxALL, 5 );
 	
 	
-	this->SetSizer( bSizer8 );
+	WhiteboardHorizPanel->Add( sbSizer9, 0, wxEXPAND, 5 );
+	
+	
+	this->SetSizer( WhiteboardHorizPanel );
 	this->Layout();
 	
 	this->Centre( wxBOTH );
 	
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( WhiteboardFrameGen::OnClose ) );
-	whiteboardCanvas->Connect( wxEVT_ERASE_BACKGROUND, wxEraseEventHandler( WhiteboardFrameGen::OnWhiteboardEraseBackground ), NULL, this );
-	whiteboardCanvas->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( WhiteboardFrameGen::OnWhiteboardKillFocus ), NULL, this );
-	whiteboardCanvas->Connect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardLeaveWindow ), NULL, this );
-	whiteboardCanvas->Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardLeftDoubleClick ), NULL, this );
-	whiteboardCanvas->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardLeftDown ), NULL, this );
-	whiteboardCanvas->Connect( wxEVT_LEFT_UP, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardLeftUp ), NULL, this );
-	whiteboardCanvas->Connect( wxEVT_MOTION, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardMotion ), NULL, this );
-	whiteboardCanvas->Connect( wxEVT_PAINT, wxPaintEventHandler( WhiteboardFrameGen::OnWhiteboardPaint ), NULL, this );
 	WhiteButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnWhiteButton ), NULL, this );
 	BlackButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnBlackButton ), NULL, this );
 	RedButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnRedButton ), NULL, this );
@@ -411,20 +404,13 @@ WhiteboardFrameGen::WhiteboardFrameGen( wxWindow* parent, wxWindowID id, const w
 	YellowButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnYellowButton ), NULL, this );
 	CyanButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnCyanButton ), NULL, this );
 	MagentaButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnMagentaButton ), NULL, this );
+	ClearButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnWhiteboardClearButton ), NULL, this );
 }
 
 WhiteboardFrameGen::~WhiteboardFrameGen()
 {
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( WhiteboardFrameGen::OnClose ) );
-	whiteboardCanvas->Disconnect( wxEVT_ERASE_BACKGROUND, wxEraseEventHandler( WhiteboardFrameGen::OnWhiteboardEraseBackground ), NULL, this );
-	whiteboardCanvas->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( WhiteboardFrameGen::OnWhiteboardKillFocus ), NULL, this );
-	whiteboardCanvas->Disconnect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardLeaveWindow ), NULL, this );
-	whiteboardCanvas->Disconnect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardLeftDoubleClick ), NULL, this );
-	whiteboardCanvas->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardLeftDown ), NULL, this );
-	whiteboardCanvas->Disconnect( wxEVT_LEFT_UP, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardLeftUp ), NULL, this );
-	whiteboardCanvas->Disconnect( wxEVT_MOTION, wxMouseEventHandler( WhiteboardFrameGen::OnWhiteboardMotion ), NULL, this );
-	whiteboardCanvas->Disconnect( wxEVT_PAINT, wxPaintEventHandler( WhiteboardFrameGen::OnWhiteboardPaint ), NULL, this );
 	WhiteButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnWhiteButton ), NULL, this );
 	BlackButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnBlackButton ), NULL, this );
 	RedButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnRedButton ), NULL, this );
@@ -433,5 +419,6 @@ WhiteboardFrameGen::~WhiteboardFrameGen()
 	YellowButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnYellowButton ), NULL, this );
 	CyanButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnCyanButton ), NULL, this );
 	MagentaButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnMagentaButton ), NULL, this );
+	ClearButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnWhiteboardClearButton ), NULL, this );
 	
 }

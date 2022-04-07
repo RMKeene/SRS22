@@ -148,7 +148,6 @@ class WhiteboardFrameGen : public wxFrame
 	private:
 	
 	protected:
-		wxPanel* whiteboardCanvas;
 		wxBitmapButton* WhiteButton;
 		wxBitmapButton* BlackButton;
 		wxBitmapButton* RedButton;
@@ -157,17 +156,10 @@ class WhiteboardFrameGen : public wxFrame
 		wxBitmapButton* YellowButton;
 		wxBitmapButton* CyanButton;
 		wxBitmapButton* MagentaButton;
+		wxButton* ClearButton;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardEraseBackground( wxEraseEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardKillFocus( wxFocusEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardLeaveWindow( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardLeftDown( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardLeftUp( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardMotion( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnWhiteButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBlackButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRedButton( wxCommandEvent& event ) { event.Skip(); }
@@ -176,9 +168,11 @@ class WhiteboardFrameGen : public wxFrame
 		virtual void OnYellowButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCyanButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMagentaButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnWhiteboardClearButton( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		wxBoxSizer* WhiteboardHorizPanel;
 		
 		WhiteboardFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS - Whiteboard"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,500 ), long style = wxCAPTION|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		

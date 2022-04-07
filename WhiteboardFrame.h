@@ -1,10 +1,14 @@
 #pragma once
 #include "SRS22UIgen.h"
+#include "canvas.h"
+
+
 class WhiteboardFrame :
     public WhiteboardFrameGen
 {
 public:
 	wxBrush whiteboardBrush;
+	MyCanvas canvas;
 
     WhiteboardFrame(wxWindow* parent);
     ~WhiteboardFrame();
@@ -19,6 +23,7 @@ public:
 	void OnYellowButton(wxCommandEvent& event) override;
 	void OnCyanButton(wxCommandEvent& event) override;
 	void OnMagentaButton(wxCommandEvent& event) override;
+	void OnWhiteboardClearButton(wxCommandEvent& event) override;
 
 };
 
