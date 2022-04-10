@@ -9,25 +9,28 @@
 #include "WhiteboardFrame.h"
 #include "TopVideoFrame.h"
 
-// Define a new application type, each program should derive a class from wxApp
-class SRS22App : public wxApp
-{
-public:
-    SRS22App();
-    ~SRS22App();
-    // override base class virtuals
-    // ----------------------------
+namespace SRS22 {
 
-    // this one is called on application startup and is a good place for the app
-    // initialization (doing it here and not in the ctor allows to have an error
-    // return: if OnInit() returns false, the application terminates)
-    virtual bool OnInit() wxOVERRIDE;
+    // Define a new application type, each program should derive a class from wxApp
+    class SRS22App : public wxApp
+    {
+    public:
+        SRS22App();
+        ~SRS22App();
+        // override base class virtuals
+        // ----------------------------
 
-    MonitorFrame* monitorFrame;
+        // this one is called on application startup and is a good place for the app
+        // initialization (doing it here and not in the ctor allows to have an error
+        // return: if OnInit() returns false, the application terminates)
+        virtual bool OnInit() wxOVERRIDE;
 
-private:
-    wxLocale m_locale;
-};
+        MonitorFrame* monitorFrame;
 
-wxIMPLEMENT_APP(SRS22App);
+    private:
+        wxLocale m_locale;
+    };
 
+    wxIMPLEMENT_APP(SRS22App);
+
+}

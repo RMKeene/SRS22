@@ -1,13 +1,16 @@
 #pragma once
 #include "SRS22UIgen.h"
 
-class TopTextFrame :
-	public TopTextFrameGen
-{
-public:
-	TopTextFrame(wxWindow* parent);
-	~TopTextFrame();
+namespace SRS22 {
 
-	void OnClose(wxCloseEvent& event) override;
-};
+	class TopTextFrame :
+		public TopTextFrameGen
+	{
+	public:
+		TopTextFrame(wxWindow* parent);
+		~TopTextFrame();
 
+		void OnClose(wxCloseEvent& event) override;
+	};
+
+}

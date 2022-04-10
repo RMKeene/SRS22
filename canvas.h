@@ -1,3 +1,4 @@
+#pragma once
 ///////////////////////////////////////////////////////////////////////////////
 // Name:        samples/image/canvas.h
 // Purpose:     sample showing operations with wxImage
@@ -14,30 +15,34 @@
 // MyCanvas
 //-----------------------------------------------------------------------------
 
-class MyCanvas: public wxWindow
-{
-public:
-    MyCanvas( wxWindow *parent, wxWindowID, const wxPoint &pos, const wxSize &size );
-    ~MyCanvas();
+namespace SRS22 {
 
-    void OnEraseBackground(wxEraseEvent& event);
-    void OnPaint(wxPaintEvent& event);
-    void OnMouseLeft(wxMouseEvent& event);
-    void OnMouseMove(wxMouseEvent& event);
+    class MyCanvas : public wxWindow
+    {
+    public:
+        MyCanvas(wxWindow* parent, wxWindowID, const wxPoint& pos, const wxSize& size);
+        ~MyCanvas();
 
-    void Clear();
-    // Does not do a repaint.
-    void SetPixel(wxColor c, wxPoint pt, int thickness = 1);
+        void OnEraseBackground(wxEraseEvent& event);
+        void OnPaint(wxPaintEvent& event);
+        void OnMouseLeft(wxMouseEvent& event);
+        void OnMouseMove(wxMouseEvent& event);
 
-    wxBitmap  backingStore;
-    /// <summary>
-    /// Also defines the "current color" to draw with.
-    /// </summary>
-    wxBrush currentBrush;
+        void Clear();
+        // Does not do a repaint.
+        void SetPixel(wxColor c, wxPoint pt, int thickness = 1);
 
-private:
-    wxBitmap m_bmpSmileXpm;
-    wxIcon   m_iconSmileXpm;
+        wxBitmap  backingStore;
+        /// <summary>
+        /// Also defines the "current color" to draw with.
+        /// </summary>
+        wxBrush currentBrush;
 
-    wxDECLARE_EVENT_TABLE();
-};
+    private:
+        wxBitmap m_bmpSmileXpm;
+        wxIcon   m_iconSmileXpm;
+
+        wxDECLARE_EVENT_TABLE();
+    };
+
+}

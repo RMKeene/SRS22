@@ -1,12 +1,25 @@
 #pragma once
 #include "SRS22UIgen.h"
-class TopVideoFrame :
-    public TopVideoFrameGen
-{
-public:
-    TopVideoFrame(wxWindow* parent);
-    ~TopVideoFrame();
+#include "canvas.h"
 
-    void OnClose(wxCloseEvent& event) override;
-};
+namespace SRS22 {
 
+    class TopVideoFrame :
+        public TopVideoFrameGen
+    {
+    public:
+        MyCanvas canvas;
+        cv::Mat previousImage;
+        cv::Mat currentImage;
+        cv::VideoCapture* cap;
+
+        TopVideoFrame(wxWindow* parent);
+        ~TopVideoFrame();
+
+        void TakeImage();
+
+        void OnActivate(wxActivateEvent& event) override;
+        void OnClose(wxCloseEvent& event) override;
+    };
+
+}

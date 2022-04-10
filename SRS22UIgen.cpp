@@ -50,12 +50,27 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	wxStaticBoxSizer* MonitorControl;
 	MonitorControl = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("Control") ), wxHORIZONTAL );
 	
-	MonitorControl->SetMinSize( wxSize( -1,100 ) ); 
-	RunButton = new wxToggleButton( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Run"), wxDefaultPosition, wxDefaultSize, 0 );
-	MonitorControl->Add( RunButton, 0, wxALL, 5 );
+	wxStaticBoxSizer* sbSizer10;
+	sbSizer10 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Tick") ), wxVERTICAL );
 	
-	MonitorStepButton = new wxButton( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Step"), wxDefaultPosition, wxDefaultSize, 0 );
-	MonitorControl->Add( MonitorStepButton, 0, wxALL, 5 );
+	wxBoxSizer* bSizer9;
+	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
+	
+	RunButton = new wxToggleButton( sbSizer10->GetStaticBox(), wxID_ANY, wxT("Run"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer9->Add( RunButton, 0, wxALL, 5 );
+	
+	MonitorStepButton = new wxButton( sbSizer10->GetStaticBox(), wxID_ANY, wxT("Step"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer9->Add( MonitorStepButton, 0, wxALL, 5 );
+	
+	
+	sbSizer10->Add( bSizer9, 1, wxEXPAND, 5 );
+	
+	TickCountText = new wxStaticText( sbSizer10->GetStaticBox(), wxID_ANY, wxT("Ticks: 0000000000"), wxDefaultPosition, wxDefaultSize, 0 );
+	TickCountText->Wrap( -1 );
+	sbSizer10->Add( TickCountText, 0, wxALL, 5 );
+	
+	
+	MonitorControl->Add( sbSizer10, 0, wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSizer8;
 	sbSizer8 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Window Layout") ), wxHORIZONTAL );
@@ -71,6 +86,9 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	
 	MonitorControl->Add( sbSizer8, 0, wxEXPAND, 5 );
+	
+	
+	MonitorControl->Add( 0, 0, 0, wxEXPAND, 5 );
 	
 	
 	bSizer3->Add( MonitorControl, 0, wxEXPAND, 5 );
@@ -137,6 +155,10 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	VideoInChoiceDropbox->SetSelection( 0 );
 	bSizer31->Add( VideoInChoiceDropbox, 0, wxALL, 5 );
 	
+	videoOnOffButton = new wxToggleButton( sbSizer13->GetStaticBox(), wxID_ANY, wxT("Video On/Off"), wxDefaultPosition, wxDefaultSize, 0 );
+	videoOnOffButton->SetValue( true ); 
+	bSizer31->Add( videoOnOffButton, 0, wxALL, 5 );
+	
 	
 	bSizer30->Add( bSizer31, 0, wxEXPAND, 5 );
 	
@@ -202,6 +224,9 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	this->SetSizer( bSizer3 );
 	this->Layout();
+	MonitorFrameTick.SetOwner( this, wxID_ANY );
+	MonitorFrameTick.Start( 100 );
+	
 	
 	this->Centre( wxBOTH );
 	
@@ -232,6 +257,8 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	AudioOutVolume->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeOut ), NULL, this );
 	AudioOutVolume->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeOut ), NULL, this );
 	VideoInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnVideoInChanged ), NULL, this );
+	videoOnOffButton->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnVideoOnOffToggle ), NULL, this );
+	this->Connect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( MonitorFrameGen::OnMonitorFrameTickTimer ) );
 }
 
 MonitorFrameGen::~MonitorFrameGen()
@@ -263,6 +290,8 @@ MonitorFrameGen::~MonitorFrameGen()
 	AudioOutVolume->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeOut ), NULL, this );
 	AudioOutVolume->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeOut ), NULL, this );
 	VideoInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnVideoInChanged ), NULL, this );
+	videoOnOffButton->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnVideoOnOffToggle ), NULL, this );
+	this->Disconnect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( MonitorFrameGen::OnMonitorFrameTickTimer ) );
 	
 }
 
@@ -270,25 +299,23 @@ TopVideoFrameGen::TopVideoFrameGen( wxWindow* parent, wxWindowID id, const wxStr
 {
 	this->SetSizeHints( wxSize( 200,200 ), wxDefaultSize );
 	
-	wxBoxSizer* bSizer13;
-	bSizer13 = new wxBoxSizer( wxVERTICAL );
-	
-	TopVideoPanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxSize( 256,256 ), wxTAB_TRAVERSAL );
-	bSizer13->Add( TopVideoPanel, 1, wxEXPAND | wxALL, 5 );
+	TopVideoFrameVertLayout = new wxBoxSizer( wxVERTICAL );
 	
 	
-	this->SetSizer( bSizer13 );
+	this->SetSizer( TopVideoFrameVertLayout );
 	this->Layout();
 	
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( TopVideoFrameGen::OnActivate ) );
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( TopVideoFrameGen::OnClose ) );
 }
 
 TopVideoFrameGen::~TopVideoFrameGen()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_ACTIVATE, wxActivateEventHandler( TopVideoFrameGen::OnActivate ) );
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( TopVideoFrameGen::OnClose ) );
 	
 }

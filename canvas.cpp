@@ -31,82 +31,83 @@
 
 #include "canvas.h"
 
+namespace SRS22 {
 
-//-----------------------------------------------------------------------------
-// MyCanvas
-//-----------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------
+	// MyCanvas
+	//-----------------------------------------------------------------------------
 
-wxBEGIN_EVENT_TABLE(MyCanvas, wxWindow)
-EVT_ERASE_BACKGROUND(MyCanvas::OnEraseBackground)
-EVT_PAINT(MyCanvas::OnPaint)
-EVT_LEFT_DOWN(MyCanvas::OnMouseLeft)
-EVT_MOTION(MyCanvas::OnMouseMove)
-wxEND_EVENT_TABLE()
+	wxBEGIN_EVENT_TABLE(MyCanvas, wxWindow)
+		EVT_ERASE_BACKGROUND(MyCanvas::OnEraseBackground)
+		EVT_PAINT(MyCanvas::OnPaint)
+		EVT_LEFT_DOWN(MyCanvas::OnMouseLeft)
+		EVT_MOTION(MyCanvas::OnMouseMove)
+		wxEND_EVENT_TABLE()
 
-MyCanvas::MyCanvas(wxWindow* parent, wxWindowID id,
-	const wxPoint& pos, const wxSize& size)
-	: wxWindow(parent, id, pos, size, wxSUNKEN_BORDER),
-	backingStore()
-{
-	backingStore.Create(size.x, size.y, 24);
-	Clear();
-	SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_TRANSPARENT);
-}
+		MyCanvas::MyCanvas(wxWindow* parent, wxWindowID id,
+			const wxPoint& pos, const wxSize& size)
+		: wxWindow(parent, id, pos, size, wxSUNKEN_BORDER),
+		backingStore()
+	{
+		backingStore.Create(size.x, size.y, 24);
+		Clear();
+	}
 
-void MyCanvas::Clear() {
-	wxMemoryDC dc;
-	dc.SelectObject(backingStore);
-	dc.SetBrush(*wxWHITE_BRUSH);
-	dc.DrawRectangle(0, 0, GetSize().x, GetSize().y);
-	dc.SelectObject(wxNullBitmap);
-}
+	void MyCanvas::Clear() {
+		wxMemoryDC dc;
+		dc.SelectObject(backingStore);
+		dc.SetBrush(*wxWHITE_BRUSH);
+		dc.DrawRectangle(0, 0, GetSize().x, GetSize().y);
+		dc.SelectObject(wxNullBitmap);
+	}
 
-void MyCanvas::SetPixel(wxColor c, wxPoint pt, int thickness) {
-	wxMemoryDC dc;
-	dc.SelectObject(backingStore);
-	dc.SetBrush(currentBrush);
-	dc.SetPen(wxPen(c, thickness, wxPENSTYLE_SOLID));
-	if (thickness <= 1)
-		dc.DrawPoint(pt);
-	else
-		dc.DrawCircle(pt, thickness/2);
-	dc.SelectObject(wxNullBitmap);
-}
+	void MyCanvas::SetPixel(wxColor c, wxPoint pt, int thickness) {
+		wxMemoryDC dc;
+		dc.SelectObject(backingStore);
+		dc.SetBrush(currentBrush);
+		dc.SetPen(wxPen(c, thickness, wxPENSTYLE_SOLID));
+		if (thickness <= 1)
+			dc.DrawPoint(pt);
+		else
+			dc.DrawCircle(pt, thickness / 2);
+		dc.SelectObject(wxNullBitmap);
+	}
 
-MyCanvas::~MyCanvas()
-{
-}
+	MyCanvas::~MyCanvas()
+	{
+	}
 
-void MyCanvas::OnEraseBackground(wxEraseEvent& event) {
-	// do nothing
-}
+	void MyCanvas::OnEraseBackground(wxEraseEvent& event) {
+		// do nothing
+	}
 
-void MyCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
-{
-	wxPaintDC dc(this);
-	PrepareDC(dc);
+	void MyCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
+	{
+		wxPaintDC dc(this);
+		PrepareDC(dc);
 
-	dc.DrawBitmap(backingStore, 0, 0);
+		dc.DrawBitmap(backingStore, 0, 0);
 
-	//dc.DrawText("Drawn directly", 150, 10);
-	//dc.SetBrush(wxBrush("orange"));
-	//dc.SetPen(*wxBLACK_PEN);
-	//dc.DrawRectangle(150, 30, 100, 100);
-	//dc.SetBrush(*wxWHITE_BRUSH);
-	//dc.DrawRectangle(170, 50, 60, 60);
+		//dc.DrawText("Drawn directly", 150, 10);
+		//dc.SetBrush(wxBrush("orange"));
+		//dc.SetPen(*wxBLACK_PEN);
+		//dc.DrawRectangle(150, 30, 100, 100);
+		//dc.SetBrush(*wxWHITE_BRUSH);
+		//dc.DrawRectangle(170, 50, 60, 60);
 
 
-}
+	}
 
-void MyCanvas::OnMouseLeft(wxMouseEvent& event) {
-	SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
-	Refresh();
-}
-
-void MyCanvas::OnMouseMove(wxMouseEvent& event) {
-	if (event.Dragging()) {
+	void MyCanvas::OnMouseLeft(wxMouseEvent& event) {
 		SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
 		Refresh();
 	}
-}
 
+	void MyCanvas::OnMouseMove(wxMouseEvent& event) {
+		if (event.Dragging()) {
+			SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
+			Refresh();
+		}
+	}
+
+}

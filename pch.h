@@ -40,6 +40,9 @@
 #include "wx/settings.h"
 #endif
 
+#undef free
+#include <opencv2/opencv.hpp>
+
 #include <nlohmann/json.hpp>
 #include <list>
 #include <map>

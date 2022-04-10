@@ -22,15 +22,15 @@
 #include <wx/tglbtn.h>
 #include <wx/button.h>
 #include <wx/sizer.h>
-#include <wx/statbox.h>
 #include <wx/stattext.h>
+#include <wx/statbox.h>
 #include <wx/choice.h>
 #include <wx/slider.h>
 #include <wx/statline.h>
 #include <wx/statbmp.h>
 #include <wx/richtext/richtextctrl.h>
+#include <wx/timer.h>
 #include <wx/frame.h>
-#include <wx/panel.h>
 #include <wx/bmpbuttn.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -48,6 +48,7 @@ class MonitorFrameGen : public wxFrame
 		wxMenu* m_menu5;
 		wxToggleButton* RunButton;
 		wxButton* MonitorStepButton;
+		wxStaticText* TickCountText;
 		wxButton* saveLayoutButton;
 		wxButton* reloadLayoutButton;
 		wxButton* resetLayoutButton;
@@ -62,6 +63,7 @@ class MonitorFrameGen : public wxFrame
 		wxSlider* AudioOutVolume;
 		wxStaticText* m_staticText911;
 		wxChoice* VideoInChoiceDropbox;
+		wxToggleButton* videoOnOffButton;
 		wxStaticBitmap* AudioInFFTBitmapWidget;
 		wxStaticBitmap* AudioOutFFTBitmapWidget;
 		wxStaticText* MonitorStatisticsLine1;
@@ -69,6 +71,7 @@ class MonitorFrameGen : public wxFrame
 		wxStaticText* MonitorStatisticsLine3;
 		wxStaticText* MonitorStatisticsLine4;
 		wxRichTextCtrl* LogRichText;
+		wxTimer MonitorFrameTick;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnRunToggleButton( wxCommandEvent& event ) { event.Skip(); }
@@ -81,6 +84,8 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioVolumeOut( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnVideoInChanged( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnVideoOnOffToggle( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMonitorFrameTickTimer( wxTimerEvent& event ) { event.Skip(); }
 		
 	
 	public:
@@ -99,15 +104,16 @@ class TopVideoFrameGen : public wxFrame
 	private:
 	
 	protected:
-		wxPanel* TopVideoPanel;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		wxBoxSizer* TopVideoFrameVertLayout;
 		
-		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,512 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,520 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~TopVideoFrameGen();
 	
