@@ -3,6 +3,7 @@
 #include "TopTextFrame.h"
 #include "WhiteboardFrame.h"
 #include "TopVideoFrame.h"
+#include "WaveInputHelper.h"
 
 namespace SRS22 {
 	class MonitorFrame :
@@ -23,11 +24,13 @@ namespace SRS22 {
 		void OnAudioVolumeOut(wxScrollEvent& event) override;
 		void OnVideoInChanged(wxCommandEvent& event) override;
 		void OnMonitorFrameTickTimer(wxTimerEvent& event) override;
+		void OnTestAClicked(wxCommandEvent& event) override;
+		void OnTestBClicked(wxCommandEvent& event) override;
 
 		TopTextFrame* topTextFrame;
 		WhiteboardFrame* whiteboardFrame;
 		TopVideoFrame* topVideoFrame;
-
+		WaveInputHelper waveInput;
 	};
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "SRS22UIgen.h"
 #include "canvas.h"
+#include <Mmsystem.h>
 
 namespace SRS22 {
 
