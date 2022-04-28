@@ -86,6 +86,9 @@
     <ClInclude Include="StringConversionHelpers.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="WaveOutputHelper.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -119,6 +122,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="StringConversionHelpers.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="WaveOutputHelper.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

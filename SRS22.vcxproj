@@ -229,6 +229,7 @@
     <ClInclude Include="ui\ColorSquare16White.bmp.h" />
     <ClInclude Include="ui\ColorSquare16Yellow.bmp.h" />
     <ClInclude Include="WaveInputHelper.h" />
+    <ClInclude Include="WaveOutputHelper.h" />
     <ClInclude Include="WhiteboardFrame.h" />
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +248,7 @@
     <ClCompile Include="TopTextFrame.cpp" />
     <ClCompile Include="TopVideoFrame.cpp" />
     <ClCompile Include="WaveInputHelper.cpp" />
+    <ClCompile Include="WaveOutputHelper.cpp" />
     <ClCompile Include="WhiteboardFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
