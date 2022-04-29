@@ -3,6 +3,8 @@
 
 namespace SRS22 {
 
+	SRS22::WaveOutputHelper::PWAVELIB WaveOutputHelper::pWaveLib = NULL;
+
 	WaveOutputHelper::WaveOutputHelper() {
 
 	}
@@ -12,8 +14,6 @@ namespace SRS22 {
 	}
 
 	HWAVELIB WaveOutputHelper::Init(PCHAR pWaveFile, BOOL bPause) {
-		PWAVELIB pWaveLib = NULL;
-
 		if (pWaveLib = (PWAVELIB)LocalAlloc(LMEM_ZEROINIT, sizeof(WAVELIB)))
 		{
 			pWaveLib->bPaused = bPause;
@@ -96,7 +96,6 @@ namespace SRS22 {
 
 
 	void CALLBACK WaveOutputHelper::WaveOutputCallback(HWAVEOUT hwo, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2) {
-		PWAVELIB pWaveLib = (PWAVELIB)dwInstance;
 		WaveOutputHelper* wvh = (WaveOutputHelper*)(pWaveLib->pWaveOutputHelper);
 
 		switch (uMsg)

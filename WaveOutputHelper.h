@@ -75,6 +75,9 @@ namespace SRS22 {
         static void SetupAudio(PWAVELIB pWaveLib);
         static void WaveClose(HWAVEOUT hWaveOut, PWAVELIB pWaveLib);
         static void AudioBuffer(PWAVELIB pWaveLib, UINT Index);
+
+        static PWAVELIB pWaveLib;
+
 	};
 
 }

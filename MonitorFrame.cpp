@@ -1,5 +1,6 @@
 #include "MonitorFrame.h"
 #include "Settings.h"
+#include "StringConversionHelpers.h"
 
 namespace SRS22 {
 
@@ -76,15 +77,19 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
-		waveInput.Init();
-		waveInput.PrepareWaveIn(&waveInput.waveInHandle, &waveInput.waveHeader, 50000);
-		waveInput.StartRecord(&waveInput.waveInHandle);
+		//waveInput.Init();
+		//waveInput.PrepareWaveIn(&waveInput.waveInHandle, &waveInput.waveHeader, 50000);
+		//waveInput.StartRecord(&waveInput.waveInHandle);
+ 
+		waveOut.Init((PCHAR)"C:\\SRS22\\SRS22\\train.wav", false);
+		Sleep(100);
+		waveOut2.Init((PCHAR)"C:\\SRS22\\SRS22\\train.wav", false);
 	}
 
 	void MonitorFrame::OnTestBClicked(wxCommandEvent& event) {
-		mmtime_tag tt;
-		int N = waveInput.StopRecord(&waveInput.waveInHandle, &tt);
-		waveInput.SaveRecordtoFile("mysound.wav", &waveInput.waveInFormat , &waveInput.waveInHandle, &waveInput.waveHeader, &tt);
+		//mmtime_tag tt;
+		//int N = waveInput.StopRecord(&waveInput.waveInHandle, &tt);
+		//waveInput.SaveRecordtoFile("mysound.wav", &waveInput.waveInFormat , &waveInput.waveInHandle, &waveInput.waveHeader, &tt);
 	}
 
 }
