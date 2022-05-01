@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\opencv\build\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\SRS22\SRS22\soloud\include;E:\opencv\build\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -89,7 +89,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\opencv\build\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\SRS22\SRS22\soloud\include;E:\opencv\build\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -117,7 +117,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;WXUSINGDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -130,10 +130,10 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>wxmsw31ud.lib;opencv_world455d.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxmsw31ud.lib;opencv_world455d.lib;Winmm.lib;soloud_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalLibraryDirectories>E:\opencv\build\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SRS22\SRS22\soloud\bin;E:\opencv\build\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -193,8 +193,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>wxmsw31u.lib;opencv_world455.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\opencv\build\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wxmsw31u.lib;opencv_world455.lib;soloud_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\SRS22\SRS22\soloud\bin;E:\opencv\build\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -214,6 +214,41 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="soloud\include\soloud.h" />
+    <ClInclude Include="soloud\include\soloud_audiosource.h" />
+    <ClInclude Include="soloud\include\soloud_bassboostfilter.h" />
+    <ClInclude Include="soloud\include\soloud_biquadresonantfilter.h" />
+    <ClInclude Include="soloud\include\soloud_bus.h" />
+    <ClInclude Include="soloud\include\soloud_c.h" />
+    <ClInclude Include="soloud\include\soloud_dcremovalfilter.h" />
+    <ClInclude Include="soloud\include\soloud_echofilter.h" />
+    <ClInclude Include="soloud\include\soloud_error.h" />
+    <ClInclude Include="soloud\include\soloud_fader.h" />
+    <ClInclude Include="soloud\include\soloud_fft.h" />
+    <ClInclude Include="soloud\include\soloud_fftfilter.h" />
+    <ClInclude Include="soloud\include\soloud_file.h" />
+    <ClInclude Include="soloud\include\soloud_file_hack_off.h" />
+    <ClInclude Include="soloud\include\soloud_file_hack_on.h" />
+    <ClInclude Include="soloud\include\soloud_filter.h" />
+    <ClInclude Include="soloud\include\soloud_flangerfilter.h" />
+    <ClInclude Include="soloud\include\soloud_freeverbfilter.h" />
+    <ClInclude Include="soloud\include\soloud_internal.h" />
+    <ClInclude Include="soloud\include\soloud_lofifilter.h" />
+    <ClInclude Include="soloud\include\soloud_misc.h" />
+    <ClInclude Include="soloud\include\soloud_monotone.h" />
+    <ClInclude Include="soloud\include\soloud_noise.h" />
+    <ClInclude Include="soloud\include\soloud_openmpt.h" />
+    <ClInclude Include="soloud\include\soloud_queue.h" />
+    <ClInclude Include="soloud\include\soloud_robotizefilter.h" />
+    <ClInclude Include="soloud\include\soloud_sfxr.h" />
+    <ClInclude Include="soloud\include\soloud_speech.h" />
+    <ClInclude Include="soloud\include\soloud_tedsid.h" />
+    <ClInclude Include="soloud\include\soloud_thread.h" />
+    <ClInclude Include="soloud\include\soloud_vic.h" />
+    <ClInclude Include="soloud\include\soloud_vizsn.h" />
+    <ClInclude Include="soloud\include\soloud_wav.h" />
+    <ClInclude Include="soloud\include\soloud_waveshaperfilter.h" />
+    <ClInclude Include="soloud\include\soloud_wavstream.h" />
     <ClInclude Include="SRS22.h" />
     <ClInclude Include="SRS22UIgen.h" />
     <ClInclude Include="StringConversionHelpers.h" />

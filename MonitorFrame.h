@@ -33,7 +33,6 @@ namespace SRS22 {
 		TopVideoFrame* topVideoFrame;
 		WaveInputHelper waveInput;
 		WaveOutputHelper waveOut;
-		WaveOutputHelper waveOut2;
 	};
 }
 
