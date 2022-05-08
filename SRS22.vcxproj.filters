@@ -86,13 +86,7 @@
     <ClInclude Include="canvas.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="WaveInputHelper.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="StringConversionHelpers.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="WaveOutputHelper.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="soloud\include\soloud.h">
@@ -200,6 +194,66 @@
     <ClInclude Include="soloud\include\soloud_wavstream.h">
       <Filter>Source\soloud\include</Filter>
     </ClInclude>
+    <ClInclude Include="WaveInputHelper.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WaveOutputHelper.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Brain.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ConceptState.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectivityTriple.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="FastRand.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="GoodnessFunction.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="MatchSelector.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Pattern.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternConnection.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternMatchingSystem.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Reaper.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="SRSLog.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="SRSUnit.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyfloat.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformFunction.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\AudioCaptureIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\IOCommon.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\ScreenInputIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\ScreenIn.h">
+      <Filter>Source\Maps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -229,14 +283,68 @@
     <ClCompile Include="canvas.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="WaveInputHelper.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="StringConversionHelpers.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="WaveInputHelper.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
     <ClCompile Include="WaveOutputHelper.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Brain.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ConceptState.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectivityTriple.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FastRand.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GoodnessFunction.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MatchSelector.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Pattern.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternConnection.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternMatchingSystem.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Reaper.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SRSLog.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SRSUnit.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyfloat.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformFunction.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\AudioCaptureIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\IOCommon.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\ScreenInputIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\ScreenIn.cpp">
+      <Filter>Source\Maps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
