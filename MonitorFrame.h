@@ -16,6 +16,7 @@ namespace SRS22 {
 
 		void OnRunToggleButton(wxCommandEvent& event) override;
 		void OnStep(wxCommandEvent& event) override;
+		void OnContinueButton(wxCommandEvent& event) override;
 		void OnSaveLayoutButton(wxCommandEvent& event) override;
 		void OnReloadLayoutButton(wxCommandEvent& event) override;
 		void OnResetLayoutButton(wxCommandEvent& event) override;

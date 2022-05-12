@@ -19,6 +19,10 @@ namespace SRS22 {
 	}
 
 	void Brain::Tick() {
+		if (SingleStepCount == 0)
+			return;
+		if (SingleStepCount > 0)
+			SingleStepCount--;
 		PreTick();
 
 		// Call all SRSUnit ProcessState in parallel
@@ -133,6 +137,22 @@ namespace SRS22 {
 		textOut.UnitTest();
 		whiteboardIn.UnitTest();
 		whiteboardOut.UnitTest();
+	}
+
+	void Brain::DoNStep(int n) {
+		SingleStepCount = clamp(n, 1, 10000);
+	}
+
+	void Brain::DoSingleStep() {
+		SingleStepCount = 1;
+	}
+
+	void Brain::Pause() {
+		SingleStepCount = 0;
+	}
+
+	void Brain::Continue() {
+		SingleStepCount = -1;
 	}
 
 	void Brain::PostCreateAllSRSUnits() {

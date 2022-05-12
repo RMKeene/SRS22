@@ -48,6 +48,7 @@ class MonitorFrameGen : public wxFrame
 		wxMenu* m_menu5;
 		wxToggleButton* RunButton;
 		wxButton* MonitorStepButton;
+		wxButton* ContinueButton;
 		wxStaticText* TickCountText;
 		wxButton* saveLayoutButton;
 		wxButton* reloadLayoutButton;
@@ -78,6 +79,7 @@ class MonitorFrameGen : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnRunToggleButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStep( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnContinueButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSaveLayoutButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnReloadLayoutButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnResetLayoutButton( wxCommandEvent& event ) { event.Skip(); }

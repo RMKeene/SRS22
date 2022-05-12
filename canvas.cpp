@@ -94,19 +94,21 @@ namespace SRS22 {
 		//dc.DrawRectangle(150, 30, 100, 100);
 		//dc.SetBrush(*wxWHITE_BRUSH);
 		//dc.DrawRectangle(170, 50, 60, 60);
-
-
 	}
 
 	void MyCanvas::OnMouseLeft(wxMouseEvent& event) {
-		SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
-		Refresh();
+		if (currentBrush.IsOk()) {
+			SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
+			Refresh();
+		}
 	}
 
 	void MyCanvas::OnMouseMove(wxMouseEvent& event) {
 		if (event.Dragging()) {
-			SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
-			Refresh();
+			if (currentBrush.IsOk()) {
+				SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
+				Refresh();
+			}
 		}
 	}
 

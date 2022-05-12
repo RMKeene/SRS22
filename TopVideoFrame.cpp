@@ -22,10 +22,10 @@ namespace SRS22 {
 	}
 
 	void TopVideoFrame::TakeImage(Brain& brain) {
-		if(brain.cameraInput.AcquireFrame()) {
-			cv::Size sz = brain.cameraInput.getCurrentImage().size();
-			int imageWidth = sz.width;
-			int imageHeight = sz.height;
+		cv::Size sz = brain.cameraInput.getCurrentImage().size();
+		int imageWidth = sz.width;
+		int imageHeight = sz.height;
+		if(imageWidth > 0 && imageHeight > 0) {
 			wxImage Image(imageWidth, imageHeight, brain.cameraInput.getCurrentImage().data, TRUE);
 			canvas.backingStore = Image;
 			canvas.Refresh();

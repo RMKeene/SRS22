@@ -22,14 +22,20 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnRunToggleButton(wxCommandEvent& event) {
-		//if (event.IsChecked())
-		//	topVideoFrame->grabber.Init(GetHWND());
-		//else
-		//	topVideoFrame->grabber.Finalize();
+		if (event.IsChecked())
+			GlobalWorld::GlobalWorldInstance.GetBrain(0)->Continue();
+		else
+			GlobalWorld::GlobalWorldInstance.GetBrain(0)->Pause();
 	}
 
 	void MonitorFrame::OnStep(wxCommandEvent& event) {
+		RunButton->SetValue(true);
+		GlobalWorld::GlobalWorldInstance.GetBrain(0)->DoSingleStep();
+	}
 
+	void MonitorFrame::OnContinueButton(wxCommandEvent& event) {
+		RunButton->SetValue(true);
+		GlobalWorld::GlobalWorldInstance.GetBrain(0)->Continue();
 	}
 
 	void MonitorFrame::OnSaveLayoutButton(wxCommandEvent& event) {
@@ -74,6 +80,7 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
+		GlobalWorld::GlobalWorldInstance.TickAll();
 		if (RunButton->GetValue()) {
 			topVideoFrame->TakeImage(*GlobalWorld::GlobalWorldInstance.GetBrain(0));
 		}
