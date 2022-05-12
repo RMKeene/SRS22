@@ -3,8 +3,8 @@
 #include "TopTextFrame.h"
 #include "WhiteboardFrame.h"
 #include "TopVideoFrame.h"
-#include "WaveInputHelper.h"
-#include "WaveOutputHelper.h"
+#include "HardwareIO/WaveInputHelper.h"
+#include "HardwareIO/WaveOutputHelper.h"
 
 namespace SRS22 {
 	class MonitorFrame :
@@ -31,8 +31,7 @@ namespace SRS22 {
 		TopTextFrame* topTextFrame;
 		WhiteboardFrame* whiteboardFrame;
 		TopVideoFrame* topVideoFrame;
-		WaveInputHelper waveInput;
-		WaveOutputHelper waveOut;
+
 	};
 }
 

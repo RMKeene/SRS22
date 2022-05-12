@@ -1,18 +1,13 @@
 #pragma once
-#include <Windows.h>
-#include <dshow.h>
 
 #include "IOCommon.h"
-#include "WaveInputHelper.h"
 
 namespace SRS22 {
-	class AudioCaptureIO : IOCommon
+	class WhiteboardOutIO : IOCommon
 	{
 	public:
-		WaveInputHelper inputHelper;
-
-		AudioCaptureIO();
-		~AudioCaptureIO();
+		WhiteboardOutIO();
+		~WhiteboardOutIO();
 
 		virtual bool Init();
 		virtual void Shutdown();
@@ -25,8 +20,6 @@ namespace SRS22 {
 		/// Called for each IOCommon at the end of tick in Brain.
 		/// </summary>
 		virtual void PostTick();
-
-		void CaptureSegment();
 
 		void UnitTest();
 	};

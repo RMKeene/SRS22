@@ -20,4 +20,15 @@ namespace SRS22 {
 
 	}
 
+	void IOCommon::PreTick() {
+
+	}
+
+	void IOCommon::PostTick() {
+
+	}
+
+	void IOCommon::UnitTest() {
+
+	}
 }

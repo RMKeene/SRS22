@@ -27,6 +27,7 @@ namespace SRS22 {
 		PatternMatchingSystem matchSystem;
 		GoodnessFunction goodnessFunc;
 		ConceptState M;
+		ConceptState nextM;
 
 		SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w);
 		SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w, int h);
@@ -40,9 +41,23 @@ namespace SRS22 {
 		/// </summary>
 		void PostCreate(Brain& b);
 
+		/// <summary>
+		/// return M.size();
+		/// </summary>
+		/// <returns></returns>
 		const int size();
 
-		virtual void ProcessIO();
+		/// <summary>
+		/// Process all inputs and system state, comapre patterns, do transforms.
+		/// Do NOT change M, just cache next M state. Gets called in parallel for all SRSUnits.
+		/// </summary>
+		virtual void ComputeNextState();
+
+		/// <summary>
+		/// After processIO has been called on all SRSUnits, this gets called to transfer the nextM state to M.
+		/// Gets called in parallel for all SRSUnits. So must be just state transfer inside the SRSUnit.
+		/// </summary>
+		virtual void LatchNewState();
 	};
 
 }

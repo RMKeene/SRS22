@@ -35,6 +35,8 @@ namespace SRS22 {
 		void put(float v, int x, int y, int z);
 
 		float Compare(std::shared_ptr<ConceptState> other, const int skip = 1);
+
+		static void Copy(ConceptState& fromM, ConceptState& toM);
 	};
 
 }

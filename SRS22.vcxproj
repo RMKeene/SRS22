@@ -213,10 +213,20 @@
     <ClInclude Include="ConceptState.h" />
     <ClInclude Include="ConnectivityTriple.h" />
     <ClInclude Include="FastRand.h" />
+    <ClInclude Include="GlobalWorld.h" />
     <ClInclude Include="GoodnessFunction.h" />
     <ClInclude Include="HardwareIO\AudioCaptureIO.h" />
+    <ClInclude Include="HardwareIO\AudioOutIO.h" />
+    <ClInclude Include="HardwareIO\CameraInIO.h" />
     <ClInclude Include="HardwareIO\IOCommon.h" />
     <ClInclude Include="HardwareIO\ScreenInputIO.h" />
+    <ClInclude Include="HardwareIO\TextInIO.h" />
+    <ClInclude Include="HardwareIO\TextOutIO.h" />
+    <ClInclude Include="HardwareIO\VideoHelper.h" />
+    <ClInclude Include="HardwareIO\WaveInputHelper.h" />
+    <ClInclude Include="HardwareIO\WaveOutputHelper.h" />
+    <ClInclude Include="HardwareIO\WhiteboardInIO.h" />
+    <ClInclude Include="HardwareIO\WhiteboardOutIO.h" />
     <ClInclude Include="ini.h" />
     <ClInclude Include="Maps\ScreenIn.h" />
     <ClInclude Include="MatchSelector.h" />
@@ -281,8 +291,6 @@
     <ClInclude Include="ui\ColorSquare16Red.bmp.h" />
     <ClInclude Include="ui\ColorSquare16White.bmp.h" />
     <ClInclude Include="ui\ColorSquare16Yellow.bmp.h" />
-    <ClInclude Include="WaveInputHelper.h" />
-    <ClInclude Include="WaveOutputHelper.h" />
     <ClInclude Include="WhiteboardFrame.h" />
   </ItemGroup>
   <ItemGroup>
@@ -291,10 +299,20 @@
     <ClCompile Include="ConceptState.cpp" />
     <ClCompile Include="ConnectivityTriple.cpp" />
     <ClCompile Include="FastRand.cpp" />
+    <ClCompile Include="GlobalWorld.cpp" />
     <ClCompile Include="GoodnessFunction.cpp" />
     <ClCompile Include="HardwareIO\AudioCaptureIO.cpp" />
+    <ClCompile Include="HardwareIO\AudioOutIO.cpp" />
+    <ClCompile Include="HardwareIO\CameraInIO.cpp" />
     <ClCompile Include="HardwareIO\IOCommon.cpp" />
     <ClCompile Include="HardwareIO\ScreenInputIO.cpp" />
+    <ClCompile Include="HardwareIO\TextInIO.cpp" />
+    <ClCompile Include="HardwareIO\TextOutIO.cpp" />
+    <ClCompile Include="HardwareIO\VideoHelper.cpp" />
+    <ClCompile Include="HardwareIO\WaveInputHelper.cpp" />
+    <ClCompile Include="HardwareIO\WaveOutputHelper.cpp" />
+    <ClCompile Include="HardwareIO\WhiteboardInIO.cpp" />
+    <ClCompile Include="HardwareIO\WhiteboardOutIO.cpp" />
     <ClCompile Include="Maps\ScreenIn.cpp" />
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
@@ -318,8 +336,6 @@
     <ClCompile Include="TopTextFrame.cpp" />
     <ClCompile Include="TopVideoFrame.cpp" />
     <ClCompile Include="TransformFunction.cpp" />
-    <ClCompile Include="WaveInputHelper.cpp" />
-    <ClCompile Include="WaveOutputHelper.cpp" />
     <ClCompile Include="WhiteboardFrame.cpp" />
   </ItemGroup>
   <ItemGroup>

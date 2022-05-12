@@ -25,8 +25,6 @@ namespace SRS22 {
 		if (!wxApp::OnInit())
 			return false;
 
-
-
 		monitorFrame = new MonitorFrame(nullptr);
 		monitorFrame->Show(true);
 

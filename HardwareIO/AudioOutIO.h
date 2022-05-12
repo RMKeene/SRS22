@@ -3,16 +3,16 @@
 #include <dshow.h>
 
 #include "IOCommon.h"
-#include "WaveInputHelper.h"
+#include "WaveOutputHelper.h"
 
 namespace SRS22 {
-	class AudioCaptureIO : IOCommon
+	class AudioOutIO : IOCommon
 	{
 	public:
-		WaveInputHelper inputHelper;
+		WaveOutputHelper outHelper;
 
-		AudioCaptureIO();
-		~AudioCaptureIO();
+		AudioOutIO();
+		~AudioOutIO();
 
 		virtual bool Init();
 		virtual void Shutdown();

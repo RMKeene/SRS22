@@ -1,5 +1,5 @@
 #include "WaveOutputHelper.h"
-#include "StringConversionHelpers.h"
+#include "../StringConversionHelpers.h"
 #include "soloud.h"
 
 namespace SRS22 {

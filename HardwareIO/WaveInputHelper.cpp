@@ -1,7 +1,6 @@
-#include "pch.h"
 #include "WaveInputHelper.h"
 #include <codecvt>
-#include "StringConversionHelpers.h"
+#include "../StringConversionHelpers.h"
 
 namespace SRS22 {
 

@@ -33,6 +33,14 @@ namespace SRS22 {
 		}
 	}
 
+	void ScreenInputIO::PreTick() {
+
+	}
+
+	void ScreenInputIO::PostTick() {
+
+	}
+
 	int ScreenInputIO::GetScreenWidth() {
 		HDC hScreenDC = GetDC(nullptr);
 		int width = GetDeviceCaps(hScreenDC, HORZRES);

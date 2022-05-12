@@ -1,18 +1,13 @@
 #pragma once
-#include <Windows.h>
-#include <dshow.h>
 
 #include "IOCommon.h"
-#include "WaveInputHelper.h"
 
 namespace SRS22 {
-	class AudioCaptureIO : IOCommon
+	class TextOutIO : IOCommon
 	{
 	public:
-		WaveInputHelper inputHelper;
-
-		AudioCaptureIO();
-		~AudioCaptureIO();
+		TextOutIO();
+		~TextOutIO();
 
 		virtual bool Init();
 		virtual void Shutdown();
@@ -26,10 +21,7 @@ namespace SRS22 {
 		/// </summary>
 		virtual void PostTick();
 
-		void CaptureSegment();
-
 		void UnitTest();
 	};
-
 }
 

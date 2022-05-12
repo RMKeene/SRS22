@@ -57,4 +57,15 @@ namespace SRS22 {
 
 		return (float)(sum / (double)size);
 	}
+
+	void ConceptState::Copy(ConceptState& fromM, ConceptState& toM) {
+		if (fromM.size != toM.size) {
+			throw std::runtime_error("copy size missmatch in ConceptState.");
+		}
+		const float* f = fromM.charges.get();
+		float* t = toM.charges.get();
+		for (int i = 0; i < fromM.size; i++) {
+			t[i] = f[i];
+		}
+	}
 }

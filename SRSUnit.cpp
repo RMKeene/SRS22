@@ -10,18 +10,18 @@ namespace SRS22 {
 
 	SRSUnit::SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w) :
 		UID(nextUID++),  
-		ctrip(ctrip), location(location), M(w) {
+		ctrip(ctrip), location(location), M(w), nextM(w) {
 	}
 
 	SRSUnit::SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w, int h) :
 		UID(nextUID++), 
-		ctrip(ctrip), location(location), M(w, h) {
+		ctrip(ctrip), location(location), M(w, h), nextM(w, h) {
 
 	}
 
 	SRSUnit::SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, int d) :
 		UID(nextUID++),
-		ctrip(ctrip), location(location), M(w, h, d) {
+		ctrip(ctrip), location(location), M(w, h, d), nextM(w, h, d) {
 
 	}
 
@@ -59,7 +59,11 @@ namespace SRS22 {
 		farMaps.assign(farMapsList.begin(), farMapsList.end());
 	}
 
-	void SRSUnit::ProcessIO() {
+	void SRSUnit::ComputeNextState() {
 
+	}
+
+	void SRSUnit::LatchNewState() {
+		ConceptState::Copy(M, nextM);
 	}
 }

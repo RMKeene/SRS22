@@ -1,13 +1,12 @@
 #include "MonitorFrame.h"
 #include "Settings.h"
 #include "StringConversionHelpers.h"
+#include "GlobalWorld.h"
 
 namespace SRS22 {
 
 	MonitorFrame::MonitorFrame(wxWindow* parent) :
 		MonitorFrameGen(parent) {
-
-		waveOut.Init();
 
 		whiteboardFrame = new WhiteboardFrame(this);
 		whiteboardFrame->Show(true);
@@ -76,14 +75,11 @@ namespace SRS22 {
 
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
 		if (RunButton->GetValue()) {
-			topVideoFrame->TakeImage();
+			topVideoFrame->TakeImage(*GlobalWorld::GlobalWorldInstance.GetBrain(0));
 		}
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
-		
-		waveOut.Play(waveOut.sampleTest);
-		waveOut.Play(waveOut.sampleTest2);
 	}
 
 	void MonitorFrame::OnTestBClicked(wxCommandEvent& event) {

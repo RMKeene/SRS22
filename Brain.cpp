@@ -3,12 +3,57 @@
 #include "SRSUnit.h"
 #include "FastRand.h"
 #include <tchar.h>
+#include <ppl.h>
+
+using namespace concurrency;
 
 namespace SRS22 {
 	using namespace std;
 
-	void Brain::Tick() {
+	Brain::Brain() {
 
+	}
+
+	Brain::~Brain() {
+
+	}
+
+	void Brain::Tick() {
+		PreTick();
+
+		// Call all SRSUnit ProcessState in parallel
+		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::shared_ptr<SRSUnit> n) {
+			n->ComputeNextState();
+			});
+
+		// Call all SRSUnit LatchNewState in parallel.
+		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::shared_ptr<SRSUnit> n) {
+			n->LatchNewState();
+			});
+
+		PostTick();
+	}
+
+	void Brain::PreTick() {
+		screenInput.PreTick();
+		audioInput.PreTick();
+		audioOut.PreTick();
+		cameraInput.PreTick();
+		textIn.PreTick();
+		textOut.PreTick();
+		whiteboardIn.PreTick();
+		whiteboardOut.PreTick();
+	}
+	
+	void Brain::PostTick() {
+		screenInput.PostTick();
+		audioInput.PostTick();
+		audioOut.PostTick();
+		cameraInput.PostTick();
+		textIn.PostTick();
+		textOut.PostTick();
+		whiteboardIn.PostTick();
+		whiteboardOut.PostTick();
 	}
 
 	pair<bool, string> Brain::Load(string fileName) {
@@ -55,18 +100,39 @@ namespace SRS22 {
 	}
 
 	void Brain::Init() {
+		// Hardware I/O setups.
 		screenInput.Init();
 		audioInput.Init();
+		audioOut.Init();
+		cameraInput.Init();
+		textIn.Init();
+		textOut.Init();
+		whiteboardIn.Init();
+		whiteboardOut.Init();
+
 		PostCreateAllSRSUnits();
 	}
 
 	void Brain::Shutdown() {
 		screenInput.Shutdown();
 		audioInput.Shutdown();
+		audioOut.Shutdown();
+		cameraInput.Shutdown();
+		textIn.Shutdown();
+		textOut.Shutdown();
+		whiteboardIn.Shutdown();
+		whiteboardOut.Shutdown();
 	}
 
 	void Brain::UnitTest() {
-
+		screenInput.UnitTest();
+		audioInput.UnitTest();
+		audioOut.UnitTest();
+		cameraInput.UnitTest();
+		textIn.UnitTest();
+		textOut.UnitTest();
+		whiteboardIn.UnitTest();
+		whiteboardOut.UnitTest();
 	}
 
 	void Brain::PostCreateAllSRSUnits() {

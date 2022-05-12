@@ -1,18 +1,15 @@
 #pragma once
-#include <Windows.h>
-#include <dshow.h>
-
 #include "IOCommon.h"
-#include "WaveInputHelper.h"
+#include "VideoHelper.h"
 
 namespace SRS22 {
-	class AudioCaptureIO : IOCommon
+	class CameraInIO : IOCommon
 	{
 	public:
-		WaveInputHelper inputHelper;
+		VideoHelper vidHelper;
 
-		AudioCaptureIO();
-		~AudioCaptureIO();
+		CameraInIO();
+		~CameraInIO();
 
 		virtual bool Init();
 		virtual void Shutdown();
@@ -26,7 +23,9 @@ namespace SRS22 {
 		/// </summary>
 		virtual void PostTick();
 
-		void CaptureSegment();
+		bool AcquireFrame();
+		cv::Mat getCurrentImage() { return vidHelper.currentImage; }
+		cv::Mat getPreviousImage() { return vidHelper.previousImage; }
 
 		void UnitTest();
 	};

@@ -7,6 +7,14 @@
 #include "SRSUnit.h"
 #include "HardwareIO/ScreenInputIO.h"
 #include "HardwareIO/AudioCaptureIO.h"
+#include "HardwareIO/WaveInputHelper.h"
+#include "HardwareIO/WaveOutputHelper.h"
+#include "HardwareIO/AudioOutIO.h"
+#include "HardwareIO/CameraInIO.h"
+#include "HardwareIO/TextInIO.h"
+#include "HardwareIO/TextOutIO.h"
+#include "HardwareIO/WhiteboardInIO.h"
+#include "HardwareIO/WhiteboardOutIO.h"
 
 namespace SRS22 {
 	using namespace std;
@@ -26,6 +34,15 @@ namespace SRS22 {
 
 		ScreenInputIO screenInput;
 		AudioCaptureIO audioInput;
+		AudioOutIO audioOut;
+		CameraInIO cameraInput;
+		TextInIO textIn;
+		TextOutIO textOut;
+		WhiteboardInIO whiteboardIn;
+		WhiteboardOutIO whiteboardOut;
+
+		Brain();
+		~Brain();
 
 		/// <summary>
 		/// Called just before Win Main Message Loop starts iterating.
@@ -44,6 +61,11 @@ namespace SRS22 {
 		void PostCreateAllSRSUnits();
 
 		void TakeScreenSnapshot();
+
+	private:
+		void PreTick();
+		void PostTick();
+
 	};
 
 }

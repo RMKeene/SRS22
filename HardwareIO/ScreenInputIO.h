@@ -4,7 +4,7 @@
 
 namespace SRS22 {
 
-	class ScreenInputIO : IOCommon
+	class ScreenInputIO : public IOCommon
 	{
 		BITMAPINFOHEADER CreateBitmapHeader(int width, int height);
 		// From Microsoft's web site for more generic image dump.
@@ -25,6 +25,15 @@ namespace SRS22 {
 
 		virtual bool Init();
 		virtual void Shutdown();
+
+		/// <summary>
+		/// Called for each IOCommon at the start of tick in Brain.
+		/// </summary>
+		virtual void PreTick();
+		/// <summary>
+		/// Called for each IOCommon at the end of tick in Brain.
+		/// </summary>
+		virtual void PostTick();
 
 		int GetScreenWidth();
 		int GetScreenHeight();

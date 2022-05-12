@@ -194,12 +194,6 @@
     <ClInclude Include="soloud\include\soloud_wavstream.h">
       <Filter>Source\soloud\include</Filter>
     </ClInclude>
-    <ClInclude Include="WaveInputHelper.h">
-      <Filter>Source\HardwareIO</Filter>
-    </ClInclude>
-    <ClInclude Include="WaveOutputHelper.h">
-      <Filter>Source\HardwareIO</Filter>
-    </ClInclude>
     <ClInclude Include="Brain.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -254,6 +248,36 @@
     <ClInclude Include="Maps\ScreenIn.h">
       <Filter>Source\Maps</Filter>
     </ClInclude>
+    <ClInclude Include="HardwareIO\WaveInputHelper.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\WaveOutputHelper.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\AudioOutIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\CameraInIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\WhiteboardInIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\WhiteboardOutIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\TextInIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\TextOutIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\VideoHelper.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalWorld.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -285,12 +309,6 @@
     </ClCompile>
     <ClCompile Include="StringConversionHelpers.cpp">
       <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="WaveInputHelper.cpp">
-      <Filter>Source\HardwareIO</Filter>
-    </ClCompile>
-    <ClCompile Include="WaveOutputHelper.cpp">
-      <Filter>Source\HardwareIO</Filter>
     </ClCompile>
     <ClCompile Include="Brain.cpp">
       <Filter>Source</Filter>
@@ -345,6 +363,36 @@
     </ClCompile>
     <ClCompile Include="Maps\ScreenIn.cpp">
       <Filter>Source\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\WaveInputHelper.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\WaveOutputHelper.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\AudioOutIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\CameraInIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\WhiteboardInIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\WhiteboardOutIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\TextInIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\TextOutIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalWorld.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\VideoHelper.cpp">
+      <Filter>Source\HardwareIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
