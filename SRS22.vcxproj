@@ -217,8 +217,10 @@
     <ClInclude Include="GoodnessFunction.h" />
     <ClInclude Include="HardwareIO\AudioCaptureIO.h" />
     <ClInclude Include="HardwareIO\AudioOutIO.h" />
+    <ClInclude Include="HardwareIO\CameraAttnSpotIO.h" />
     <ClInclude Include="HardwareIO\CameraInIO.h" />
     <ClInclude Include="HardwareIO\IOCommon.h" />
+    <ClInclude Include="HardwareIO\ScreenAttnSpotIO.h" />
     <ClInclude Include="HardwareIO\ScreenInputIO.h" />
     <ClInclude Include="HardwareIO\TextInIO.h" />
     <ClInclude Include="HardwareIO\TextOutIO.h" />
@@ -228,13 +230,14 @@
     <ClInclude Include="HardwareIO\WhiteboardInIO.h" />
     <ClInclude Include="HardwareIO\WhiteboardOutIO.h" />
     <ClInclude Include="ini.h" />
-    <ClInclude Include="Maps\ScreenIn.h" />
+    <ClInclude Include="Maps\ScreenFoveaMap.h" />
     <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="MonitorFrame.h" />
     <ClInclude Include="Pattern.h" />
     <ClInclude Include="PatternConnection.h" />
     <ClInclude Include="PatternMatchingSystem.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Reaper.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Settings.h" />
@@ -303,8 +306,10 @@
     <ClCompile Include="GoodnessFunction.cpp" />
     <ClCompile Include="HardwareIO\AudioCaptureIO.cpp" />
     <ClCompile Include="HardwareIO\AudioOutIO.cpp" />
+    <ClCompile Include="HardwareIO\CameraAttnSpotIO.cpp" />
     <ClCompile Include="HardwareIO\CameraInIO.cpp" />
     <ClCompile Include="HardwareIO\IOCommon.cpp" />
+    <ClCompile Include="HardwareIO\ScreenAttnSpotIO.cpp" />
     <ClCompile Include="HardwareIO\ScreenInputIO.cpp" />
     <ClCompile Include="HardwareIO\TextInIO.cpp" />
     <ClCompile Include="HardwareIO\TextOutIO.cpp" />
@@ -313,7 +318,7 @@
     <ClCompile Include="HardwareIO\WaveOutputHelper.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardInIO.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardOutIO.cpp" />
-    <ClCompile Include="Maps\ScreenIn.cpp" />
+    <ClCompile Include="Maps\ScreenFoveaMap.cpp" />
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
     <ClCompile Include="Pattern.cpp" />
@@ -326,6 +331,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Reaper.cpp" />
+    <ClCompile Include="Rect.h" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SRS22.cpp" />
     <ClCompile Include="SRS22UIgen.cpp" />

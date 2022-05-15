@@ -19,11 +19,12 @@ namespace SRS22 {
     }
 
     void CameraInIO::PreTick() {
+        IOCommon::PreTick();
         AcquireFrame();
     }
 
     void CameraInIO::PostTick() {
-
+        IOCommon::PostTick();
     }
 
     void CameraInIO::UnitTest() {

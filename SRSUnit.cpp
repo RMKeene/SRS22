@@ -8,20 +8,26 @@ namespace SRS22 {
 
 	unsigned short SRSUnit::nextUID = 0;
 
-	SRSUnit::SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w) :
+	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, std::string MapDescription) :
+		MapName(MapName),
 		UID(nextUID++),  
-		ctrip(ctrip), location(location), M(w), nextM(w) {
+		ctrip(ctrip), location(location), M(w), nextM(w),
+		MapDescription(MapDescription) {
 	}
 
-	SRSUnit::SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w, int h) :
-		UID(nextUID++), 
-		ctrip(ctrip), location(location), M(w, h), nextM(w, h) {
-
-	}
-
-	SRSUnit::SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, int d) :
+	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, std::string MapDescription) :
+		MapName(MapName),
 		UID(nextUID++),
-		ctrip(ctrip), location(location), M(w, h, d), nextM(w, h, d) {
+		ctrip(ctrip), location(location), M(w, h), nextM(w, h),
+		MapDescription(MapDescription) {
+
+	}
+
+	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, int d, std::string MapDescription) :
+		MapName(MapName),
+		UID(nextUID++),
+		ctrip(ctrip), location(location), M(w, h, d), nextM(w, h, d),
+		MapDescription(MapDescription) {
 
 	}
 

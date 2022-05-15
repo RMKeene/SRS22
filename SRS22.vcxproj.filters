@@ -245,7 +245,7 @@
     <ClInclude Include="HardwareIO\ScreenInputIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\ScreenIn.h">
+    <ClInclude Include="Maps\ScreenFoveaMap.h">
       <Filter>Source\Maps</Filter>
     </ClInclude>
     <ClInclude Include="HardwareIO\WaveInputHelper.h">
@@ -276,6 +276,15 @@
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
     <ClInclude Include="GlobalWorld.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\CameraAttnSpotIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\ScreenAttnSpotIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
@@ -361,7 +370,7 @@
     <ClCompile Include="HardwareIO\ScreenInputIO.cpp">
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\ScreenIn.cpp">
+    <ClCompile Include="Maps\ScreenFoveaMap.cpp">
       <Filter>Source\Maps</Filter>
     </ClCompile>
     <ClCompile Include="HardwareIO\WaveInputHelper.cpp">
@@ -393,6 +402,15 @@
     </ClCompile>
     <ClCompile Include="HardwareIO\VideoHelper.cpp">
       <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\CameraAttnSpotIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\ScreenAttnSpotIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.h">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

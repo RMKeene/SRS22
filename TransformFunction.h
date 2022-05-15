@@ -10,4 +10,8 @@ namespace SRS22 {
 		virtual void Process();
 	};
 
+	class BlankTransformFunction : public TransformFunction {
+	public:
+		void Process() {}
+	};
 }

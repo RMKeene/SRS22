@@ -34,11 +34,11 @@ namespace SRS22 {
 	}
 
 	void ScreenInputIO::PreTick() {
-
+		IOCommon::PreTick();
 	}
 
 	void ScreenInputIO::PostTick() {
-
+		IOCommon::PostTick();
 	}
 
 	int ScreenInputIO::GetScreenWidth() {

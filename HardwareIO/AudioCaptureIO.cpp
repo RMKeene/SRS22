@@ -20,11 +20,11 @@ namespace SRS22 {
     }
 
     void AudioCaptureIO::PreTick() {
-
+        IOCommon::PreTick();
     }
 
     void AudioCaptureIO::PostTick() {
-
+        IOCommon::PostTick();
     }
 
     void AudioCaptureIO::UnitTest() {

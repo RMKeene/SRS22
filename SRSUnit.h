@@ -5,6 +5,7 @@
 #include "PatternMatchingSystem.h"
 #include "GoodnessFunction.h"
 #include "ConnectivityTriple.h"
+#include "TransformFunction.h"
 
 namespace SRS22 {
 
@@ -12,6 +13,8 @@ namespace SRS22 {
 	{
 		static unsigned short nextUID;
 	public:
+		std::string MapName;
+		std::string MapDescription;
 
 		std::vector<std::shared_ptr<SRSUnit>> nearMaps;
 		std::vector<std::shared_ptr<SRSUnit>> farMaps;
@@ -25,13 +28,15 @@ namespace SRS22 {
 		const ConnectivityTriple ctrip;
 
 		PatternMatchingSystem matchSystem;
-		GoodnessFunction goodnessFunc;
+		std::shared_ptr<GoodnessFunction> goodnessFunc;
+		std::shared_ptr<TransformFunction> inputTransform;
+		std::shared_ptr<TransformFunction>  outputTransform;
 		ConceptState M;
 		ConceptState nextM;
 
-		SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w);
-		SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w, int h);
-		SRSUnit(ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, int d);
+		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, std::string MapDescription);
+		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, std::string MapDescription);
+		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, int d, std::string MapDescription);
 
 		~SRSUnit();
 

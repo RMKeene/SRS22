@@ -19,11 +19,11 @@ namespace SRS22 {
     }
 
     void WhiteboardOutIO::PreTick() {
-
+        IOCommon::PreTick();
     }
 
     void WhiteboardOutIO::PostTick() {
-
+        IOCommon::PostTick();
     }
 
     void WhiteboardOutIO::UnitTest() {
