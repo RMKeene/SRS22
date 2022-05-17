@@ -3,7 +3,7 @@
 
 namespace SRS22 {
 
-	ScreenInputIO::ScreenInputIO() {
+	ScreenInputIO::ScreenInputIO() : IOCommon(std::string("ScreenInputIO")) {
 		HDC hScreenDC = GetDC(nullptr);
 		w = GetDeviceCaps(hScreenDC, HORZRES);
 		h = GetDeviceCaps(hScreenDC, VERTRES);

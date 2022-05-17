@@ -1,7 +1,7 @@
 #include "WhiteboardInIO.h"
 
 namespace SRS22 {
-    WhiteboardInIO::WhiteboardInIO() : IOCommon() {
+    WhiteboardInIO::WhiteboardInIO() : IOCommon(std::string("WhiteboardInIO")) {
 
     }
 

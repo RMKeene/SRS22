@@ -11,7 +11,6 @@ namespace SRS22 {
 	using namespace std;
 
 	Brain::Brain() {
-
 	}
 
 	Brain::~Brain() {

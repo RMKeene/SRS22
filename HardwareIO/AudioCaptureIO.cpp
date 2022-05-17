@@ -1,7 +1,7 @@
 #include "AudioCaptureIO.h"
 
 namespace SRS22 {
-    AudioCaptureIO::AudioCaptureIO() : IOCommon() {
+    AudioCaptureIO::AudioCaptureIO() : IOCommon(std::string("AudioCaptureIO")) {
 
     }
 

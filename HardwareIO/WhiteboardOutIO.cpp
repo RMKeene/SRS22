@@ -1,7 +1,7 @@
 #include "WhiteboardOutIO.h"
 
 namespace SRS22 {
-    WhiteboardOutIO::WhiteboardOutIO() : IOCommon() {
+    WhiteboardOutIO::WhiteboardOutIO() : IOCommon(std::string("WhiteboardOutIO")) {
 
     }
 
