@@ -9,6 +9,7 @@ namespace SRS22 {
 	/// </summary>
 	class GlobalWorld
 	{
+		bool isExiting = false;
 	public:
 		static GlobalWorld GlobalWorldInstance;
 
@@ -22,6 +23,8 @@ namespace SRS22 {
 		~GlobalWorld() {
 
 		}
+
+		void Exit();
 
 		/// <summary>
 		/// Idx starts at 0. No error checking. Assumes at least one Brain exists.

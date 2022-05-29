@@ -30,6 +30,41 @@ namespace SRS22 {
 		}
 	}
 
+	void MonitorFrame::OnMonitorWindowActivate(wxActivateEvent& event) {
+
+	}
+
+	void MonitorFrame::OnMonitorWindowActivateApp(wxActivateEvent& event) {
+
+	}
+
+	void MonitorFrame::OnMonitorWindowClose(wxCloseEvent& event) {
+		GlobalWorld::GlobalWorldInstance.Exit();
+		exit(0);
+	}
+
+	void MonitorFrame::OnMonitorWindowHibernate(wxActivateEvent& event) {
+
+	}
+
+	void MonitorFrame::OnMonitorWindowIconize(wxIconizeEvent& event) {
+
+	}
+
+	void MonitorFrame::OnMonitorWindowIdle(wxIdleEvent& event) {
+
+	}
+
+
+	void MonitorFrame::OnNewMapMonitorWindow(wxCommandEvent& event) {
+
+	}
+
+	void MonitorFrame::OnMapChoiceChange(wxCommandEvent& event) {
+
+	}
+
+
 	void MonitorFrame::OnRunToggleButton(wxCommandEvent& event) {
 		if (event.IsChecked())
 			GlobalWorld::GlobalWorldInstance.GetBrain(0)->Continue();

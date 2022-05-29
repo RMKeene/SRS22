@@ -16,6 +16,13 @@ namespace SRS22 {
 
 		void LoadMapChoices();
 
+		void OnMonitorWindowActivate(wxActivateEvent& event) override;
+		void OnMonitorWindowActivateApp(wxActivateEvent& event) override;
+		void OnMonitorWindowClose(wxCloseEvent& event) override;
+		void OnMonitorWindowHibernate(wxActivateEvent& event) override;
+		void OnMonitorWindowIconize(wxIconizeEvent& event) override;
+		void OnMonitorWindowIdle(wxIdleEvent& event) override;
+
 		void OnRunToggleButton(wxCommandEvent& event) override;
 		void OnStep(wxCommandEvent& event) override;
 		void OnContinueButton(wxCommandEvent& event) override;
@@ -28,6 +35,8 @@ namespace SRS22 {
 		void OnAudioVolumeOut(wxScrollEvent& event) override;
 		void OnVideoInChanged(wxCommandEvent& event) override;
 		void OnMonitorFrameTickTimer(wxTimerEvent& event) override;
+		void OnNewMapMonitorWindow(wxCommandEvent& event) override;
+		void OnMapChoiceChange(wxCommandEvent& event) override;
 		void OnTestAClicked(wxCommandEvent& event) override;
 		void OnTestBClicked(wxCommandEvent& event) override;
 

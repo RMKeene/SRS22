@@ -80,6 +80,12 @@ class MonitorFrameGen : public wxFrame
 		wxTimer MonitorFrameTick;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnMonitorWindowActivate( wxActivateEvent& event ) { event.Skip(); }
+		virtual void OnMonitorWindowActivateApp( wxActivateEvent& event ) { event.Skip(); }
+		virtual void OnMonitorWindowClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnMonitorWindowHibernate( wxActivateEvent& event ) { event.Skip(); }
+		virtual void OnMonitorWindowIconize( wxIconizeEvent& event ) { event.Skip(); }
+		virtual void OnMonitorWindowIdle( wxIdleEvent& event ) { event.Skip(); }
 		virtual void OnRunToggleButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStep( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnContinueButton( wxCommandEvent& event ) { event.Skip(); }
@@ -94,6 +100,8 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnAudioVolumeOut( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnVideoInChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnVideoOnOffToggle( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnNewMapMonitorWindow( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapChoiceChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMonitorFrameTickTimer( wxTimerEvent& event ) { event.Skip(); }
 		
 	

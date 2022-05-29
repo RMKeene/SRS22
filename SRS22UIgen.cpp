@@ -270,6 +270,12 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowActivate ) );
+	this->Connect( wxEVT_ACTIVATE_APP, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowActivateApp ) );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MonitorFrameGen::OnMonitorWindowClose ) );
+	this->Connect( wxEVT_HIBERNATE, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowHibernate ) );
+	this->Connect( wxEVT_ICONIZE, wxIconizeEventHandler( MonitorFrameGen::OnMonitorWindowIconize ) );
+	this->Connect( wxEVT_IDLE, wxIdleEventHandler( MonitorFrameGen::OnMonitorWindowIdle ) );
 	RunButton->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRunToggleButton ), NULL, this );
 	MonitorStepButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnStep ), NULL, this );
 	ContinueButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnContinueButton ), NULL, this );
@@ -300,12 +306,20 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	AudioOutVolume->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeOut ), NULL, this );
 	VideoInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnVideoInChanged ), NULL, this );
 	videoOnOffButton->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnVideoOnOffToggle ), NULL, this );
+	ShowMapWindowButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNewMapMonitorWindow ), NULL, this );
+	ViewMapChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnMapChoiceChange ), NULL, this );
 	this->Connect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( MonitorFrameGen::OnMonitorFrameTickTimer ) );
 }
 
 MonitorFrameGen::~MonitorFrameGen()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_ACTIVATE, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowActivate ) );
+	this->Disconnect( wxEVT_ACTIVATE_APP, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowActivateApp ) );
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MonitorFrameGen::OnMonitorWindowClose ) );
+	this->Disconnect( wxEVT_HIBERNATE, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowHibernate ) );
+	this->Disconnect( wxEVT_ICONIZE, wxIconizeEventHandler( MonitorFrameGen::OnMonitorWindowIconize ) );
+	this->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MonitorFrameGen::OnMonitorWindowIdle ) );
 	RunButton->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRunToggleButton ), NULL, this );
 	MonitorStepButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnStep ), NULL, this );
 	ContinueButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnContinueButton ), NULL, this );
@@ -336,6 +350,8 @@ MonitorFrameGen::~MonitorFrameGen()
 	AudioOutVolume->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeOut ), NULL, this );
 	VideoInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnVideoInChanged ), NULL, this );
 	videoOnOffButton->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnVideoOnOffToggle ), NULL, this );
+	ShowMapWindowButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNewMapMonitorWindow ), NULL, this );
+	ViewMapChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnMapChoiceChange ), NULL, this );
 	this->Disconnect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( MonitorFrameGen::OnMonitorFrameTickTimer ) );
 	
 }

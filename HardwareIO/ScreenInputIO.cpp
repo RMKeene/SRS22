@@ -35,6 +35,7 @@ namespace SRS22 {
 		if (snapshotData) {
 			DeleteObject(snapshotData);
 		}
+		IOCommon::Shutdown();
 	}
 
 	void ScreenInputIO::PreTick() {
