@@ -14,6 +14,8 @@ namespace SRS22 {
 		MonitorFrame(wxWindow* parent);
 		~MonitorFrame();
 
+		void LoadMapChoices();
+
 		void OnRunToggleButton(wxCommandEvent& event) override;
 		void OnStep(wxCommandEvent& event) override;
 		void OnContinueButton(wxCommandEvent& event) override;

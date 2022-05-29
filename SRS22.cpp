@@ -26,6 +26,7 @@ namespace SRS22 {
 			return false;
 
 		monitorFrame = new MonitorFrame(nullptr);
+		monitorFrame->LoadMapChoices();
 		monitorFrame->Show(true);
 
 		// success: wxApp::OnRun() will be called which will enter the main message

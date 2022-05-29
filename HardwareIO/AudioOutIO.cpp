@@ -1,7 +1,8 @@
 #include "AudioOutIO.h"
 
 namespace SRS22 {
-    AudioOutIO::AudioOutIO() : IOCommon(std::string("AudioOutIO")) {
+    AudioOutIO::AudioOutIO() : IOCommon() {
+        IOCOMMON_SETCLASSNAME;
 
     }
 

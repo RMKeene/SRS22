@@ -1,11 +1,12 @@
 #include "CameraAttnSpotIO.h"
 
 namespace SRS22 {
-    CameraAttnSpotIO::CameraAttnSpotIO() : IOCommon(std::string("CameraAttnSpotIO")) {
+    CameraAttnSpotIO::CameraAttnSpotIO() : IOCommon() {
+        IOCOMMON_SETCLASSNAME;
 
     }
 
-    CameraAttnSpotIO::CameraAttnSpotIO(Point p, Rect cameraRect) : IOCommon(std::string("CameraAttnSpotIO")), _p(p), _rect(cameraRect)
+    CameraAttnSpotIO::CameraAttnSpotIO(Point p, Rect cameraRect) : IOCommon(), _p(p), _rect(cameraRect)
     {
         _rect.Clamp(_p);
     }

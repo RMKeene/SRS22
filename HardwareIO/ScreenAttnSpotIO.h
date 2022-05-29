@@ -9,13 +9,15 @@
 namespace SRS22 {
 	class ScreenAttnSpotIO : IOCommon
 	{
-		Rect _rect;
-		Point _p;
+		SRS22::Rect _rect;
+		SRS22::Point _p;
 	public:
 
 		ScreenAttnSpotIO();
 		ScreenAttnSpotIO(Point p, Rect screenRect);
 		~ScreenAttnSpotIO();
+
+		SRS22::Rect& GetRect() { return _rect; }
 
 		/// <summary>
 		/// Where we are loolking within cameraRect.

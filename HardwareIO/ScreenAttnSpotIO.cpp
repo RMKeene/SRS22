@@ -1,12 +1,14 @@
 #include "ScreenAttnSpotIO.h"
 
 namespace SRS22 {
-    ScreenAttnSpotIO::ScreenAttnSpotIO() : IOCommon(std::string("ScreenAttnSpotIO")) {
+    ScreenAttnSpotIO::ScreenAttnSpotIO() : IOCommon() {
+        IOCOMMON_SETCLASSNAME;
 
     }
 
-    ScreenAttnSpotIO::ScreenAttnSpotIO(Point p, Rect screenRect) : IOCommon(std::string("ScreenAttnSpotIO")), _p(p), _rect(screenRect)
+    ScreenAttnSpotIO::ScreenAttnSpotIO(Point p, Rect screenRect) : IOCommon(), _p(p), _rect(screenRect)
     {
+        IOCOMMON_SETCLASSNAME;
         _rect.Clamp(_p);
     }
 

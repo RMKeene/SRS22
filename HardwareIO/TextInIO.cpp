@@ -1,7 +1,8 @@
 #include "TextInIO.h"
 
 namespace SRS22 {
-    TextInIO::TextInIO() : IOCommon(std::string("TextInIO")) {
+    TextInIO::TextInIO() : IOCommon() {
+        IOCOMMON_SETCLASSNAME;
 
     }
 

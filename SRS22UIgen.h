@@ -69,6 +69,9 @@ class MonitorFrameGen : public wxFrame
 		wxToggleButton* videoOnOffButton;
 		wxStaticBitmap* AudioInFFTBitmapWidget;
 		wxStaticBitmap* AudioOutFFTBitmapWidget;
+		wxButton* ShowMapWindowButton;
+		wxChoice* ViewMapChoice;
+		wxStaticBitmap* m_bitmap3;
 		wxStaticText* MonitorStatisticsLine1;
 		wxStaticText* MonitorStatisticsLine2;
 		wxStaticText* MonitorStatisticsLine3;

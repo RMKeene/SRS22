@@ -1,9 +1,12 @@
 #include "../pch.h"
 #include "ScreenInputIO.h"
+#include "../Point.h"
 
 namespace SRS22 {
 
-	ScreenInputIO::ScreenInputIO() : IOCommon(std::string("ScreenInputIO")) {
+	ScreenInputIO::ScreenInputIO() : IOCommon() {
+		IOCOMMON_SETCLASSNAME;
+
 		HDC hScreenDC = GetDC(nullptr);
 		w = GetDeviceCaps(hScreenDC, HORZRES);
 		h = GetDeviceCaps(hScreenDC, VERTRES);
@@ -20,6 +23,7 @@ namespace SRS22 {
 	}
 
 	bool ScreenInputIO::Init() {
+		IOCommon::Init();
 		HDC hScreenDC = GetDC(nullptr);
 		w = GetDeviceCaps(hScreenDC, HORZRES);
 		h = GetDeviceCaps(hScreenDC, VERTRES);
@@ -35,6 +39,8 @@ namespace SRS22 {
 
 	void ScreenInputIO::PreTick() {
 		IOCommon::PreTick();
+		TakeScreenSnapshot();
+		DebugCurrentScreen();
 	}
 
 	void ScreenInputIO::PostTick() {
@@ -86,21 +92,26 @@ namespace SRS22 {
 		int width = GetSystemMetrics(SM_CXSCREEN);
 		int height = GetSystemMetrics(SM_CYSCREEN);
 
-		if (!snapshotData) {
-			snapshotData = CreateCompatibleBitmap(hwindowDC, width, height);
-			snapshotDataHeader = CreateBitmapHeader(width, height);
+		if (!snapshotData) { // Reuse memory. 
+			snapshotData = CreateCompatibleBitmap(hwindowDC, w, h);
+			snapshotDataHeader = CreateBitmapHeader(w, h);
 		}
 
 		SelectObject(hwindowCompatibleDC, snapshotData);
 
-		DWORD dwBmpSize = ((width * snapshotDataHeader.biBitCount + 31) / 32) * 4 * height;
+		DWORD dwBmpSize = ((w * snapshotDataHeader.biBitCount + 31) / 32) * 4 * h;
 		if(snapshotDataHeaderDIB == NULL)
 			snapshotDataHeaderDIB = GlobalAlloc(GHND, dwBmpSize);
 		if (snapshotDataHeaderDIB != 0) {
 			char* lpbitmap = (char*)GlobalLock(snapshotDataHeaderDIB);
 
-			StretchBlt(hwindowCompatibleDC, 0, 0, width, height, hwindowDC, screenx, screeny, width, height, SRCCOPY);   //change SRCCOPY to NOTSRCCOPY for wacky colors !
-			GetDIBits(hwindowCompatibleDC, snapshotData, 0, height, lpbitmap, (BITMAPINFO*)&snapshotDataHeader, DIB_RGB_COLORS);
+			// Copy from actual screen
+			StretchBlt(hwindowCompatibleDC, 0, 0, w, h, hwindowDC, screenx, screeny, w, h, SRCCOPY);
+			if (currentScreen.cols != w || currentScreen.rows != h) {
+				currentScreen.create(h, w, CV_8UC4);
+			}
+			// Copy to the OpenCV Mat memory.
+			GetDIBits(hwindowCompatibleDC, snapshotData, 0, height, currentScreen.data, (BITMAPINFO*)&snapshotDataHeader, DIB_RGB_COLORS);
 		}
 
 		DeleteDC(hwindowCompatibleDC);
@@ -263,5 +274,23 @@ namespace SRS22 {
 		CreateBMPFile((LPTSTR)fname, bi, snapshotData, hDC);
 		DeleteObject(bi);
 		DeleteDC(hDC);
+	}
+
+	bool ScreenInputIO::IsCorrectSize(cv::Mat& m) {
+		return !m.empty() && m.rows == h && m.cols == w;
+	}
+
+	cv::Mat ScreenInputIO::GetCorrectSizeMat() {
+		cv::Mat m;
+		m.create(h, w, CV_8UC4);
+		return m;
+	}
+
+	void ScreenInputIO::GetCurrentScreen(cv::Mat& outMat) {
+		currentScreen.copyTo(outMat);
+	}
+
+	void ScreenInputIO::GetSubRect(cv::Mat& outM, Rect& region) {
+
 	}
 }

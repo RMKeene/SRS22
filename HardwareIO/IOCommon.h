@@ -1,6 +1,8 @@
 #pragma once
 #include "../pch.h"
 
+#define IOCOMMON_SETCLASSNAME ioClassName = typeid(*this).name()
+
 namespace SRS22 {
 
 	/// <summary>
@@ -26,30 +28,44 @@ namespace SRS22 {
 		}	
 
 	protected:
+		// Treat as const after constructors are done!
+		std::string ioClassName;
+
 		/// <summary>
 		/// Only sub classes of IOCommon are allowed to be created in outside code.
 		/// </summary>
 		/// <param name="ioClassName"></param>
-		IOCommon(std::string ioClassName);
+		IOCommon();
 
 	public:
+
+		std::string getIOClassName() { return ioClassName; }
 
 		std::shared_ptr<IOCommon> getptr() {
 			return shared_from_this();
 		}
 
-		const std::string ioClassName;
-
 		~IOCommon();
 
-		static IOCommon* GetIO(const std::string ioClassNm) {
+		/// <summary>
+		/// Find the global singleton for a given IOCommon subclass.
+		/// NOT reference counted.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="ioClassNm"></param>
+		/// <returns></returns>
+		template <typename T>
+		static T* GetIO() {
+			const std::string ioClassNm = typeid(T).name();
 			if (getGlobalIOTable().empty()) {
 				throw std::logic_error(std::string("Undefined IOCommon uid. (Empty IOCommon table, nothing initialized?) Not allowed. ioClassName=") + ioClassNm);
 			}
+
+
 			auto p = getGlobalIOTable().find(ioClassNm);
 			if(p == getGlobalIOTable().end())
 				throw std::logic_error(std::string("Undefined IOCommon uid. Not allowed. ioClassName=") + ioClassNm);
-			return p->second;
+			return (T*)p->second;
 		}
 
 		virtual bool Init();

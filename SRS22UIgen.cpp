@@ -193,7 +193,31 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	sbSizer14->Add( AudioOutFFTBitmapWidget, 0, wxALL, 5 );
 	
 	
-	bSizer27->Add( sbSizer14, 1, wxEXPAND, 5 );
+	bSizer27->Add( sbSizer14, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* sbSizer12;
+	sbSizer12 = new wxStaticBoxSizer( new wxStaticBox( sbSizer13->GetStaticBox(), wxID_ANY, wxT("Map Monitor") ), wxHORIZONTAL );
+	
+	wxBoxSizer* bSizer10;
+	bSizer10 = new wxBoxSizer( wxVERTICAL );
+	
+	ShowMapWindowButton = new wxButton( sbSizer12->GetStaticBox(), wxID_ANY, wxT("New Window"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer10->Add( ShowMapWindowButton, 0, wxALL, 5 );
+	
+	wxString ViewMapChoiceChoices[] = { wxT("None") };
+	int ViewMapChoiceNChoices = sizeof( ViewMapChoiceChoices ) / sizeof( wxString );
+	ViewMapChoice = new wxChoice( sbSizer12->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, ViewMapChoiceNChoices, ViewMapChoiceChoices, 0 );
+	ViewMapChoice->SetSelection( 0 );
+	bSizer10->Add( ViewMapChoice, 0, wxALL, 5 );
+	
+	
+	sbSizer12->Add( bSizer10, 1, wxEXPAND, 5 );
+	
+	m_bitmap3 = new wxStaticBitmap( sbSizer12->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( 128,128 ), 0 );
+	sbSizer12->Add( m_bitmap3, 0, wxALL, 5 );
+	
+	
+	bSizer27->Add( sbSizer12, 0, wxEXPAND, 5 );
 	
 	
 	bSizer27->Add( 0, 0, 1, wxEXPAND, 5 );

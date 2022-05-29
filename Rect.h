@@ -1,3 +1,4 @@
+#pragma once
 #include "Point.h"
 namespace SRS22 {
 

@@ -8,25 +8,25 @@ namespace SRS22 {
 
 	unsigned short SRSUnit::nextUID = 0;
 
-	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, std::string MapDescription) :
+	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription) :
 		MapName(MapName),
 		UID(nextUID++),  
-		ctrip(ctrip), location(location), M(w), nextM(w),
+		ctrip(ctrip), location(location), M(cols), nextM(cols),
 		MapDescription(MapDescription) {
 	}
 
-	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, std::string MapDescription) :
+	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription) :
 		MapName(MapName),
 		UID(nextUID++),
-		ctrip(ctrip), location(location), M(w, h), nextM(w, h),
+		ctrip(ctrip), location(location), M(rows, cols), nextM(rows, cols),
 		MapDescription(MapDescription) {
 
 	}
 
-	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, int d, std::string MapDescription) :
+	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription) :
 		MapName(MapName),
 		UID(nextUID++),
-		ctrip(ctrip), location(location), M(w, h, d), nextM(w, h, d),
+		ctrip(ctrip), location(location), M(layers, rows, cols), nextM(layers, rows, cols),
 		MapDescription(MapDescription) {
 
 	}
@@ -35,8 +35,16 @@ namespace SRS22 {
 
 	}
 
-	const int SRSUnit::size() {
-		return M.size;
+	const cv::MatSize SRSUnit::matSize() {
+		return M.matSize();
+	}
+
+	const int SRSUnit::entriesCount() {
+		return M.entriesCount();
+	}
+
+	const int SRSUnit::byteCount() {
+		return M.byteCount();
 	}
 
 	void SRSUnit::PostCreate(Brain& b) {
@@ -49,14 +57,14 @@ namespace SRS22 {
 		float near2 = b.maxNearDistance * b.maxNearDistance;
 		float far2 = b.minFarDistance * b.minFarDistance;
 		for (auto u : b.conceptMaps) {
-			cv::Vec3f d = u->location - location;
+			cv::Vec3f d = u.second->location - location;
 			const float d2 = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
-			if (u->UID != UID) { 
+			if (u.second->UID != UID) {
 				if (d2 <= near2) {
-					nearMapsList.push_back(u);
+					nearMapsList.push_back(u.second);
 				}
 				else if (d2 <= far2) {
-					farMapsList.push_back(u);
+					farMapsList.push_back(u.second);
 				}
 			}
 		}
@@ -66,10 +74,14 @@ namespace SRS22 {
 	}
 
 	void SRSUnit::ComputeNextState() {
-
 	}
 
 	void SRSUnit::LatchNewState() {
 		ConceptState::Copy(M, nextM);
+	}
+
+	std::string SRSUnit::Debug() {
+		std::string ret = M.Debug();
+		return ret;
 	}
 }

@@ -29,14 +29,21 @@ namespace SRS22 {
 
 		PatternMatchingSystem matchSystem;
 		std::shared_ptr<GoodnessFunction> goodnessFunc;
-		std::shared_ptr<TransformFunction> inputTransform;
-		std::shared_ptr<TransformFunction>  outputTransform;
+
 		ConceptState M;
 		ConceptState nextM;
 
-		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, std::string MapDescription);
-		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, std::string MapDescription);
-		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int w, int h, int d, std::string MapDescription);
+		/// <summary>
+		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap"
+		/// </summary>
+		/// <param name="MapName"></param>
+		/// <param name="ctrip"></param>
+		/// <param name="location"></param>
+		/// <param name="cols"></param>
+		/// <param name="MapDescription"></param>
+		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription);
+		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription);
+		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
 
 		~SRSUnit();
 
@@ -47,10 +54,12 @@ namespace SRS22 {
 		void PostCreate(Brain& b);
 
 		/// <summary>
-		/// return M.size();
+		/// return M.charges.size();
 		/// </summary>
 		/// <returns></returns>
-		const int size();
+		const cv::MatSize matSize();
+		const int entriesCount();
+		const int byteCount();
 
 		/// <summary>
 		/// Process all inputs and system state, comapre patterns, do transforms.
@@ -61,8 +70,11 @@ namespace SRS22 {
 		/// <summary>
 		/// After processIO has been called on all SRSUnits, this gets called to transfer the nextM state to M.
 		/// Gets called in parallel for all SRSUnits. So must be just state transfer inside the SRSUnit.
+		/// This is NOT the place to do any post processing on the next state!
 		/// </summary>
 		virtual void LatchNewState();
+
+		virtual std::string Debug();
 	};
 
 }

@@ -27,6 +27,7 @@ namespace SRS22 {
 		/// <summary>
 		/// How many connections this map should have generated on setup.
 		/// You may get less than or equal to that many connections.
+		/// May be zero to turn off connectivity to other maps.
 		/// </summary>
 		const int desiredConnectionCount;
 
@@ -37,6 +38,7 @@ namespace SRS22 {
 			assert(desiredConnectionCount >= 0);
 		}
 
+		bool IsUnconnected() { return desiredConnectionCount == 0; }
 	};
 
 }

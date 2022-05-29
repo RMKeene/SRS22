@@ -4,6 +4,7 @@
 #include "FastRand.h"
 #include <tchar.h>
 #include <ppl.h>
+#include "Maps/ScreenFoveaMap.h"
 
 using namespace concurrency;
 
@@ -25,19 +26,20 @@ namespace SRS22 {
 		PreTick();
 
 		// Call all SRSUnit ProcessState in parallel
-		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::shared_ptr<SRSUnit> n) {
-			n->ComputeNextState();
+		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<std::string, std::shared_ptr<SRSUnit>> n) {
+			n.second->ComputeNextState();
 			});
 
 		// Call all SRSUnit LatchNewState in parallel.
-		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::shared_ptr<SRSUnit> n) {
-			n->LatchNewState();
+		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<std::string, std::shared_ptr<SRSUnit>> n) {
+			n.second->LatchNewState();
 			});
 
 		PostTick();
 	}
 
 	void Brain::PreTick() {
+		screenFovea.PreTick();
 		screenInput.PreTick();
 		audioInput.PreTick();
 		audioOut.PreTick();
@@ -49,6 +51,7 @@ namespace SRS22 {
 	}
 	
 	void Brain::PostTick() {
+		screenFovea.PostTick();
 		screenInput.PostTick();
 		audioInput.PostTick();
 		audioOut.PostTick();
@@ -74,16 +77,16 @@ namespace SRS22 {
 		for (int i = 0; i < 2; i++) {
 			float r = static_cast <float> (xorshf96()) / static_cast <float> (RAND_MAX);
 			if (r < origin->ctrip.A) { // Select random neuron from self
-				if (origin->size() > 0) {
-					PatternConnection c(origin, xorshf96() % origin->size());
+				if (origin->entriesCount() > 0) {
+					PatternConnection c(origin, xorshf96() % origin->entriesCount());
 					return std::optional<PatternConnection>{ c };
 				}
 			}
 			else if (r < origin->ctrip.B) { // Select from near concepts
 				if (origin->nearMaps.size() > 0) {
 					shared_ptr<SRSUnit> other = origin->nearMaps[xorshf96() % origin->nearMaps.size()];
-					if (other->size() > 0) {
-						PatternConnection c(origin, xorshf96() % other->size());
+					if (other->entriesCount() > 0) {
+						PatternConnection c(origin, xorshf96() % other->entriesCount());
 						return std::optional<PatternConnection>{ c };
 					}
 				}
@@ -91,8 +94,8 @@ namespace SRS22 {
 			else { // Select from far concepts
 				if (origin->farMaps.size()) {
 					shared_ptr<SRSUnit> other = origin->farMaps[xorshf96() % origin->farMaps.size()];
-					if (other->size() > 0) {
-						PatternConnection c(origin, xorshf96() % other->size());
+					if (other->entriesCount() > 0) {
+						PatternConnection c(origin, xorshf96() % other->entriesCount());
 						return std::optional<PatternConnection>{ c };
 					}
 				}
@@ -104,6 +107,7 @@ namespace SRS22 {
 
 	void Brain::Init() {
 		// Hardware I/O setups.
+		screenFovea.Init();
 		screenInput.Init();
 		audioInput.Init();
 		audioOut.Init();
@@ -113,10 +117,14 @@ namespace SRS22 {
 		whiteboardIn.Init();
 		whiteboardOut.Init();
 
+		// All Map instances.
+		AddMap(make_shared<ScreenFoveaMap>());
+
 		PostCreateAllSRSUnits();
 	}
 
 	void Brain::Shutdown() {
+		screenFovea.Shutdown();
 		screenInput.Shutdown();
 		audioInput.Shutdown();
 		audioOut.Shutdown();
@@ -128,6 +136,7 @@ namespace SRS22 {
 	}
 
 	void Brain::UnitTest() {
+		screenFovea.UnitTest();
 		screenInput.UnitTest();
 		audioInput.UnitTest();
 		audioOut.UnitTest();
@@ -136,6 +145,10 @@ namespace SRS22 {
 		textOut.UnitTest();
 		whiteboardIn.UnitTest();
 		whiteboardOut.UnitTest();
+	}
+
+	void Brain::AddMap(shared_ptr<SRSUnit> m) {
+		conceptMaps[m->MapName] = m;
 	}
 
 	void Brain::DoNStep(int n) {
@@ -155,12 +168,8 @@ namespace SRS22 {
 	}
 
 	void Brain::PostCreateAllSRSUnits() {
-		for (auto u : conceptMaps)
-			u->PostCreate(*this);
+		for (std::pair<std::string, std::shared_ptr<SRSUnit>> u : conceptMaps)
+			u.second->PostCreate(*this);
 	}
 
-	void Brain::TakeScreenSnapshot() {
-		screenInput.TakeScreenSnapshot();
-		//screenInput.DumpCurrentScreenSnapshot(_T("test.bmp"));
-	}
 }

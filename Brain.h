@@ -15,6 +15,7 @@
 #include "HardwareIO/TextOutIO.h"
 #include "HardwareIO/WhiteboardInIO.h"
 #include "HardwareIO/WhiteboardOutIO.h"
+#include "HardwareIO/ScreenAttnSpotIO.h"
 
 namespace SRS22 {
 	using namespace std;
@@ -22,7 +23,7 @@ namespace SRS22 {
 	class Brain
 	{
 	public:
-		list<std::shared_ptr<SRSUnit>> conceptMaps;
+		map<std::string, std::shared_ptr<SRSUnit>> conceptMaps;
 
 		/// <summary>
 		/// Threshold for ConnectivityTriple that defines range B.
@@ -38,10 +39,11 @@ namespace SRS22 {
 		/// </summary>
 		int SingleStepCount = -1;
 
-		ScreenInputIO screenInput;
 		AudioCaptureIO audioInput;
 		AudioOutIO audioOut;
 		CameraInIO cameraInput;
+		ScreenAttnSpotIO screenFovea;
+		ScreenInputIO screenInput;
 		TextInIO textIn;
 		TextOutIO textOut;
 		WhiteboardInIO whiteboardIn;
@@ -75,11 +77,12 @@ namespace SRS22 {
 
 		void PostCreateAllSRSUnits();
 
-		void TakeScreenSnapshot();
 
 	private:
 		void PreTick();
 		void PostTick();
+
+		void AddMap(shared_ptr<SRSUnit> m);
 
 	};
 

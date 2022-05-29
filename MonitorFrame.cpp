@@ -21,6 +21,15 @@ namespace SRS22 {
 
 	}
 
+	void MonitorFrame::LoadMapChoices() {
+		std::shared_ptr<Brain> b = GlobalWorld::GlobalWorldInstance.brains[0];
+		ViewMapChoice->Clear();
+		ViewMapChoice->AppendString(wxString("None"));
+		for (auto m : b->conceptMaps) {
+			ViewMapChoice->AppendString(wxString(m.first));
+		}
+	}
+
 	void MonitorFrame::OnRunToggleButton(wxCommandEvent& event) {
 		if (event.IsChecked())
 			GlobalWorld::GlobalWorldInstance.GetBrain(0)->Continue();

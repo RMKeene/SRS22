@@ -1,7 +1,8 @@
 #include "CameraInIO.h"
 
 namespace SRS22 {
-    CameraInIO::CameraInIO() : IOCommon(std::string("CameraInIO")) {
+    CameraInIO::CameraInIO() : IOCommon() {
+        IOCOMMON_SETCLASSNAME;
 
     }
 

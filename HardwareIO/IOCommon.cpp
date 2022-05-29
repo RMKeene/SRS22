@@ -6,10 +6,9 @@ namespace SRS22 {
 
 	std::map<std::string, IOCommon*>* IOCommon::globalIOTable;
 
-	IOCommon::IOCommon(std::string ioClassName) : ioClassName(ioClassName) {
-		if (getGlobalIOTable().find(ioClassName) != getGlobalIOTable().end())
-			throw std::logic_error(std::string("Duplicate IOCommon ioClassName. Not allowed. ioClassName=") + ioClassName);
-		getGlobalIOTable()[ioClassName] = this;
+	IOCommon::IOCommon() {
+		IOCOMMON_SETCLASSNAME;
+
 	}
 
 	IOCommon::~IOCommon() {
@@ -17,6 +16,10 @@ namespace SRS22 {
 	}
 
 	bool IOCommon::Init() {
+		if (getGlobalIOTable().find(ioClassName) != getGlobalIOTable().end())
+			throw std::logic_error(std::string("Duplicate IOCommon ioClassName. Not allowed. ioClassName=") + ioClassName);
+		getGlobalIOTable()[ioClassName] = this;
+
 		return true;
 	}
 

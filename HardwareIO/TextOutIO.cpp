@@ -1,7 +1,8 @@
 #include "TextOutIO.h"
 
 namespace SRS22 {
-    TextOutIO::TextOutIO() : IOCommon(std::string("TextOutIO")) {
+    TextOutIO::TextOutIO() : IOCommon() {
+        IOCOMMON_SETCLASSNAME;
 
     }
 

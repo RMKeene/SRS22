@@ -4,9 +4,13 @@
 
 namespace SRS22 {
 
-	class TransformFunction
+	class TransformFunction : std::enable_shared_from_this<TransformFunction>
 	{
 	public:
+		std::shared_ptr<TransformFunction> getptr() {
+			return shared_from_this();
+		}
+
 		virtual void Process();
 	};
 
