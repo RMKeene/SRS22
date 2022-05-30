@@ -17,6 +17,8 @@ namespace SRS22 {
         VideoHelper();
         ~VideoHelper();
 
+        void Shutdown();
+
         /// <summary>
         /// The whole open and capture. Only opes if needed. First call is rather sloooooow, then fast after that.
         /// </summary>

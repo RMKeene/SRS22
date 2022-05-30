@@ -8,7 +8,14 @@ namespace SRS22 {
 	}
 
 	VideoHelper::~VideoHelper() {
+		Shutdown();
+	}
 
+	void VideoHelper::Shutdown() {
+		if (cap) {
+			cap->release();
+			cap = nullptr;
+		}
 	}
 
 	bool VideoHelper::CaptureFrame() {

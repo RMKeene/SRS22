@@ -41,7 +41,7 @@ namespace SRS22 {
 	void ScreenInputIO::PreTick() {
 		IOCommon::PreTick();
 		TakeScreenSnapshot();
-		DebugCurrentScreen();
+		//bugCurrentScreen();
 	}
 
 	void ScreenInputIO::PostTick() {

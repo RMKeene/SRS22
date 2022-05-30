@@ -17,6 +17,9 @@ namespace SRS22 {
     }
 
     void AudioCaptureIO::Shutdown() {
+        MMTIME mmt;
+        inputHelper.StopRecord(&inputHelper.waveInHandle, &mmt);
+        inputHelper.CloseWaveIn(&inputHelper.waveInHandle);
         IOCommon::Shutdown();
     }
 

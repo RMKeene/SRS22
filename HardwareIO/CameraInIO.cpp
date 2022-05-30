@@ -16,6 +16,7 @@ namespace SRS22 {
     }
 
     void CameraInIO::Shutdown() {
+        vidHelper.Shutdown();
         IOCommon::Shutdown();
     }
 
