@@ -78,6 +78,7 @@ namespace SRS22 {
 			wxBitmap bitmap(w, h, 24);
 			ConvertMatBitmapTowxBitmap_CV_32FC1(m.value()->M.charges, w, h, bitmap);
 			chosenMapBitmap->SetBitmap(bitmap);
+			chosenMapBitmap->Refresh();
 		}
 		else {
 			wxBitmap bitmap(64, 64, 24);
@@ -151,9 +152,14 @@ namespace SRS22 {
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
 		// Milliseconds since the epoc.
 		long long timeTicks = SRS22::GetTimeTicksMs();
+		auto brain0 = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+
+		std::string s = "Tick Count: ";
+		TickCountText->SetLabelText(s + std::to_string(brain0->tickCount));
+
 		GlobalWorld::GlobalWorldInstance.TickAll();
 		if (RunButton->GetValue()) {
-			topVideoFrame->TakeImage(*GlobalWorld::GlobalWorldInstance.GetBrain(0));
+			topVideoFrame->TakeImage(*brain0);
 		}
 
 		if (lastMapMonitorRefreshTime + mapMonitorRefreshDelay->GetValue() < timeTicks) {

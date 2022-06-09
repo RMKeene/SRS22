@@ -33,11 +33,13 @@ namespace SRS22 {
 		float maxNearDistance = 50.0f;
 		float minFarDistance = 100.0f;
 
+		long long tickCount = 0;
+
 		/// <summary>
 		/// If -1 the free run. Else step this many times, usualy 1, down to 0 then stop.
 		/// Assumes Tick() is getting called frequently.
 		/// </summary>
-		int SingleStepCount = -1;
+		int SingleStepCount = 0;
 
 		AudioCaptureIO audioInput;
 		AudioOutIO audioOut;

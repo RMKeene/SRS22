@@ -19,8 +19,8 @@ namespace SRS22 {
 		ScreenFoveaMap();
 		~ScreenFoveaMap();
 
-		virtual void ComputeNextState();
-		virtual void LatchNewState();
+		virtual void ComputeNextState() override;
+		virtual void LatchNewState() override;
 	};
 
 }

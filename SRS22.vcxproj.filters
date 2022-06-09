@@ -263,9 +263,6 @@
     <ClInclude Include="HardwareIO\WhiteboardInIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="HardwareIO\WhiteboardOutIO.h">
-      <Filter>Source\HardwareIO</Filter>
-    </ClInclude>
     <ClInclude Include="HardwareIO\TextInIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
@@ -304,6 +301,12 @@
     </ClInclude>
     <ClInclude Include="OpenCVHelpers.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\WhiteboardOutIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\RandomMap.h">
+      <Filter>Source\Maps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -444,6 +447,9 @@
     </ClCompile>
     <ClCompile Include="OpenCVHelpers.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\RandomMap.cpp">
+      <Filter>Source\Maps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

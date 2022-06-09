@@ -5,6 +5,7 @@
 #include <tchar.h>
 #include <ppl.h>
 #include "Maps/ScreenFoveaMap.h"
+#include "Maps/RandomMap.h"
 
 using namespace concurrency;
 
@@ -36,6 +37,8 @@ namespace SRS22 {
 			});
 
 		PostTick();
+
+		tickCount++;
 	}
 
 	void Brain::PreTick() {
@@ -122,6 +125,7 @@ namespace SRS22 {
 
 		// All Map instances.
 		AddMap(make_shared<ScreenFoveaMap>());
+		AddMap(make_shared<RandomMap>());
 
 		// Anonymouse Maps
 
