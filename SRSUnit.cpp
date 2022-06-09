@@ -77,7 +77,7 @@ namespace SRS22 {
 	}
 
 	void SRSUnit::LatchNewState() {
-		ConceptState::Copy(M, nextM);
+		ConceptState::Copy(nextM, M);
 	}
 
 	std::string SRSUnit::Debug() {

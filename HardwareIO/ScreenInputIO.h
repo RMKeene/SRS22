@@ -17,9 +17,10 @@ namespace SRS22 {
 		// From Microsoft's web site for more generic image dump.
 		// 0 on success, else error number.
 		int CreateBMPFile(LPTSTR pszFile, PBITMAPINFO pbi, HBITMAP hBMP, HDC hDC);
-	public:
 		int w;
 		int h;
+
+	public:
 
 		std::recursive_mutex snapshotDataLock;
 
@@ -40,8 +41,21 @@ namespace SRS22 {
 		/// </summary>
 		virtual void PostTick();
 
-		int GetScreenWidth();
-		int GetScreenHeight();
+		/// <summary>
+		/// Get the screen size from Win32 calls. Not a cached answer.
+		/// </summary>
+		/// <returns></returns>
+		int GetScreenWidthWin32();
+		int GetScreenHeightWin32();
+
+		/// <summary>
+		/// Get screen size as cached.
+		/// </summary>
+		/// <returns></returns>
+		int GetScreenWidth() { return w; }
+		int GetScreenHeight() { return h; }
+		Rect GetScreenRect() { return Rect(0, 0, w, h); }
+
 		/// <summary>
 		/// Snaps the whole screen into  HBITMAP snapshotData.
 		/// Can do 100 snapshots in about 3 seconds on my machine.
@@ -56,17 +70,23 @@ namespace SRS22 {
 		bool IsCorrectSize(cv::Mat& m);
 		cv::Mat GetCorrectSizeMat();
 		/// <summary>
-		/// Copy currentScreen snapshot to outMat.
+		/// COPY currentScreen snapshot to outMat.
 		/// </summary>
 		/// <param name="outMat"></param>
 		void GetCurrentScreen(cv::Mat& outMat);
+
+		/// <summary>
+		/// Gets a reference to the currentScreen Matrix. Treat this as read only!
+		/// </summary>
+		/// <returns></returns>
+		cv::Mat& GetCurrentScreenRaw();
 
 		/// <summary>
 		/// Copy a sub rectangle from screen to outM.
 		/// </summary>
 		/// <param name="outM"></param>
 		/// <param name="centerPoint"></param>
-		void GetSubRect(cv::Mat& outM, Rect& region);
+		void GetSubRect(cv::Mat& outM, const Rect& region);
 
 		void DumpCurrentScreenSnapshot(LPCTSTR fname);
 

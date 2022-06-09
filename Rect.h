@@ -2,41 +2,82 @@
 #include "Point.h"
 namespace SRS22 {
 
+	/// <summary>
+	/// Immutable Rect. Asserts non-negative width and height.
+	/// </summary>
 	class Rect {
+		int halfWidth;
+		int halfHeight;
 	public:
-		int minX;
-		int minY;
+		int X;
+		int Y;
 		int width;
 		int height;
 
-		Rect() : minX(0), minY(0), width(0), height(0) {}
+		const int left() const { return X; }
+		/// <summary>
+		/// One pixel off the left edge.
+		/// return X + width;
+		/// </summary>
+		/// <returns></returns>
+		const int right() const { return X + width; }
+		const int top() const { return Y; }
+		const int bottom() const { return Y + height; }
+		const int halfW() const { return halfWidth; }
+		const int halfH() const { return halfHeight; }
+		Point Center() { return Point(X - halfWidth, Y - halfHeight); }
+
+		Rect() : X(0), Y(0), width(0), height(0), halfWidth(0 / 2), halfHeight(0 / 2) { }
 
 		/// <summary>
-		/// If width is negative, moves x to x - w, and then negates w.
-		/// Same for y and height.
+		/// asserts width and height are >= 0
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="w"></param>
 		/// <param name="h"></param>
 		Rect(int x, int y, int w, int h) :
-			minX(x), minY(y), width(w), height(h) {
-			if (w < 0) {
-				x = x - w;
-				w = -w;
-			}
-			if (h < 0) {
-				y = y - w;
-				w = -w;
-			}
+			X(x), Y(y), width(w), height(h), halfWidth(w / 2), halfHeight(h / 2) {
+			assert(width >= 0);
+			assert(height >= 0);
 		}
 
-		bool Inside(int x, int y) {
-			return x >= minX && x < minX + width && y >= minY && y < minY + height;
+		/// <summary>
+		/// Make Rect from upper left corner and size.
+		/// </summary>
+		/// <param name="upperLeftCorner"></param>
+		/// <param name="w"></param>
+		/// <param name="h"></param>
+		Rect(Point upperLeftCorner, int w, int h) :
+			X(upperLeftCorner.X), Y(upperLeftCorner.Y), width(w), height(h), halfWidth(w / 2), halfHeight(h / 2) {
+			assert(width >= 0);
+			assert(height >= 0);
 		}
 
-		bool Outside(int x, int y) {
-			return x < minX || x >= minX + width || y < minY&& y >= minY + height;
+		/// <summary>
+		/// Make Rect from size and CENTER POINT.
+		/// </summary>
+		/// <param name="w"></param>
+		/// <param name="h"></param>
+		/// <param name="centerPt"></param>
+		Rect(int w, int h, Point centerPt) :
+			X(centerPt.X - w / 2), Y(centerPt.Y - h / 2), width(w), height(h), halfWidth(w / 2), halfHeight(h / 2) {
+			assert(width >= 0);
+			assert(height >= 0);
+		}
+
+		Rect(cv::Rect& r) :
+			X(r.x), Y(r.y), width(r.width), height(r.height), halfWidth(r.width / 2), halfHeight(r.height / 2) {
+			assert(width >= 0);
+			assert(height >= 0);
+		}
+
+		bool Inside(const int x, const int y) {
+			return x >= X && x < right() && y >= Y && y < bottom();
+		}
+
+		bool Outside(const int x, const int y) {
+			return x < X || x >= right() || y < Y&& y >= bottom();
 		}
 
 		/// <summary>
@@ -45,10 +86,33 @@ namespace SRS22 {
 		/// <param name="p"></param>
 		/// <returns></returns>
 		void Clamp(Point& p) {
-			if (p.X < minX) p.X = minX;
-			else if (p.X >= minX + width) p.X = minX + width - 1;
-			if (p.Y < minY) p.Y = minY;
-			else if (p.Y >= minY + height) p.Y = minY + height - 1;
+			if (p.X < X) p.X = X;
+			else if (p.X >= right()) p.X = right() - 1;
+
+			if (p.Y < Y) p.Y = Y;
+			else if (p.Y >= bottom()) p.Y = bottom() - 1;
+		}
+
+		/// <summary>
+		/// Returns a Rect that is inside outer Rect nearest to where this Rect is.
+		/// Assumes outerRect is larger than this rect width, height.
+		/// </summary>
+		/// <param name="outerRect"></param>
+		/// <returns></returns>
+		Rect ForceInRect(const Rect& outerRect) {
+			return Rect(X < outerRect.X ? outerRect.X : X >= outerRect.right() ? outerRect.right() - 1 : X,
+				Y < outerRect.Y ? outerRect.Y : Y >= outerRect.bottom() ? outerRect.bottom() - 1 : Y,
+				width, height);
+
+		}
+
+		void CenterOn(const Point& p) {
+			X = p.X - halfWidth;
+			Y = p.Y - halfHeight;
+		}
+
+		cv::Rect toOpenCVRect() const {
+			return cv::Rect(X, Y, width, height);
 		}
 	};
 

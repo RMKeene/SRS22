@@ -68,7 +68,7 @@ namespace SRS22 {
 	int WaveInputHelper::SetWaveFormat(WAVEFORMATEX* wf, int wFormatTag, int nChannels, int nSamplesPerSec,
 		int nBlockAlign, int wBitsPerSample, int cbSize)
 	{
-		int res;
+		//int res;
 
 		wf->wFormatTag = wFormatTag;
 		wf->nChannels = nChannels;
@@ -227,7 +227,7 @@ namespace SRS22 {
 	// Save recorded speech to file
 	int WaveInputHelper::SaveRecordtoFile(const char* fileName, WAVEFORMATEX* wf, HWAVEIN* hWaveIn, WAVEHDR* waveHeader, MMTIME* mmTime)
 	{
-		int res;
+		//int res;
 		DWORD NumToWrite = 0;
 		DWORD dwNumber = 0;
 		static wchar_t fnameW[1024];
@@ -253,7 +253,7 @@ namespace SRS22 {
 	// Release wave in memory
 	int WaveInputHelper::ReleaseWaveIn(HWAVEIN* hWaveIn, WAVEHDR* waveHeader)
 	{
-		int res;
+		long long res;
 
 		res = waveInUnprepareHeader(*hWaveIn, waveHeader, sizeof(WAVEHDR));
 		if (res != MMSYSERR_NOERROR)
@@ -266,7 +266,7 @@ namespace SRS22 {
 			_debug_print("UnPrepare Wave In Header SUCCEED!");
 		}
 
-		res = (int)GlobalFree(GlobalHandle(waveHeader->lpData));
+		res = (long long)GlobalFree(GlobalHandle(waveHeader->lpData));
 		if (res != MMSYSERR_NOERROR)
 		{
 			_debug_print("Global Free FAILED!", 1);

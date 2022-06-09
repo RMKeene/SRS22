@@ -9,16 +9,16 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-// This gives one common place to define MS windows values. 
-#define WIN32_LEAN_AND_MEAN
-
+// There is a whole cascade of errors if the windows headers are not in the correct order!
+//#define WIN32_LEAN_AND_MEAN
+#include <WinSock2.h>
 #ifndef __wtypes_h__
 #include <wtypes.h>
 #endif
-
 #ifndef __WINDEF_
 #include <windef.h>
 #endif
+#include <gdiplus.h>
 
 #include "wx/setup.h"
 // add headers that you want to pre-compile here

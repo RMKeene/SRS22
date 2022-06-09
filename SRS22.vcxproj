@@ -130,7 +130,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>wxmsw31ud.lib;opencv_world455d.lib;Winmm.lib;soloud_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxmsw31ud.lib;opencv_world455d.lib;Winmm.lib;soloud_static.lib;gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <AdditionalLibraryDirectories>C:\SRS22\SRS22\soloud\bin;E:\opencv\build\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -193,7 +193,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>wxmsw31u.lib;opencv_world455.lib;soloud_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxmsw31u.lib;opencv_world455.lib;soloud_static.lib;gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\SRS22\SRS22\soloud\bin;E:\opencv\build\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
@@ -208,10 +208,12 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="bmpfromocvpanel.h" />
     <ClInclude Include="Brain.h" />
     <ClInclude Include="canvas.h" />
     <ClInclude Include="ConceptState.h" />
     <ClInclude Include="ConnectivityTriple.h" />
+    <ClInclude Include="convertmattowxbmp.h" />
     <ClInclude Include="FastRand.h" />
     <ClInclude Include="GlobalWorld.h" />
     <ClInclude Include="GoodnessFunction.h" />
@@ -233,6 +235,7 @@
     <ClInclude Include="Maps\ScreenFoveaMap.h" />
     <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="MonitorFrame.h" />
+    <ClInclude Include="OpenCVHelpers.h" />
     <ClInclude Include="Pattern.h" />
     <ClInclude Include="PatternConnection.h" />
     <ClInclude Include="PatternMatchingSystem.h" />
@@ -278,10 +281,13 @@
     <ClInclude Include="soloud\include\soloud_wavstream.h" />
     <ClInclude Include="SRS22.h" />
     <ClInclude Include="SRS22UIgen.h" />
+    <ClInclude Include="SRSUnitDisplay.h" />
     <ClInclude Include="SRSLog.h" />
     <ClInclude Include="SRSUnit.h" />
+    <ClInclude Include="SRSUnitDisplayModes.h" />
     <ClInclude Include="StringConversionHelpers.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TimeHelpers.h" />
     <ClInclude Include="tinyfloat.h" />
     <ClInclude Include="TopTextFrame.h" />
     <ClInclude Include="TopVideoFrame.h" />
@@ -297,10 +303,12 @@
     <ClInclude Include="WhiteboardFrame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bmpfromocvpanel.cpp" />
     <ClCompile Include="Brain.cpp" />
     <ClCompile Include="canvas.cpp" />
     <ClCompile Include="ConceptState.cpp" />
     <ClCompile Include="ConnectivityTriple.cpp" />
+    <ClCompile Include="convertmattowxbmp.cpp" />
     <ClCompile Include="FastRand.cpp" />
     <ClCompile Include="GlobalWorld.cpp" />
     <ClCompile Include="GoodnessFunction.cpp" />
@@ -321,6 +329,7 @@
     <ClCompile Include="Maps\ScreenFoveaMap.cpp" />
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
+    <ClCompile Include="OpenCVHelpers.cpp" />
     <ClCompile Include="Pattern.cpp" />
     <ClCompile Include="PatternConnection.cpp" />
     <ClCompile Include="PatternMatchingSystem.cpp" />
@@ -335,9 +344,11 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SRS22.cpp" />
     <ClCompile Include="SRS22UIgen.cpp" />
+    <ClCompile Include="SRSUnitDisplay.cpp" />
     <ClCompile Include="SRSLog.cpp" />
     <ClCompile Include="SRSUnit.cpp" />
     <ClCompile Include="StringConversionHelpers.cpp" />
+    <ClCompile Include="TimeHelpers.cpp" />
     <ClCompile Include="tinyfloat.cpp" />
     <ClCompile Include="TopTextFrame.cpp" />
     <ClCompile Include="TopVideoFrame.cpp" />

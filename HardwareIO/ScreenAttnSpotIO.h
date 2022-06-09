@@ -4,27 +4,33 @@
 
 /// <summary>
 /// Designates the screen attention spot, much like stearing the eye around the screen.
-/// Lets the ScreenFoveaMap know where we are looking.
+/// Lets the ScreenFoveaMap know where we are looking. Currently 128x128
 /// </summary>
 namespace SRS22 {
 	class ScreenAttnSpotIO : IOCommon
 	{
-		SRS22::Rect _rect;
-		SRS22::Point _p;
+		/// <summary>
+		/// Overall screen rect we must stay inside of.
+		/// </summary>
+		SRS22::Rect _screenRect;
+
+		void ForceOnScreen();
 	public:
+		Rect rect;
 
 		ScreenAttnSpotIO();
-		ScreenAttnSpotIO(Point p, Rect screenRect);
+		ScreenAttnSpotIO(Point p, int w, int h, Rect screenRect);
 		~ScreenAttnSpotIO();
 
-		SRS22::Rect& GetRect() { return _rect; }
+		const SRS22::Rect& GetScreenRect() { return _screenRect; }
+		const SRS22::Rect& GetRect() { return rect; }
 
 		/// <summary>
 		/// Where we are loolking within cameraRect.
 		/// </summary>
-		Point getPt() { return _p; }
-		Point setPt(Point& pt) { _p = pt; _rect.Clamp(_p);  return _p; }
-		virtual bool Init();
+		Point GetPt() { return Point(rect.X, rect.Y); }
+		void SetPt(Point& pt);
+		bool Init(Point p, int w, int h, Rect screenRect);
 		virtual void Shutdown();
 
 		/// <summary>

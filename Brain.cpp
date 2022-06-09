@@ -107,7 +107,6 @@ namespace SRS22 {
 
 	void Brain::Init() {
 		// Hardware I/O setups.
-		screenFovea.Init();
 		screenInput.Init();
 		audioInput.Init();
 		audioOut.Init();
@@ -117,8 +116,14 @@ namespace SRS22 {
 		whiteboardIn.Init();
 		whiteboardOut.Init();
 
+		// Virtual hardware devices.
+		screenFovea.Init(Point(screenInput.GetScreenWidth() / 2, screenInput.GetScreenHeight() / 2), 
+			127, 127, screenInput.GetScreenRect());
+
 		// All Map instances.
 		AddMap(make_shared<ScreenFoveaMap>());
+
+		// Anonymouse Maps
 
 		PostCreateAllSRSUnits();
 	}
@@ -170,6 +175,14 @@ namespace SRS22 {
 	void Brain::PostCreateAllSRSUnits() {
 		for (std::pair<std::string, std::shared_ptr<SRSUnit>> u : conceptMaps)
 			u.second->PostCreate(*this);
+	}
+
+	optional<shared_ptr<SRSUnit>> Brain::FindMapByName(string n) {
+		auto m = conceptMaps.find(n);
+		if (m != conceptMaps.end()) {
+			return m->second;
+		}
+		return std::nullopt;
 	}
 
 }

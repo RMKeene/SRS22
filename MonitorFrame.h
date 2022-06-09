@@ -39,11 +39,17 @@ namespace SRS22 {
 		void OnMapChoiceChange(wxCommandEvent& event) override;
 		void OnTestAClicked(wxCommandEvent& event) override;
 		void OnTestBClicked(wxCommandEvent& event) override;
+		void OnScrollMapMonitorMsSlider(wxScrollEvent& event) override;
+
+		void OnPaintFrame(wxPaintEvent& event) override;
+
+		void RefreshMapMonitor(long long timeTicks);
 
 		TopTextFrame* topTextFrame;
 		WhiteboardFrame* whiteboardFrame;
 		TopVideoFrame* topVideoFrame;
 
+		long long lastMapMonitorRefreshTime = 0;
 	};
 }
 

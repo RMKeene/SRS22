@@ -210,11 +210,18 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	ViewMapChoice->SetSelection( 0 );
 	bSizer10->Add( ViewMapChoice, 0, wxALL, 5 );
 	
+	refreshDelayMSText = new wxStaticText( sbSizer12->GetStaticBox(), wxID_ANY, wxT("Refresh 200 ms."), wxDefaultPosition, wxDefaultSize, 0 );
+	refreshDelayMSText->Wrap( -1 );
+	bSizer10->Add( refreshDelayMSText, 0, wxALL, 5 );
+	
+	mapMonitorRefreshDelay = new wxSlider( sbSizer12->GetStaticBox(), wxID_ANY, 200, 1, 1000, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	bSizer10->Add( mapMonitorRefreshDelay, 0, wxALL, 5 );
+	
 	
 	sbSizer12->Add( bSizer10, 1, wxEXPAND, 5 );
 	
-	m_bitmap3 = new wxStaticBitmap( sbSizer12->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( 128,128 ), 0 );
-	sbSizer12->Add( m_bitmap3, 0, wxALL, 5 );
+	chosenMapBitmap = new wxStaticBitmap( sbSizer12->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( 128,128 ), 0 );
+	sbSizer12->Add( chosenMapBitmap, 0, wxALL, 5 );
 	
 	
 	bSizer27->Add( sbSizer12, 0, wxEXPAND, 5 );
@@ -273,9 +280,11 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowActivate ) );
 	this->Connect( wxEVT_ACTIVATE_APP, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowActivateApp ) );
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MonitorFrameGen::OnMonitorWindowClose ) );
+	this->Connect( wxEVT_ERASE_BACKGROUND, wxEraseEventHandler( MonitorFrameGen::OnPaintFrameErase ) );
 	this->Connect( wxEVT_HIBERNATE, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowHibernate ) );
 	this->Connect( wxEVT_ICONIZE, wxIconizeEventHandler( MonitorFrameGen::OnMonitorWindowIconize ) );
 	this->Connect( wxEVT_IDLE, wxIdleEventHandler( MonitorFrameGen::OnMonitorWindowIdle ) );
+	this->Connect( wxEVT_PAINT, wxPaintEventHandler( MonitorFrameGen::OnPaintFrame ) );
 	RunButton->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRunToggleButton ), NULL, this );
 	MonitorStepButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnStep ), NULL, this );
 	ContinueButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnContinueButton ), NULL, this );
@@ -308,6 +317,15 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	videoOnOffButton->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnVideoOnOffToggle ), NULL, this );
 	ShowMapWindowButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNewMapMonitorWindow ), NULL, this );
 	ViewMapChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnMapChoiceChange ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
 	this->Connect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( MonitorFrameGen::OnMonitorFrameTickTimer ) );
 }
 
@@ -317,9 +335,11 @@ MonitorFrameGen::~MonitorFrameGen()
 	this->Disconnect( wxEVT_ACTIVATE, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowActivate ) );
 	this->Disconnect( wxEVT_ACTIVATE_APP, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowActivateApp ) );
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MonitorFrameGen::OnMonitorWindowClose ) );
+	this->Disconnect( wxEVT_ERASE_BACKGROUND, wxEraseEventHandler( MonitorFrameGen::OnPaintFrameErase ) );
 	this->Disconnect( wxEVT_HIBERNATE, wxActivateEventHandler( MonitorFrameGen::OnMonitorWindowHibernate ) );
 	this->Disconnect( wxEVT_ICONIZE, wxIconizeEventHandler( MonitorFrameGen::OnMonitorWindowIconize ) );
 	this->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MonitorFrameGen::OnMonitorWindowIdle ) );
+	this->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MonitorFrameGen::OnPaintFrame ) );
 	RunButton->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRunToggleButton ), NULL, this );
 	MonitorStepButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnStep ), NULL, this );
 	ContinueButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnContinueButton ), NULL, this );
@@ -352,6 +372,15 @@ MonitorFrameGen::~MonitorFrameGen()
 	videoOnOffButton->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnVideoOnOffToggle ), NULL, this );
 	ShowMapWindowButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNewMapMonitorWindow ), NULL, this );
 	ViewMapChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnMapChoiceChange ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
+	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
 	this->Disconnect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( MonitorFrameGen::OnMonitorFrameTickTimer ) );
 	
 }

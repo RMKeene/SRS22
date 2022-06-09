@@ -71,7 +71,9 @@ class MonitorFrameGen : public wxFrame
 		wxStaticBitmap* AudioOutFFTBitmapWidget;
 		wxButton* ShowMapWindowButton;
 		wxChoice* ViewMapChoice;
-		wxStaticBitmap* m_bitmap3;
+		wxStaticText* refreshDelayMSText;
+		wxSlider* mapMonitorRefreshDelay;
+		wxStaticBitmap* chosenMapBitmap;
 		wxStaticText* MonitorStatisticsLine1;
 		wxStaticText* MonitorStatisticsLine2;
 		wxStaticText* MonitorStatisticsLine3;
@@ -83,9 +85,11 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnMonitorWindowActivate( wxActivateEvent& event ) { event.Skip(); }
 		virtual void OnMonitorWindowActivateApp( wxActivateEvent& event ) { event.Skip(); }
 		virtual void OnMonitorWindowClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnPaintFrameErase( wxEraseEvent& event ) { event.Skip(); }
 		virtual void OnMonitorWindowHibernate( wxActivateEvent& event ) { event.Skip(); }
 		virtual void OnMonitorWindowIconize( wxIconizeEvent& event ) { event.Skip(); }
 		virtual void OnMonitorWindowIdle( wxIdleEvent& event ) { event.Skip(); }
+		virtual void OnPaintFrame( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnRunToggleButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStep( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnContinueButton( wxCommandEvent& event ) { event.Skip(); }
@@ -102,6 +106,7 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnVideoOnOffToggle( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNewMapMonitorWindow( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapChoiceChange( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnScrollMapMonitorMsSlider( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnMonitorFrameTickTimer( wxTimerEvent& event ) { event.Skip(); }
 		
 	

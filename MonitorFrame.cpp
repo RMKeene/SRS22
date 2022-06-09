@@ -2,6 +2,10 @@
 #include "Settings.h"
 #include "StringConversionHelpers.h"
 #include "GlobalWorld.h"
+#include "SRSUnitDisplay.h"
+#include <wx/dcclient.h>
+#include "convertmattowxbmp.h"
+#include "TimeHelpers.h"
 
 namespace SRS22 {
 
@@ -60,10 +64,31 @@ namespace SRS22 {
 
 	}
 
-	void MonitorFrame::OnMapChoiceChange(wxCommandEvent& event) {
-
+	void MonitorFrame::RefreshMapMonitor(long long timeTicks) {
+		if (ViewMapChoice->GetSelection() > 0) {
+			auto m = GlobalWorld::GlobalWorldInstance.GetBrain(0)->FindMapByName(ViewMapChoice->GetStringSelection());
+			auto M = m.value()->M;
+			auto chgs = M.charges;
+			int w = chgs.cols;
+			int h = chgs.rows;
+			if (chgs.dims == 3) {
+				w = chgs.size[2];
+				h = chgs.size[1];
+			}
+			wxBitmap bitmap(w, h, 24);
+			ConvertMatBitmapTowxBitmap_CV_32FC1(m.value()->M.charges, w, h, bitmap);
+			chosenMapBitmap->SetBitmap(bitmap);
+		}
+		else {
+			wxBitmap bitmap(64, 64, 24);
+			chosenMapBitmap->SetBitmap(bitmap);
+		}
+		lastMapMonitorRefreshTime = timeTicks;
 	}
 
+	void MonitorFrame::OnMapChoiceChange(wxCommandEvent& event) {
+		RefreshMapMonitor(SRS22::GetTimeTicksMs());
+	}
 
 	void MonitorFrame::OnRunToggleButton(wxCommandEvent& event) {
 		if (event.IsChecked())
@@ -124,9 +149,15 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
+		// Milliseconds since the epoc.
+		long long timeTicks = SRS22::GetTimeTicksMs();
 		GlobalWorld::GlobalWorldInstance.TickAll();
 		if (RunButton->GetValue()) {
 			topVideoFrame->TakeImage(*GlobalWorld::GlobalWorldInstance.GetBrain(0));
+		}
+
+		if (lastMapMonitorRefreshTime + mapMonitorRefreshDelay->GetValue() < timeTicks) {
+			RefreshMapMonitor(timeTicks);
 		}
 	}
 
@@ -134,6 +165,18 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnTestBClicked(wxCommandEvent& event) {
+	}
+
+	void MonitorFrame::OnScrollMapMonitorMsSlider(wxScrollEvent& event) {
+		RefreshMapMonitor(GetTimeTicksMs());
+		wxString ss;
+		refreshDelayMSText->SetLabel(ss.Format(wxT("Refresh %d ms."), mapMonitorRefreshDelay->GetValue()));
+	}
+
+	void MonitorFrame::OnPaintFrame(wxPaintEvent& event) {
+		//wxClientDC dc(this);
+		// draw some text
+		//dc.DrawText(wxT("Testing"), 40, 60);
 	}
 
 }

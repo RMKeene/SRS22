@@ -14,6 +14,9 @@ namespace SRS22 {
 		/// <param name="wcharOutSz"></param>
 		/// <returns></returns>
 		static int CharToWChar(const char * charIn, wchar_t * wcharOut, int wcharOutSz);
+
+		static std::wstring str_2_wstr(std::string& str);
+		static std::string wstr_2_str(std::wstring& str);
 	};
 
 }

@@ -6,6 +6,8 @@
 #include "GoodnessFunction.h"
 #include "ConnectivityTriple.h"
 #include "TransformFunction.h"
+#include "SRSUnitDisplayModes.h"
+#include "OpenCVHelpers.h"
 
 namespace SRS22 {
 
@@ -20,6 +22,12 @@ namespace SRS22 {
 		std::vector<std::shared_ptr<SRSUnit>> farMaps;
 
 		const unsigned short UID;
+
+		/// <summary>
+		/// How the Monitor app should display this Concept Map.
+		/// </summary>
+		SRSUnitDisplayModes displayMode = SRSUnitDisplayModes::COLOR;
+
 		/// <summary>
 		/// Brain location, 3D. Concept relevance location.
 		/// </summary>
@@ -32,6 +40,12 @@ namespace SRS22 {
 
 		ConceptState M;
 		ConceptState nextM;
+
+		const int Width() { if (M.charges.dims < 3) return M.charges.cols; else return M.charges.size[2]; }
+		const int Height() { if (M.charges.dims < 3) return M.charges.rows; else return M.charges.size[1]; }
+		const int Depth() { if (M.charges.dims < 3) return 1; else return M.charges.size[0]; }
+		const int CVType() { return M.charges.type(); }
+		const std::string CVTypeString() { return CVTypeToStr(M.charges.type()); }
 
 		/// <summary>
 		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap"
@@ -62,8 +76,8 @@ namespace SRS22 {
 		const int byteCount();
 
 		/// <summary>
-		/// Process all inputs and system state, comapre patterns, do transforms.
-		/// Do NOT change M, just cache next M state. Gets called in parallel for all SRSUnits.
+		/// Process all inputs and system state, compare patterns, do transforms.
+		/// Do NOT change M, just manipulate nextM state. Gets called in parallel for all SRSUnits.
 		/// </summary>
 		virtual void ComputeNextState();
 

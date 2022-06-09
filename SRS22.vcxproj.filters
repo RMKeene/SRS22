@@ -287,6 +287,24 @@
     <ClInclude Include="Point.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="SRSUnitDisplay.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="SRSUnitDisplayModes.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="bmpfromocvpanel.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="convertmattowxbmp.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeHelpers.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenCVHelpers.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -410,6 +428,21 @@
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
     <ClCompile Include="Rect.h">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SRSUnitDisplay.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="bmpfromocvpanel.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="convertmattowxbmp.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeHelpers.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenCVHelpers.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

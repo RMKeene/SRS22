@@ -77,6 +77,8 @@ namespace SRS22 {
 
 		void PostCreateAllSRSUnits();
 
+		optional<shared_ptr<SRSUnit>> FindMapByName(string n);
+
 
 	private:
 		void PreTick();

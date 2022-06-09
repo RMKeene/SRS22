@@ -3,7 +3,7 @@
 
 namespace SRS22 {
 	/// <summary>
-	/// Raw pixel map of center of screen fovea in color.
+	/// Raw pixel map of center of screen fovea in color. 8x8 in the center of the ScreenAttnSpot.
 	/// </summary>
 	class ScreenFoveaMap : public SRSUnit
 	{
