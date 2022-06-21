@@ -308,6 +308,12 @@
     <ClInclude Include="Maps\RandomMap.h">
       <Filter>Source\Maps</Filter>
     </ClInclude>
+    <ClInclude Include="Maps\CameraFoveaMap.h">
+      <Filter>Source\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32Helpers.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -450,6 +456,12 @@
     </ClCompile>
     <ClCompile Include="Maps\RandomMap.cpp">
       <Filter>Source\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\CameraFoveaMap.cpp">
+      <Filter>Source\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32Helpers.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@
 #include "../Rect.h"
 
 /// <summary>
-/// Designates the screen attention spot, much like stearing the eye around the screen.
+/// Designates the screen attention spot, much like steering the eye around the screen.
 /// Lets the ScreenFoveaMap know where we are looking. Currently 128x128
 /// </summary>
 namespace SRS22 {
@@ -26,7 +26,7 @@ namespace SRS22 {
 		const SRS22::Rect& GetRect() { return rect; }
 
 		/// <summary>
-		/// Where we are loolking within cameraRect.
+		/// Where we are loolking within screenRect.
 		/// </summary>
 		Point GetPt() { return Point(rect.X, rect.Y); }
 		void SetPt(Point& pt);

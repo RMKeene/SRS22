@@ -18,6 +18,26 @@ namespace SRS22 {
 		}
 	}
 
+	int VideoHelper::GetCameraWidthWin32() {
+		if (cap == nullptr)
+			cap = new VideoCapture(0);
+		if (!cap->isOpened()) {
+			return 0;
+		}
+
+		return cap->get(CAP_PROP_FRAME_WIDTH);
+	}
+
+	int VideoHelper::GetCameraHeightWin32() {
+		if (cap == nullptr)
+			cap = new VideoCapture(0);
+		if (!cap->isOpened()) {
+			return 0;
+		}
+
+		return cap->get(CAP_PROP_FRAME_HEIGHT);
+	}
+
 	bool VideoHelper::CaptureFrame() {
 		if (cap == nullptr)
 			cap = new VideoCapture(0);
@@ -29,8 +49,8 @@ namespace SRS22 {
 		previousImage = currentImage;
 		*cap >> currentImage;
 		if (!currentImage.empty()) {
-			// cv::String ts = cv::typeToString(currentImage.type());
-			//imshow("SRS22 Video & Audio", currentImage);
+			//cv::String ts = cv::typeToString(currentImage.type()); // "CV_8UC3"
+			//imshow(ts, currentImage);
 
 			cv::Size sz = currentImage.size();
 			int imageWidth = sz.width;

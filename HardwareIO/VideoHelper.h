@@ -20,6 +20,13 @@ namespace SRS22 {
         void Shutdown();
 
         /// <summary>
+        /// Hardware get witdth. Returns 0 on fail.
+        /// </summary>
+        /// <returns></returns>
+        int GetCameraWidthWin32();
+        int GetCameraHeightWin32();
+
+        /// <summary>
         /// The whole open and capture. Only opes if needed. First call is rather sloooooow, then fast after that.
         /// </summary>
         bool CaptureFrame();

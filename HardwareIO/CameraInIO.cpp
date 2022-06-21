@@ -1,4 +1,5 @@
 #include "CameraInIO.h"
+#include "../OpenCVHelpers.h"
 
 namespace SRS22 {
     CameraInIO::CameraInIO() : IOCommon() {
@@ -12,6 +13,8 @@ namespace SRS22 {
 
     bool CameraInIO::Init() {
         IOCommon::Init();
+        w = GetCameraWidthWin32();
+        h = GetCameraHeightWin32();
         return true;
     }
 
@@ -33,8 +36,21 @@ namespace SRS22 {
 
     }
 
+    int CameraInIO::GetCameraWidthWin32() {
+        return vidHelper.GetCameraWidthWin32();
+    }
+
+    int CameraInIO::GetCameraHeightWin32() {
+        return vidHelper.GetCameraHeightWin32();
+    }
+
     bool CameraInIO::AcquireFrame() {
         return vidHelper.CaptureFrame();
+    }
+
+    void CameraInIO::GetSubRect(cv::Mat& outM, const SRS22::Rect& region) {
+        // current image is CV_8UC3
+        OpenCVHelpers::CVGetSubRectRGB(vidHelper.currentImage, outM, region);
     }
 
 

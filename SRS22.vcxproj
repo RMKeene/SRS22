@@ -232,6 +232,7 @@
     <ClInclude Include="HardwareIO\WhiteboardInIO.h" />
     <ClInclude Include="HardwareIO\WhiteboardOutIO.h" />
     <ClInclude Include="ini.h" />
+    <ClInclude Include="Maps\CameraFoveaMap.h" />
     <ClInclude Include="Maps\RandomMap.h" />
     <ClInclude Include="Maps\ScreenFoveaMap.h" />
     <ClInclude Include="MatchSelector.h" />
@@ -302,6 +303,7 @@
     <ClInclude Include="ui\ColorSquare16White.bmp.h" />
     <ClInclude Include="ui\ColorSquare16Yellow.bmp.h" />
     <ClInclude Include="WhiteboardFrame.h" />
+    <ClInclude Include="Win32Helpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bmpfromocvpanel.cpp" />
@@ -327,6 +329,7 @@
     <ClCompile Include="HardwareIO\WaveOutputHelper.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardInIO.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardOutIO.cpp" />
+    <ClCompile Include="Maps\CameraFoveaMap.cpp" />
     <ClCompile Include="Maps\RandomMap.cpp" />
     <ClCompile Include="Maps\ScreenFoveaMap.cpp" />
     <ClCompile Include="MatchSelector.cpp" />
@@ -356,6 +359,7 @@
     <ClCompile Include="TopVideoFrame.cpp" />
     <ClCompile Include="TransformFunction.cpp" />
     <ClCompile Include="WhiteboardFrame.cpp" />
+    <ClCompile Include="Win32Helpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SRS22.rc" />

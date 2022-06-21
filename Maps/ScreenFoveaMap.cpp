@@ -23,7 +23,8 @@ namespace SRS22 {
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		auto fovea = IOCommon::GetIO<ScreenAttnSpotIO>();
-		screenIn->GetSubRect(nextM.charges, Rect(Width(), Height(), fovea->GetPt()));
+		Rect r(Width(), Height(), fovea->GetPt());
+		screenIn->GetSubRect(nextM.charges, r);
 		//std::string ss = CVMatrixInfo(nextM.charges);
 		//ss = CVMatrixInfo(screenIn->currentScreen);
 	}

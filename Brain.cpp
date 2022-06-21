@@ -6,6 +6,7 @@
 #include <ppl.h>
 #include "Maps/ScreenFoveaMap.h"
 #include "Maps/RandomMap.h"
+#include "Maps/CameraFoveaMap.h"
 
 using namespace concurrency;
 
@@ -42,11 +43,12 @@ namespace SRS22 {
 	}
 
 	void Brain::PreTick() {
-		screenFovea.PreTick();
 		screenInput.PreTick();
+		screenFovea.PreTick();
 		audioInput.PreTick();
 		audioOut.PreTick();
 		cameraInput.PreTick();
+		cameraFovea.PreTick();
 		textIn.PreTick();
 		textOut.PreTick();
 		whiteboardIn.PreTick();
@@ -58,6 +60,7 @@ namespace SRS22 {
 		screenInput.PostTick();
 		audioInput.PostTick();
 		audioOut.PostTick();
+		cameraFovea.PostTick();
 		cameraInput.PostTick();
 		textIn.PostTick();
 		textOut.PostTick();
@@ -120,11 +123,14 @@ namespace SRS22 {
 		whiteboardOut.Init();
 
 		// Virtual hardware devices.
-		screenFovea.Init(Point(screenInput.GetScreenWidth() / 2, screenInput.GetScreenHeight() / 2), 
+		screenFovea.Init(Point(screenInput.GetScreenWidth() / 2, screenInput.GetScreenHeight() / 2),
 			127, 127, screenInput.GetScreenRect());
+		cameraFovea.Init(Point(cameraInput.GetCameraWidth() / 2, cameraInput.GetCameraHeight() / 2),
+			64, 64, cameraInput.GetCameraRect());
 
 		// All Map instances.
 		AddMap(make_shared<ScreenFoveaMap>());
+		AddMap(make_shared<CameraFoveaMap>());
 		AddMap(make_shared<RandomMap>());
 
 		// Anonymouse Maps

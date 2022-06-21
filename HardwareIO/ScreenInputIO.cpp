@@ -1,6 +1,7 @@
 #include "../pch.h"
 #include "ScreenInputIO.h"
 #include "../Point.h"
+#include "../OpenCVHelpers.h"
 
 namespace SRS22 {
 
@@ -269,14 +270,6 @@ namespace SRS22 {
 		return 0;
 	}
 
-	void ScreenInputIO::DumpCurrentScreenSnapshot(LPCTSTR fname) {
-		HDC hDC = GetDC(nullptr);
-		PBITMAPINFO bi = CreateBitmapInfoStruct(snapshotData);
-		CreateBMPFile((LPTSTR)fname, bi, snapshotData, hDC);
-		DeleteObject(bi);
-		DeleteDC(hDC);
-	}
-
 	bool ScreenInputIO::IsCorrectSize(cv::Mat& m) {
 		return !m.empty() && m.rows == h && m.cols == w;
 	}
@@ -295,48 +288,7 @@ namespace SRS22 {
 		return currentScreen;
 	}
 
-	void ScreenInputIO::GetSubRect(cv::Mat& outM, const Rect& region) {
-		// currentScreen is CV_8UC4 data.
-
-		if (outM.type() == CV_32FC1) {
-			if (outM.dims == 3) {
-				if (outM.size[0] == 3) {
-					int outMw = outM.size[2];
-					int outMh = outM.size[1];
-					int outMd = outM.size[0];
-					for (int y = region.top(); y < region.bottom(); y++) {
-						const int yy = y - region.Y;
-						for (int x = region.left(); x < region.right(); x++) {
-							const int xx = x - region.X;
-							const cv::Vec4b n = currentScreen.at<cv::Vec4b>(y, x);
-							//int n0 = n[0];
-							//int n1 = n[1];
-							//int n2 = n[2];
-							outM.at<float>(0, yy, xx) = n[0] / 255.0f;
-							outM.at<float>(1, yy, xx) = n[1] / 255.0f;
-							outM.at<float>(2, yy, xx) = n[2] / 255.0f;
-						}
-					}
-				}
-				else if (outM.size[0] == 1) {
-					for (int y = region.top(); y < region.bottom(); y++) {
-						for (int x = region.left(); x < region.right(); x++) {
-							const cv::Vec4b n = currentScreen.at<cv::Vec4b>(y, x);
-							const float vv = (n[0] / 255.0f + n[1] / 255.0f + n[2] / 255.0f) / 3.0f;
-							outM.at<float>(0, y, x) = vv;
-						}
-					}
-				}
-				else {
-					throw std::logic_error("dims = 3, size[0] not 1 or 3 - TODO Implement this.");
-				}
-			}
-			else {
-				throw std::logic_error("Unimplemented GetSubRect out data type. dims != 3 - TODO Implement this.");
-			}
-		}
-		else {
-			throw std::logic_error("Unimplemented GetSubRect out data type. not type CV_32FC1. - TODO implement this.");
-		}
+	void ScreenInputIO::GetSubRect(cv::Mat& outM, const SRS22::Rect& region) {
+		OpenCVHelpers::CVGetSubRectRGB(currentScreen, outM, region);
 	}
 }

@@ -3,30 +3,34 @@
 #include "../Rect.h"
 
 /// <summary>
-/// Designates the attention spot, much like stearing the camera with motors.
+/// Designates the attention spot, much like steering the camera with motors.
 /// Lets the CameraFoveaMap know where we are looking.
 /// </summary>
 namespace SRS22 {
 	class CameraAttnSpotIO : IOCommon
 	{
-		Point _p;
 		/// <summary>
-		/// The whole camera scene rectangle, e.g. 640 x 480
+		/// Overall camera rect we must stay inside of.
 		/// </summary>
-		Rect _rect;
+		SRS22::Rect _cameraRect;
 
+		void ForceOnScreen();
 	public:
+		Rect rect;
+
 		CameraAttnSpotIO();
-		CameraAttnSpotIO(Point p, Rect cameraRect);
+		CameraAttnSpotIO(Point p, int w, int h, Rect cameraRect);
 		~CameraAttnSpotIO();
+
+		const SRS22::Rect& GetScreenRect() { return _cameraRect; }
+		const SRS22::Rect& GetRect() { return rect; }
 
 		/// <summary>
 		/// Where we are loolking within cameraRect.
 		/// </summary>
-		Point getPt() { return _p; }
-		Point setPt(Point& pt) { _p = pt; _rect.Clamp(_p);  return _p; }
-
-		virtual bool Init();
+		Point GetPt() { return Point(rect.X, rect.Y); }
+		void SetPt(Point& pt);
+		bool Init(Point p, int w, int h, Rect cameraRect);
 		virtual void Shutdown();
 
 		/// <summary>

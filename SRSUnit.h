@@ -45,7 +45,7 @@ namespace SRS22 {
 		const int Height() { if (M.charges.dims < 3) return M.charges.rows; else return M.charges.size[1]; }
 		const int Depth() { if (M.charges.dims < 3) return 1; else return M.charges.size[0]; }
 		const int CVType() { return M.charges.type(); }
-		const std::string CVTypeString() { return CVTypeToStr(M.charges.type()); }
+		const std::string CVTypeString() { return OpenCVHelpers::CVTypeToStr(M.charges.type()); }
 
 		/// <summary>
 		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap"

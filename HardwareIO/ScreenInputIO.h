@@ -49,7 +49,7 @@ namespace SRS22 {
 		int GetScreenHeightWin32();
 
 		/// <summary>
-		/// Get screen size as cached.
+		/// Get screen size, as cached. Init sets up the cached values.
 		/// </summary>
 		/// <returns></returns>
 		int GetScreenWidth() { return w; }
@@ -82,13 +82,11 @@ namespace SRS22 {
 		cv::Mat& GetCurrentScreenRaw();
 
 		/// <summary>
-		/// Copy a sub rectangle from screen to outM.
+		/// Copy a sub rectangle from current screen to outM.
 		/// </summary>
 		/// <param name="outM"></param>
 		/// <param name="centerPoint"></param>
 		void GetSubRect(cv::Mat& outM, const Rect& region);
-
-		void DumpCurrentScreenSnapshot(LPCTSTR fname);
 
 		/// <summary>
 		/// Does a cv::imshow on the current screen.
