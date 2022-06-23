@@ -73,6 +73,9 @@ class MonitorFrameGen : public wxFrame
 		wxChoice* ViewMapChoice;
 		wxStaticText* refreshDelayMSText;
 		wxSlider* mapMonitorRefreshDelay;
+		wxStaticText* chosenMapText1;
+		wxStaticText* chosenMapText2;
+		wxStaticText* chosenMapText3;
 		wxStaticBitmap* chosenMapBitmap;
 		wxStaticText* MonitorStatisticsLine1;
 		wxStaticText* MonitorStatisticsLine2;

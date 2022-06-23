@@ -22,14 +22,31 @@ namespace SRS22 {
 		CameraAttnSpotIO(Point p, int w, int h, Rect cameraRect);
 		~CameraAttnSpotIO();
 
-		const SRS22::Rect& GetScreenRect() { return _cameraRect; }
-		const SRS22::Rect& GetRect() { return rect; }
-
+		const Rect& GetCameraRect() { return _cameraRect; }
 		/// <summary>
-		/// Where we are loolking within cameraRect.
+		/// Where we are looking at in the Camera Rect.
 		/// </summary>
-		Point GetPt() { return Point(rect.X, rect.Y); }
+		/// <returns></returns>
+		const Rect& GetRect() { return rect; }
+		/// <summary>
+		/// Where we are loolking within Camera Rect. The center point of rect.
+		/// </summary>
+		Point GetPt() { return Point(rect.CenterX(), rect.CenterY()); }
+		/// <summary>
+		/// Set the centr of attention in the camera.
+		/// </summary>
+		/// <param name="pt"></param>
 		void SetPt(Point& pt);
+		/// <summary>
+		/// Set the centr of attention in the camera.
+		/// </summary>
+		/// <param name="pt"></param>
+		void SetPt(const int x, const int y);
+		/// <summary>
+		/// Set the centr of attention in the camera.
+		/// </summary>
+		/// <param name="pt"></param>
+		void SetPt(const float x, const float y);
 		bool Init(Point p, int w, int h, Rect cameraRect);
 		virtual void Shutdown();
 

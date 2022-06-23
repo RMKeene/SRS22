@@ -10,7 +10,7 @@ namespace SRS22 {
 		SRSUnit("ScreenFoveaMap", 
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100), 
 			cv::Vec3f(0.0, 0.0, 0.0), 
-			3, ScreenFoveaMap_Width, ScreenFoveaMap_Height,
+			3, ScreenFoveaMap_Height, ScreenFoveaMap_Width,
 			"Raw pixel map of center of screen fovea in color.") {
 	}
 

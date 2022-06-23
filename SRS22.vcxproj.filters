@@ -314,6 +314,9 @@
     <ClInclude Include="Win32Helpers.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Maps\CameraAttnSpotMap.h">
+      <Filter>Source\Maps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -462,6 +465,9 @@
     </ClCompile>
     <ClCompile Include="Win32Helpers.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\CameraAttnSpotMap.cpp">
+      <Filter>Source\Maps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

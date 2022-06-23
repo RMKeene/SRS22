@@ -8,10 +8,15 @@ namespace SRS22 {
 	class ConceptState
 	{
 	public:
+		/// <summary>
+		/// The charges of this ConceptState. In general a charge is range 0.0f to 1.0f. 
+		/// Possibly can be a little outside of that range. Weights of connections can be positive or negative,
+		/// thus we get stimulation and inhibition.
+		/// </summary>
+		const float MinCharge = 0.0f;
+		const float MaxCharge = 1.0f;
 
 		/// <summary>
-		/// The charges of this ConceptState. 
-		/// 
 		/// cv::Mat works with reverse order layers, rows, cols or Z, Y, X or depth, height, width.
 		/// sv::Mat.size() return a 1 or 2 or 3 element array of axis sizes in the above orders.
 		/// </summary>

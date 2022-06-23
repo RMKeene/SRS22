@@ -111,7 +111,9 @@ bool ConvertMatBitmapTowxBitmap_CV_8UC3(const cv::Mat& matBitmap, wxBitmap& bitm
 	return bitmap.IsOk();
 }
 
-bool ConvertMatBitmapTowxBitmap_CV_32FC1(const cv::Mat& matBitmap, const int w, const int h, wxBitmap& bitmap, float scale)
+bool ConvertMatBitmapTowxBitmap_CV_32FC1(
+	const cv::Mat& matBitmap, const int w, const int h, wxBitmap& bitmap, 
+	const float pixelScale, const float scaleX, const float scaleY)
 {
 	wxCHECK(!matBitmap.empty(), false);
 	wxCHECK(matBitmap.type() == CV_32FC1, false);
@@ -130,9 +132,9 @@ bool ConvertMatBitmapTowxBitmap_CV_32FC1(const cv::Mat& matBitmap, const int w, 
 
 			for (int col = 0; col < w; ++col, ++pixelDataIt)
 			{
-				pixelDataIt.Blue() = matBitmap.at<float>(0, row, col) * scale;
-				pixelDataIt.Green() = matBitmap.at<float>(1, row, col) * scale;
-				pixelDataIt.Red() = matBitmap.at<float>(2, row, col) * scale;
+				pixelDataIt.Blue() = matBitmap.at<float>(0, row / scaleY, col / scaleX) * pixelScale;
+				pixelDataIt.Green() = matBitmap.at<float>(1, row / scaleY, col / scaleX) * pixelScale;
+				pixelDataIt.Red() = matBitmap.at<float>(2, row / scaleY, col / scaleX) * pixelScale;
 			}
 		}
 	}
@@ -143,10 +145,11 @@ bool ConvertMatBitmapTowxBitmap_CV_32FC1(const cv::Mat& matBitmap, const int w, 
 
 			for (int col = 0; col < w; ++col, ++pixelDataIt)
 			{
-				pixelDataIt.Red() = 
-					pixelDataIt.Green() = 
-					pixelDataIt.Blue() = matBitmap.at<float>(0, row, col) * scale;
-
+				float vv = matBitmap.at<float>(row / scaleY, col / scaleX)* pixelScale;
+				const unsigned char cc = vv;
+				pixelDataIt.Red() = cc;
+				pixelDataIt.Green() = cc;
+				pixelDataIt.Blue() = cc;
 			}
 		}
 	}

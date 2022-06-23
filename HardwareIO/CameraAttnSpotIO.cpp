@@ -49,4 +49,14 @@ namespace SRS22 {
 		ForceOnScreen();
 	}
 
+	void CameraAttnSpotIO::SetPt(const int x, const int y) {
+		rect.CenterOn(x, y);
+		ForceOnScreen();
+	}
+
+	void CameraAttnSpotIO::SetPt(const float x, const float y) {
+		rect.CenterOn((const int)x, (const int)y);
+		ForceOnScreen();
+	}
+
 }

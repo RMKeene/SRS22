@@ -25,7 +25,9 @@ namespace SRS22 {
 		const int bottom() const { return Y + height; }
 		const int halfW() const { return halfWidth; }
 		const int halfH() const { return halfHeight; }
-		Point Center() { return Point(X - halfWidth, Y - halfHeight); }
+		Point Center() { return Point(X + halfWidth, Y + halfHeight); }
+		const int CenterX() { return X + halfWidth; }
+		const int CenterY() { return Y + halfHeight; }
 
 		Rect() : X(0), Y(0), width(0), height(0), halfWidth(0 / 2), halfHeight(0 / 2) { }
 
@@ -107,8 +109,13 @@ namespace SRS22 {
 		}
 
 		void CenterOn(const Point& p) {
-			X = p.X - halfWidth;
-			Y = p.Y - halfHeight;
+			X = p.X + halfWidth;
+			Y = p.Y + halfHeight;
+		}
+
+		void CenterOn(const int x, const int y) {
+			X = x + halfWidth;
+			Y = y + halfHeight;
 		}
 
 		cv::Rect toOpenCVRect() const {

@@ -75,14 +75,45 @@ namespace SRS22 {
 				w = chgs.size[2];
 				h = chgs.size[1];
 			}
+
+			float scaleX = 1.0f;
+			float scaleY = 1.0f;
+			if (w < 64) { 
+				scaleX = 64.0f / (float)w;
+				w = 64; 
+			}
+			if (h < 64) {
+				scaleY = 64.0f / (float)h;
+				h = 64;
+			}
+
 			wxBitmap bitmap(w, h, 24);
-			ConvertMatBitmapTowxBitmap_CV_32FC1(m.value()->M.charges, w, h, bitmap);
+			ConvertMatBitmapTowxBitmap_CV_32FC1(m.value()->M.charges, w, h, bitmap, 255.0f, scaleX, scaleY);
+			// Scale bitmap if very small for easier visualization of small maps, e.g. a 2 x 1 map or 1 x 1 map.
 			chosenMapBitmap->SetBitmap(bitmap);
 			chosenMapBitmap->Refresh();
+
+			std::shared_ptr<SRSUnit> mv = m.value();
+			wxString s;
+			s << "[" << mv->Width() << 
+				", " << mv->Height() << 
+				", " << mv->Depth() << "]";
+			s << " at [" << mv->location[0] << ", " << mv->location[1] << ", " << mv->location[2] << "]";
+			chosenMapText1->SetLabelText(s);
+
+			s.Clear();
+			s << "CTrip [" << mv->ctrip.A << ", " << mv->ctrip.B << ", " << mv->ctrip.C << "]";
+			s << " Mtchs " << mv->matchSystem.knownPatterns.size();
+			chosenMapText2->SetLabelText(s);
+
+			chosenMapText3->SetLabel(mv->MapDescription);
+			
 		}
 		else {
 			wxBitmap bitmap(64, 64, 24);
 			chosenMapBitmap->SetBitmap(bitmap);
+			chosenMapText1->SetLabelText("No Map");
+			chosenMapText2->SetLabelText("Selected");
 		}
 		lastMapMonitorRefreshTime = timeTicks;
 	}

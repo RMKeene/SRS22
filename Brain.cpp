@@ -7,6 +7,7 @@
 #include "Maps/ScreenFoveaMap.h"
 #include "Maps/RandomMap.h"
 #include "Maps/CameraFoveaMap.h"
+#include "Maps/CameraAttnSpotMap.h"
 
 using namespace concurrency;
 
@@ -128,13 +129,15 @@ namespace SRS22 {
 		cameraFovea.Init(Point(cameraInput.GetCameraWidth() / 2, cameraInput.GetCameraHeight() / 2),
 			64, 64, cameraInput.GetCameraRect());
 
-		// All Map instances.
-		AddMap(make_shared<ScreenFoveaMap>());
+		// All Map instances. Keep in alphabetical order please.
 		AddMap(make_shared<CameraFoveaMap>());
+		AddMap(make_shared<CameraAttnSpotMap>());
 		AddMap(make_shared<RandomMap>());
+		AddMap(make_shared<ScreenFoveaMap>());
 
 		// Anonymouse Maps
 
+		// Compile the SRS system relationships.
 		PostCreateAllSRSUnits();
 	}
 

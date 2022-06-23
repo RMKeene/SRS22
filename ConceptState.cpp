@@ -4,11 +4,13 @@
 namespace SRS22 {
 
 	ConceptState::ConceptState(int cols) {
-		charges.create(cols, 1, CV_32FC1);
+		charges.create(1, cols, CV_32FC1);
+		cv::randu(charges, 0.0f, 1.0f);
 	}
 
 	ConceptState::ConceptState(int rows, int cols) {
 		charges.create(rows, cols, CV_32FC1);
+		cv::randu(charges, 0.0f, 1.0f);
 	}
 
 	ConceptState::ConceptState(int layers, int rows, int cols) {
@@ -17,6 +19,7 @@ namespace SRS22 {
 		out[1] = rows;
 		out[2] = cols;
 		charges.create(3, out, CV_32FC1);
+		cv::randu(charges, 0.0f, 1.0f);
 	}
 
 	ConceptState::~ConceptState() {

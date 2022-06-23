@@ -43,7 +43,20 @@ class wxBitmap;
 */
 bool ConvertMatBitmapTowxBitmap_CV_8UC3(const cv::Mat& matBitmap, wxBitmap& bitmap);
 
+/// <summary>
+/// pixelScale is the pixel value conversion, e.g. convert neuron 0.0 to 1.0 to RGB 0 to 255.
+/// scaleX and scaleY are how much the image is scalled. Default is 1.0 for both, but you can
+/// scale very small concept maps up for the UI. See use in MonitorFrame.cpp
+/// </summary>
+/// <param name="matBitmap"></param>
+/// <param name="w"></param>
+/// <param name="h"></param>
+/// <param name="bitmap"></param>
+/// <param name="pixelScale"></param>
+/// <param name="scaleX"></param>
+/// <param name="scaleY"></param>
+/// <returns></returns>
 bool ConvertMatBitmapTowxBitmap_CV_32FC1(const cv::Mat& matBitmap, const int w, const int h, 
-    wxBitmap& bitmap, float scale = 255.0f);
+    wxBitmap& bitmap, const float pixelScale = 255.0f, const float scaleX = 1.0f, const float scaleY = 1.0f);
 
 #endif // #ifndef CONVERTMATTOWXBMP_H

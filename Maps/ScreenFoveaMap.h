@@ -13,7 +13,7 @@ namespace SRS22 {
 	public:
 		/// <summary>
 		/// implemented as 
-		/// SRSUnit("ScreenFoveaMap", ctrip, location, 3, ScreenFoveaMap_Width, ScreenFoveaMap_Height, 
+		/// SRSUnit("ScreenFoveaMap", ctrip, location, 3, ScreenFoveaMap_Height, ScreenFoveaMap_Width, 
 		///     "Raw pixel map of center of screen fovea in color.") {
 		/// </summary>
 		ScreenFoveaMap();
