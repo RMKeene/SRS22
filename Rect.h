@@ -121,6 +121,12 @@ namespace SRS22 {
 		cv::Rect toOpenCVRect() const {
 			return cv::Rect(X, Y, width, height);
 		}
+
+		wxRect toWxRect() const {
+			return wxRect(X, Y, width, height);
+		}
+
+
 	};
 
 }

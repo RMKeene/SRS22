@@ -9,6 +9,13 @@
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
 
+// For compilers that support precompilation, includes "wx/wx.h".
+#include "wx/wxprec.h"
+
+
+#ifndef WX_PRECOMP
+#include "wx/wx.h"
+#endif
 #include "wx/scrolwin.h"
 
 //-----------------------------------------------------------------------------
@@ -16,6 +23,13 @@
 //-----------------------------------------------------------------------------
 
 namespace SRS22 {
+
+    class MyCanvas;
+
+    class MyCanvasPainter {
+    public:
+        virtual void OnPostPaint(wxPaintDC* DC, wxPaintEvent& event) = 0;
+    };
 
     class MyCanvas : public wxWindow
     {
@@ -37,6 +51,12 @@ namespace SRS22 {
         /// Also defines the "current color" to draw with.
         /// </summary>
         wxBrush currentBrush;
+
+        /// <summary>
+        /// The canvas may have zero or one callback at the end of OnPaint
+        /// to allow a owenr to draw something. 
+        /// </summary>
+        MyCanvasPainter* OnPaintPostListener = NULL;
 
     private:
         wxBitmap m_bmpSmileXpm;

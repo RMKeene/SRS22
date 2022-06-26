@@ -31,6 +31,7 @@
 #include <wx/richtext/richtextctrl.h>
 #include <wx/timer.h>
 #include <wx/frame.h>
+#include <wx/checkbox.h>
 #include <wx/bmpbuttn.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -129,6 +130,7 @@ class TopVideoFrameGen : public wxFrame
 	private:
 	
 	protected:
+		wxCheckBox* cameraFoveaSoptCB;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }
@@ -138,7 +140,7 @@ class TopVideoFrameGen : public wxFrame
 	public:
 		wxBoxSizer* TopVideoFrameVertLayout;
 		
-		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,520 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,545 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~TopVideoFrameGen();
 	

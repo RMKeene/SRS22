@@ -8,14 +8,6 @@
 // Licence:     wxWindows licence
 ///////////////////////////////////////////////////////////////////////////////
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
-
-
-#ifndef WX_PRECOMP
-#include "wx/wx.h"
-#endif
-
 #include "wx/image.h"
 #include "wx/file.h"
 #include "wx/filename.h"
@@ -81,7 +73,7 @@ namespace SRS22 {
 		// do nothing
 	}
 
-	void MyCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
+	void MyCanvas::OnPaint(wxPaintEvent& event)
 	{
 		wxPaintDC dc(this);
 		PrepareDC(dc);
@@ -94,6 +86,9 @@ namespace SRS22 {
 		//dc.DrawRectangle(150, 30, 100, 100);
 		//dc.SetBrush(*wxWHITE_BRUSH);
 		//dc.DrawRectangle(170, 50, 60, 60);
+
+		if (OnPaintPostListener)
+			OnPaintPostListener->OnPostPaint(&dc, event);
 	}
 
 	void MyCanvas::OnMouseLeft(wxMouseEvent& event) {

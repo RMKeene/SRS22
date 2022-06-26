@@ -413,6 +413,17 @@ TopVideoFrameGen::TopVideoFrameGen( wxWindow* parent, wxWindowID id, const wxStr
 	
 	TopVideoFrameVertLayout = new wxBoxSizer( wxVERTICAL );
 	
+	wxBoxSizer* bSizer12;
+	bSizer12 = new wxBoxSizer( wxHORIZONTAL );
+	
+	bSizer12->SetMinSize( wxSize( -1,24 ) ); 
+	cameraFoveaSoptCB = new wxCheckBox( this, wxID_ANY, wxT("Fovea Spot"), wxDefaultPosition, wxDefaultSize, 0 );
+	cameraFoveaSoptCB->SetValue(true); 
+	bSizer12->Add( cameraFoveaSoptCB, 0, wxALL, 5 );
+	
+	
+	TopVideoFrameVertLayout->Add( bSizer12, 0, wxEXPAND, 1 );
+	
 	
 	this->SetSizer( TopVideoFrameVertLayout );
 	this->Layout();
