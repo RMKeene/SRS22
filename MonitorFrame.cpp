@@ -18,7 +18,6 @@ namespace SRS22 {
 		topTextFrame->Show(true);
 		topVideoFrame = new TopVideoFrame(this);
 		topVideoFrame->Show(true);
-
 	}
 
 	MonitorFrame::~MonitorFrame() {

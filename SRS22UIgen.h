@@ -130,7 +130,6 @@ class TopVideoFrameGen : public wxFrame
 	private:
 	
 	protected:
-		wxCheckBox* cameraFoveaSoptCB;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }
@@ -139,6 +138,7 @@ class TopVideoFrameGen : public wxFrame
 	
 	public:
 		wxBoxSizer* TopVideoFrameVertLayout;
+		wxCheckBox* cameraFoveaSoptCB;
 		
 		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,545 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
