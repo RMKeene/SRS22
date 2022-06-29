@@ -10,6 +10,10 @@ namespace SRS22 {
 	/// go through a IOCommon derrived class. The Brain overall system never talks to hardware such as Win32 
 	/// audio code directly. In general low level hardware classes end in ...Helper, such as WaveOutputHelper.h 
 	/// 
+	/// Often IOCommon subclasses calculate matricies used by more than one Map for processing.
+	/// This tries to reduce recalculation of effects. E.g. previous and 
+	/// current camera frame low resolution.
+	/// 
 	/// IOCommon sub class instances are all registered by class name in a global map, use 
 	/// static IOCommon* GetIO(const std::string ioClassNm) to get at them. In the Brain creator and Barin::Init the 
 	/// IOCommons get set up. There are never more than one instance of a IOCommon sub class.

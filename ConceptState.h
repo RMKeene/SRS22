@@ -63,6 +63,13 @@ namespace SRS22 {
 
 		static void Copy(ConceptState& fromM, ConceptState& toM);
 
+		/// <summary>
+		/// Decay all charges toward V. Each time tick V += (chargeValue - V) * relaxationRate;
+		/// </summary>
+		/// <param name="V"></param>
+		/// <param name="relaxationRate"></param>
+		void RelaxTowardValue(const float V, const float relaxationRate = 1.0f);
+
 		virtual std::string Debug();
 	};
 

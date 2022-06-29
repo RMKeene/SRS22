@@ -12,6 +12,18 @@ namespace SRS22 {
 		int w = 0;
 		int h = 0;
 
+		/// 3 x 480(rows) x 640(cols) range 0.0 to 1.0 for RGB colors.
+		cv::Mat currentFrame;
+		cv::Mat previousFrame;
+
+		/// 3 x 48(rows) x 64(cols) range 0.0 to 1.0 for RGB colors.
+		cv::Mat currentFrameLowRes;
+		cv::Mat previousFrameLowRes;
+		cv::Mat currentAbsDifferenceLowRes;
+
+		static const int AbsDiffWidth = 64;
+		static const int AbsDiffHeight = 48;
+
 		CameraInIO();
 		~CameraInIO();
 
@@ -43,8 +55,22 @@ namespace SRS22 {
 		Rect GetCameraRect() { return Rect(0, 0, w, h); }
 
 		bool AcquireFrame();
-		cv::Mat getCurrentImage() { return vidHelper.currentImage; }
-		cv::Mat getPreviousImage() { return vidHelper.previousImage; }
+		/// <summary>
+		/// CV_8UC3 640(cols) x 480(rows)
+		/// </summary>
+		cv::Mat getCurrentImage() { return vidHelper.currentImage3UC8; }
+		/// <summary>
+		/// CV_8UC3 640(cols) x 480(rows)
+		/// </summary>
+		cv::Mat getPreviousImage() { return vidHelper.previousImage3UC8; }
+		/// <summary>
+		/// CV_8UC3 64(cols) x 48(rows)
+		/// </summary>
+		cv::Mat getCurrentImageLowRes() { return vidHelper.currentImageLowRes3UC8; }
+		/// <summary>
+		/// CV_8UC3 64(cols) x 48(rows)
+		/// </summary>
+		cv::Mat getPreviousImageLowRes() { return vidHelper.previousImageLowRes3UC8; }
 
 		/// <summary>
 		/// Copy a sub rectangle from screen to outM.
@@ -57,7 +83,7 @@ namespace SRS22 {
 		/// Does a cv::imshow on the current screen.
 		/// </summary>
 		void DebugCurrentScreen() {
-			cv::imshow(std::string("Debug Current Scrren"), vidHelper.currentImage);
+			cv::imshow(std::string("Debug Current Scrren"), vidHelper.currentImage3UC8);
 		}
 
 

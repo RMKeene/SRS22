@@ -8,6 +8,7 @@
 #include "Maps/RandomMap.h"
 #include "Maps/CameraFoveaMap.h"
 #include "Maps/CameraAttnSpotMap.h"
+#include "Maps/CameraDifferenceMap.h"
 
 using namespace concurrency;
 
@@ -134,6 +135,7 @@ namespace SRS22 {
 		AddMap(make_shared<CameraAttnSpotMap>());
 		AddMap(make_shared<RandomMap>());
 		AddMap(make_shared<ScreenFoveaMap>());
+		AddMap(make_shared<CameraDifferenceMap>());
 
 		// Anonymouse Maps
 

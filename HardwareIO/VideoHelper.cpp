@@ -3,6 +3,8 @@
 
 namespace SRS22 {
 
+	const float VideoHelper::lowResScale = 0.1f;
+
 	VideoHelper::VideoHelper() {
 
 	}
@@ -46,16 +48,20 @@ namespace SRS22 {
 		}
 
 		// 640 x 480 color CV_8UC3 depth 24 bits BGR
-		previousImage = currentImage;
-		*cap >> currentImage;
-		if (!currentImage.empty()) {
+		currentImage3UC8.copyTo(previousImage3UC8);
+		currentImageLowRes3UC8.copyTo(previousImageLowRes3UC8);
+		*cap >> currentImage3UC8;
+		if (!currentImage3UC8.empty()) {
 			//cv::String ts = cv::typeToString(currentImage.type()); // "CV_8UC3"
 			//imshow(ts, currentImage);
 
-			cv::Size sz = currentImage.size();
+			cv::Size sz = currentImage3UC8.size();
 			int imageWidth = sz.width;
 			int imageHeight = sz.height;
-			cv::cvtColor(currentImage, currentImage, cv::COLOR_RGB2BGR);
+			cv::cvtColor(currentImage3UC8, currentImage3UC8, cv::COLOR_RGB2BGR);
+			// Genertate low res RGB.
+			cv::Size size(currentImage3UC8.cols * lowResScale, currentImage3UC8.rows * lowResScale);
+			cv::resize(currentImage3UC8, currentImageLowRes3UC8, size);
 			return true;
 		}
 		return false;

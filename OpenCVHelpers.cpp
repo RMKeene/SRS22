@@ -45,6 +45,9 @@ namespace SRS22 {
     }
 
 	void OpenCVHelpers::CVGetSubRectRGB(cv::Mat& inputMatRGB, cv::Mat& outM, const SRS22::Rect& region) {
+		if (inputMatRGB.empty())
+			return;
+
 		if (outM.type() == CV_32FC1) {
 			if (outM.dims == 3) {
 				if (outM.size[0] == 3) {
@@ -88,4 +91,36 @@ namespace SRS22 {
 			throw std::logic_error("Unimplemented GetSubRect out data type. not type CV_32FC1. - TODO implement this.");
 		}
 	}
+
+	void OpenCVHelpers::CVCopyRGBToMat(cv::Mat& inputMatRGB, cv::Mat& outM) {
+		if (inputMatRGB.empty())
+			return;
+		CVGetSubRectRGB(inputMatRGB, outM, 
+			SRS22::Rect(0, 0, OpenCVHelpers::CVMatrixCols(inputMatRGB), OpenCVHelpers::CVMatrixRows(inputMatRGB)));
+	}
+
+	int OpenCVHelpers::CVMatrixCols(const cv::Mat& m) {
+		if (m.empty())
+			return 0;
+		if (m.cols > 0)
+			return m.cols;
+		return m.size[m.dims - 1];
+	}
+
+	int OpenCVHelpers::CVMatrixRows(const cv::Mat& m) {
+		if (m.empty())
+			return 0;
+		if (m.rows > 0)
+			return m.rows;
+		return m.size[m.dims - 2];
+	}
+
+	int OpenCVHelpers::CVMatrixPlanes(const cv::Mat& m) {
+		if (m.empty())
+			return 0;
+		if (m.rows > 0)
+			return 1;
+		return m.size[m.dims - 3];
+	}
+
 }

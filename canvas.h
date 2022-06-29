@@ -58,7 +58,10 @@ namespace SRS22 {
         /// </summary>
         MyCanvasPainter* OnPaintPostListener = NULL;
 
+        void SetEraseBackground(bool erase);
+
     private:
+        bool _eraseBackgroundFlag = false;
         wxBitmap m_bmpSmileXpm;
         wxIcon   m_iconSmileXpm;
 

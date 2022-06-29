@@ -233,6 +233,7 @@
     <ClInclude Include="HardwareIO\WhiteboardOutIO.h" />
     <ClInclude Include="ini.h" />
     <ClInclude Include="Maps\CameraAttnSpotMap.h" />
+    <ClInclude Include="Maps\CameraDifferenceMap.h" />
     <ClInclude Include="Maps\CameraFoveaMap.h" />
     <ClInclude Include="Maps\RandomMap.h" />
     <ClInclude Include="Maps\ScreenFoveaMap.h" />
@@ -331,6 +332,7 @@
     <ClCompile Include="HardwareIO\WhiteboardInIO.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardOutIO.cpp" />
     <ClCompile Include="Maps\CameraAttnSpotMap.cpp" />
+    <ClCompile Include="Maps\CameraDifferenceMap.cpp" />
     <ClCompile Include="Maps\CameraFoveaMap.cpp" />
     <ClCompile Include="Maps\RandomMap.cpp" />
     <ClCompile Include="Maps\ScreenFoveaMap.cpp" />

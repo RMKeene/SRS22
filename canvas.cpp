@@ -73,11 +73,23 @@ namespace SRS22 {
 		// do nothing
 	}
 
+	void MyCanvas::SetEraseBackground(bool erase) {
+		_eraseBackgroundFlag = erase;
+	}
+
 	void MyCanvas::OnPaint(wxPaintEvent& event)
 	{
 		wxPaintDC dc(this);
 		PrepareDC(dc);
 
+		if (_eraseBackgroundFlag) {
+			dc.SetBrush(*wxLIGHT_GREY_BRUSH);
+			dc.SetPen(*wxLIGHT_GREY_PEN);
+			// The inflate acounts for the sub-panels not being included. So this
+			// eliminates a uncleared boarder at the top.
+			wxRect r = GetRect().Inflate(30);
+			dc.DrawRectangle(r);
+		}
 		dc.DrawBitmap(backingStore, 0, 0);
 
 		//dc.DrawText("Drawn directly", 150, 10);

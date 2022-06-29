@@ -24,13 +24,27 @@ namespace SRS22 {
 	}
 
 	void TopVideoFrame::TakeImage(Brain& brain) {
-		cv::Size sz = brain.cameraInput.getCurrentImage().size();
-		int imageWidth = sz.width;
-		int imageHeight = sz.height;
-		if (imageWidth > 0 && imageHeight > 0) {
-			wxImage Image(imageWidth, imageHeight, brain.cameraInput.getCurrentImage().data, TRUE);
-			canvas.backingStore = Image;
-			canvas.Refresh();
+		if (cameraLowResCB->IsChecked()) {
+			canvas.SetEraseBackground(true);
+			cv::Size sz = brain.cameraInput.getCurrentImageLowRes().size();
+			int imageWidth = sz.width;
+			int imageHeight = sz.height;
+			if (imageWidth > 0 && imageHeight > 0) {
+				wxImage img(imageWidth, imageHeight, brain.cameraInput.getCurrentImageLowRes().data, TRUE);
+				canvas.backingStore = img;
+				canvas.Refresh();
+			}
+		}
+		else {
+			canvas.SetEraseBackground(false);
+			cv::Size sz = brain.cameraInput.getCurrentImage().size();
+			int imageWidth = sz.width;
+			int imageHeight = sz.height;
+			if (imageWidth > 0 && imageHeight > 0) {
+				wxImage img(imageWidth, imageHeight, brain.cameraInput.getCurrentImage().data, TRUE);
+				canvas.backingStore = img;
+				canvas.Refresh();
+			}
 		}
 	}
 

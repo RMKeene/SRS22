@@ -421,6 +421,9 @@ TopVideoFrameGen::TopVideoFrameGen( wxWindow* parent, wxWindowID id, const wxStr
 	cameraFoveaSoptCB->SetValue(true); 
 	bSizer12->Add( cameraFoveaSoptCB, 0, wxALL, 5 );
 	
+	cameraLowResCB = new wxCheckBox( this, wxID_ANY, wxT("LowRes"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer12->Add( cameraLowResCB, 0, wxALL, 5 );
+	
 	
 	TopVideoFrameVertLayout->Add( bSizer12, 0, wxEXPAND, 1 );
 	

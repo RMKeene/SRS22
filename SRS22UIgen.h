@@ -130,6 +130,7 @@ class TopVideoFrameGen : public wxFrame
 	private:
 	
 	protected:
+		wxCheckBox* cameraLowResCB;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }
