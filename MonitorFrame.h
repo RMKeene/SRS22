@@ -50,6 +50,8 @@ namespace SRS22 {
 		TopVideoFrame* topVideoFrame;
 
 		long long lastMapMonitorRefreshTime = 0;
+
+		bool hasSetupVideoInDroplist = false;
 	};
 }
 

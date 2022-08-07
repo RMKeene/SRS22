@@ -24,6 +24,8 @@ namespace SRS22 {
 
         std::string failureReason;
 
+        std::list<std::wstring> listedDevices = std::list<std::wstring>();
+
         VideoHelper();
         ~VideoHelper();
 
@@ -43,6 +45,8 @@ namespace SRS22 {
         /// Sets currentImage to what the camer sees. Also scales and sets currentImageLowRes.
         /// </summary>
         bool CaptureFrame();
+
+        HRESULT EnumerateDevices();
     };
 }
 

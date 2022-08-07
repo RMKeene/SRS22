@@ -77,9 +77,9 @@ namespace SRS22 {
 
 			float scaleX = 1.0f;
 			float scaleY = 1.0f;
-			if (w < 64) { 
+			if (w < 64) {
 				scaleX = 64.0f / (float)w;
-				w = 64; 
+				w = 64;
 			}
 			if (h < 64) {
 				scaleY = 64.0f / (float)h;
@@ -94,8 +94,8 @@ namespace SRS22 {
 
 			std::shared_ptr<SRSUnit> mv = m.value();
 			wxString s;
-			s << "[" << mv->Width() << 
-				", " << mv->Height() << 
+			s << "[" << mv->Width() <<
+				", " << mv->Height() <<
 				", " << mv->Depth() << "]";
 			s << " at [" << mv->location[0] << ", " << mv->location[1] << ", " << mv->location[2] << "]";
 			chosenMapText1->SetLabelText(s);
@@ -195,6 +195,21 @@ namespace SRS22 {
 		if (lastMapMonitorRefreshTime + mapMonitorRefreshDelay->GetValue() < timeTicks) {
 			RefreshMapMonitor(timeTicks);
 		}
+
+		if (!hasSetupVideoInDroplist) {
+			wxSleep(1);
+			auto cameraIn = IOCommon::GetIO<CameraInIO>();
+			cameraIn->vidHelper.EnumerateDevices();
+			if (cameraIn && cameraIn->vidHelper.listedDevices.size() > 0) {
+				VideoInChoiceDropbox->Clear();
+				for (auto it = cameraIn->vidHelper.listedDevices.begin(); it != cameraIn->vidHelper.listedDevices.end(); it++) {
+					VideoInChoiceDropbox->AppendString(*it);
+				}
+				VideoInChoiceDropbox->Select(0);
+				hasSetupVideoInDroplist = true;
+			}
+		}
+
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
