@@ -11,7 +11,7 @@ namespace SRS22 {
 	class RandomMap : public SRSUnit
 	{
 	public:
-		RandomMap();
+		RandomMap(Brain* br);
 		~RandomMap();
 
 		virtual void ComputeNextState() override;

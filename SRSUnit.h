@@ -15,6 +15,8 @@ namespace SRS22 {
 	{
 		static unsigned short nextUID;
 	public:
+		Brain* myBrain = NULL;
+
 		std::string MapName;
 		std::string MapDescription;
 
@@ -55,9 +57,9 @@ namespace SRS22 {
 		/// <param name="location"></param>
 		/// <param name="cols"></param>
 		/// <param name="MapDescription"></param>
-		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription);
-		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription);
-		SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
+		SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription);
+		SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription);
+		SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
 
 		~SRSUnit();
 

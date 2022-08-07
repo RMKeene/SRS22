@@ -8,14 +8,16 @@ namespace SRS22 {
 
 	unsigned short SRSUnit::nextUID = 0;
 
-	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription) :
+	SRSUnit::SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription) :
+		myBrain(br),
 		MapName(MapName),
 		UID(nextUID++),  
 		ctrip(ctrip), location(location), M(cols), nextM(cols),
 		MapDescription(MapDescription) {
 	}
 
-	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription) :
+	SRSUnit::SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription) :
+		myBrain(br),
 		MapName(MapName),
 		UID(nextUID++),
 		ctrip(ctrip), location(location), M(rows, cols), nextM(rows, cols),
@@ -23,7 +25,8 @@ namespace SRS22 {
 
 	}
 
-	SRSUnit::SRSUnit(std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription) :
+	SRSUnit::SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription) :
+		myBrain(br),
 		MapName(MapName),
 		UID(nextUID++),
 		ctrip(ctrip), location(location), M(layers, rows, cols), nextM(layers, rows, cols),

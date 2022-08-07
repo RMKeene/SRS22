@@ -2,47 +2,131 @@
 #include "Rect.h"
 
 namespace SRS22 {
-    using namespace std;
-    string OpenCVHelpers::CVTypeToStr(const int type) {
-        string r;
+	using namespace std;
+	string OpenCVHelpers::CVTypeToStr(const int type) {
+		string r;
 
-        uchar depth = type & CV_MAT_DEPTH_MASK;
-        uchar chans = 1 + (type >> CV_CN_SHIFT);
+		uchar depth = type & CV_MAT_DEPTH_MASK;
+		uchar chans = 1 + (type >> CV_CN_SHIFT);
 
-        switch (depth) {
-        case CV_8U:  r = "8U"; break;
-        case CV_8S:  r = "8S"; break;
-        case CV_16U: r = "16U"; break;
-        case CV_16S: r = "16S"; break;
-        case CV_32S: r = "32S"; break;
-        case CV_32F: r = "32F"; break;
-        case CV_64F: r = "64F"; break;
-        default:     r = "User"; break;
-        }
+		switch (depth) {
+		case CV_8U:  r = "8U"; break;
+		case CV_8S:  r = "8S"; break;
+		case CV_16U: r = "16U"; break;
+		case CV_16S: r = "16S"; break;
+		case CV_32S: r = "32S"; break;
+		case CV_32F: r = "32F"; break;
+		case CV_64F: r = "64F"; break;
+		default:     r = "User"; break;
+		}
 
-        r += "C";
-        r += (chans + '0');
+		r += "C";
+		r += (chans + '0');
 
-        return r;
-    }
+		return r;
+	}
 
-    std::string OpenCVHelpers::CVMatrixInfo(cv::Mat& m) {
+	std::string OpenCVHelpers::CVMatrixInfo(cv::Mat& m) {
 
-        string r = CVTypeToStr(m.type());
-        r += " : dims=";
-        r += to_string(m.dims);
-        if (m.dims >= 3) {
-            r += " sizes ";
-            for (int i = 0; i < m.dims; i++) {
-                r += "size[" + to_string(i) + "]=" + to_string(m.size[i]) + " ";
-            }
-        }
-        else {
-            r += " rows=" + to_string(m.rows) + " cols=" + to_string(m.cols);
-        }
+		string r = CVTypeToStr(m.type());
+		r += " : dims=";
+		r += to_string(m.dims);
+		if (m.dims >= 3) {
+			r += " sizes ";
+			for (int i = 0; i < m.dims; i++) {
+				r += "size[" + to_string(i) + "]=" + to_string(m.size[i]) + " ";
+			}
+		}
+		else {
+			r += " rows=" + to_string(m.rows) + " cols=" + to_string(m.cols);
+		}
 
-        return r;
-    }
+		return r;
+	}
+
+	std::string OpenCVHelpers::MapUIText(cv::Mat& m) {
+		int maxN = 20;
+		std::string briefData = "";
+
+		if (m.empty()) {
+			briefData = "(empty)";
+		}
+		else if (m.cols > 0) { // 2D Matrix with 1 or 3 channels.
+			std::string ty = CVTypeToStr(m.type());
+			if (ty == "8UC1") {
+				for (int r = 0; r < m.rows; r++) {
+					for (int c = 0; c < m.cols; c++) {
+						briefData += (int)m.at<unsigned char>(r, c);
+						briefData += ", ";
+						maxN--;
+						if (maxN <= 0) break;
+					}
+					if (maxN <= 0) break;
+					briefData += "\n";
+				}
+			}
+			if (ty == "8UC3") {
+				for (int r = 0; r < m.rows; r++) {
+					for (int c = 0; c < m.cols; c++) {
+						cv::Vec3b v = m.at<cv::Vec3b>(r, c);
+						briefData += "[" + std::to_string((int)v[0]) + ", " + std::to_string((int)v[1]) + ", " + std::to_string((int)v[2]) + "] ";
+						maxN--;
+						if (maxN <= 0) break;
+					}
+					if (maxN <= 0) break;
+					briefData += "\n";
+				}
+			}
+			if (ty == "32FC1") {
+				for (int r = 0; r < m.rows; r++) {
+					for (int c = 0; c < m.cols; c++) {
+						briefData += std::to_string(m.at<float>(r, c));
+						briefData += "\n";
+						maxN--;
+						if (maxN <= 0) break;
+					}
+					if (maxN <= 0) break;
+					briefData += "\n";
+				}
+			}
+
+			if (ty == "32FC3") {
+				for (int r = 0; r < m.rows; r++) {
+					for (int c = 0; c < m.cols; c++) {
+						cv::Vec3f v = m.at<cv::Vec3f>(r, c);
+						briefData += "[" + std::to_string(v[0]) + ", " + std::to_string(v[1]) + ", " + std::to_string(v[2]) + "] ";
+						maxN--;
+						if (maxN <= 0) break;
+					}
+					if (maxN <= 0) break;
+					briefData += "\n";
+				}
+			}
+			briefData += "...";
+		}
+		else if (m.size.dims() == 3) { // 3D Matrix, not channels.
+
+			for (int z = 0; z < m.size[0]; z++) {
+				for (int y = 0; y < m.size[1]; y++) {
+					for (int x = 0; x < m.size[2]; x++) {
+						briefData += std::to_string(m.at<float>(z, y, x));
+						briefData += ", ";
+						if (maxN <= 0) break;
+					}
+					if (maxN <= 0) break;
+					briefData += "\n";
+				}
+				if (maxN <= 0) break;
+				briefData += "\n";
+				briefData += "\n";
+			}
+		}
+		else {
+			briefData += "Unknown Matrix Layout.";
+		}
+
+		return CVMatrixInfo(m) + std::string(" : ") + briefData;
+	}
 
 	void OpenCVHelpers::CVGetSubRectRGB(cv::Mat& inputMatRGB, cv::Mat& outM, const SRS22::Rect& region) {
 		if (inputMatRGB.empty())
@@ -95,7 +179,7 @@ namespace SRS22 {
 	void OpenCVHelpers::CVCopyRGBToMat(cv::Mat& inputMatRGB, cv::Mat& outM) {
 		if (inputMatRGB.empty())
 			return;
-		CVGetSubRectRGB(inputMatRGB, outM, 
+		CVGetSubRectRGB(inputMatRGB, outM,
 			SRS22::Rect(0, 0, OpenCVHelpers::CVMatrixCols(inputMatRGB), OpenCVHelpers::CVMatrixRows(inputMatRGB)));
 	}
 

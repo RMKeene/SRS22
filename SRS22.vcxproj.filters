@@ -320,6 +320,9 @@
     <ClInclude Include="Maps\CameraDifferenceMap.h">
       <Filter>Source\Maps</Filter>
     </ClInclude>
+    <ClInclude Include="Maps\CameraMotionXYMap.h">
+      <Filter>Source\Maps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -473,6 +476,9 @@
       <Filter>Source\Maps</Filter>
     </ClCompile>
     <ClCompile Include="Maps\CameraDifferenceMap.cpp">
+      <Filter>Source\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\CameraMotionXYMap.cpp">
       <Filter>Source\Maps</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,8 +7,8 @@
 
 namespace SRS22 {
 
-	RandomMap::RandomMap() :
-		SRSUnit("RandomMap", 
+	RandomMap::RandomMap(Brain* br) :
+		SRSUnit(br, "RandomMap", 
 			ConnectivityTriple(0.1f, 0.1f, 0.8f, 0), 
 			cv::Vec3f(0.0, 0.0, 0.0), 
 			3, RandomMap_Width, RandomMap_Height,

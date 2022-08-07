@@ -199,6 +199,15 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	sbSizer12 = new wxStaticBoxSizer( new wxStaticBox( sbSizer13->GetStaticBox(), wxID_ANY, wxT("Map Monitor") ), wxHORIZONTAL );
 	
 	sbSizer12->SetMinSize( wxSize( 400,-1 ) ); 
+	wxBoxSizer* bSizer13;
+	bSizer13 = new wxBoxSizer( wxVERTICAL );
+	
+	
+	bSizer13->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer14;
+	bSizer14 = new wxBoxSizer( wxHORIZONTAL );
+	
 	wxBoxSizer* bSizer10;
 	bSizer10 = new wxBoxSizer( wxVERTICAL );
 	
@@ -219,7 +228,7 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	bSizer10->Add( mapMonitorRefreshDelay, 0, wxALL, 5 );
 	
 	
-	sbSizer12->Add( bSizer10, 1, wxEXPAND, 5 );
+	bSizer14->Add( bSizer10, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
@@ -240,10 +249,17 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	bSizer11->Add( chosenMapBitmap, 0, wxALL, 2 );
 	
 	
-	sbSizer12->Add( bSizer11, 0, wxEXPAND, 1 );
+	bSizer14->Add( bSizer11, 0, wxEXPAND, 1 );
 	
 	
-	sbSizer12->Add( 0, 0, 1, wxEXPAND, 5 );
+	bSizer13->Add( bSizer14, 0, wxEXPAND, 5 );
+	
+	SelectedMapDetailLabel = new wxStaticText( sbSizer12->GetStaticBox(), wxID_ANY, wxT("Map Detail:"), wxDefaultPosition, wxDefaultSize, 0 );
+	SelectedMapDetailLabel->Wrap( -1 );
+	bSizer13->Add( SelectedMapDetailLabel, 0, wxALL, 5 );
+	
+	
+	sbSizer12->Add( bSizer13, 0, wxEXPAND, 5 );
 	
 	
 	bSizer27->Add( sbSizer12, 0, wxEXPAND, 5 );

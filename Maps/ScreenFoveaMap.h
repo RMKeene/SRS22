@@ -16,7 +16,7 @@ namespace SRS22 {
 		/// SRSUnit("ScreenFoveaMap", ctrip, location, 3, ScreenFoveaMap_Height, ScreenFoveaMap_Width, 
 		///     "Raw pixel map of center of screen fovea in color.") {
 		/// </summary>
-		ScreenFoveaMap();
+		ScreenFoveaMap(Brain* br);
 		~ScreenFoveaMap();
 
 		virtual void ComputeNextState() override;

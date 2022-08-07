@@ -14,6 +14,8 @@ namespace SRS22 {
 		/// <returns></returns>
 		static std::string CVMatrixInfo(cv::Mat& m);
 
+		static std::string MapUIText(cv::Mat& m);
+
 		/// <summary>
 		/// Get a matrix of a subrect in inputMat. So far is coded for CV_32FC1 either 1 or 3 layers.
 		/// Assumes inputMat is an RGB image CV_3UC8. From camera or screen etc. If outM is 3 layer then converts 

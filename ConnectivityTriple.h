@@ -14,15 +14,15 @@ namespace SRS22 {
 		/// Fraction (0.0 to 1.0) if connections to SRSUnit self.
 		/// A + B + C must equal 1.0f.
 		/// </summary>
-		const float A;
+		const float selfFract;
 		/// <summary>
 		/// Fraction (0.0 to 1.0) if connections to neaby SRSUnits.
 		/// </summary>
-		const float B;
+		const float nearbyFract;
 		/// <summary>
 		/// Fraction (0.0 to 1.0) if connections to far SRSUnits.
 		/// </summary>
-		const float C;
+		const float farFract;
 
 		/// <summary>
 		/// How many connections this map should have generated on setup.
@@ -31,10 +31,10 @@ namespace SRS22 {
 		/// </summary>
 		const int desiredConnectionCount;
 
-		ConnectivityTriple(float a, float b, float c, int desiredConnectionCount) :
-			A(a), B(b), C(c), desiredConnectionCount(desiredConnectionCount) {
+		ConnectivityTriple(float selfFraction, float nearbyFraction, float farFraction, int desiredConnectionCount) :
+			selfFract(selfFraction), nearbyFract(nearbyFraction), farFract(farFraction), desiredConnectionCount(desiredConnectionCount) {
 			// A + B + C must equal 1.0f
-			assert(a + b + c > 0.99f && a + b + c < 1.01f);
+			assert(selfFraction + nearbyFraction + farFraction > 0.99f && selfFraction + nearbyFraction + farFraction < 1.01f);
 			assert(desiredConnectionCount >= 0);
 		}
 

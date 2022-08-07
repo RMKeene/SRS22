@@ -78,6 +78,7 @@ class MonitorFrameGen : public wxFrame
 		wxStaticText* chosenMapText2;
 		wxStaticText* chosenMapText3;
 		wxStaticBitmap* chosenMapBitmap;
+		wxStaticText* SelectedMapDetailLabel;
 		wxStaticText* MonitorStatisticsLine1;
 		wxStaticText* MonitorStatisticsLine2;
 		wxStaticText* MonitorStatisticsLine3;

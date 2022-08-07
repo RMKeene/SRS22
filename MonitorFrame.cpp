@@ -101,18 +101,18 @@ namespace SRS22 {
 			chosenMapText1->SetLabelText(s);
 
 			s.Clear();
-			s << "CTrip [" << mv->ctrip.A << ", " << mv->ctrip.B << ", " << mv->ctrip.C << "]";
+			s << "CTrip [" << mv->ctrip.selfFract << ", " << mv->ctrip.nearbyFract << ", " << mv->ctrip.farFract << "]";
 			s << " Mtchs " << mv->matchSystem.knownPatterns.size();
 			chosenMapText2->SetLabelText(s);
-
 			chosenMapText3->SetLabel(mv->MapDescription);
-			
+			SelectedMapDetailLabel->SetLabel(OpenCVHelpers::MapUIText(mv->M.charges));
 		}
 		else {
 			wxBitmap bitmap(64, 64, 24);
 			chosenMapBitmap->SetBitmap(bitmap);
 			chosenMapText1->SetLabelText("No Map");
 			chosenMapText2->SetLabelText("Selected");
+			SelectedMapDetailLabel->SetLabel("Map Info:");
 		}
 		lastMapMonitorRefreshTime = timeTicks;
 	}

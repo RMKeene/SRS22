@@ -9,6 +9,7 @@
 #include "Maps/CameraFoveaMap.h"
 #include "Maps/CameraAttnSpotMap.h"
 #include "Maps/CameraDifferenceMap.h"
+#include "Maps/CameraMotionXYMap.h"
 
 using namespace concurrency;
 
@@ -84,13 +85,13 @@ namespace SRS22 {
 
 		for (int i = 0; i < 2; i++) {
 			float r = static_cast <float> (xorshf96()) / static_cast <float> (RAND_MAX);
-			if (r < origin->ctrip.A) { // Select random neuron from self
+			if (r < origin->ctrip.selfFract) { // Select random neuron from self
 				if (origin->entriesCount() > 0) {
 					PatternConnection c(origin, xorshf96() % origin->entriesCount());
 					return std::optional<PatternConnection>{ c };
 				}
 			}
-			else if (r < origin->ctrip.B) { // Select from near concepts
+			else if (r < origin->ctrip.nearbyFract) { // Select from near concepts
 				if (origin->nearMaps.size() > 0) {
 					shared_ptr<SRSUnit> other = origin->nearMaps[xorshf96() % origin->nearMaps.size()];
 					if (other->entriesCount() > 0) {
@@ -131,11 +132,12 @@ namespace SRS22 {
 			64, 64, cameraInput.GetCameraRect());
 
 		// All Map instances. Keep in alphabetical order please.
-		AddMap(make_shared<CameraFoveaMap>());
-		AddMap(make_shared<CameraAttnSpotMap>());
-		AddMap(make_shared<RandomMap>());
-		AddMap(make_shared<ScreenFoveaMap>());
-		AddMap(make_shared<CameraDifferenceMap>());
+		AddMap(make_shared<CameraFoveaMap>(this));
+		AddMap(make_shared<CameraAttnSpotMap>(this));
+		AddMap(make_shared<CameraMotionXYMap>(this));
+		AddMap(make_shared<RandomMap>(this));
+		AddMap(make_shared<ScreenFoveaMap>(this));
+		AddMap(make_shared<CameraDifferenceMap>(this));
 
 		// Anonymouse Maps
 

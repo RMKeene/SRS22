@@ -20,7 +20,7 @@ namespace SRS22 {
 		/// 	CameraAttnSpotMap_Width,
 		/// 	"Raw pixel map of center of camera fovea in color.")
 		/// </summary>
-		CameraAttnSpotMap();
+		CameraAttnSpotMap(Brain* br);
 		~CameraAttnSpotMap();
 
 		virtual void ComputeNextState() override;
