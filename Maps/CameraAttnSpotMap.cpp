@@ -33,12 +33,8 @@ namespace SRS22 {
 		float xx = M.get(0) * cameraVideo->GetCameraWidth();
 		float yy = M.get(1) * cameraVideo->GetCameraHeight();
 
-		FILE* fp = fopen("AA_debugFovea.txt", "a");
 		auto fovea = IOCommon::GetIO<CameraAttnSpotIO>();
-		fprintf(fp, "Pre: %f, %f ---> ", xx, yy);
 		fovea->SetPt(xx, yy);
-		fprintf(fp, "%d, %d]\n", fovea->GetPt().X, fovea->GetPt().Y);
-		fclose(fp);
 	}
 
 	void CameraAttnSpotMap::LatchNewState() {
