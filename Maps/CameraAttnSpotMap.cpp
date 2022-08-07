@@ -29,10 +29,16 @@ namespace SRS22 {
 		nextM.charges.at<float>(0) = motionXY->M.get(0);
 		nextM.charges.at<float>(1) = motionXY->M.get(1);
 
+		auto cameraVideo = IOCommon::GetIO<CameraInIO>();
+		float xx = M.get(0) * cameraVideo->GetCameraWidth();
+		float yy = M.get(1) * cameraVideo->GetCameraHeight();
+
+		FILE* fp = fopen("AA_debugFovea.txt", "a");
 		auto fovea = IOCommon::GetIO<CameraAttnSpotIO>();
-		fovea->SetPt(
-			M.get(0) * fovea->GetRect().width,
-			M.get(1) * fovea->GetRect().height);
+		fprintf(fp, "Pre: %f, %f ---> ", xx, yy);
+		fovea->SetPt(xx, yy);
+		fprintf(fp, "%d, %d]\n", fovea->GetPt().X, fovea->GetPt().Y);
+		fclose(fp);
 	}
 
 	void CameraAttnSpotMap::LatchNewState() {

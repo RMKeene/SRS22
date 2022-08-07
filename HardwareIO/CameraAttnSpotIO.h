@@ -43,7 +43,7 @@ namespace SRS22 {
 		/// <param name="pt"></param>
 		void SetPt(const int x, const int y);
 		/// <summary>
-		/// Set the centr of attention in the camera.
+		/// Set the center of attention in the camera.
 		/// </summary>
 		/// <param name="pt"></param>
 		void SetPt(const float x, const float y);

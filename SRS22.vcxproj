@@ -351,6 +351,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Reaper.cpp" />
+    <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Rect.h" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SRS22.cpp" />

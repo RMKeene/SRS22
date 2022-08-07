@@ -22,6 +22,11 @@ namespace SRS22 {
 		/// <returns></returns>
 		const int right() const { return X + width; }
 		const int top() const { return Y; }
+		/// <summary>
+		/// One pixel off the bottom edge.
+		/// return Y + height;
+		/// </summary>
+		/// <returns></returns>		
 		const int bottom() const { return Y + height; }
 		const int halfW() const { return halfWidth; }
 		const int halfH() const { return halfHeight; }
@@ -102,21 +107,18 @@ namespace SRS22 {
 		/// <param name="outerRect"></param>
 		/// <returns></returns>
 		Rect ForceInRect(const Rect& outerRect) {
-			return Rect(X < outerRect.X ? outerRect.X : X >= outerRect.right() ? outerRect.right() - 1 : X,
-				Y < outerRect.Y ? outerRect.Y : Y >= outerRect.bottom() ? outerRect.bottom() - 1 : Y,
+			return Rect(X < outerRect.X ? outerRect.X : X >= outerRect.right() - width ? outerRect.right() - width - 1 : X,
+				Y < outerRect.Y ? outerRect.Y : Y >= outerRect.bottom() - height ? outerRect.bottom() - height - 1 : Y,
 				width, height);
 
 		}
 
-		void CenterOn(const Point& p) {
-			X = p.X + halfWidth;
-			Y = p.Y + halfHeight;
+		void CenterOnInPlace(const Point& p) {
+			X = p.X - halfWidth;
+			Y = p.Y - halfHeight;
 		}
 
-		void CenterOn(const int x, const int y) {
-			X = x + halfWidth;
-			Y = y + halfHeight;
-		}
+		void CenterOnInPlace(const int x, const int y);
 
 		cv::Rect toOpenCVRect() const {
 			return cv::Rect(X, Y, width, height);

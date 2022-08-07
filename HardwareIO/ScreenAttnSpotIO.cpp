@@ -41,11 +41,11 @@ namespace SRS22 {
 	}
 
 	void ScreenAttnSpotIO::ForceOnScreen() {
-		rect.ForceInRect(_screenRect);
+		rect = rect.ForceInRect(_screenRect);
 	}
 
 	void ScreenAttnSpotIO::SetPt(Point& pt) {
-		rect.CenterOn(pt);
+		rect.CenterOnInPlace(pt);
 		ForceOnScreen();
 	}
 

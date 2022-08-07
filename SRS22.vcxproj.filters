@@ -481,6 +481,9 @@
     <ClCompile Include="Maps\CameraMotionXYMap.cpp">
       <Filter>Source\Maps</Filter>
     </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SRS22.rc">
