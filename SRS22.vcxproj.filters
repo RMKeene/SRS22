@@ -323,6 +323,9 @@
     <ClInclude Include="Maps\CameraMotionXYMap.h">
       <Filter>Source\Maps</Filter>
     </ClInclude>
+    <ClInclude Include="HardwareIO\AttnSpotBaseIO.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -483,6 +486,9 @@
     </ClCompile>
     <ClCompile Include="Rect.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\AttnSpotBaseIO.cpp">
+      <Filter>Source\HardwareIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

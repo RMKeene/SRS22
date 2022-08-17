@@ -217,6 +217,7 @@
     <ClInclude Include="FastRand.h" />
     <ClInclude Include="GlobalWorld.h" />
     <ClInclude Include="GoodnessFunction.h" />
+    <ClInclude Include="HardwareIO\AttnSpotBaseIO.h" />
     <ClInclude Include="HardwareIO\AudioCaptureIO.h" />
     <ClInclude Include="HardwareIO\AudioOutIO.h" />
     <ClInclude Include="HardwareIO\CameraAttnSpotIO.h" />
@@ -318,6 +319,7 @@
     <ClCompile Include="FastRand.cpp" />
     <ClCompile Include="GlobalWorld.cpp" />
     <ClCompile Include="GoodnessFunction.cpp" />
+    <ClCompile Include="HardwareIO\AttnSpotBaseIO.cpp" />
     <ClCompile Include="HardwareIO\AudioCaptureIO.cpp" />
     <ClCompile Include="HardwareIO\AudioOutIO.cpp" />
     <ClCompile Include="HardwareIO\CameraAttnSpotIO.cpp" />

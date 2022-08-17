@@ -2,26 +2,21 @@
 
 namespace SRS22 {
 	ScreenAttnSpotIO::ScreenAttnSpotIO() :
-		IOCommon(), rect(0, 0, 0, 0), _screenRect(0, 0, 0, 0) {
+		AttnSpotBaseIO() {
 		IOCOMMON_SETCLASSNAME;
-
 	}
 
 	ScreenAttnSpotIO::ScreenAttnSpotIO(Point p, int w, int h, Rect screenRect) :
-		IOCommon(), rect(p.X - w / 2, p.Y - w / 2, w, h), _screenRect(screenRect)
+		AttnSpotBaseIO()
 	{
 		IOCOMMON_SETCLASSNAME;
 	}
 
 	ScreenAttnSpotIO::~ScreenAttnSpotIO() {
-
 	}
 
 	bool ScreenAttnSpotIO::Init(Point p, int w, int h, Rect screenRect) {
-		IOCommon::Init();
-		rect = Rect(p.X, p.Y, w, h);
-		_screenRect = screenRect;
-		return true;
+		return AttnSpotBaseIO::Init(p, w, h, screenRect);
 	}
 
 	void ScreenAttnSpotIO::Shutdown() {
@@ -36,17 +31,9 @@ namespace SRS22 {
 		IOCommon::PostTick();
 	}
 
+	void ScreenAttnSpotIO::ForceToBeSubclassed() {}
+
 	void ScreenAttnSpotIO::UnitTest() {
 
 	}
-
-	void ScreenAttnSpotIO::ForceOnScreen() {
-		rect = rect.ForceInRect(_screenRect);
-	}
-
-	void ScreenAttnSpotIO::SetPt(Point& pt) {
-		rect.CenterOnInPlace(pt);
-		ForceOnScreen();
-	}
-
 }

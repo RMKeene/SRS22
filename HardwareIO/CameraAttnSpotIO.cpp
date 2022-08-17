@@ -2,13 +2,13 @@
 
 namespace SRS22 {
 	CameraAttnSpotIO::CameraAttnSpotIO() :
-		IOCommon(), rect(0, 0, 0, 0), _cameraRect(0, 0, 0, 0) {
+		AttnSpotBaseIO() {
 		IOCOMMON_SETCLASSNAME;
 
 	}
 
 	CameraAttnSpotIO::CameraAttnSpotIO(Point p, int w, int h, Rect cameraRect) :
-		IOCommon(), rect(p.X - w / 2, p.Y - w / 2, w, h), _cameraRect(cameraRect)
+		AttnSpotBaseIO(p, w, h, cameraRect)
 	{
 		IOCOMMON_SETCLASSNAME;
 	}
@@ -18,45 +18,25 @@ namespace SRS22 {
 	}
 
 	bool CameraAttnSpotIO::Init(Point p, int w, int h, Rect cameraRect) {
-		IOCommon::Init();
-		rect = Rect(p.X, p.Y, w, h);
-		_cameraRect = cameraRect;
-		return true;
+		return AttnSpotBaseIO::Init(p, w, h, cameraRect);
 	}
 
 	void CameraAttnSpotIO::Shutdown() {
-		IOCommon::Shutdown();
+		AttnSpotBaseIO::Shutdown();
 	}
 
 	void CameraAttnSpotIO::PreTick() {
-		IOCommon::PreTick();
+		AttnSpotBaseIO::PreTick();
 	}
 
 	void CameraAttnSpotIO::PostTick() {
-		IOCommon::PostTick();
+		AttnSpotBaseIO::PostTick();
 	}
+
+	void CameraAttnSpotIO::ForceToBeSubclassed() {}
 
 	void CameraAttnSpotIO::UnitTest() {
 
-	}
-
-	void CameraAttnSpotIO::ForceOnScreen() {
-		rect = rect.ForceInRect(_cameraRect);
-	}
-
-	void CameraAttnSpotIO::SetPt(Point& pt) {
-		rect.CenterOnInPlace(pt);
-		ForceOnScreen();
-	}
-
-	void CameraAttnSpotIO::SetPt(const int x, const int y) {
-		rect.CenterOnInPlace(x, y);
-		ForceOnScreen();
-	}
-
-	void CameraAttnSpotIO::SetPt(const float x, const float y) {
-		rect.CenterOnInPlace((const int)x, (const int)y);
-		ForceOnScreen();
 	}
 
 }
