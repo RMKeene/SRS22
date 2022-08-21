@@ -66,6 +66,8 @@ namespace SRS22 {
 	void MonitorFrame::RefreshMapMonitor(long long timeTicks) {
 		if (ViewMapChoice->GetSelection() > 0) {
 			auto m = GlobalWorld::GlobalWorldInstance.GetBrain(0)->FindMapByName(ViewMapChoice->GetStringSelection());
+			if (m.has_value() == false) // No such map.
+				return;
 			auto M = m.value()->M;
 			auto chgs = M.charges;
 			int w = chgs.cols;
@@ -86,10 +88,39 @@ namespace SRS22 {
 				h = 64;
 			}
 
-			wxBitmap bitmap(w, h, 24);
-			ConvertMatBitmapTowxBitmap_CV_32FC1(m.value()->M.charges, w, h, bitmap, 255.0f, scaleX, scaleY);
-			// Scale bitmap if very small for easier visualization of small maps, e.g. a 2 x 1 map or 1 x 1 map.
-			chosenMapBitmap->SetBitmap(bitmap);
+			if (chgs.dims == 2 && chgs.size[0] + chgs.size[1] == 2 + 1) {
+				if (m.value()->displayMode == SRSUnitDisplayModes::TWOVALUECAMERA) {
+					w = w * 1.3;
+				}
+				else if (m.value()->displayMode == SRSUnitDisplayModes::TWOVALUEWIDESCREEN) {
+					w = w * 1.8;
+				}
+				wxBitmap bitmap(w, h, 24);
+
+				if (bitmap.GetWidth() != w || bitmap.GetHeight() != h) {
+					chosenMapBitmap->SetSize(w, h);
+					chosenMapBitmap->SetMaxSize(wxSize(w, h));
+					chosenMapBitmap->SetMinSize(wxSize(w, h));
+					this->Layout();
+					this->Fit();
+				}
+				Convert2ValueMatBitmapTowxBitmap_CV_32FC1(chgs, w, h, bitmap, 255.0f, scaleX, scaleY);
+				chosenMapBitmap->SetBitmap(bitmap);
+			}
+			else {
+				wxBitmap bitmap(w, h, 24);
+
+				if (bitmap.GetWidth() != w || bitmap.GetHeight() != h) {
+					chosenMapBitmap->SetSize(w, h);
+					chosenMapBitmap->SetMaxSize(wxSize(w, h));
+					chosenMapBitmap->SetMinSize(wxSize(w, h));
+					this->Layout();
+					this->Fit();
+				}
+				ConvertMatBitmapTowxBitmap_CV_32FC1(chgs, w, h, bitmap, 255.0f, scaleX, scaleY);
+				chosenMapBitmap->SetBitmap(bitmap);
+			}
+			
 			chosenMapBitmap->Refresh();
 
 			std::shared_ptr<SRSUnit> mv = m.value();

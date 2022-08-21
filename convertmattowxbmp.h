@@ -11,6 +11,8 @@
 #ifndef CONVERTMATTOWXBMP_H
 #define CONVERTMATTOWXBMP_H
 
+#include "SRSUnitDisplayModes.h"
+
 // forward declarations
 namespace cv { class Mat; }
 class wxBitmap;
@@ -57,6 +59,22 @@ bool ConvertMatBitmapTowxBitmap_CV_8UC3(const cv::Mat& matBitmap, wxBitmap& bitm
 /// <param name="scaleY"></param>
 /// <returns></returns>
 bool ConvertMatBitmapTowxBitmap_CV_32FC1(const cv::Mat& matBitmap, const int w, const int h, 
-    wxBitmap& bitmap, const float pixelScale = 255.0f, const float scaleX = 1.0f, const float scaleY = 1.0f);
+    wxBitmap& bitmap, 
+    const float pixelScale = 255.0f, const float scaleX = 1.0f, const float scaleY = 1.0f, 
+    const SRS22::SRSUnitDisplayModes UIHint = SRS22::SRSUnitDisplayModes::COLOR);
+
+/// <summary>
+/// Make a bitmap that is black with a dot where the two values as an X,Y coordinate are.
+/// 0,0 is the upper left.
+/// </summary>
+/// <param name="matBitmap"></param>
+/// <param name="w"></param>
+/// <param name="h"></param>
+/// <param name="bitmap"></param>
+/// <returns></returns>
+bool Convert2ValueMatBitmapTowxBitmap_CV_32FC1(
+    const cv::Mat& matBitmap, const int w, const int h, wxBitmap& bitmap,
+    const float pixelScale = 255.0f, const float scaleX = 1.0f, const float scaleY = 1.0f,
+    const SRS22::SRSUnitDisplayModes UIHint = SRS22::SRSUnitDisplayModes::COLOR);
 
 #endif // #ifndef CONVERTMATTOWXBMP_H

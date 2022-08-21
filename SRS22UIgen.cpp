@@ -203,7 +203,7 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	bSizer13 = new wxBoxSizer( wxVERTICAL );
 	
 	
-	bSizer13->Add( 0, 0, 1, wxEXPAND, 5 );
+	bSizer13->Add( 0, 0, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer14;
 	bSizer14 = new wxBoxSizer( wxHORIZONTAL );
@@ -245,7 +245,7 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	chosenMapText3->Wrap( -1 );
 	bSizer11->Add( chosenMapText3, 0, wxALL, 5 );
 	
-	chosenMapBitmap = new wxStaticBitmap( sbSizer12->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( 128,128 ), 0 );
+	chosenMapBitmap = new wxStaticBitmap( sbSizer12->GetStaticBox(), wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( 200,200 ), 0 );
 	bSizer11->Add( chosenMapBitmap, 0, wxALL, 2 );
 	
 	

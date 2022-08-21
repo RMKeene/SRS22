@@ -112,8 +112,9 @@ bool ConvertMatBitmapTowxBitmap_CV_8UC3(const cv::Mat& matBitmap, wxBitmap& bitm
 }
 
 bool ConvertMatBitmapTowxBitmap_CV_32FC1(
-	const cv::Mat& matBitmap, const int w, const int h, wxBitmap& bitmap, 
-	const float pixelScale, const float scaleX, const float scaleY)
+	const cv::Mat& matBitmap, const int w, const int h, wxBitmap& bitmap,
+	const float pixelScale, const float scaleX, const float scaleY,
+	const SRS22::SRSUnitDisplayModes UIHint)
 {
 	wxCHECK(!matBitmap.empty(), false);
 	wxCHECK(matBitmap.type() == CV_32FC1, false);
@@ -145,7 +146,7 @@ bool ConvertMatBitmapTowxBitmap_CV_32FC1(
 
 			for (int col = 0; col < w; ++col, ++pixelDataIt)
 			{
-				float vv = matBitmap.at<float>(row / scaleY, col / scaleX)* pixelScale;
+				float vv = matBitmap.at<float>(row / scaleY, col / scaleX) * pixelScale;
 				const unsigned char cc = vv;
 				pixelDataIt.Red() = cc;
 				pixelDataIt.Green() = cc;
@@ -154,6 +155,46 @@ bool ConvertMatBitmapTowxBitmap_CV_32FC1(
 		}
 	}
 
+	return bitmap.IsOk();
+}
+
+bool Convert2ValueMatBitmapTowxBitmap_CV_32FC1(
+	const cv::Mat& matBitmap, const int w, const int h, wxBitmap& bitmap,
+	const float pixelScale, const float scaleX, const float scaleY,
+	const SRS22::SRSUnitDisplayModes UIHint)
+{
+	wxCHECK(!matBitmap.empty(), false);
+	wxCHECK(matBitmap.type() == CV_32FC1, false);
+	// Exactly two values, Mat size either (1,2) or (2,1)
+	wxCHECK(matBitmap.dims == 2, false);
+	wxCHECK(matBitmap.size[0] + matBitmap.size[1] == 2 + 1, false);
+
+	wxCHECK(bitmap.IsOk(), false);
+	wxCHECK(bitmap.GetWidth() == w && bitmap.GetHeight() == h, false);
+	wxCHECK(bitmap.GetDepth() == 24, false);
+
+	float x = 0.0f;
+	float y = 0.0f;
+	if (matBitmap.size[0] == 2) {
+		x = matBitmap.at<float>(0, 0);
+		y = matBitmap.at<float>(1, 0);
+	}
+	else if (matBitmap.size[1] == 2) {
+		x = matBitmap.at<float>(0, 0);
+		y = matBitmap.at<float>(0, 1);
+	}
+	else {
+		throw std::logic_error("attempt to draw X,Y coords from 2 neuron Concept Map that is not 2 neruons.");
+	}
+
+	wxMemoryDC DC;
+	DC.SelectObject(bitmap);
+	DC.SetBrush(*wxGREY_BRUSH);
+	DC.SetPen(*wxBLUE_PEN);
+	DC.DrawRectangle(0, 0, w, h);
+	DC.SetPen(*wxWHITE_PEN);
+	DC.DrawPoint((int)(x * (float)w), (int)(y * (float)h));
+	DC.SelectObject(wxNullBitmap);
 
 	return bitmap.IsOk();
 }

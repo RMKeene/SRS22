@@ -46,11 +46,6 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="pt"></param>
 		void SetPt(const int x, const int y);
-		/// <summary>
-		/// Set the center of attention in the view.
-		/// </summary>
-		/// <param name="pt"></param>
-		void SetPt(const float x, const float y);
 		virtual bool Init(Point p, int w, int h, Rect viewRect);
 		virtual void Shutdown();
 

@@ -54,9 +54,5 @@ namespace SRS22 {
 		ForceOnScreen();
 	}
 
-	void AttnSpotBaseIO::SetPt(const float x, const float y) {
-		rect.CenterOnInPlace((const int)x, (const int)y);
-		ForceOnScreen();
-	}
 
 }

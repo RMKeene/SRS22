@@ -118,7 +118,10 @@ namespace SRS22 {
 			Y = p.Y - halfHeight;
 		}
 
-		void CenterOnInPlace(const int x, const int y);
+		void CenterOnInPlace(const int x, const int y) {
+			X = x - halfWidth;
+			Y = y - halfHeight;
+		}
 
 		cv::Rect toOpenCVRect() const {
 			return cv::Rect(X, Y, width, height);

@@ -13,6 +13,7 @@ namespace SRS22 {
 			cv::Vec3f(0.0, 0.0, 0.0),
 			CameraAttnSpotMap_Width,
 			"Raw pixel map of center of camera fovea in color.") {
+		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
 	}
 
 	CameraAttnSpotMap::~CameraAttnSpotMap() {
