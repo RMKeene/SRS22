@@ -5,6 +5,9 @@
 #include <tchar.h>
 #include <ppl.h>
 #include "Maps/ScreenFoveaMap.h"
+#include "Maps/ScreenAttnSpotMap.h"
+#include "Maps/ScreenDifferenceMap.h"
+#include "Maps/ScreenMotionXYMap.h"
 #include "Maps/RandomMap.h"
 #include "Maps/CameraFoveaMap.h"
 #include "Maps/CameraAttnSpotMap.h"
@@ -132,12 +135,15 @@ namespace SRS22 {
 			64, 64, cameraInput.GetCameraRect());
 
 		// All Map instances. Keep in alphabetical order please.
-		AddMap(make_shared<CameraFoveaMap>(this));
 		AddMap(make_shared<CameraAttnSpotMap>(this));
+		AddMap(make_shared<CameraDifferenceMap>(this));
+		AddMap(make_shared<CameraFoveaMap>(this));
 		AddMap(make_shared<CameraMotionXYMap>(this));
 		AddMap(make_shared<RandomMap>(this));
+		AddMap(make_shared<ScreenAttnSpotMap>(this));
+		AddMap(make_shared<ScreenDifferenceMap>(this));
 		AddMap(make_shared<ScreenFoveaMap>(this));
-		AddMap(make_shared<CameraDifferenceMap>(this));
+		AddMap(make_shared<ScreenMotionXYMap>(this));
 
 		// Anonymouse Maps
 

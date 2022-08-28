@@ -326,6 +326,15 @@
     <ClInclude Include="HardwareIO\AttnSpotBaseIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
+    <ClInclude Include="Maps\ScreenAttnSpotMap.h">
+      <Filter>Source\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\ScreenMotionXYMap.h">
+      <Filter>Source\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\ScreenDifferenceMap.h">
+      <Filter>Source\Maps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -489,6 +498,15 @@
     </ClCompile>
     <ClCompile Include="HardwareIO\AttnSpotBaseIO.cpp">
       <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\ScreenAttnSpotMap.cpp">
+      <Filter>Source\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\ScreenMotionXYMap.cpp">
+      <Filter>Source\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\ScreenDifferenceMap.cpp">
+      <Filter>Source\Maps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

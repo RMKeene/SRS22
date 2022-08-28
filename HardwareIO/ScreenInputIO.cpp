@@ -41,8 +41,23 @@ namespace SRS22 {
 
 	void ScreenInputIO::PreTick() {
 		IOCommon::PreTick();
+		if (!currentScreen.empty())
+			currentScreen.copyTo(previousScreen);
+		if (!currentScreenLowRes.empty())
+			currentScreenLowRes.copyTo(previousScreenLowRes);
+
 		TakeScreenSnapshot();
-		//bugCurrentScreen();
+
+		if (!currentScreen.empty()) {
+			resize(currentScreen, currentScreenLowRes, cv::Size2i(AbsDiffWidth, AbsDiffHeight));
+			// Debug
+			// imshow("Screen Low Res", currentScreenLowRes);
+		}
+		if (!currentScreenLowRes.empty() &&
+			!previousScreenLowRes.empty()) {
+			// 8UC4 : dims=2 rows=270 cols=640"
+			cv::absdiff(currentScreenLowRes, previousScreenLowRes, currentAbsDifferenceLowRes);
+		}
 	}
 
 	void ScreenInputIO::PostTick() {
@@ -118,6 +133,9 @@ namespace SRS22 {
 
 		DeleteDC(hwindowCompatibleDC);
 		ReleaseDC(nullptr, hwindowDC);
+
+		// For debug.
+		//imshow("SCreen", currentScreen);
 
 		return true;
 	}

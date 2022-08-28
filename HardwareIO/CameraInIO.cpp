@@ -57,10 +57,18 @@ namespace SRS22 {
 	bool CameraInIO::AcquireFrame() {
 		if (!vidHelper.CaptureFrame())
 			return false;
+		// Convert RGB uchar data to float 3 planes. 
+		// Thus 8UC3 2D to 32FC1 2D
 		OpenCVHelpers::CVCopyRGBToMat(vidHelper.currentImage3UC8, currentFrame);
 		OpenCVHelpers::CVCopyRGBToMat(vidHelper.previousImage3UC8, previousFrame);
 		OpenCVHelpers::CVCopyRGBToMat(vidHelper.currentImageLowRes3UC8, currentFrameLowRes);
 		OpenCVHelpers::CVCopyRGBToMat(vidHelper.previousImageLowRes3UC8, previousFrameLowRes);
+
+		//std::string ss1 = OpenCVHelpers::CVMatrixInfo(currentFrame);
+		//std::string ss2 = OpenCVHelpers::CVMatrixInfo(previousFrame);
+		//std::string ss3 = OpenCVHelpers::CVMatrixInfo(currentFrameLowRes);
+		//std::string ss4 = OpenCVHelpers::CVMatrixInfo(previousFrameLowRes);
+		//std::string ss5 = OpenCVHelpers::CVMatrixInfo(currentAbsDifferenceLowRes);
 
 		if (currentFrameLowRes.empty() == false &&
 			previousFrameLowRes.empty() == false) {

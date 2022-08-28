@@ -24,7 +24,18 @@ namespace SRS22 {
 
 		std::recursive_mutex snapshotDataLock;
 
+		// 8UC4 : dims=2 rows=1080 cols=2560"
 		cv::Mat currentScreen;
+		cv::Mat previousScreen;
+
+		// 8UC4 : dims=2 rows=270 cols=640"
+		cv::Mat currentScreenLowRes;
+		cv::Mat previousScreenLowRes;
+		cv::Mat currentAbsDifferenceLowRes;
+
+		// My (R Keene) screen is 2560 x 1080
+		static const int AbsDiffWidth = 2560 / 4;
+		static const int AbsDiffHeight = 1080 / 4;
 
 		ScreenInputIO();
 		~ScreenInputIO();
@@ -80,7 +91,18 @@ namespace SRS22 {
 		/// </summary>
 		/// <returns></returns>
 		cv::Mat& GetCurrentScreenRaw();
-
+		/// <summary>
+		/// CV_8UC3 640(cols) x 480(rows)
+		/// </summary>
+		cv::Mat GetPreviousScreen() { return previousScreen; }
+		/// <summary>
+		/// CV_8UC3 64(cols) x 48(rows)
+		/// </summary>
+		cv::Mat GetCurrentScreenLowRes() { return currentScreenLowRes; }
+		/// <summary>
+		/// CV_8UC3 64(cols) x 48(rows)
+		/// </summary>
+		cv::Mat GetPreviousScreenLowRes() { return previousScreenLowRes; }
 		/// <summary>
 		/// Copy a sub rectangle from current screen to outM.
 		/// </summary>
