@@ -117,7 +117,10 @@ namespace SRS22 {
 					this->Layout();
 					this->Fit();
 				}
-				ConvertMatBitmapTowxBitmap_CV_32FC1(chgs, w, h, bitmap, 255.0f, scaleX, scaleY);
+				std::string ss = OpenCVHelpers::CVMatrixInfo(chgs);
+				if(chgs.type() == CV_32FC1)
+					ConvertMatBitmapTowxBitmap_CV_32FC1(chgs, w, h, bitmap, 255.0f, scaleX, scaleY);
+
 				chosenMapBitmap->SetBitmap(bitmap);
 			}
 			

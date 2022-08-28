@@ -137,19 +137,23 @@ namespace SRS22 {
 				if (outM.size[0] == 3) {
 					for (int y = region.top(); y < region.bottom(); y++) {
 						const int yy = y - region.Y;
-						for (int x = region.left(); x < region.right(); x++) {
-							const int xx = x - region.X;
-							if (inputMatRGB.type() == CV_8UC4) {
-								const cv::Vec4b n = inputMatRGB.at<cv::Vec4b>(y, x);
-								outM.at<float>(0, yy, xx) = n[0] / 255.0f;
-								outM.at<float>(1, yy, xx) = n[1] / 255.0f;
-								outM.at<float>(2, yy, xx) = n[2] / 255.0f;
-							}
-							else { // CV_8UC3 BGR
-								const cv::Vec3b n = inputMatRGB.at<cv::Vec3b>(y, x);
-								outM.at<float>(0, yy, xx) = n[2] / 255.0f;
-								outM.at<float>(1, yy, xx) = n[1] / 255.0f;
-								outM.at<float>(2, yy, xx) = n[0] / 255.0f;
+						if (yy >= 0 && yy < outM.size[1] && y >= 0 && y < inputMatRGB.rows) {
+							for (int x = region.left(); x < region.right(); x++) {
+								const int xx = x - region.X;
+								if (xx >= 0 && xx < outM.size[2] && x >= 0 && x < inputMatRGB.cols) {
+									if (inputMatRGB.type() == CV_8UC4) {
+										const cv::Vec4b& n = inputMatRGB.at<cv::Vec4b>(y, x);
+										outM.at<float>(0, yy, xx) = n[0] / 255.0f;
+										outM.at<float>(1, yy, xx) = n[1] / 255.0f;
+										outM.at<float>(2, yy, xx) = n[2] / 255.0f;
+									}
+									else { // CV_8UC3 BGR
+										const cv::Vec3b& n = inputMatRGB.at<cv::Vec3b>(y, x);
+										outM.at<float>(0, yy, xx) = n[2] / 255.0f;
+										outM.at<float>(1, yy, xx) = n[1] / 255.0f;
+										outM.at<float>(2, yy, xx) = n[0] / 255.0f;
+									}
+								}
 							}
 						}
 					}
