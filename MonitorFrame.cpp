@@ -6,6 +6,7 @@
 #include <wx/dcclient.h>
 #include "convertmattowxbmp.h"
 #include "TimeHelpers.h"
+#include "HardwareIO/TextOutIO.h"
 
 namespace SRS22 {
 

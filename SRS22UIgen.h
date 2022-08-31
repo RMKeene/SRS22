@@ -164,6 +164,10 @@ class TopTextFrameGen : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnTextInClearButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnInputTextKeyDown( wxKeyEvent& event ) { event.Skip(); }
+		virtual void OnInputText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnInputTextEnter( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnInputTextMaxLen( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTextOutClearButton( wxCommandEvent& event ) { event.Skip(); }
 		
 	

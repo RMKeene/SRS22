@@ -608,5 +608,6 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

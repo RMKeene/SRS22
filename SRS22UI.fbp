@@ -4187,7 +4187,7 @@
                                 <event name="OnChar"></event>
                                 <event name="OnEnterWindow"></event>
                                 <event name="OnEraseBackground"></event>
-                                <event name="OnKeyDown"></event>
+                                <event name="OnKeyDown">OnInputTextKeyDown</event>
                                 <event name="OnKeyUp"></event>
                                 <event name="OnKillFocus"></event>
                                 <event name="OnLeaveWindow"></event>
@@ -4215,9 +4215,9 @@
                                 <event name="OnRightUp"></event>
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
-                                <event name="OnText"></event>
-                                <event name="OnTextEnter"></event>
-                                <event name="OnTextMaxLen"></event>
+                                <event name="OnText">OnInputText</event>
+                                <event name="OnTextEnter">OnInputTextEnter</event>
+                                <event name="OnTextMaxLen">OnInputTextMaxLen</event>
                                 <event name="OnTextURL"></event>
                                 <event name="OnUpdateUI"></event>
                             </object>
@@ -4349,7 +4349,7 @@
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
                                 <property name="docking">Left</property>
-                                <property name="enabled">1</property>
+                                <property name="enabled">0</property>
                                 <property name="fg"></property>
                                 <property name="floatable">1</property>
                                 <property name="font"></property>

@@ -488,6 +488,8 @@ TopTextFrameGen::TopTextFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	sbSizer10->Add( TextOutClearButton1, 0, wxALL, 2 );
 	
 	TextOutRichText = new wxRichTextCtrl( sbSizer10->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0|wxVSCROLL|wxHSCROLL|wxNO_BORDER|wxWANTS_CHARS );
+	TextOutRichText->Enable( false );
+	
 	sbSizer10->Add( TextOutRichText, 1, wxEXPAND | wxALL, 5 );
 	
 	
@@ -502,6 +504,10 @@ TopTextFrameGen::TopTextFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( TopTextFrameGen::OnClose ) );
 	TextInClearButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TopTextFrameGen::OnTextInClearButton ), NULL, this );
+	TextInRichText->Connect( wxEVT_KEY_DOWN, wxKeyEventHandler( TopTextFrameGen::OnInputTextKeyDown ), NULL, this );
+	TextInRichText->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( TopTextFrameGen::OnInputText ), NULL, this );
+	TextInRichText->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( TopTextFrameGen::OnInputTextEnter ), NULL, this );
+	TextInRichText->Connect( wxEVT_COMMAND_TEXT_MAXLEN, wxCommandEventHandler( TopTextFrameGen::OnInputTextMaxLen ), NULL, this );
 	TextOutClearButton1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TopTextFrameGen::OnTextOutClearButton ), NULL, this );
 }
 
@@ -510,6 +516,10 @@ TopTextFrameGen::~TopTextFrameGen()
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( TopTextFrameGen::OnClose ) );
 	TextInClearButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TopTextFrameGen::OnTextInClearButton ), NULL, this );
+	TextInRichText->Disconnect( wxEVT_KEY_DOWN, wxKeyEventHandler( TopTextFrameGen::OnInputTextKeyDown ), NULL, this );
+	TextInRichText->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( TopTextFrameGen::OnInputText ), NULL, this );
+	TextInRichText->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( TopTextFrameGen::OnInputTextEnter ), NULL, this );
+	TextInRichText->Disconnect( wxEVT_COMMAND_TEXT_MAXLEN, wxCommandEventHandler( TopTextFrameGen::OnInputTextMaxLen ), NULL, this );
 	TextOutClearButton1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( TopTextFrameGen::OnTextOutClearButton ), NULL, this );
 	
 }
