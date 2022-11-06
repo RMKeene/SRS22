@@ -2,7 +2,6 @@
 #include "GlobalWorld.h"
 
 namespace SRS22 {
-
 	GlobalWorld GlobalWorld::GlobalWorldInstance;
 
 	void GlobalWorld::TickAll() {

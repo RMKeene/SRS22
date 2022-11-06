@@ -10,7 +10,6 @@
 #include "OpenCVHelpers.h"
 
 namespace SRS22 {
-
 	class SRSUnit
 	{
 		static unsigned short nextUID;
@@ -92,5 +91,4 @@ namespace SRS22 {
 
 		virtual std::string Debug();
 	};
-
 }

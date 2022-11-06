@@ -31,6 +31,4 @@ namespace SRS22 {
 
 		void UnitTest();
 	};
-
 }
-

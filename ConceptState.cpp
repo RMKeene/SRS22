@@ -2,7 +2,6 @@
 #include "ConceptState.h"
 
 namespace SRS22 {
-
 	ConceptState::ConceptState(int cols) {
 		charges.create(1, cols, CV_32FC1);
 		cv::randu(charges, 0.0f, 1.0f);
@@ -87,7 +86,7 @@ namespace SRS22 {
 			s << charges.size[i];
 		}
 		s << "] temp.channels = " << charges.channels() << std::endl;
-		
+
 		return s.str();
 	}
 }

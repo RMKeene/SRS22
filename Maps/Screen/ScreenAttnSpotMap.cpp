@@ -1,12 +1,11 @@
-#include "../pch.h"
+#include "../../pch.h"
 #include "ScreenAttnSpotMap.h"
-#include "../HardwareIO/IOCommon.h"
-#include "../HardwareIO/ScreenAttnSpotIO.h"
+#include "../../HardwareIO/IOCommon.h"
+#include "../../HardwareIO/ScreenAttnSpotIO.h"
 #include "ScreenMotionXYMap.h"
-#include "../Brain.h"
+#include "../../Brain.h"
 
 namespace SRS22 {
-
 	ScreenAttnSpotMap::ScreenAttnSpotMap(Brain* br) :
 		SRSUnit(br, "ScreenAttnSpotMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
@@ -17,7 +16,6 @@ namespace SRS22 {
 	}
 
 	ScreenAttnSpotMap::~ScreenAttnSpotMap() {
-
 	}
 
 	void ScreenAttnSpotMap::ComputeNextState() {
@@ -41,5 +39,4 @@ namespace SRS22 {
 	void ScreenAttnSpotMap::LatchNewState() {
 		SRSUnit::LatchNewState();
 	}
-
 }

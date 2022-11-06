@@ -36,15 +36,14 @@ namespace SoLoud
 	public:
 		unsigned int mNumParams;
 		unsigned int mParamChanged;
-		float *mParam;
-		Fader *mParamFader;
-		
+		float* mParam;
+		Fader* mParamFader;
 
 		FilterInstance();
 		virtual result initParams(int aNumParams);
 		virtual void updateParams(time aTime);
-		virtual void filter(float *aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
-		virtual void filterChannel(float *aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
+		virtual void filter(float* aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
+		virtual void filterChannel(float* aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
 		virtual float getFilterParameter(unsigned int aAttributeId);
 		virtual void setFilterParameter(unsigned int aAttributeId, float aValue);
 		virtual void fadeFilterParameter(unsigned int aAttributeId, float aTo, time aTime, time aStartTime);
@@ -68,7 +67,7 @@ namespace SoLoud
 		virtual float getParamMax(unsigned int aParamIndex);
 		virtual float getParamMin(unsigned int aParamIndex);
 
-		virtual FilterInstance *createInstance() = 0;
+		virtual FilterInstance* createInstance() = 0;
 		virtual ~Filter();
 	};
 };

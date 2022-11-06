@@ -23,7 +23,6 @@ namespace SRS22 {
 	}
 
 	Brain::~Brain() {
-
 	}
 
 	void Brain::Tick() {
@@ -60,7 +59,7 @@ namespace SRS22 {
 		whiteboardIn.PreTick();
 		whiteboardOut.PreTick();
 	}
-	
+
 	void Brain::PostTick() {
 		screenFovea.PostTick();
 		screenInput.PostTick();
@@ -75,7 +74,6 @@ namespace SRS22 {
 	}
 
 	pair<bool, string> Brain::Load(string fileName) {
-
 		return pair<bool, string>(false, "Not yet implemented");
 	}
 
@@ -85,7 +83,6 @@ namespace SRS22 {
 
 	std::optional<PatternConnection> Brain::GetRandomNeuron(
 		shared_ptr<SRSUnit> origin) {
-
 		for (int i = 0; i < 2; i++) {
 			float r = static_cast <float> (xorshf96()) / static_cast <float> (RAND_MAX);
 			if (r < origin->ctrip.selfFract) { // Select random neuron from self
@@ -207,5 +204,4 @@ namespace SRS22 {
 		}
 		return std::nullopt;
 	}
-
 }

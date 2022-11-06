@@ -233,15 +233,16 @@
     <ClInclude Include="HardwareIO\WhiteboardInIO.h" />
     <ClInclude Include="HardwareIO\WhiteboardOutIO.h" />
     <ClInclude Include="ini.h" />
-    <ClInclude Include="Maps\CameraAttnSpotMap.h" />
-    <ClInclude Include="Maps\CameraDifferenceMap.h" />
-    <ClInclude Include="Maps\CameraFoveaMap.h" />
-    <ClInclude Include="Maps\CameraMotionXYMap.h" />
+    <ClInclude Include="Maps\Camera\CameraAttnSpotMap.h" />
+    <ClInclude Include="Maps\Camera\CameraDifferenceMap.h" />
+    <ClInclude Include="Maps\Camera\CameraFoveaMap.h" />
+    <ClInclude Include="Maps\Camera\CameraMotionXYMap.h" />
     <ClInclude Include="Maps\RandomMap.h" />
-    <ClInclude Include="Maps\ScreenAttnSpotMap.h" />
-    <ClInclude Include="Maps\ScreenDifferenceMap.h" />
-    <ClInclude Include="Maps\ScreenFoveaMap.h" />
-    <ClInclude Include="Maps\ScreenMotionXYMap.h" />
+    <ClInclude Include="Maps\Screen\ScreenAttnSpotMap.h" />
+    <ClInclude Include="Maps\Screen\ScreenDifferenceMap.h" />
+    <ClInclude Include="Maps\Screen\ScreenFoveaMap.h" />
+    <ClInclude Include="Maps\Screen\ScreenMotionXYMap.h" />
+    <ClInclude Include="Maps\Text\TextCurrentChar.h" />
     <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="MonitorFrame.h" />
     <ClInclude Include="OpenCVHelpers.h" />
@@ -337,15 +338,15 @@
     <ClCompile Include="HardwareIO\WaveOutputHelper.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardInIO.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardOutIO.cpp" />
-    <ClCompile Include="Maps\CameraAttnSpotMap.cpp" />
-    <ClCompile Include="Maps\CameraDifferenceMap.cpp" />
-    <ClCompile Include="Maps\CameraFoveaMap.cpp" />
-    <ClCompile Include="Maps\CameraMotionXYMap.cpp" />
+    <ClCompile Include="Maps\Camera\CameraAttnSpotMap.cpp" />
+    <ClCompile Include="Maps\Camera\CameraDifferenceMap.cpp" />
+    <ClCompile Include="Maps\Camera\CameraFoveaMap.cpp" />
+    <ClCompile Include="Maps\Camera\CameraMotionXYMap.cpp" />
     <ClCompile Include="Maps\RandomMap.cpp" />
-    <ClCompile Include="Maps\ScreenAttnSpotMap.cpp" />
-    <ClCompile Include="Maps\ScreenDifferenceMap.cpp" />
-    <ClCompile Include="Maps\ScreenFoveaMap.cpp" />
-    <ClCompile Include="Maps\ScreenMotionXYMap.cpp" />
+    <ClCompile Include="Maps\Screen\ScreenAttnSpotMap.cpp" />
+    <ClCompile Include="Maps\Screen\ScreenDifferenceMap.cpp" />
+    <ClCompile Include="Maps\Screen\ScreenFoveaMap.cpp" />
+    <ClCompile Include="Maps\Screen\ScreenMotionXYMap.cpp" />
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
     <ClCompile Include="OpenCVHelpers.cpp" />
@@ -414,6 +415,9 @@
     <None Include="packages.config" />
     <None Include="README.md" />
     <None Include="res\SRS22.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="NatvisFile.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

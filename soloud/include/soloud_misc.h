@@ -58,7 +58,6 @@ namespace SoLoud
 			float rand_float();
 			void srand(int aSeed);
 		};
-
 	};
 };
 

@@ -33,16 +33,16 @@ namespace SoLoud
 
 	class FlangerFilterInstance : public FilterInstance
 	{
-		float *mBuffer;
+		float* mBuffer;
 		unsigned int mBufferLength;
-		FlangerFilter *mParent;
+		FlangerFilter* mParent;
 		unsigned int mOffset;
 		double mIndex;
 
 	public:
-		virtual void filter(float *aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
+		virtual void filter(float* aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
 		virtual ~FlangerFilterInstance();
-		FlangerFilterInstance(FlangerFilter *aParent);
+		FlangerFilterInstance(FlangerFilter* aParent);
 	};
 
 	class FlangerFilter : public Filter
@@ -61,7 +61,7 @@ namespace SoLoud
 		virtual unsigned int getParamType(unsigned int aParamIndex);
 		virtual float getParamMax(unsigned int aParamIndex);
 		virtual float getParamMin(unsigned int aParamIndex);
-		virtual FilterInstance *createInstance();
+		virtual FilterInstance* createInstance();
 		FlangerFilter();
 		result setParams(float aDelay, float aFreq);
 	};

@@ -26,11 +26,11 @@ freely, subject to the following restrictions:
 See soloud_file_hack_on.h
 */
 
-#undef FILE  
-#undef fgetc 
-#undef fread 
-#undef fseek 
-#undef ftell 
+#undef FILE
+#undef fgetc
+#undef fread
+#undef fseek
+#undef ftell
 #undef fclose
-#undef fopen 
+#undef fopen
 #undef fopen_s

@@ -3,15 +3,12 @@
 #include "soloud.h"
 
 namespace SRS22 {
-
 	SoLoud::Soloud soloudInst;
 
 	WaveOutputHelper::WaveOutputHelper() {
-
 	}
 
 	WaveOutputHelper::~WaveOutputHelper() {
-
 	}
 
 	void WaveOutputHelper::Init() {
@@ -27,5 +24,4 @@ namespace SRS22 {
 	void WaveOutputHelper::Play(SoLoud::Wav& wav) {
 		soloudInst.play(wav);
 	}
-
 }

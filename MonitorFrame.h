@@ -54,4 +54,3 @@ namespace SRS22 {
 		bool hasSetupVideoInDroplist = false;
 	};
 }
-

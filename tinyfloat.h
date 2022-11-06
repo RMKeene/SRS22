@@ -1,7 +1,6 @@
 #pragma once
 
 namespace SRS22 {
-
 	typedef unsigned char tinyfloatprim;
 
 	/// <summary>
@@ -43,5 +42,4 @@ namespace SRS22 {
 
 		tinyfloat operator=(tinyfloat f) {}
 	};
-
 }

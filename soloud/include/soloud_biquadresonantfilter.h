@@ -51,12 +51,12 @@ namespace SoLoud
 		int mDirty;
 		float mSamplerate;
 
-		BiquadResonantFilter *mParent;
+		BiquadResonantFilter* mParent;
 		void calcBQRParams();
 	public:
-		virtual void filterChannel(float *aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
+		virtual void filterChannel(float* aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
 		virtual ~BiquadResonantFilterInstance();
-		BiquadResonantFilterInstance(BiquadResonantFilter *aParent);
+		BiquadResonantFilterInstance(BiquadResonantFilter* aParent);
 	};
 
 	class BiquadResonantFilter : public Filter
@@ -84,7 +84,7 @@ namespace SoLoud
 		virtual float getParamMax(unsigned int aParamIndex);
 		virtual float getParamMin(unsigned int aParamIndex);
 
-		virtual BiquadResonantFilterInstance *createInstance();
+		virtual BiquadResonantFilterInstance* createInstance();
 		BiquadResonantFilter();
 		result setParams(int aType, float aFrequency, float aResonance);
 		virtual ~BiquadResonantFilter();

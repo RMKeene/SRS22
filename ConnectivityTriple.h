@@ -5,8 +5,7 @@
 #include <cassert>
 
 namespace SRS22 {
-
-	/// See paper Connectivity Triples ⅄, and Brain maxNearDistance and minFarDistance 
+	/// See paper Connectivity Triples ⅄, and Brain maxNearDistance and minFarDistance
 	class ConnectivityTriple
 	{
 	public:
@@ -40,5 +39,4 @@ namespace SRS22 {
 
 		bool IsUnconnected() { return desiredConnectionCount == 0; }
 	};
-
 }

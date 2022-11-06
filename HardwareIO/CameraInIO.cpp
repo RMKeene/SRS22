@@ -4,22 +4,20 @@
 namespace SRS22 {
 	CameraInIO::CameraInIO() : IOCommon() {
 		IOCOMMON_SETCLASSNAME;
-
 	}
 
 	CameraInIO::~CameraInIO() {
-
 	}
 
 	bool CameraInIO::Init() {
 		IOCommon::Init();
 		w = GetCameraWidthWin32();
 		h = GetCameraHeightWin32();
-		
+
 		int sizes[3] = { 3, h, w };
 		currentFrame = cv::Mat(3, sizes, CV_32FC1);
 		previousFrame = cv::Mat(3, sizes, CV_32FC1);
-		
+
 		int sizesLowRes[3] = { 3,
 			(int)(h * VideoHelper::lowResScale),
 			(int)(w * VideoHelper::lowResScale) };
@@ -43,7 +41,6 @@ namespace SRS22 {
 	}
 
 	void CameraInIO::UnitTest() {
-
 	}
 
 	int CameraInIO::GetCameraWidthWin32() {
@@ -57,7 +54,7 @@ namespace SRS22 {
 	bool CameraInIO::AcquireFrame() {
 		if (!vidHelper.CaptureFrame())
 			return false;
-		// Convert RGB uchar data to float 3 planes. 
+		// Convert RGB uchar data to float 3 planes.
 		// Thus 8UC3 2D to 32FC1 2D
 		OpenCVHelpers::CVCopyRGBToMat(vidHelper.currentImage3UC8, currentFrame);
 		OpenCVHelpers::CVCopyRGBToMat(vidHelper.previousImage3UC8, previousFrame);
@@ -81,6 +78,4 @@ namespace SRS22 {
 		// current image is CV_8UC3
 		OpenCVHelpers::CVGetSubRectRGB(vidHelper.currentImage3UC8, outM, region);
 	}
-
-
 }

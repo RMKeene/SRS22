@@ -12,7 +12,6 @@
 #pragma comment(lib, "mfplat")
 
 namespace SRS22 {
-
 	const float VideoHelper::lowResScale = 0.1f;
 
 	VideoHelper::VideoHelper() {
@@ -124,5 +123,4 @@ namespace SRS22 {
 
 		return hr;
 	}
-
 }

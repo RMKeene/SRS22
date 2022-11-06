@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	<Type Name="SRS22::TextInIO">
+		<DisplayString>{{ charBuffer={charBuffer} }}</DisplayString>
+		<Expand>
+			<Item Name="[charBuffer]" ExcludeView="simple">charBuffer</Item>
+			<Item Name="[maxBufferSize]" ExcludeView="simple">maxBufferSize</Item>
+		</Expand>
+	</Type>
+</AutoVisualizer>

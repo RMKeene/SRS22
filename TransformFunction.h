@@ -3,7 +3,6 @@
 #include "ClassPredefines.h"
 
 namespace SRS22 {
-
 	class TransformFunction : std::enable_shared_from_this<TransformFunction>
 	{
 	public:

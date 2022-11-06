@@ -27,7 +27,6 @@ namespace SRS22 {
 	}
 
 	std::string OpenCVHelpers::CVMatrixInfo(cv::Mat& m) {
-
 		string r = CVTypeToStr(m.type());
 		r += " : dims=";
 		r += to_string(m.dims);
@@ -105,7 +104,6 @@ namespace SRS22 {
 			briefData += "...";
 		}
 		else if (m.size.dims() == 3) { // 3D Matrix, not channels.
-
 			for (int z = 0; z < m.size[0]; z++) {
 				for (int y = 0; y < m.size[1]; y++) {
 					for (int x = 0; x < m.size[2]; x++) {
@@ -210,5 +208,4 @@ namespace SRS22 {
 			return 1;
 		return m.size[m.dims - 3];
 	}
-
 }

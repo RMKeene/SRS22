@@ -32,191 +32,181 @@
 #include <wx/timer.h>
 #include <wx/frame.h>
 #include <wx/checkbox.h>
+#include <wx/textctrl.h>
 #include <wx/bmpbuttn.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MonitorFrameGen
 ///////////////////////////////////////////////////////////////////////////////
-class MonitorFrameGen : public wxFrame 
+class MonitorFrameGen : public wxFrame
 {
-	private:
-	
-	protected:
-		wxMenuBar* MonitorFrameMenuBar;
-		wxMenu* m_menu5;
-		wxToggleButton* RunButton;
-		wxButton* MonitorStepButton;
-		wxButton* ContinueButton;
-		wxStaticText* TickCountText;
-		wxButton* saveLayoutButton;
-		wxButton* reloadLayoutButton;
-		wxButton* resetLayoutButton;
-		wxButton* TerstAButton;
-		wxButton* TestBButton;
-		wxStaticText* m_staticText91;
-		wxChoice* AudioInChoiceDropbox;
-		wxStaticText* m_staticText181;
-		wxSlider* AudioInVolume;
-		wxStaticLine* m_staticline1;
-		wxStaticText* m_staticText9;
-		wxChoice* AudioOutChoiceDropbox;
-		wxStaticText* m_staticText18;
-		wxSlider* AudioOutVolume;
-		wxStaticText* m_staticText911;
-		wxChoice* VideoInChoiceDropbox;
-		wxToggleButton* videoOnOffButton;
-		wxStaticBitmap* AudioInFFTBitmapWidget;
-		wxStaticBitmap* AudioOutFFTBitmapWidget;
-		wxButton* ShowMapWindowButton;
-		wxChoice* ViewMapChoice;
-		wxStaticText* refreshDelayMSText;
-		wxSlider* mapMonitorRefreshDelay;
-		wxStaticText* chosenMapText1;
-		wxStaticText* chosenMapText2;
-		wxStaticText* chosenMapText3;
-		wxStaticBitmap* chosenMapBitmap;
-		wxStaticText* SelectedMapDetailLabel;
-		wxStaticText* MonitorStatisticsLine1;
-		wxStaticText* MonitorStatisticsLine2;
-		wxStaticText* MonitorStatisticsLine3;
-		wxStaticText* MonitorStatisticsLine4;
-		wxRichTextCtrl* LogRichText;
-		wxTimer MonitorFrameTick;
-		
-		// Virtual event handlers, overide them in your derived class
-		virtual void OnMonitorWindowActivate( wxActivateEvent& event ) { event.Skip(); }
-		virtual void OnMonitorWindowActivateApp( wxActivateEvent& event ) { event.Skip(); }
-		virtual void OnMonitorWindowClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnPaintFrameErase( wxEraseEvent& event ) { event.Skip(); }
-		virtual void OnMonitorWindowHibernate( wxActivateEvent& event ) { event.Skip(); }
-		virtual void OnMonitorWindowIconize( wxIconizeEvent& event ) { event.Skip(); }
-		virtual void OnMonitorWindowIdle( wxIdleEvent& event ) { event.Skip(); }
-		virtual void OnPaintFrame( wxPaintEvent& event ) { event.Skip(); }
-		virtual void OnRunToggleButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnStep( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnContinueButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnSaveLayoutButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnReloadLayoutButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnResetLayoutButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnTestAClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnTestBClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnAudioInDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnAudioVolumeIn( wxScrollEvent& event ) { event.Skip(); }
-		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnAudioVolumeOut( wxScrollEvent& event ) { event.Skip(); }
-		virtual void OnVideoInChanged( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnVideoOnOffToggle( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnNewMapMonitorWindow( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMapChoiceChange( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnScrollMapMonitorMsSlider( wxScrollEvent& event ) { event.Skip(); }
-		virtual void OnMonitorFrameTickTimer( wxTimerEvent& event ) { event.Skip(); }
-		
-	
-	public:
-		
-		MonitorFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Monitor - Debug"), const wxPoint& pos = wxPoint( -1,-1 ), const wxSize& size = wxSize( 2400,1000 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-		
-		~MonitorFrameGen();
-	
+private:
+
+protected:
+	wxMenuBar* MonitorFrameMenuBar;
+	wxMenu* m_menu5;
+	wxToggleButton* RunButton;
+	wxButton* MonitorStepButton;
+	wxButton* ContinueButton;
+	wxStaticText* TickCountText;
+	wxButton* saveLayoutButton;
+	wxButton* reloadLayoutButton;
+	wxButton* resetLayoutButton;
+	wxButton* TerstAButton;
+	wxButton* TestBButton;
+	wxStaticText* m_staticText91;
+	wxChoice* AudioInChoiceDropbox;
+	wxStaticText* m_staticText181;
+	wxSlider* AudioInVolume;
+	wxStaticLine* m_staticline1;
+	wxStaticText* m_staticText9;
+	wxChoice* AudioOutChoiceDropbox;
+	wxStaticText* m_staticText18;
+	wxSlider* AudioOutVolume;
+	wxStaticText* m_staticText911;
+	wxChoice* VideoInChoiceDropbox;
+	wxToggleButton* videoOnOffButton;
+	wxStaticBitmap* AudioInFFTBitmapWidget;
+	wxStaticBitmap* AudioOutFFTBitmapWidget;
+	wxButton* ShowMapWindowButton;
+	wxChoice* ViewMapChoice;
+	wxStaticText* refreshDelayMSText;
+	wxSlider* mapMonitorRefreshDelay;
+	wxStaticText* chosenMapText1;
+	wxStaticText* chosenMapText2;
+	wxStaticText* chosenMapText3;
+	wxStaticBitmap* chosenMapBitmap;
+	wxStaticText* SelectedMapDetailLabel;
+	wxStaticText* MonitorStatisticsLine1;
+	wxStaticText* MonitorStatisticsLine2;
+	wxStaticText* MonitorStatisticsLine3;
+	wxStaticText* MonitorStatisticsLine4;
+	wxRichTextCtrl* LogRichText;
+	wxTimer MonitorFrameTick;
+
+	// Virtual event handlers, overide them in your derived class
+	virtual void OnMonitorWindowActivate(wxActivateEvent& event) { event.Skip(); }
+	virtual void OnMonitorWindowActivateApp(wxActivateEvent& event) { event.Skip(); }
+	virtual void OnMonitorWindowClose(wxCloseEvent& event) { event.Skip(); }
+	virtual void OnPaintFrameErase(wxEraseEvent& event) { event.Skip(); }
+	virtual void OnMonitorWindowHibernate(wxActivateEvent& event) { event.Skip(); }
+	virtual void OnMonitorWindowIconize(wxIconizeEvent& event) { event.Skip(); }
+	virtual void OnMonitorWindowIdle(wxIdleEvent& event) { event.Skip(); }
+	virtual void OnPaintFrame(wxPaintEvent& event) { event.Skip(); }
+	virtual void OnRunToggleButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnStep(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnContinueButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnSaveLayoutButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnReloadLayoutButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnResetLayoutButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnTestAClicked(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnTestBClicked(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnAudioInDeviceChoiceChanged(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnAudioVolumeIn(wxScrollEvent& event) { event.Skip(); }
+	virtual void OnAudioOutDeviceChoiceChanged(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnAudioVolumeOut(wxScrollEvent& event) { event.Skip(); }
+	virtual void OnVideoInChanged(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnVideoOnOffToggle(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnNewMapMonitorWindow(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnMapChoiceChange(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnScrollMapMonitorMsSlider(wxScrollEvent& event) { event.Skip(); }
+	virtual void OnMonitorFrameTickTimer(wxTimerEvent& event) { event.Skip(); }
+
+public:
+
+	MonitorFrameGen(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Monitor - Debug"), const wxPoint& pos = wxPoint(-1, -1), const wxSize& size = wxSize(2400, 1000), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
+
+	~MonitorFrameGen();
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class TopVideoFrameGen
 ///////////////////////////////////////////////////////////////////////////////
-class TopVideoFrameGen : public wxFrame 
+class TopVideoFrameGen : public wxFrame
 {
-	private:
-	
-	protected:
-		wxCheckBox* cameraLowResCB;
-		
-		// Virtual event handlers, overide them in your derived class
-		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }
-		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		
-	
-	public:
-		wxBoxSizer* TopVideoFrameVertLayout;
-		wxCheckBox* cameraFoveaSoptCB;
-		
-		TopVideoFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,545 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-		
-		~TopVideoFrameGen();
-	
+private:
+
+protected:
+	wxCheckBox* cameraLowResCB;
+
+	// Virtual event handlers, overide them in your derived class
+	virtual void OnActivate(wxActivateEvent& event) { event.Skip(); }
+	virtual void OnClose(wxCloseEvent& event) { event.Skip(); }
+
+public:
+	wxBoxSizer* TopVideoFrameVertLayout;
+	wxCheckBox* cameraFoveaSoptCB;
+
+	TopVideoFrameGen(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Video"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(656, 545), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
+
+	~TopVideoFrameGen();
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class TopTextFrameGen
 ///////////////////////////////////////////////////////////////////////////////
-class TopTextFrameGen : public wxFrame 
+class TopTextFrameGen : public wxFrame
 {
-	private:
-	
-	protected:
-		wxButton* TextInClearButton;
-		wxRichTextCtrl* TextInRichText;
-		wxButton* TextOutClearButton1;
-		wxRichTextCtrl* TextOutRichText;
-		
-		// Virtual event handlers, overide them in your derived class
-		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnTextInClearButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnInputTextKeyDown( wxKeyEvent& event ) { event.Skip(); }
-		virtual void OnInputText( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnInputTextEnter( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnInputTextMaxLen( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnTextOutClearButton( wxCommandEvent& event ) { event.Skip(); }
-		
-	
-	public:
-		
-		TopTextFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22-Text"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,650 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-		
-		~TopTextFrameGen();
-	
+private:
+
+protected:
+	wxTextCtrl* TextIn;
+	wxButton* TextInClearButton;
+	wxTextCtrl* TextOut;
+	wxButton* TextOutClearButton1;
+
+	// Virtual event handlers, overide them in your derived class
+	virtual void TextInOnChar(wxKeyEvent& event) { event.Skip(); }
+	virtual void OnClose(wxCloseEvent& event) { event.Skip(); }
+	virtual void OnTextInChar(wxKeyEvent& event) { event.Skip(); }
+	virtual void OnTextInClearButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnTextOutClearButton(wxCommandEvent& event) { event.Skip(); }
+
+public:
+
+	TopTextFrameGen(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22-Text"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500, 694), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
+
+	~TopTextFrameGen();
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class WhiteboardFrameGen
 ///////////////////////////////////////////////////////////////////////////////
-class WhiteboardFrameGen : public wxFrame 
+class WhiteboardFrameGen : public wxFrame
 {
-	private:
-	
-	protected:
-		wxBitmapButton* WhiteButton;
-		wxBitmapButton* BlackButton;
-		wxBitmapButton* RedButton;
-		wxBitmapButton* GreenButton;
-		wxBitmapButton* BlueButton;
-		wxBitmapButton* YellowButton;
-		wxBitmapButton* CyanButton;
-		wxBitmapButton* MagentaButton;
-		wxButton* ClearButton;
-		
-		// Virtual event handlers, overide them in your derived class
-		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnWhiteButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnBlackButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnRedButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnGreenButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnBlueButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnYellowButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnCyanButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMagentaButton( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnWhiteboardClearButton( wxCommandEvent& event ) { event.Skip(); }
-		
-	
-	public:
-		wxBoxSizer* WhiteboardHorizPanel;
-		
-		WhiteboardFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS - Whiteboard"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,500 ), long style = wxCAPTION|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-		
-		~WhiteboardFrameGen();
-	
+private:
+
+protected:
+	wxBitmapButton* WhiteButton;
+	wxBitmapButton* BlackButton;
+	wxBitmapButton* RedButton;
+	wxBitmapButton* GreenButton;
+	wxBitmapButton* BlueButton;
+	wxBitmapButton* YellowButton;
+	wxBitmapButton* CyanButton;
+	wxBitmapButton* MagentaButton;
+	wxButton* ClearButton;
+
+	// Virtual event handlers, overide them in your derived class
+	virtual void OnClose(wxCloseEvent& event) { event.Skip(); }
+	virtual void OnWhiteButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnBlackButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnRedButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnGreenButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnBlueButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnYellowButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnCyanButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnMagentaButton(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnWhiteboardClearButton(wxCommandEvent& event) { event.Skip(); }
+
+public:
+	wxBoxSizer* WhiteboardHorizPanel;
+
+	WhiteboardFrameGen(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS - Whiteboard"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(800, 500), long style = wxCAPTION | wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
+
+	~WhiteboardFrameGen();
 };
 
 #endif //__SRS22UIGEN_H__

@@ -46,22 +46,22 @@ namespace SoLoud
 
 	class WavStreamInstance : public AudioSourceInstance
 	{
-		WavStream *mParent;
+		WavStream* mParent;
 		unsigned int mOffset;
-		File *mFile;
+		File* mFile;
 		union codec
 		{
-			stb_vorbis *mOgg;
-			drflac *mFlac;
-			drmp3 *mMp3;
-			drwav *mWav;
+			stb_vorbis* mOgg;
+			drflac* mFlac;
+			drmp3* mMp3;
+			drwav* mWav;
 		} mCodec;
 		unsigned int mOggFrameSize;
 		unsigned int mOggFrameOffset;
-		float **mOggOutputs;
+		float** mOggOutputs;
 	public:
-		WavStreamInstance(WavStream *aParent);
-		virtual unsigned int getAudio(float *aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize);
+		WavStreamInstance(WavStream* aParent);
+		virtual unsigned int getAudio(float* aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize);
 		virtual result rewind();
 		virtual bool hasEnded();
 		virtual ~WavStreamInstance();
@@ -77,29 +77,29 @@ namespace SoLoud
 
 	class WavStream : public AudioSource
 	{
-		result loadwav(File *fp);
-		result loadogg(File *fp);
-		result loadflac(File *fp);
-		result loadmp3(File *fp);
+		result loadwav(File* fp);
+		result loadogg(File* fp);
+		result loadflac(File* fp);
+		result loadmp3(File* fp);
 	public:
 		int mFiletype;
-		char *mFilename;
-		File *mMemFile;
-		File *mStreamFile;
+		char* mFilename;
+		File* mMemFile;
+		File* mStreamFile;
 		unsigned int mSampleCount;
 
 		WavStream();
 		virtual ~WavStream();
-		result load(const char *aFilename);
-		result loadMem(const unsigned char *aData, unsigned int aDataLen, bool aCopy = false, bool aTakeOwnership = true);
-		result loadToMem(const char *aFilename);
-		result loadFile(File *aFile);
-		result loadFileToMem(File *aFile);		
-		virtual AudioSourceInstance *createInstance();
+		result load(const char* aFilename);
+		result loadMem(const unsigned char* aData, unsigned int aDataLen, bool aCopy = false, bool aTakeOwnership = true);
+		result loadToMem(const char* aFilename);
+		result loadFile(File* aFile);
+		result loadFileToMem(File* aFile);
+		virtual AudioSourceInstance* createInstance();
 		time getLength();
 
 	public:
-		result parse(File *aFile);
+		result parse(File* aFile);
 	};
 };
 

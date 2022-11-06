@@ -24,6 +24,4 @@ namespace SRS22 {
 
 		virtual void UnitTest();
 	};
-
 }
-

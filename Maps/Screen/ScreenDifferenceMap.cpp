@@ -1,11 +1,10 @@
-#include "../pch.h"
+#include "../../pch.h"
 #include "ScreenDifferenceMap.h"
-#include "../HardwareIO/IOCommon.h"
-#include "../HardwareIO/ScreenInputIO.h"
-#include "../HardwareIO/ScreenAttnSpotIO.h"
+#include "../../HardwareIO/IOCommon.h"
+#include "../../HardwareIO/ScreenInputIO.h"
+#include "../../HardwareIO/ScreenAttnSpotIO.h"
 
 namespace SRS22 {
-
 	ScreenDifferenceMap::ScreenDifferenceMap(Brain* br) :
 		SRSUnit(br, "ScreenDifferenceMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
@@ -15,7 +14,6 @@ namespace SRS22 {
 	}
 
 	ScreenDifferenceMap::~ScreenDifferenceMap() {
-
 	}
 
 	void ScreenDifferenceMap::ComputeNextState() {
@@ -37,5 +35,4 @@ namespace SRS22 {
 	void ScreenDifferenceMap::LatchNewState() {
 		SRSUnit::LatchNewState();
 	}
-
 }

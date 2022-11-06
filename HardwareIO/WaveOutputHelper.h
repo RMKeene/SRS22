@@ -6,7 +6,6 @@
 typedef PVOID HWAVELIB;
 
 namespace SRS22 {
-
 	class WaveOutputHelper
 	{
 		SoLoud::Soloud soloudInst;
@@ -23,5 +22,4 @@ namespace SRS22 {
 
 		void Play(SoLoud::Wav& wav);
 	};
-
 }

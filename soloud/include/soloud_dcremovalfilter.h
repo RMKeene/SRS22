@@ -33,23 +33,23 @@ namespace SoLoud
 
 	class DCRemovalFilterInstance : public FilterInstance
 	{
-		float *mBuffer;
-		float *mTotals;
+		float* mBuffer;
+		float* mTotals;
 		int mBufferLength;
-		DCRemovalFilter *mParent;
+		DCRemovalFilter* mParent;
 		int mOffset;
 
 	public:
-		virtual void filter(float *aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
+		virtual void filter(float* aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
 		virtual ~DCRemovalFilterInstance();
-		DCRemovalFilterInstance(DCRemovalFilter *aParent);
+		DCRemovalFilterInstance(DCRemovalFilter* aParent);
 	};
 
 	class DCRemovalFilter : public Filter
 	{
 	public:
 		float mLength;
-		virtual FilterInstance *createInstance();
+		virtual FilterInstance* createInstance();
 		DCRemovalFilter();
 		result setParams(float aLength = 0.1f);
 	};

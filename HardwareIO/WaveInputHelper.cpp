@@ -3,7 +3,6 @@
 #include "../StringConversionHelpers.h"
 
 namespace SRS22 {
-
 	typedef struct WAV_HEADER {
 		/* RIFF Chunk Descriptor */
 		uint8_t RIFF[4] = { 'R', 'I', 'F', 'F' }; // RIFF Header Magic header
@@ -27,11 +26,9 @@ namespace SRS22 {
 	using SRS22::StringConversionHelpers;
 
 	WaveInputHelper::WaveInputHelper() {
-
 	}
 
 	WaveInputHelper::~WaveInputHelper() {
-
 	}
 
 	void WaveInputHelper::Init() {
@@ -330,5 +327,4 @@ namespace SRS22 {
 #endif
 		}
 	}
-
 }

@@ -2,7 +2,6 @@
 #include <boost/algorithm/string.hpp>
 
 namespace SRS22 {
-
 	Settings Settings::globalSettings;
 
 	bool Settings::Load() {
@@ -54,14 +53,12 @@ namespace SRS22 {
 		if (has(section, key))
 			return ini[section][key];
 		return d;
-
 	}
 
 	float Settings::GetFloat(std::string section, std::string key, float d) {
 		if (has(section, key))
 			return std::stof(ini[section][key]);
 		return d;
-
 	}
 
 	POINT Settings::GetPoint(std::string section, std::string key, POINT d) {
@@ -163,5 +160,4 @@ namespace SRS22 {
 		ini[section][key] = std::to_string(v.x) + "," + std::to_string(v.y) +
 			"," + std::to_string(v.width) + "," + std::to_string(v.height);
 	}
-
 }

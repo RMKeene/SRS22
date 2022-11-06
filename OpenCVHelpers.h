@@ -2,7 +2,6 @@
 #include "Rect.h"
 
 namespace SRS22 {
-
 	class OpenCVHelpers {
 	public:
 		static std::string CVTypeToStr(const int type);
@@ -18,7 +17,7 @@ namespace SRS22 {
 
 		/// <summary>
 		/// Get a matrix of a subrect in inputMat. So far is coded for CV_32FC1 either 1 or 3 layers.
-		/// Assumes inputMat is an RGB image CV_3UC8. From camera or screen etc. If outM is 3 layer then converts 
+		/// Assumes inputMat is an RGB image CV_3UC8. From camera or screen etc. If outM is 3 layer then converts
 		/// 0 to 255 pixels to 0.0 to 1.0 values in the 3 layers. If outM is 1 layer, converts to grey.
 		/// If inputMatRGB is empty then does nothing.
 		/// </summary>

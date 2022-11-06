@@ -33,15 +33,15 @@ namespace SoLoud
 
 	class EchoFilterInstance : public FilterInstance
 	{
-		float *mBuffer;
+		float* mBuffer;
 		int mBufferLength;
 		int mBufferMaxLength;
 		int mOffset;
 
 	public:
-		virtual void filter(float *aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
+		virtual void filter(float* aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
 		virtual ~EchoFilterInstance();
-		EchoFilterInstance(EchoFilter *aParent);
+		EchoFilterInstance(EchoFilter* aParent);
 	};
 
 	class EchoFilter : public Filter
@@ -62,7 +62,7 @@ namespace SoLoud
 		virtual unsigned int getParamType(unsigned int aParamIndex);
 		virtual float getParamMax(unsigned int aParamIndex);
 		virtual float getParamMin(unsigned int aParamIndex);
-		virtual FilterInstance *createInstance();
+		virtual FilterInstance* createInstance();
 		EchoFilter();
 		result setParams(float aDelay, float aDecay = 0.7f, float aFilter = 0.0f);
 	};

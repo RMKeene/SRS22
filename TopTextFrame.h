@@ -2,7 +2,6 @@
 #include "SRS22UIgen.h"
 
 namespace SRS22 {
-
 	class TopTextFrame :
 		public TopTextFrameGen
 	{
@@ -11,13 +10,9 @@ namespace SRS22 {
 		~TopTextFrame();
 
 		void OnTextInClearButton(wxCommandEvent& event) override;
-		void OnInputTextKeyDown(wxKeyEvent& event) override;
-		void OnInputText(wxCommandEvent& event) override;
-		void OnInputTextEnter(wxCommandEvent& event) override;
-		void OnInputTextMaxLen(wxCommandEvent& event) override;
+		void OnTextInChar(wxKeyEvent& event) override;
 		void OnTextOutClearButton(wxCommandEvent& event) override;
 
 		void OnClose(wxCloseEvent& event) override;
 	};
-
 }

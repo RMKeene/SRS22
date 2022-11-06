@@ -34,6 +34,5 @@ namespace SRS22 {
 	void ScreenAttnSpotIO::ForceToBeSubclassed() {}
 
 	void ScreenAttnSpotIO::UnitTest() {
-
 	}
 }

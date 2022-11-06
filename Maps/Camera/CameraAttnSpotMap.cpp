@@ -1,12 +1,11 @@
-#include "../pch.h"
+#include "../../pch.h"
 #include "CameraAttnSpotMap.h"
-#include "../HardwareIO/IOCommon.h"
-#include "../HardwareIO/CameraAttnSpotIO.h"
+#include "../../HardwareIO/IOCommon.h"
+#include "../../HardwareIO/CameraAttnSpotIO.h"
 #include "CameraMotionXYMap.h"
-#include "../Brain.h"
+#include "../../Brain.h"
 
 namespace SRS22 {
-
 	CameraAttnSpotMap::CameraAttnSpotMap(Brain* br) :
 		SRSUnit(br, "CameraAttnSpotMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
@@ -17,7 +16,6 @@ namespace SRS22 {
 	}
 
 	CameraAttnSpotMap::~CameraAttnSpotMap() {
-
 	}
 
 	void CameraAttnSpotMap::ComputeNextState() {
@@ -41,5 +39,4 @@ namespace SRS22 {
 	void CameraAttnSpotMap::LatchNewState() {
 		SRSUnit::LatchNewState();
 	}
-
 }

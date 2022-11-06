@@ -1,12 +1,11 @@
-#include "../pch.h"
+#include "../../pch.h"
 #include "ScreenMotionXYMap.h"
-#include "../HardwareIO/IOCommon.h"
-#include "../HardwareIO/ScreenInputIO.h"
-#include "../HardwareIO/ScreenAttnSpotIO.h"
-#include "../OpenCVHelpers.h"
+#include "../../HardwareIO/IOCommon.h"
+#include "../../HardwareIO/ScreenInputIO.h"
+#include "../../HardwareIO/ScreenAttnSpotIO.h"
+#include "../../OpenCVHelpers.h"
 
 namespace SRS22 {
-
 	ScreenMotionXYMap::ScreenMotionXYMap(Brain* br) :
 		SRSUnit(br, "ScreenMotionXYMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
@@ -17,7 +16,6 @@ namespace SRS22 {
 	}
 
 	ScreenMotionXYMap::~ScreenMotionXYMap() {
-
 	}
 
 	void ScreenMotionXYMap::ComputeNextState() {
@@ -53,5 +51,4 @@ namespace SRS22 {
 	void ScreenMotionXYMap::LatchNewState() {
 		SRSUnit::LatchNewState();
 	}
-
 }

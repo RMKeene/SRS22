@@ -1,5 +1,5 @@
 #pragma once
-#include "../SRSUnit.h"
+#include "../../SRSUnit.h"
 
 #define ScreenFoveaMap_Width 15
 #define ScreenFoveaMap_Height 15
@@ -12,8 +12,8 @@ namespace SRS22 {
 	{
 	public:
 		/// <summary>
-		/// implemented as 
-		/// SRSUnit("ScreenFoveaMap", ctrip, location, 3, ScreenFoveaMap_Height, ScreenFoveaMap_Width, 
+		/// implemented as
+		/// SRSUnit("ScreenFoveaMap", ctrip, location, 3, ScreenFoveaMap_Height, ScreenFoveaMap_Width,
 		///     "Raw pixel map of center of screen fovea in color.") {
 		/// </summary>
 		ScreenFoveaMap(Brain* br);
@@ -22,5 +22,4 @@ namespace SRS22 {
 		virtual void ComputeNextState() override;
 		virtual void LatchNewState() override;
 	};
-
 }

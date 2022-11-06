@@ -43,14 +43,14 @@ namespace SoLoud
 			ROOMSIZE,
 			DAMP,
 			WIDTH
-		};		
+		};
 
-		FreeverbFilter *mParent;
-		FreeverbImpl::Revmodel *mModel;
+		FreeverbFilter* mParent;
+		FreeverbImpl::Revmodel* mModel;
 	public:
-		virtual void filter(float* aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);		
+		virtual void filter(float* aBuffer, unsigned int aSamples, unsigned int aChannels, float aSamplerate, time aTime);
 		virtual ~FreeverbFilterInstance();
-		FreeverbFilterInstance(FreeverbFilter *aParent);
+		FreeverbFilterInstance(FreeverbFilter* aParent);
 	};
 
 	class FreeverbFilter : public Filter
@@ -73,7 +73,7 @@ namespace SoLoud
 		float mRoomSize;
 		float mDamp;
 		float mWidth;
-		virtual FreeverbFilterInstance *createInstance();
+		virtual FreeverbFilterInstance* createInstance();
 		FreeverbFilter();
 		result setParams(float aMode, float aRoomSize, float aDamp, float aWidth);
 		virtual ~FreeverbFilter();

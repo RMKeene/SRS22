@@ -4,7 +4,6 @@ namespace SRS22 {
 	AttnSpotBaseIO::AttnSpotBaseIO() :
 		IOCommon(), rect(0, 0, 0, 0), _viewRect(0, 0, 0, 0) {
 		IOCOMMON_SETCLASSNAME;
-
 	}
 
 	AttnSpotBaseIO::AttnSpotBaseIO(Point p, int w, int h, Rect viewRect) :
@@ -14,7 +13,6 @@ namespace SRS22 {
 	}
 
 	AttnSpotBaseIO::~AttnSpotBaseIO() {
-
 	}
 
 	bool AttnSpotBaseIO::Init(Point p, int w, int h, Rect viewRect) {
@@ -37,7 +35,6 @@ namespace SRS22 {
 	}
 
 	void AttnSpotBaseIO::UnitTest() {
-
 	}
 
 	void AttnSpotBaseIO::ForceOnScreen() {
@@ -53,6 +50,4 @@ namespace SRS22 {
 		rect.CenterOnInPlace(x, y);
 		ForceOnScreen();
 	}
-
-
 }

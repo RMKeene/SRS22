@@ -6,22 +6,20 @@
 #include <wx/dcclient.h>
 
 namespace SRS22 {
+	class TopVideoFrame :
+		public TopVideoFrameGen, MyCanvasPainter
+	{
+	public:
+		MyCanvas canvas;
 
-    class TopVideoFrame :
-        public TopVideoFrameGen, MyCanvasPainter
-    {
-    public:
-        MyCanvas canvas;
+		TopVideoFrame(wxWindow* parent);
+		~TopVideoFrame();
 
-        TopVideoFrame(wxWindow* parent);
-        ~TopVideoFrame();
+		void TakeImage(Brain& brain);
 
-        void TakeImage(Brain& brain);
+		void OnActivate(wxActivateEvent& event) override;
+		void OnClose(wxCloseEvent& event) override;
 
-        void OnActivate(wxActivateEvent& event) override;
-        void OnClose(wxCloseEvent& event) override;
-
-        void OnPostPaint(wxPaintDC* DC, wxPaintEvent& event) override;
-    };
-
+		void OnPostPaint(wxPaintDC* DC, wxPaintEvent& event) override;
+	};
 }

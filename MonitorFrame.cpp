@@ -9,10 +9,8 @@
 #include "HardwareIO/TextOutIO.h"
 
 namespace SRS22 {
-
 	MonitorFrame::MonitorFrame(wxWindow* parent) :
 		MonitorFrameGen(parent) {
-
 		whiteboardFrame = new WhiteboardFrame(this);
 		whiteboardFrame->Show(true);
 		topTextFrame = new TopTextFrame(this);
@@ -22,11 +20,10 @@ namespace SRS22 {
 	}
 
 	MonitorFrame::~MonitorFrame() {
-
 	}
 
 	void MonitorFrame::LoadMapChoices() {
-		std::shared_ptr<Brain> b = GlobalWorld::GlobalWorldInstance.brains[0];
+		BrainH b = GlobalWorld::GlobalWorldInstance.brains[0];
 		ViewMapChoice->Clear();
 		ViewMapChoice->AppendString(wxString("None"));
 		for (auto m : b->conceptMaps) {
@@ -35,11 +32,9 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnMonitorWindowActivate(wxActivateEvent& event) {
-
 	}
 
 	void MonitorFrame::OnMonitorWindowActivateApp(wxActivateEvent& event) {
-
 	}
 
 	void MonitorFrame::OnMonitorWindowClose(wxCloseEvent& event) {
@@ -48,20 +43,15 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnMonitorWindowHibernate(wxActivateEvent& event) {
-
 	}
 
 	void MonitorFrame::OnMonitorWindowIconize(wxIconizeEvent& event) {
-
 	}
 
 	void MonitorFrame::OnMonitorWindowIdle(wxIdleEvent& event) {
-
 	}
 
-
 	void MonitorFrame::OnNewMapMonitorWindow(wxCommandEvent& event) {
-
 	}
 
 	void MonitorFrame::RefreshMapMonitor(long long timeTicks) {
@@ -119,12 +109,12 @@ namespace SRS22 {
 					this->Fit();
 				}
 				std::string ss = OpenCVHelpers::CVMatrixInfo(chgs);
-				if(chgs.type() == CV_32FC1)
+				if (chgs.type() == CV_32FC1)
 					ConvertMatBitmapTowxBitmap_CV_32FC1(chgs, w, h, bitmap, 255.0f, scaleX, scaleY);
 
 				chosenMapBitmap->SetBitmap(bitmap);
 			}
-			
+
 			chosenMapBitmap->Refresh();
 
 			std::shared_ptr<SRSUnit> mv = m.value();
@@ -174,11 +164,9 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnSaveLayoutButton(wxCommandEvent& event) {
-
 	}
 
 	void MonitorFrame::OnReloadLayoutButton(wxCommandEvent& event) {
-
 	}
 
 	void MonitorFrame::OnResetLayoutButton(wxCommandEvent& event) {
@@ -195,23 +183,18 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {
-
 	}
 
 	void MonitorFrame::OnAudioVolumeIn(wxScrollEvent& event) {
-
 	}
 
 	void MonitorFrame::OnAudioOutDeviceChoiceChanged(wxCommandEvent& event) {
-
 	}
 
 	void MonitorFrame::OnAudioVolumeOut(wxScrollEvent& event) {
-
 	}
 
 	void MonitorFrame::OnVideoInChanged(wxCommandEvent& event) {
-
 	}
 
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
@@ -244,7 +227,6 @@ namespace SRS22 {
 				hasSetupVideoInDroplist = true;
 			}
 		}
-
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
@@ -264,5 +246,4 @@ namespace SRS22 {
 		// draw some text
 		//dc.DrawText(wxT("Testing"), 40, 60);
 	}
-
 }

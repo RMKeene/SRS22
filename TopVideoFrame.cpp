@@ -5,7 +5,6 @@
 using namespace cv;
 
 namespace SRS22 {
-
 	TopVideoFrame::TopVideoFrame(wxWindow* parent) :
 		TopVideoFrameGen(parent),
 		canvas(this, wxID_ANY, wxPoint(0, 0), wxSize(640, 480)) {
@@ -67,5 +66,4 @@ namespace SRS22 {
 			DC->DrawRectangle(cfr);
 		}
 	}
-
 }

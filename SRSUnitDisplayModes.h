@@ -1,7 +1,6 @@
 #pragma once
 
 namespace SRS22 {
-
 	enum SRSUnitDisplayModes {
 		/// <summary>
 		/// The defualt.
@@ -13,5 +12,4 @@ namespace SRS22 {
 		TWOVALUECAMERA,
 		TWOVALUEWIDESCREEN,
 	};
-
 }

@@ -4,7 +4,6 @@ namespace SRS22 {
 	CameraAttnSpotIO::CameraAttnSpotIO() :
 		AttnSpotBaseIO() {
 		IOCOMMON_SETCLASSNAME;
-
 	}
 
 	CameraAttnSpotIO::CameraAttnSpotIO(Point p, int w, int h, Rect cameraRect) :
@@ -14,7 +13,6 @@ namespace SRS22 {
 	}
 
 	CameraAttnSpotIO::~CameraAttnSpotIO() {
-
 	}
 
 	bool CameraAttnSpotIO::Init(Point p, int w, int h, Rect cameraRect) {
@@ -36,7 +34,5 @@ namespace SRS22 {
 	void CameraAttnSpotIO::ForceToBeSubclassed() {}
 
 	void CameraAttnSpotIO::UnitTest() {
-
 	}
-
 }

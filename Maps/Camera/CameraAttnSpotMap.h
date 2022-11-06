@@ -1,6 +1,6 @@
 #pragma once
 #pragma once
-#include "../SRSUnit.h"
+#include "../../SRSUnit.h"
 
 /// Just an X,Y value in the map.
 #define CameraAttnSpotMap_Width 2
@@ -13,7 +13,7 @@ namespace SRS22 {
 	{
 	public:
 		/// <summary>
-		/// implemented as 
+		/// implemented as
 		/// SRSUnit("CameraAttnSpotMap",
 		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 		/// 	cv::Vec3f(0.0, 0.0, 0.0),
@@ -26,5 +26,4 @@ namespace SRS22 {
 		virtual void ComputeNextState() override;
 		virtual void LatchNewState() override;
 	};
-
 }

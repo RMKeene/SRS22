@@ -3,16 +3,13 @@
 #include "IOCommon.h"
 
 namespace SRS22 {
-
 	std::map<std::string, IOCommon*>* IOCommon::globalIOTable;
 
 	IOCommon::IOCommon() {
 		IOCOMMON_SETCLASSNAME;
-
 	}
 
 	IOCommon::~IOCommon() {
-
 	}
 
 	bool IOCommon::Init() {
@@ -24,18 +21,14 @@ namespace SRS22 {
 	}
 
 	void IOCommon::Shutdown() {
-
 	}
 
 	void IOCommon::PreTick() {
-
 	}
 
 	void IOCommon::PostTick() {
-
 	}
 
 	void IOCommon::UnitTest() {
-
 	}
 }

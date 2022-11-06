@@ -1,32 +1,30 @@
 #include "WhiteboardInIO.h"
 
 namespace SRS22 {
-    WhiteboardInIO::WhiteboardInIO() : IOCommon() {
-        IOCOMMON_SETCLASSNAME;
-    }
+	WhiteboardInIO::WhiteboardInIO() : IOCommon() {
+		IOCOMMON_SETCLASSNAME;
+	}
 
-    WhiteboardInIO::~WhiteboardInIO() {
+	WhiteboardInIO::~WhiteboardInIO() {
+	}
 
-    }
+	bool WhiteboardInIO::Init() {
+		IOCommon::Init();
+		return true;
+	}
 
-    bool WhiteboardInIO::Init() {
-        IOCommon::Init();
-        return true;
-    }
+	void WhiteboardInIO::Shutdown() {
+		IOCommon::Shutdown();
+	}
 
-    void WhiteboardInIO::Shutdown() {
-        IOCommon::Shutdown();
-    }
+	void WhiteboardInIO::PreTick() {
+		IOCommon::PreTick();
+	}
 
-    void WhiteboardInIO::PreTick() {
-        IOCommon::PreTick();
-    }
+	void WhiteboardInIO::PostTick() {
+		IOCommon::PostTick();
+	}
 
-    void WhiteboardInIO::PostTick() {
-        IOCommon::PostTick();
-    }
-
-    void WhiteboardInIO::UnitTest() {
-
-    }
+	void WhiteboardInIO::UnitTest() {
+	}
 }

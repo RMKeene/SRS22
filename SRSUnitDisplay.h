@@ -19,6 +19,4 @@ namespace SRS22 {
 		/// <param name="u"></param>
 		static void DrawInDC(Gdiplus::Graphics& g, Gdiplus::Rect& rect, std::shared_ptr<SRSUnit> u, bool showLabel = true, bool preClearToBlack = true);
 	};
-
 }
-

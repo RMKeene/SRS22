@@ -1,7 +1,6 @@
 #pragma once
 
 namespace SRS22 {
-
 	class Settings
 	{
 	public:
@@ -39,5 +38,4 @@ namespace SRS22 {
 		wxRect topVideoFrameRect;
 		wxRect whiteboardFrameRect;
 	};
-
 }

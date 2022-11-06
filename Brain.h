@@ -83,14 +83,12 @@ namespace SRS22 {
 
 		optional<shared_ptr<SRSUnit>> FindMapByName(string n);
 
-
 	private:
 		void PreTick();
 		void PostTick();
 
 		void AddMap(shared_ptr<SRSUnit> m);
-
 	};
 
+	typedef std::shared_ptr<Brain> BrainH;
 }
-

@@ -77,7 +77,7 @@ namespace SoLoud
 
 	class SfxrInstance : public AudioSourceInstance
 	{
-		Sfxr *mParent;
+		Sfxr* mParent;
 
 		Misc::Prg mRand;
 		SfxrParams mParams;
@@ -121,8 +121,8 @@ namespace SoLoud
 		void resetSample(bool aRestart);
 
 	public:
-		SfxrInstance(Sfxr *aParent);
-		virtual unsigned int getAudio(float *aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize);
+		SfxrInstance(Sfxr* aParent);
+		virtual unsigned int getAudio(float* aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize);
 		virtual bool hasEnded();
 	};
 
@@ -131,7 +131,7 @@ namespace SoLoud
 	public:
 		SfxrParams mParams;
 
-		enum SFXR_PRESETS 
+		enum SFXR_PRESETS
 		{
 			COIN,
 			LASER,
@@ -143,16 +143,16 @@ namespace SoLoud
 		};
 
 		Misc::Prg mRand;
-		
+
 		Sfxr();
 		virtual ~Sfxr();
 		void resetParams();
 		result loadParams(const char* aFilename);
-		result loadParamsMem(unsigned char *aMem, unsigned int aLength, bool aCopy = false, bool aTakeOwnership = true);
-		result loadParamsFile(File *aFile);
+		result loadParamsMem(unsigned char* aMem, unsigned int aLength, bool aCopy = false, bool aTakeOwnership = true);
+		result loadParamsFile(File* aFile);
 
 		result loadPreset(int aPresetNo, int aRandSeed);
-		virtual AudioSourceInstance *createInstance();
+		virtual AudioSourceInstance* createInstance();
 	};
 };
 

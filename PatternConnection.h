@@ -3,7 +3,6 @@
 #include "ClassPredefines.h"
 
 namespace SRS22 {
-
 	class PatternConnection
 	{
 	public:
@@ -16,5 +15,4 @@ namespace SRS22 {
 
 		PatternConnection(std::shared_ptr<SRSUnit> map, int mapIdx);
 	};
-
 }

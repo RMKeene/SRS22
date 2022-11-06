@@ -38,27 +38,27 @@ namespace SoLoud
 	class VizsnInstance : public AudioSourceInstance
 	{
 	public:
-		VizsnInstance(Vizsn *aParent);
+		VizsnInstance(Vizsn* aParent);
 		~VizsnInstance();
 
-		virtual unsigned int getAudio(float *aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize);
+		virtual unsigned int getAudio(float* aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize);
 		virtual bool hasEnded();
 
-    public:
-        Vizsn *mParent;
+	public:
+		Vizsn* mParent;
 		VizsnBank mBank0, mBank1, mBank0to1;
 		int mNper, mNmod, mNopen;
 		int mEchobuf[1024], mPtr;
 		int mCurrentVoiceType;
 		float mPitch;
-		char *mS;
+		char* mS;
 		float mBuf[2048];
 		unsigned int mBufwrite;
 		unsigned int mBufread;
 		float vcsrc(int aPitch, int aVoicetype);
 		float noisrc();
 		float genwave();
-		void setphone(VizsnBank *aB, char aP, float aPitch);
+		void setphone(VizsnBank* aB, char aP, float aPitch);
 		void slidePrepare(int aNumtix);
 		void slideTick();
 		int mA;
@@ -70,12 +70,12 @@ namespace SoLoud
 	class Vizsn : public AudioSource
 	{
 	public:
-		char *mText;
+		char* mText;
 		Vizsn();
 		virtual ~Vizsn();
-		void setText(char *aText);
+		void setText(char* aText);
 	public:
-		virtual AudioSourceInstance *createInstance();
+		virtual AudioSourceInstance* createInstance();
 	};
 };
 

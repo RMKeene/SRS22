@@ -1,12 +1,11 @@
-#include "../pch.h"
+#include "../../pch.h"
 #include "CameraMotionXYMap.h"
-#include "../HardwareIO/IOCommon.h"
-#include "../HardwareIO/CameraInIO.h"
-#include "../HardwareIO/CameraAttnSpotIO.h"
-#include "../OpenCVHelpers.h"
+#include "../../HardwareIO/IOCommon.h"
+#include "../../HardwareIO/CameraInIO.h"
+#include "../../HardwareIO/CameraAttnSpotIO.h"
+#include "../../OpenCVHelpers.h"
 
 namespace SRS22 {
-
 	CameraMotionXYMap::CameraMotionXYMap(Brain* br) :
 		SRSUnit(br, "CameraMotionXYMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
@@ -17,7 +16,6 @@ namespace SRS22 {
 	}
 
 	CameraMotionXYMap::~CameraMotionXYMap() {
-
 	}
 
 	void CameraMotionXYMap::ComputeNextState() {
@@ -52,5 +50,4 @@ namespace SRS22 {
 	void CameraMotionXYMap::LatchNewState() {
 		SRSUnit::LatchNewState();
 	}
-
 }

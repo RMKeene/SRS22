@@ -31,7 +31,7 @@ freely, subject to the following restrictions:
 
 namespace SoLoud
 {
-	class AudioSource;	
+	class AudioSource;
 	class AudioSourceInstance;
 	class AudioSourceInstance3dData;
 
@@ -39,7 +39,7 @@ namespace SoLoud
 	{
 	public:
 		// Calculate volume multiplier. Assumed to return value between 0 and 1.
-		virtual float collide(Soloud *aSoloud, AudioSourceInstance3dData *aAudioInstance3dData,	int aUserData) = 0;
+		virtual float collide(Soloud* aSoloud, AudioSourceInstance3dData* aAudioInstance3dData, int aUserData) = 0;
 	};
 
 	class AudioAttenuator
@@ -54,7 +54,7 @@ namespace SoLoud
 		// ctor
 		AudioSourceInstance3dData();
 		// Set settings from audiosource
-		void init(AudioSource &aSource);
+		void init(AudioSource& aSource);
 		// 3d position
 		float m3dPosition[3];
 		// 3d velocity
@@ -80,14 +80,14 @@ namespace SoLoud
 		// 3d doppler factor
 		float m3dDopplerFactor;
 		// Pointer to a custom audio collider object
-		AudioCollider *mCollider;
+		AudioCollider* mCollider;
 		// Pointer to a custom audio attenuator object
-		AudioAttenuator *mAttenuator;
+		AudioAttenuator* mAttenuator;
 		// User data related to audio collider
 		int mColliderData;
 
 		// Doppler sample rate multiplier
-		float mDopplerValue;		
+		float mDopplerValue;
 		// Overall 3d volume
 		float m3dVolume;
 		// Channel volume
@@ -103,7 +103,7 @@ namespace SoLoud
 	{
 	public:
 		enum FLAGS
-		{			
+		{
 			// This audio instance loops (if supported)
 			LOOPING = 1,
 			// This audio instance is protected - won't get stopped if we run out of voices
@@ -172,11 +172,11 @@ namespace SoLoud
 		// Handle of the bus this audio instance is playing on. 0 for root.
 		unsigned int mBusHandle;
 		// Filter pointer
-		FilterInstance *mFilter[FILTERS_PER_STREAM];
+		FilterInstance* mFilter[FILTERS_PER_STREAM];
 		// Initialize instance. Mostly internal use.
-		void init(AudioSource &aSource, int aPlayIndex);
+		void init(AudioSource& aSource, int aPlayIndex);
 		// Buffers for the resampler
-		AlignedFloatBuffer *mResampleData[2];
+		AlignedFloatBuffer* mResampleData[2];
 		// Sub-sample playhead; 16.16 fixed point
 		unsigned int mSrcOffset;
 		// Samples left over from earlier pass
@@ -187,11 +187,11 @@ namespace SoLoud
 		time mLoopPoint;
 
 		// Get N samples from the stream to the buffer. Report samples written.
-		virtual unsigned int getAudio(float *aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize) = 0;
+		virtual unsigned int getAudio(float* aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize) = 0;
 		// Has the stream ended?
 		virtual bool hasEnded() = 0;
 		// Seek to certain place in the stream. Base implementation is generic "tape" seek (and slow).
-		virtual result seek(time aSeconds, float *mScratch, unsigned int mScratchSize);
+		virtual result seek(time aSeconds, float* mScratch, unsigned int mScratchSize);
 		// Rewind stream. Base implementation returns NOT_IMPLEMENTED, meaning it can't rewind.
 		virtual result rewind();
 		// Get information. Returns 0 by default.
@@ -256,13 +256,13 @@ namespace SoLoud
 		// 3d doppler factor
 		float m3dDopplerFactor;
 		// Filter pointer
-		Filter *mFilter[FILTERS_PER_STREAM];
+		Filter* mFilter[FILTERS_PER_STREAM];
 		// Pointer to the Soloud object. Needed to stop all instances in dtor.
-		Soloud *mSoloud;
+		Soloud* mSoloud;
 		// Pointer to a custom audio collider object
-		AudioCollider *mCollider;
+		AudioCollider* mCollider;
 		// Pointer to custom attenuator object
-		AudioAttenuator *mAttenuator;
+		AudioAttenuator* mAttenuator;
 		// User data related to audio collider
 		int mColliderData;
 		// When looping, start playing from this time
@@ -276,7 +276,7 @@ namespace SoLoud
 		void setLooping(bool aLoop);
 		// Set whether only one instance of this sound should ever be playing at the same time
 		void setSingleInstance(bool aSingleInstance);
-		
+
 		// Set the minimum and maximum distances for 3d audio source (closer to min distance = max vol)
 		void set3dMinMaxDistance(float aMinDistance, float aMaxDistance);
 		// Set attenuation model and rolloff factor for 3d audio source
@@ -289,9 +289,9 @@ namespace SoLoud
 		void set3dDistanceDelay(bool aDistanceDelay);
 
 		// Set a custom 3d audio collider. Set to NULL to disable.
-		void set3dCollider(AudioCollider *aCollider, int aUserData = 0);
+		void set3dCollider(AudioCollider* aCollider, int aUserData = 0);
 		// Set a custom attenuator. Set to NULL to disable.
-		void set3dAttenuator(AudioAttenuator *aAttenuator);
+		void set3dAttenuator(AudioAttenuator* aAttenuator);
 
 		// Set behavior for inaudible sounds
 		void setInaudibleBehavior(bool aMustTick, bool aKill);
@@ -302,11 +302,11 @@ namespace SoLoud
 		time getLoopPoint();
 
 		// Set filter. Set to NULL to clear the filter.
-		virtual void setFilter(unsigned int aFilterId, Filter *aFilter);
+		virtual void setFilter(unsigned int aFilterId, Filter* aFilter);
 		// DTor
 		virtual ~AudioSource();
 		// Create instance from the audio source. Called from within Soloud class.
-		virtual AudioSourceInstance *createInstance() = 0;
+		virtual AudioSourceInstance* createInstance() = 0;
 		// Stop all instances of this audio source
 		void stop();
 	};

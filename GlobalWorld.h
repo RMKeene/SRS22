@@ -13,7 +13,7 @@ namespace SRS22 {
 	public:
 		static GlobalWorld GlobalWorldInstance;
 
-		std::array <std::shared_ptr<Brain>, 1> brains;
+		std::array <BrainH, 1> brains;
 
 		GlobalWorld() {
 			brains[0] = make_shared<Brain>();
@@ -21,7 +21,6 @@ namespace SRS22 {
 		}
 
 		~GlobalWorld() {
-
 		}
 
 		void Exit();
@@ -31,11 +30,10 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="idx"></param>
 		/// <returns></returns>
-		std::shared_ptr<Brain> GetBrain(int idx) { return brains[idx]; }
+		BrainH GetBrain(int idx) { return brains[idx]; }
 
 		int GetBrainCount() { return brains.size(); }
 
 		void TickAll();
 	};
 }
-

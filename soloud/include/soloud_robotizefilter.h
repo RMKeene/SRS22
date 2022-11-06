@@ -41,10 +41,10 @@ namespace SoLoud
 			FREQ,
 			WAVE
 		};
-		RobotizeFilter *mParent;
+		RobotizeFilter* mParent;
 	public:
-		virtual void filterChannel(float *aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
-		RobotizeFilterInstance(RobotizeFilter *aParent);
+		virtual void filterChannel(float* aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
+		RobotizeFilterInstance(RobotizeFilter* aParent);
 	};
 
 	class RobotizeFilter : public Filter
@@ -64,7 +64,7 @@ namespace SoLoud
 		virtual float getParamMax(unsigned int aParamIndex);
 		virtual float getParamMin(unsigned int aParamIndex);
 		void setParams(float aFreq, int aWaveform);
-		virtual FilterInstance *createInstance();
+		virtual FilterInstance* createInstance();
 		RobotizeFilter();
 	};
 }

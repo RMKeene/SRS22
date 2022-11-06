@@ -4,12 +4,11 @@
 #include "tinyfloat.h"
 
 namespace SRS22 {
-
 	class ConceptState
 	{
 	public:
 		/// <summary>
-		/// The charges of this ConceptState. In general a charge is range 0.0f to 1.0f. 
+		/// The charges of this ConceptState. In general a charge is range 0.0f to 1.0f.
 		/// Possibly can be a little outside of that range. Weights of connections can be positive or negative,
 		/// thus we get stimulation and inhibition.
 		/// </summary>
@@ -72,5 +71,4 @@ namespace SRS22 {
 
 		virtual std::string Debug();
 	};
-
 }

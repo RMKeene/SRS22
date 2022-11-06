@@ -86,9 +86,6 @@ namespace SRS22 {
 			cv::imshow(std::string("Debug Current Scrren"), vidHelper.currentImage3UC8);
 		}
 
-
 		void UnitTest();
 	};
-
 }
-

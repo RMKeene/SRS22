@@ -18,7 +18,6 @@
 
 namespace
 {
-
 	// Version optimized for Microsoft Windows.
 	// matBitmap must be continous and matBitmap.cols % 4 must equal 0
 	// as SetDIBits() requires the DIB rows to be DWORD-aligned.
@@ -43,7 +42,6 @@ namespace
 
 		return success;
 	}
-
 } // unnamed namespace
 
 #endif // #ifndef __WXMSW__

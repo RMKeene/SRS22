@@ -4,7 +4,6 @@
 #include "../Rect.h"
 
 namespace SRS22 {
-
 	class ScreenInputIO : public IOCommon
 	{
 		HBITMAP snapshotData = NULL;
@@ -72,7 +71,7 @@ namespace SRS22 {
 		/// Can do 100 snapshots in about 3 seconds on my machine.
 		/// AMD Ryzen 9 3900X 12-Core Processor, 3793 Mhz, 12 Cores, 24 Logical Processors)
 		/// NVIDIA GeForce RTX 2070 SUPER.
-		/// 
+		///
 		/// Called in Brain::Tick() in PreTick() where screenInput PreTick gets called.
 		/// </summary>
 		/// <returns></returns>
@@ -117,5 +116,4 @@ namespace SRS22 {
 			cv::imshow(std::string("Debug Current Scrren"), currentScreen);
 		}
 	};
-
 }

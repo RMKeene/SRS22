@@ -1,6 +1,5 @@
 #pragma once
-#include "../SRSUnit.h"
-
+#include "../../SRSUnit.h"
 
 namespace SRS22 {
 	/// <summary>
@@ -11,8 +10,8 @@ namespace SRS22 {
 	{
 	public:
 		/// <summary>
-		/// Implemented as 
-		/// SRSUnit("ScreenDifferenceMap", 
+		/// Implemented as
+		/// SRSUnit("ScreenDifferenceMap",
 		/// ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 		/// 	cv::Vec3f(0.0, 0.0, 0.0),
 		/// 	3, ScreenInIO::AbsDiffHeight, ScreenInIO::AbsDiffWidth,
@@ -24,5 +23,4 @@ namespace SRS22 {
 		virtual void ComputeNextState() override;
 		virtual void LatchNewState() override;
 	};
-
 }

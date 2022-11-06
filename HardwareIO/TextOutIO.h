@@ -3,14 +3,13 @@
 #include "IOCommon.h"
 
 namespace SRS22 {
-
 	/// <summary>
 	/// Text out to the text output window.
 	/// </summary>
 	class TextOutIO : IOCommon
 	{
 		static std::mutex charBufferMutex;
-		static std::list<char> charBuffer;
+		static std::list<TextIOType> charBuffer;
 		static bool wantsClear;
 
 		static int maxBufferSize;
@@ -35,7 +34,7 @@ namespace SRS22 {
 		/// From the Brain to tell this to put a character out.
 		/// </summary>
 		/// <param name="c"></param>
-		static void TakeCharacter(char c);
+		static void TakeCharacter(TextIOType c);
 
 		/// <summary>
 		/// From the Brain to tell this to clear the window.
@@ -47,7 +46,7 @@ namespace SRS22 {
 		/// True if there was a character and c was set.
 		/// </summary>
 		/// <param name="c"></param>
-		static bool GetCharacterOut(char& c);
+		static bool GetCharacterOut(TextIOType& c);
 		/// <summary>
 		/// Where the UI can ask if the Brain wants the text out window cleared.  (TopTextFrame.cpp and .h)
 		/// </summary>
@@ -56,4 +55,3 @@ namespace SRS22 {
 		void UnitTest();
 	};
 }
-

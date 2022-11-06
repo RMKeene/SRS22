@@ -1,19 +1,16 @@
 #include "TextOutIO.h"
 
 namespace SRS22 {
-
 	std::mutex TextOutIO::charBufferMutex;
-	std::list<char> TextOutIO::charBuffer;
+	std::list<TextIOType> TextOutIO::charBuffer;
 	bool TextOutIO::wantsClear = false;
 	int TextOutIO::maxBufferSize = 1000;
 
 	TextOutIO::TextOutIO() : IOCommon() {
 		IOCOMMON_SETCLASSNAME;
-
 	}
 
 	TextOutIO::~TextOutIO() {
-
 	}
 
 	bool TextOutIO::Init() {
@@ -34,14 +31,13 @@ namespace SRS22 {
 	}
 
 	void TextOutIO::UnitTest() {
-
 	}
 
 	/// <summary>
 	/// From the Brain to tell this to put a character out.
 	/// </summary>
 	/// <param name="c"></param>
-	void TextOutIO::TakeCharacter(char c) {
+	void TextOutIO::TakeCharacter(TextIOType c) {
 		std::lock_guard<std::mutex> lk(charBufferMutex);
 		while (charBuffer.size() > maxBufferSize)
 			charBuffer.pop_back();
@@ -61,7 +57,7 @@ namespace SRS22 {
 	/// True if there was a character and c was set.
 	/// </summary>
 	/// <param name="c"></param>
-	bool TextOutIO::GetCharacterOut(char& c) {
+	bool TextOutIO::GetCharacterOut(TextIOType& c) {
 		std::lock_guard<std::mutex> lk(charBufferMutex);
 		if (charBuffer.size() > 0) {
 			c = charBuffer.back();
@@ -81,6 +77,4 @@ namespace SRS22 {
 		}
 		return false;
 	}
-
-
 }

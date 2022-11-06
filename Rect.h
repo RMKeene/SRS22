@@ -1,7 +1,6 @@
 #pragma once
 #include "Point.h"
 namespace SRS22 {
-
 	/// <summary>
 	/// Immutable Rect. Asserts non-negative width and height.
 	/// </summary>
@@ -26,7 +25,7 @@ namespace SRS22 {
 		/// One pixel off the bottom edge.
 		/// return Y + height;
 		/// </summary>
-		/// <returns></returns>		
+		/// <returns></returns>
 		const int bottom() const { return Y + height; }
 		const int halfW() const { return halfWidth; }
 		const int halfH() const { return halfHeight; }
@@ -110,7 +109,6 @@ namespace SRS22 {
 			return Rect(X < outerRect.X ? outerRect.X : X >= outerRect.right() - width ? outerRect.right() - width - 1 : X,
 				Y < outerRect.Y ? outerRect.Y : Y >= outerRect.bottom() - height ? outerRect.bottom() - height - 1 : Y,
 				width, height);
-
 		}
 
 		void CenterOnInPlace(const Point& p) {
@@ -130,8 +128,5 @@ namespace SRS22 {
 		wxRect toWxRect() const {
 			return wxRect(X, Y, width, height);
 		}
-
-
 	};
-
 }

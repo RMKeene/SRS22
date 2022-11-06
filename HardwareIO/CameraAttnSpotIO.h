@@ -9,7 +9,6 @@
 namespace SRS22 {
 	class CameraAttnSpotIO : public AttnSpotBaseIO
 	{
-
 	public:
 		CameraAttnSpotIO();
 		CameraAttnSpotIO(Point p, int w, int h, Rect cameraRect);
@@ -31,6 +30,4 @@ namespace SRS22 {
 
 		void UnitTest();
 	};
-
 }
-

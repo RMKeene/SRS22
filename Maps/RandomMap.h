@@ -17,5 +17,4 @@ namespace SRS22 {
 		virtual void ComputeNextState() override;
 		virtual void LatchNewState() override;
 	};
-
 }

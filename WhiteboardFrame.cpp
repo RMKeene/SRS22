@@ -1,16 +1,13 @@
 #include "WhiteboardFrame.h"
 
 namespace SRS22 {
-
 	WhiteboardFrame::WhiteboardFrame(wxWindow* parent) :
 		WhiteboardFrameGen(parent),
 		canvas(this, wxID_ANY, wxPoint(0, 0), wxSize(740, 460)) {
-
 		WhiteboardHorizPanel->Add(&canvas);
 	}
 
 	WhiteboardFrame::~WhiteboardFrame() {
-
 	}
 
 	void WhiteboardFrame::OnClose(wxCloseEvent& event) {
@@ -53,5 +50,4 @@ namespace SRS22 {
 		canvas.Clear();
 		canvas.Refresh();
 	}
-
 }

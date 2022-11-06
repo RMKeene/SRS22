@@ -54,23 +54,23 @@ namespace SoLoud
 		int mFrames;
 		darray mElement;
 		Speech();
-		result setText(const char *aText);
+		result setText(const char* aText);
 		result setParams(unsigned int aBaseFrequency = 1330, float aBaseSpeed = 10.0f, float aBaseDeclination = 0.5f, int aBaseWaveform = KW_TRIANGLE);
 		virtual ~Speech();
-		virtual AudioSourceInstance *createInstance();
+		virtual AudioSourceInstance* createInstance();
 	};
 
 	class SpeechInstance : public AudioSourceInstance
 	{
 		klatt mSynth;
-		Speech *mParent;
-		short *mSample;
+		Speech* mParent;
+		short* mSample;
 		int mSampleCount;
 		int mOffset;
 	public:
-		SpeechInstance(Speech *aParent);
-        virtual ~SpeechInstance();
-		virtual unsigned int getAudio(float *aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize);
+		SpeechInstance(Speech* aParent);
+		virtual ~SpeechInstance();
+		virtual unsigned int getAudio(float* aBuffer, unsigned int aSamplesToRead, unsigned int aBufferSize);
 		virtual result rewind();
 		virtual bool hasEnded();
 	};

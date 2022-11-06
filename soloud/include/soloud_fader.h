@@ -57,7 +57,7 @@ namespace SoLoud
 		void set(float aFrom, float aTo, time aTime, time aStartTime);
 		// Get the current fading value
 		float get(time aCurrentTime);
-	}; 
+	};
 };
 
 #endif 

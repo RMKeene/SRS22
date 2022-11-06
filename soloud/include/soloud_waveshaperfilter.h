@@ -32,12 +32,12 @@ namespace SoLoud
 	class WaveShaperFilter;
 
 	class WaveShaperFilterInstance : public FilterInstance
-	{	
-		WaveShaperFilter *mParent;
+	{
+		WaveShaperFilter* mParent;
 	public:
-		virtual void filterChannel(float *aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
+		virtual void filterChannel(float* aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
 		virtual ~WaveShaperFilterInstance();
-		WaveShaperFilterInstance(WaveShaperFilter *aParent);
+		WaveShaperFilterInstance(WaveShaperFilter* aParent);
 	};
 
 	class WaveShaperFilter : public Filter
@@ -48,7 +48,7 @@ namespace SoLoud
 			AMOUNT
 		};
 		float mAmount;
-		virtual WaveShaperFilterInstance *createInstance();
+		virtual WaveShaperFilterInstance* createInstance();
 		result setParams(float aAmount);
 		WaveShaperFilter();
 		virtual ~WaveShaperFilter();

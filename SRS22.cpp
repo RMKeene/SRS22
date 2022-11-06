@@ -1,4 +1,3 @@
-
 // SRS22.cpp : Defines the class behaviors for the application.
 //
 
@@ -7,7 +6,6 @@
 #include "Settings.h"
 
 namespace SRS22 {
-
 	SRS22App::SRS22App() :
 		// Locale affects on the language used in the calendar, and may affect
 		// on the first day of the week.
@@ -34,5 +32,4 @@ namespace SRS22 {
 		// application would exit immediately.
 		return true;
 	}
-
 }

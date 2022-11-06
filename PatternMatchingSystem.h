@@ -8,12 +8,11 @@
 #include "Reaper.h"
 
 namespace SRS22 {
-
 	class PatternMatchingSystem
 	{
 	public:
 		/// <summary>
-		/// The concept state is the privious state of the Concept Map 
+		/// The concept state is the privious state of the Concept Map
 		/// that was present some delta T before
 		/// the patter was snap shotted.
 		/// </summary>
@@ -22,8 +21,5 @@ namespace SRS22 {
 		Reaper reaper;
 
 		virtual SelectionResult Select(std::shared_ptr<ConceptState> conceptMap);
-
 	};
-
 }
-

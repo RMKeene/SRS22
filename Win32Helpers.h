@@ -13,6 +13,4 @@ public:
 	// From Microsoft's web site for more generic image dump.
 	// 0 on success, else error number.
 	int CreateBMPFile(LPTSTR pszFile, PBITMAPINFO pbi, HBITMAP hBMP, HDC hDC);
-
 };
-

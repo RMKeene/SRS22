@@ -1,6 +1,5 @@
 #pragma once
 namespace SRS22 {
-
 	class Point {
 	public:
 		int X;

@@ -2,7 +2,6 @@
 #include <mmeapi.h>
 
 namespace SRS22 {
-
 	class WaveInputHelper
 	{
 	public:
@@ -45,5 +44,4 @@ namespace SRS22 {
 		// Print function in debug mode
 		void _debug_print(const char* content, int flag = 0);
 	};
-
 }

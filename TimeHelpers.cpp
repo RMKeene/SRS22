@@ -1,7 +1,6 @@
 #include "TimeHelpers.h"
 
 namespace SRS22 {
-
 	long long GetTimeTicksSeconds() {
 		auto now = std::chrono::system_clock::now();
 		auto duration = now.time_since_epoch();
@@ -29,6 +28,4 @@ namespace SRS22 {
 		auto millis = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
 		return millis;
 	}
-
-
 }

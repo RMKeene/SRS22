@@ -24,6 +24,21 @@
     <Filter Include="Source\soloud\include">
       <UniqueIdentifier>{359f7290-bb81-430d-bf00-444f9ef5c389}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Maps\Camera">
+      <UniqueIdentifier>{a41a3486-b6d3-4842-81f1-5466d82fd68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Maps\Screen">
+      <UniqueIdentifier>{2a659e74-4274-40e0-842c-1483a1c5d2f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Maps\Text">
+      <UniqueIdentifier>{08fe6eea-6dc9-4bc6-88f8-c0c186b95e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Maps\Voice">
+      <UniqueIdentifier>{fc66a3ca-0964-497c-a0fd-3450011138f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Maps\Draw">
+      <UniqueIdentifier>{b855610a-28fc-45e2-b10b-10b7c69bc168}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRS22.h">
@@ -245,9 +260,6 @@
     <ClInclude Include="HardwareIO\ScreenInputIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\ScreenFoveaMap.h">
-      <Filter>Source\Maps</Filter>
-    </ClInclude>
     <ClInclude Include="HardwareIO\WaveInputHelper.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
@@ -308,32 +320,38 @@
     <ClInclude Include="Maps\RandomMap.h">
       <Filter>Source\Maps</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\CameraFoveaMap.h">
-      <Filter>Source\Maps</Filter>
-    </ClInclude>
     <ClInclude Include="Win32Helpers.h">
       <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps\CameraAttnSpotMap.h">
-      <Filter>Source\Maps</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps\CameraDifferenceMap.h">
-      <Filter>Source\Maps</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps\CameraMotionXYMap.h">
-      <Filter>Source\Maps</Filter>
     </ClInclude>
     <ClInclude Include="HardwareIO\AttnSpotBaseIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\ScreenAttnSpotMap.h">
-      <Filter>Source\Maps</Filter>
+    <ClInclude Include="Maps\Text\TextCurrentChar.h">
+      <Filter>Source\Maps\Text</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\ScreenMotionXYMap.h">
-      <Filter>Source\Maps</Filter>
+    <ClInclude Include="Maps\Camera\CameraAttnSpotMap.h">
+      <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\ScreenDifferenceMap.h">
-      <Filter>Source\Maps</Filter>
+    <ClInclude Include="Maps\Camera\CameraDifferenceMap.h">
+      <Filter>Source\Maps\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Camera\CameraFoveaMap.h">
+      <Filter>Source\Maps\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Camera\CameraMotionXYMap.h">
+      <Filter>Source\Maps\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Screen\ScreenAttnSpotMap.h">
+      <Filter>Source\Maps\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Screen\ScreenDifferenceMap.h">
+      <Filter>Source\Maps\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Screen\ScreenFoveaMap.h">
+      <Filter>Source\Maps\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Screen\ScreenMotionXYMap.h">
+      <Filter>Source\Maps\Screen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -418,9 +436,6 @@
     <ClCompile Include="HardwareIO\ScreenInputIO.cpp">
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\ScreenFoveaMap.cpp">
-      <Filter>Source\Maps</Filter>
-    </ClCompile>
     <ClCompile Include="HardwareIO\WaveInputHelper.cpp">
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
@@ -478,20 +493,8 @@
     <ClCompile Include="Maps\RandomMap.cpp">
       <Filter>Source\Maps</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\CameraFoveaMap.cpp">
-      <Filter>Source\Maps</Filter>
-    </ClCompile>
     <ClCompile Include="Win32Helpers.cpp">
       <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Maps\CameraAttnSpotMap.cpp">
-      <Filter>Source\Maps</Filter>
-    </ClCompile>
-    <ClCompile Include="Maps\CameraDifferenceMap.cpp">
-      <Filter>Source\Maps</Filter>
-    </ClCompile>
-    <ClCompile Include="Maps\CameraMotionXYMap.cpp">
-      <Filter>Source\Maps</Filter>
     </ClCompile>
     <ClCompile Include="Rect.cpp">
       <Filter>Source</Filter>
@@ -499,14 +502,29 @@
     <ClCompile Include="HardwareIO\AttnSpotBaseIO.cpp">
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\ScreenAttnSpotMap.cpp">
-      <Filter>Source\Maps</Filter>
+    <ClCompile Include="Maps\Camera\CameraAttnSpotMap.cpp">
+      <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\ScreenMotionXYMap.cpp">
-      <Filter>Source\Maps</Filter>
+    <ClCompile Include="Maps\Camera\CameraDifferenceMap.cpp">
+      <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\ScreenDifferenceMap.cpp">
-      <Filter>Source\Maps</Filter>
+    <ClCompile Include="Maps\Camera\CameraFoveaMap.cpp">
+      <Filter>Source\Maps\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Camera\CameraMotionXYMap.cpp">
+      <Filter>Source\Maps\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Screen\ScreenAttnSpotMap.cpp">
+      <Filter>Source\Maps\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Screen\ScreenDifferenceMap.cpp">
+      <Filter>Source\Maps\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Screen\ScreenFoveaMap.cpp">
+      <Filter>Source\Maps\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Screen\ScreenMotionXYMap.cpp">
+      <Filter>Source\Maps\Screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -609,5 +627,8 @@
     </None>
     <None Include="packages.config" />
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="NatvisFile.natvis" />
   </ItemGroup>
 </Project>

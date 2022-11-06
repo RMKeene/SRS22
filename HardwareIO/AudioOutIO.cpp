@@ -1,41 +1,35 @@
 #include "AudioOutIO.h"
 
 namespace SRS22 {
-    AudioOutIO::AudioOutIO() : IOCommon() {
-        IOCOMMON_SETCLASSNAME;
+	AudioOutIO::AudioOutIO() : IOCommon() {
+		IOCOMMON_SETCLASSNAME;
+	}
 
-    }
+	AudioOutIO::~AudioOutIO() {
+	}
 
-    AudioOutIO::~AudioOutIO() {
+	bool AudioOutIO::Init() {
+		IOCommon::Init();
+		outHelper.Init();
+		return true;
+	}
 
-    }
+	void AudioOutIO::Shutdown() {
+		outHelper.UnInit();
+		IOCommon::Shutdown();
+	}
 
-    bool AudioOutIO::Init() {
-        IOCommon::Init();
-        outHelper.Init();
-        return true;
-    }
+	void AudioOutIO::PreTick() {
+		IOCommon::PreTick();
+	}
 
-    void AudioOutIO::Shutdown() {
-        outHelper.UnInit();
-        IOCommon::Shutdown();
-    }
+	void AudioOutIO::PostTick() {
+		IOCommon::PostTick();
+	}
 
-    void AudioOutIO::PreTick() {
-        IOCommon::PreTick();
-    }
+	void AudioOutIO::UnitTest() {
+	}
 
-    void AudioOutIO::PostTick() {
-        IOCommon::PostTick();
-    }
-
-    void AudioOutIO::UnitTest() {
-
-    }
-
-    void AudioOutIO::CaptureSegment() {
-
-    }
-
-
+	void AudioOutIO::CaptureSegment() {
+	}
 }

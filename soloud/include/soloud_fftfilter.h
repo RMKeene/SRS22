@@ -33,23 +33,23 @@ namespace SoLoud
 
 	class FFTFilterInstance : public FilterInstance
 	{
-		float *mTemp;
-		float *mInputBuffer;
-		float *mMixBuffer;
+		float* mTemp;
+		float* mInputBuffer;
+		float* mMixBuffer;
 		unsigned int mOffset[MAX_CHANNELS];
-		FFTFilter *mParent;
+		FFTFilter* mParent;
 	public:
-		virtual void fftFilterChannel(float *aFFTBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
-		virtual void filterChannel(float *aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
+		virtual void fftFilterChannel(float* aFFTBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
+		virtual void filterChannel(float* aBuffer, unsigned int aSamples, float aSamplerate, time aTime, unsigned int aChannel, unsigned int aChannels);
 		virtual ~FFTFilterInstance();
-		FFTFilterInstance(FFTFilter *aParent);
+		FFTFilterInstance(FFTFilter* aParent);
 		FFTFilterInstance();
 	};
 
 	class FFTFilter : public Filter
 	{
 	public:
-		virtual FilterInstance *createInstance();
+		virtual FilterInstance* createInstance();
 		FFTFilter();
 	};
 }
