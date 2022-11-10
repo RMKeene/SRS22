@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "../../SRSUnit.h"
 
 /// Just an X,Y value in the map.

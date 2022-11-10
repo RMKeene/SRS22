@@ -11,6 +11,7 @@ namespace SRS22 {
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, ScreenInputIO::AbsDiffHeight, ScreenInputIO::AbsDiffWidth,
 			"A low resolution version of the screen view processed for frame to frame motion differences.") {
+		SetDecayFactors(false);
 	}
 
 	ScreenDifferenceMap::~ScreenDifferenceMap() {

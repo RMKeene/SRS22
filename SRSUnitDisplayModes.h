@@ -1,7 +1,7 @@
 #pragma once
 
 namespace SRS22 {
-	enum SRSUnitDisplayModes {
+	enum class SRSUnitDisplayModes {
 		/// <summary>
 		/// The defualt.
 		/// </summary>

@@ -326,7 +326,7 @@
     <ClInclude Include="HardwareIO\AttnSpotBaseIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Text\TextCurrentChar.h">
+    <ClInclude Include="Maps\Text\TextCurrentCharMap.h">
       <Filter>Source\Maps\Text</Filter>
     </ClInclude>
     <ClInclude Include="Maps\Camera\CameraAttnSpotMap.h">
@@ -525,6 +525,9 @@
     </ClCompile>
     <ClCompile Include="Maps\Screen\ScreenMotionXYMap.cpp">
       <Filter>Source\Maps\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Text\TextCurrentCharMap.cpp">
+      <Filter>Source\Maps\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

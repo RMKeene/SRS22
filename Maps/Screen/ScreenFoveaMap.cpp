@@ -11,6 +11,7 @@ namespace SRS22 {
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, ScreenFoveaMap_Height, ScreenFoveaMap_Width,
 			"Raw pixel map of center of screen fovea in color.") {
+		SetDecayFactors(false);
 	}
 
 	ScreenFoveaMap::~ScreenFoveaMap() {

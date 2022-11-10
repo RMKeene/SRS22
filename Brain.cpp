@@ -4,15 +4,16 @@
 #include "FastRand.h"
 #include <tchar.h>
 #include <ppl.h>
-#include "Maps/ScreenFoveaMap.h"
-#include "Maps/ScreenAttnSpotMap.h"
-#include "Maps/ScreenDifferenceMap.h"
-#include "Maps/ScreenMotionXYMap.h"
+#include "Maps/Screen/ScreenFoveaMap.h"
+#include "Maps/Screen/ScreenAttnSpotMap.h"
+#include "Maps/Screen/ScreenDifferenceMap.h"
+#include "Maps/Screen/ScreenMotionXYMap.h"
 #include "Maps/RandomMap.h"
-#include "Maps/CameraFoveaMap.h"
-#include "Maps/CameraAttnSpotMap.h"
-#include "Maps/CameraDifferenceMap.h"
-#include "Maps/CameraMotionXYMap.h"
+#include "Maps/Camera/CameraFoveaMap.h"
+#include "Maps/Camera/CameraAttnSpotMap.h"
+#include "Maps/Camera/CameraDifferenceMap.h"
+#include "Maps/Camera/CameraMotionXYMap.h"
+#include "Maps/Text/TextCurrentCharMap.h"
 
 using namespace concurrency;
 
@@ -136,11 +137,15 @@ namespace SRS22 {
 		AddMap(make_shared<CameraDifferenceMap>(this));
 		AddMap(make_shared<CameraFoveaMap>(this));
 		AddMap(make_shared<CameraMotionXYMap>(this));
+
 		AddMap(make_shared<RandomMap>(this));
+
 		AddMap(make_shared<ScreenAttnSpotMap>(this));
 		AddMap(make_shared<ScreenDifferenceMap>(this));
 		AddMap(make_shared<ScreenFoveaMap>(this));
 		AddMap(make_shared<ScreenMotionXYMap>(this));
+
+		AddMap(make_shared<TextCurrentCharMap>(this));
 
 		// Anonymouse Maps
 

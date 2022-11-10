@@ -13,6 +13,7 @@ namespace SRS22 {
 			CameraMotionXYMap_Width,
 			"The XY location of the maximum frame to frame difference.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
+		SetDecayFactors(false);
 	}
 
 	CameraMotionXYMap::~CameraMotionXYMap() {

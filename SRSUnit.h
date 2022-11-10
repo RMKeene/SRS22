@@ -36,6 +36,28 @@ namespace SRS22 {
 
 		const ConnectivityTriple ctrip;
 
+	private: // See SetDecayFactors()
+		// IO maps tend to overwrite the M every frame so one can just turn this off.
+		// Regular Maps in the general SRS system do decay charge levels.
+		// If true then at the beginning of ComputeNextState, nextM = M * decayFactor;
+		bool doDecay = true;
+		float decayFactor = 1.0f;
+
+	public:
+		/// <summary>
+		/// Lets you set other than the standard decay factors. The parameter defaults are the defaults of the class
+		/// for all Maps.
+		/// In general Maps that are direct IO do not do decay.
+		/// </summary>
+		/// <param name="decayFactor"></param>
+		/// <param name="fatigueInactiveDecay"></param>
+		/// <param name="fatigueActiveDecay"></param>
+		void SetDecayFactors(bool doDecay = true, float decayFactor = 1.0f) {
+			this->doDecay = doDecay;
+			this->decayFactor = decayFactor;
+
+		}
+
 		PatternMatchingSystem matchSystem;
 		std::shared_ptr<GoodnessFunction> goodnessFunc;
 

@@ -13,6 +13,7 @@ namespace SRS22 {
 			ScreenAttnSpotMap_Width,
 			"Raw pixel map of center of screen fovea in color.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
+		SetDecayFactors(false);
 	}
 
 	ScreenAttnSpotMap::~ScreenAttnSpotMap() {
@@ -22,11 +23,11 @@ namespace SRS22 {
 		SRSUnit::ComputeNextState();
 
 		// TODO - Currently hardwired with no blending.
-		auto motionXY = static_cast<ScreenMotionXYMap*>(myBrain->FindMapByName("ScreenMotionXYMap").value().get());
-		float X = motionXY->M.get(0);
-		float Y = motionXY->M.get(1);
-		nextM.charges.at<float>(0) = motionXY->M.get(0);
-		nextM.charges.at<float>(1) = motionXY->M.get(1);
+		auto motionXYSptr = myBrain->FindMapByName("ScreenMotionXYMap").value();
+		float X = motionXYSptr.get()->M.get(0);
+		float Y = motionXYSptr.get()->M.get(1);
+		nextM.charges.at<float>(0) = motionXYSptr.get()->M.get(0);
+		nextM.charges.at<float>(1) = motionXYSptr.get()->M.get(1);
 
 		auto screenVideo = IOCommon::GetIO<ScreenInputIO>();
 		float xx = M.get(0) * screenVideo->GetScreenWidth();
