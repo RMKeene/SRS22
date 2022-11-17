@@ -62,6 +62,7 @@ namespace SRS22 {
 		if (charBuffer.size() > 0) {
 			c = charBuffer.back();
 			charBuffer.pop_back();
+			return true;
 		}
 		return false;
 	}

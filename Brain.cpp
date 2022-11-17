@@ -14,6 +14,7 @@
 #include "Maps/Camera/CameraDifferenceMap.h"
 #include "Maps/Camera/CameraMotionXYMap.h"
 #include "Maps/Text/TextCurrentCharMap.h"
+#include "Maps/Text/TextOutMap.h"
 
 using namespace concurrency;
 
@@ -146,6 +147,7 @@ namespace SRS22 {
 		AddMap(make_shared<ScreenMotionXYMap>(this));
 
 		AddMap(make_shared<TextCurrentCharMap>(this));
+		AddMap(make_shared<TextOutMap>(this));
 
 		// Anonymouse Maps
 

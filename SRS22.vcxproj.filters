@@ -353,6 +353,9 @@
     <ClInclude Include="Maps\Screen\ScreenMotionXYMap.h">
       <Filter>Source\Maps\Screen</Filter>
     </ClInclude>
+    <ClInclude Include="Maps\Text\TextOutMap.h">
+      <Filter>Source\Maps\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -527,6 +530,9 @@
       <Filter>Source\Maps\Screen</Filter>
     </ClCompile>
     <ClCompile Include="Maps\Text\TextCurrentCharMap.cpp">
+      <Filter>Source\Maps\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Text\TextOutMap.cpp">
       <Filter>Source\Maps\Text</Filter>
     </ClCompile>
   </ItemGroup>

@@ -243,6 +243,7 @@
     <ClInclude Include="Maps\Screen\ScreenFoveaMap.h" />
     <ClInclude Include="Maps\Screen\ScreenMotionXYMap.h" />
     <ClInclude Include="Maps\Text\TextCurrentCharMap.h" />
+    <ClInclude Include="Maps\Text\TextOutMap.h" />
     <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="MonitorFrame.h" />
     <ClInclude Include="OpenCVHelpers.h" />
@@ -348,6 +349,7 @@
     <ClCompile Include="Maps\Screen\ScreenFoveaMap.cpp" />
     <ClCompile Include="Maps\Screen\ScreenMotionXYMap.cpp" />
     <ClCompile Include="Maps\Text\TextCurrentCharMap.cpp" />
+    <ClCompile Include="Maps\Text\TextOutMap.cpp" />
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
     <ClCompile Include="OpenCVHelpers.cpp" />

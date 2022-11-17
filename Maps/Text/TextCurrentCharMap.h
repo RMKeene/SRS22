@@ -17,7 +17,7 @@ namespace SRS22 {
 		/// SRSUnit("TextCurrentCharMap",
 		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 		/// 	cv::Vec3f(0.0, 0.0, 0.0),
-		/// 	ScreenAttnSpotMap_Width,
+		/// 	TextCurrentCharMap_Width,
 		///     TextCurrentCharMap_Height,
 		/// 	"Last entered character ASCII Code")
 		/// </summary>

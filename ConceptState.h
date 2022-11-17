@@ -34,10 +34,13 @@ namespace SRS22 {
 		void put(float v, int layer, int row, int col);
 
 		/// <summary>
-		/// The cv::Mat size() function.
+		/// The cv::Mat size() function. 
 		/// </summary>
 		/// <returns></returns>
 		const cv::MatSize matSize();
+
+		// How many dimensions there are. E.g. 1 is 1D, 2 is a 2D matrix etx. Max is 3.
+		const int dimensionCount();
 
 		/// <summary>
 		/// The total number of elements in this map. rows * cols * layers
@@ -68,6 +71,18 @@ namespace SRS22 {
 		/// <param name="V"></param>
 		/// <param name="relaxationRate"></param>
 		void RelaxTowardValue(const float V, const float relaxationRate = 1.0f);
+
+		/// <summary>
+		/// Find the maximum value in the State array. all parameters are out variables.
+		/// minV is the minimum value to return true. The beginning minimum value is std::numeric_limits<float>::lowest()
+		/// which is -(FLT_MAX) representing a hard low limit on minV.
+		/// </summary>
+		/// <param name="col"></param>
+		/// <param name="row"></param>
+		/// <param name="depth"></param>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		bool FindMaxValue(const float minV, OUT int& col, OUT int& row, OUT int& depth, OUT float& v);
 
 		virtual std::string Debug();
 	};

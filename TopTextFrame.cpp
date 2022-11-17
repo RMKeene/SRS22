@@ -20,7 +20,7 @@ namespace SRS22 {
 		BrainH br = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 		br->textIn.TakeClearInput();
 	}
-
+	
 	void TopTextFrame::OnTextInChar(wxKeyEvent& event) {
 		// Not working for Japanese and such. Pretty much just ASCII.
 		BrainH br = GlobalWorld::GlobalWorldInstance.GetBrain(0);
@@ -31,5 +31,17 @@ namespace SRS22 {
 
 	void TopTextFrame::OnTextOutClearButton(wxCommandEvent& event) {
 		TextOut->Clear();
+	}
+
+	/// <summary>
+	/// 10 per second.
+	/// </summary>
+	/// <param name="event"></param>
+	void TopTextFrame::TextWindowTick(wxTimerEvent& event) {
+		BrainH br = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		TextIOType c;
+		if (br->textOut.GetCharacterOut(c)) {
+			TextOut->AppendText(wxString((wxChar)c));
+		}
 	}
 }
