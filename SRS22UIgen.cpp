@@ -569,6 +569,9 @@ WhiteboardFrameGen::WhiteboardFrameGen( wxWindow* parent, wxWindowID id, const w
 	
 	this->SetSizer( WhiteboardHorizPanel );
 	this->Layout();
+	m_timer3.SetOwner( this, wxID_ANY );
+	m_timer3.Start( 50 );
+	
 	
 	this->Centre( wxBOTH );
 	
@@ -583,6 +586,7 @@ WhiteboardFrameGen::WhiteboardFrameGen( wxWindow* parent, wxWindowID id, const w
 	CyanButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnCyanButton ), NULL, this );
 	MagentaButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnMagentaButton ), NULL, this );
 	ClearButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnWhiteboardClearButton ), NULL, this );
+	this->Connect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( WhiteboardFrameGen::OnTimerTick ) );
 }
 
 WhiteboardFrameGen::~WhiteboardFrameGen()
@@ -598,5 +602,6 @@ WhiteboardFrameGen::~WhiteboardFrameGen()
 	CyanButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnCyanButton ), NULL, this );
 	MagentaButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnMagentaButton ), NULL, this );
 	ClearButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( WhiteboardFrameGen::OnWhiteboardClearButton ), NULL, this );
+	this->Disconnect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( WhiteboardFrameGen::OnTimerTick ) );
 	
 }

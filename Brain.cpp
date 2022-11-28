@@ -15,6 +15,7 @@
 #include "Maps/Camera/CameraMotionXYMap.h"
 #include "Maps/Text/TextCurrentCharMap.h"
 #include "Maps/Text/TextOutMap.h"
+#include "Maps/Draw/DrawOutMap.h"
 
 using namespace concurrency;
 
@@ -139,6 +140,8 @@ namespace SRS22 {
 		AddMap(make_shared<CameraFoveaMap>(this));
 		AddMap(make_shared<CameraMotionXYMap>(this));
 
+		AddMap(make_shared<DrawOutMap>(this));
+
 		AddMap(make_shared<RandomMap>(this));
 
 		AddMap(make_shared<ScreenAttnSpotMap>(this));
@@ -149,7 +152,8 @@ namespace SRS22 {
 		AddMap(make_shared<TextCurrentCharMap>(this));
 		AddMap(make_shared<TextOutMap>(this));
 
-		// Anonymouse Maps
+
+		// Anonymouse Maps (the cortex)
 
 		// Compile the SRS system relationships.
 		PostCreateAllSRSUnits();

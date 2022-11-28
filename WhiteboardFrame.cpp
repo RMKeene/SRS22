@@ -1,4 +1,8 @@
 #include "WhiteboardFrame.h"
+#include "GlobalWorld.h"
+#include "HardwareIO/WhiteboardOutIO.h"
+#include "HardwareIO/WhiteboardInIO.h"
+#include "HardwareIO/WhiteboardPt.h"
 
 namespace SRS22 {
 	WhiteboardFrame::WhiteboardFrame(wxWindow* parent) :
@@ -49,5 +53,18 @@ namespace SRS22 {
 	void WhiteboardFrame::OnWhiteboardClearButton(wxCommandEvent& event) {
 		canvas.Clear();
 		canvas.Refresh();
+	}
+
+	// 20 per second.
+	void WhiteboardFrame::OnTimerTick(wxTimerEvent& event) {
+		BrainH br = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		WhiteboardPt pt;
+		if (br->whiteboardOut.GetNextQueuedPt(pt)) {
+			int x = static_cast<int>(std::clamp(pt.x * canvas.GetSize().x, 0.0f, (float)canvas.GetSize().x));
+			int y = static_cast<int>(std::clamp(pt.y * canvas.GetSize().y, 0.0f, (float)canvas.GetSize().y));
+			canvas.SetPixel(wxColor(pt.r, pt.g, pt.b, static_cast<unsigned char>(255.0f * pt.blend)), wxPoint(x, y), 1);
+			canvas.Refresh();
+		}
+
 	}
 }

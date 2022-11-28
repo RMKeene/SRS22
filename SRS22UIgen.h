@@ -197,6 +197,7 @@ class WhiteboardFrameGen : public wxFrame
 		wxBitmapButton* CyanButton;
 		wxBitmapButton* MagentaButton;
 		wxButton* ClearButton;
+		wxTimer m_timer3;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
@@ -209,6 +210,7 @@ class WhiteboardFrameGen : public wxFrame
 		virtual void OnCyanButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMagentaButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnWhiteboardClearButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTimerTick( wxTimerEvent& event ) { event.Skip(); }
 		
 	
 	public:

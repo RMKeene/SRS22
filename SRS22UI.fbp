@@ -5335,6 +5335,15 @@
                     </object>
                 </object>
             </object>
+            <object class="wxTimer" expanded="1">
+                <property name="enabled">1</property>
+                <property name="id">wxID_ANY</property>
+                <property name="name">m_timer3</property>
+                <property name="oneshot">0</property>
+                <property name="period">50</property>
+                <property name="permission">protected</property>
+                <event name="OnTimer">OnTimerTick</event>
+            </object>
         </object>
     </object>
 </wxFormBuilder_Project>

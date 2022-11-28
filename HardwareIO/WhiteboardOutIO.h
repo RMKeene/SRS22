@@ -1,11 +1,15 @@
 #pragma once
 
 #include "IOCommon.h"
+#include "WhiteboardPt.h"
 
 namespace SRS22 {
 	class WhiteboardOutIO : IOCommon
 	{
 	public:
+		static std::recursive_mutex mtx;
+		static std::list<WhiteboardPt> outputQueue;
+
 		WhiteboardOutIO();
 		~WhiteboardOutIO();
 
@@ -22,5 +26,20 @@ namespace SRS22 {
 		virtual void PostTick();
 
 		void UnitTest();
+
+		static void EnqueuePoint(WhiteboardPt pt) {
+			std::lock_guard<std::recursive_mutex> lk(mtx);
+			outputQueue.push_front(pt);
+		}
+
+		static bool GetNextQueuedPt(WhiteboardPt & pt /* out */) {
+			std::lock_guard<std::recursive_mutex> lk(mtx);
+			if (outputQueue.size() > 0) {
+				pt = outputQueue.back();
+				outputQueue.pop_back();
+				return true;
+			}
+			return false;
+		}
 	};
 }

@@ -356,6 +356,12 @@
     <ClInclude Include="Maps\Text\TextOutMap.h">
       <Filter>Source\Maps\Text</Filter>
     </ClInclude>
+    <ClInclude Include="HardwareIO\WhiteboardPt.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Draw\DrawOutMap.h">
+      <Filter>Source\Maps\Draw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -534,6 +540,9 @@
     </ClCompile>
     <ClCompile Include="Maps\Text\TextOutMap.cpp">
       <Filter>Source\Maps\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Draw\DrawOutMap.cpp">
+      <Filter>Source\Maps\Draw</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

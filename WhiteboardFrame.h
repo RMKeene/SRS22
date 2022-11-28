@@ -24,5 +24,7 @@ namespace SRS22 {
 		void OnCyanButton(wxCommandEvent& event) override;
 		void OnMagentaButton(wxCommandEvent& event) override;
 		void OnWhiteboardClearButton(wxCommandEvent& event) override;
+
+		void OnTimerTick(wxTimerEvent& event) override;
 	};
 }

@@ -232,11 +232,13 @@
     <ClInclude Include="HardwareIO\WaveOutputHelper.h" />
     <ClInclude Include="HardwareIO\WhiteboardInIO.h" />
     <ClInclude Include="HardwareIO\WhiteboardOutIO.h" />
+    <ClInclude Include="HardwareIO\WhiteboardPt.h" />
     <ClInclude Include="ini.h" />
     <ClInclude Include="Maps\Camera\CameraAttnSpotMap.h" />
     <ClInclude Include="Maps\Camera\CameraDifferenceMap.h" />
     <ClInclude Include="Maps\Camera\CameraFoveaMap.h" />
     <ClInclude Include="Maps\Camera\CameraMotionXYMap.h" />
+    <ClInclude Include="Maps\Draw\DrawOutMap.h" />
     <ClInclude Include="Maps\RandomMap.h" />
     <ClInclude Include="Maps\Screen\ScreenAttnSpotMap.h" />
     <ClInclude Include="Maps\Screen\ScreenDifferenceMap.h" />
@@ -343,6 +345,7 @@
     <ClCompile Include="Maps\Camera\CameraDifferenceMap.cpp" />
     <ClCompile Include="Maps\Camera\CameraFoveaMap.cpp" />
     <ClCompile Include="Maps\Camera\CameraMotionXYMap.cpp" />
+    <ClCompile Include="Maps\Draw\DrawOutMap.cpp" />
     <ClCompile Include="Maps\RandomMap.cpp" />
     <ClCompile Include="Maps\Screen\ScreenAttnSpotMap.cpp" />
     <ClCompile Include="Maps\Screen\ScreenDifferenceMap.cpp" />
