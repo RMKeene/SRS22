@@ -29,6 +29,11 @@ namespace SRS22 {
 		virtual void OnPostPaint(wxPaintDC* DC, wxPaintEvent& event) = 0;
 	};
 
+	class MyCanvasOnDrawPixel {
+	public:
+		virtual void OnDrawPixel(wxColor c, wxPoint pt, int dotSize) = 0;
+	};
+
 	class MyCanvas : public wxWindow
 	{
 	public:
@@ -38,6 +43,7 @@ namespace SRS22 {
 		void OnEraseBackground(wxEraseEvent& event);
 		void OnPaint(wxPaintEvent& event);
 		void OnMouseLeft(wxMouseEvent& event);
+		void DrawPixelAndEvent(wxMouseEvent& event);
 		void OnMouseMove(wxMouseEvent& event);
 
 		void Clear();
@@ -52,9 +58,14 @@ namespace SRS22 {
 
 		/// <summary>
 		/// The canvas may have zero or one callback at the end of OnPaint
-		/// to allow a owenr to draw something.
+		/// to allow a owner to draw something.
 		/// </summary>
 		MyCanvasPainter* OnPaintPostListener = NULL;
+
+		/// <summary>
+		/// When the user draws a pixel this gets called if not NULL.
+		/// </summary>
+		MyCanvasOnDrawPixel* OnDrawPixel = NULL;
 
 		void SetEraseBackground(bool erase);
 

@@ -362,6 +362,9 @@
     <ClInclude Include="Maps\Draw\DrawOutMap.h">
       <Filter>Source\Maps\Draw</Filter>
     </ClInclude>
+    <ClInclude Include="Maps\Draw\DrawInMap.h">
+      <Filter>Source\Maps\Draw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -542,6 +545,9 @@
       <Filter>Source\Maps\Text</Filter>
     </ClCompile>
     <ClCompile Include="Maps\Draw\DrawOutMap.cpp">
+      <Filter>Source\Maps\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Draw\DrawInMap.cpp">
       <Filter>Source\Maps\Draw</Filter>
     </ClCompile>
   </ItemGroup>

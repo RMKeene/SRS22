@@ -8,6 +8,7 @@ namespace SRS22 {
 	WhiteboardFrame::WhiteboardFrame(wxWindow* parent) :
 		WhiteboardFrameGen(parent),
 		canvas(this, wxID_ANY, wxPoint(0, 0), wxSize(740, 460)) {
+		canvas.OnDrawPixel = this;
 		WhiteboardHorizPanel->Add(&canvas);
 	}
 
@@ -65,6 +66,21 @@ namespace SRS22 {
 			canvas.SetPixel(wxColor(pt.r, pt.g, pt.b, static_cast<unsigned char>(255.0f * pt.blend)), wxPoint(x, y), 1);
 			canvas.Refresh();
 		}
-
 	}
+
+	/// <summary>
+	/// When the user draws a point on the whiteboard.
+	/// </summary>
+	/// <param name="c"></param>
+	/// <param name="pt"></param>
+	/// <param name="dotSize"></param>
+	void WhiteboardFrame::OnDrawPixel(wxColor c, wxPoint pt, int dotSize) {
+		BrainH br = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		WhiteboardPt Wpt(c.Red(), c.Green(), c.Blue(), 1.0f, 
+			std::clamp(pt.x / (float)canvas.GetSize().x, 0.0f, 1.0f), 
+			std::clamp(pt.y / (float)canvas.GetSize().y, 0.0f, 1.0f));
+
+		br->whiteboardIn.EnqueuePoint(Wpt);
+	}
+
 }

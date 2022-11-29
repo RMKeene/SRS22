@@ -103,18 +103,23 @@ namespace SRS22 {
 	}
 
 	void MyCanvas::OnMouseLeft(wxMouseEvent& event) {
+		DrawPixelAndEvent(event);
+	}
+
+	void MyCanvas::DrawPixelAndEvent(wxMouseEvent& event)
+	{
 		if (currentBrush.IsOk()) {
 			SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
+			if (OnDrawPixel) {
+				OnDrawPixel->OnDrawPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
+			}
 			Refresh();
 		}
 	}
 
 	void MyCanvas::OnMouseMove(wxMouseEvent& event) {
 		if (event.Dragging()) {
-			if (currentBrush.IsOk()) {
-				SetPixel(currentBrush.GetColour(), wxPoint(event.GetX(), event.GetY()), event.m_shiftDown ? 4 : 1);
-				Refresh();
-			}
+			DrawPixelAndEvent(event);
 		}
 	}
 }

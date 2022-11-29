@@ -4,7 +4,8 @@
 
 namespace SRS22 {
 	class WhiteboardFrame :
-		public WhiteboardFrameGen
+		public WhiteboardFrameGen,
+		public MyCanvasOnDrawPixel
 	{
 	public:
 		wxBrush whiteboardBrush;
@@ -26,5 +27,6 @@ namespace SRS22 {
 		void OnWhiteboardClearButton(wxCommandEvent& event) override;
 
 		void OnTimerTick(wxTimerEvent& event) override;
+		void OnDrawPixel(wxColor c, wxPoint pt, int dotSize) override;
 	};
 }

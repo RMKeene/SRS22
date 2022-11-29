@@ -55,7 +55,6 @@ namespace SRS22 {
 		void SetDecayFactors(bool doDecay = true, float decayFactor = 1.0f) {
 			this->doDecay = doDecay;
 			this->decayFactor = decayFactor;
-
 		}
 
 		PatternMatchingSystem matchSystem;

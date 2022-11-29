@@ -238,6 +238,7 @@
     <ClInclude Include="Maps\Camera\CameraDifferenceMap.h" />
     <ClInclude Include="Maps\Camera\CameraFoveaMap.h" />
     <ClInclude Include="Maps\Camera\CameraMotionXYMap.h" />
+    <ClInclude Include="Maps\Draw\DrawInMap.h" />
     <ClInclude Include="Maps\Draw\DrawOutMap.h" />
     <ClInclude Include="Maps\RandomMap.h" />
     <ClInclude Include="Maps\Screen\ScreenAttnSpotMap.h" />
@@ -345,6 +346,7 @@
     <ClCompile Include="Maps\Camera\CameraDifferenceMap.cpp" />
     <ClCompile Include="Maps\Camera\CameraFoveaMap.cpp" />
     <ClCompile Include="Maps\Camera\CameraMotionXYMap.cpp" />
+    <ClCompile Include="Maps\Draw\DrawInMap.cpp" />
     <ClCompile Include="Maps\Draw\DrawOutMap.cpp" />
     <ClCompile Include="Maps\RandomMap.cpp" />
     <ClCompile Include="Maps\Screen\ScreenAttnSpotMap.cpp" />
