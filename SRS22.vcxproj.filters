@@ -365,6 +365,12 @@
     <ClInclude Include="Maps\Draw\DrawInMap.h">
       <Filter>Source\Maps\Draw</Filter>
     </ClInclude>
+    <ClInclude Include="HardwareIO\Phonemes.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareIO\PhonemesE.h">
+      <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -549,6 +555,9 @@
     </ClCompile>
     <ClCompile Include="Maps\Draw\DrawInMap.cpp">
       <Filter>Source\Maps\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareIO\Phonemes.cpp">
+      <Filter>Source\HardwareIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

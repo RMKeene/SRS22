@@ -223,6 +223,8 @@
     <ClInclude Include="HardwareIO\CameraAttnSpotIO.h" />
     <ClInclude Include="HardwareIO\CameraInIO.h" />
     <ClInclude Include="HardwareIO\IOCommon.h" />
+    <ClInclude Include="HardwareIO\Phonemes.h" />
+    <ClInclude Include="HardwareIO\PhonemesE.h" />
     <ClInclude Include="HardwareIO\ScreenAttnSpotIO.h" />
     <ClInclude Include="HardwareIO\ScreenInputIO.h" />
     <ClInclude Include="HardwareIO\TextInIO.h" />
@@ -333,6 +335,7 @@
     <ClCompile Include="HardwareIO\CameraAttnSpotIO.cpp" />
     <ClCompile Include="HardwareIO\CameraInIO.cpp" />
     <ClCompile Include="HardwareIO\IOCommon.cpp" />
+    <ClCompile Include="HardwareIO\Phonemes.cpp" />
     <ClCompile Include="HardwareIO\ScreenAttnSpotIO.cpp" />
     <ClCompile Include="HardwareIO\ScreenInputIO.cpp" />
     <ClCompile Include="HardwareIO\TextInIO.cpp" />

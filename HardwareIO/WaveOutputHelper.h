@@ -2,24 +2,31 @@
 #include <mmeapi.h>
 #include "soloud.h"
 #include <soloud_wav.h>
+#include <memory>
+#include <string>
 
 typedef PVOID HWAVELIB;
 
 namespace SRS22 {
+
+	class WaveOutputHelper;
+	typedef WaveOutputHelper* WaveOutputHelperH;
+
 	class WaveOutputHelper
 	{
 		SoLoud::Soloud soloudInst;
 	public:
-		SoLoud::Wav sampleTest;
-		SoLoud::Wav sampleTest2;
+		static WaveOutputHelperH globalSingleton;
 
-	public:
 		WaveOutputHelper();
 		~WaveOutputHelper();
 
 		void Init();
 		void UnInit();
 
+		SoLoud::Wav* LoadSoLoudWav(std::string fileName);
+
 		void Play(SoLoud::Wav& wav);
 	};
+
 }

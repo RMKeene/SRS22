@@ -26,7 +26,7 @@ namespace SRS22 {
 		/// </summary>
 		virtual void PostTick();
 
-		void CaptureSegment();
+		void PlayWav(SoLoud::Wav& w);
 
 		void UnitTest();
 	};

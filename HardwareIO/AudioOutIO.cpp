@@ -30,6 +30,7 @@ namespace SRS22 {
 	void AudioOutIO::UnitTest() {
 	}
 
-	void AudioOutIO::CaptureSegment() {
+	void AudioOutIO::PlayWav(SoLoud::Wav& w) {
+		outHelper.Play(w);
 	}
 }

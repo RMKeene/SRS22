@@ -123,6 +123,7 @@ namespace SRS22 {
 		screenInput.Init();
 		audioInput.Init();
 		audioOut.Init();
+		phonemesOut.Init();
 		cameraInput.Init();
 		textIn.Init();
 		textOut.Init();
