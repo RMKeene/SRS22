@@ -17,6 +17,7 @@
 #include "Maps/Text/TextOutMap.h"
 #include "Maps/Draw/DrawOutMap.h"
 #include "Maps/Draw/DrawInMap.h"
+#include "Maps/Voice/PhonemeMap.h"
 
 using namespace concurrency;
 
@@ -58,6 +59,7 @@ namespace SRS22 {
 		audioOut.PreTick();
 		cameraInput.PreTick();
 		cameraFovea.PreTick();
+		phonemesOut.PreTick();
 		textIn.PreTick();
 		textOut.PreTick();
 		whiteboardIn.PreTick();
@@ -71,6 +73,7 @@ namespace SRS22 {
 		audioOut.PostTick();
 		cameraFovea.PostTick();
 		cameraInput.PostTick();
+		phonemesOut.PostTick();
 		textIn.PostTick();
 		textOut.PostTick();
 		whiteboardIn.PostTick();
@@ -123,8 +126,8 @@ namespace SRS22 {
 		screenInput.Init();
 		audioInput.Init();
 		audioOut.Init();
-		phonemesOut.Init();
 		cameraInput.Init();
+		phonemesOut.Init();
 		textIn.Init();
 		textOut.Init();
 		whiteboardIn.Init();
@@ -144,6 +147,8 @@ namespace SRS22 {
 
 		AddMap(make_shared<DrawInMap>(this));
 		AddMap(make_shared<DrawOutMap>(this));
+
+		AddMap(make_shared<PhonemeMap>(this));
 
 		AddMap(make_shared<RandomMap>(this));
 

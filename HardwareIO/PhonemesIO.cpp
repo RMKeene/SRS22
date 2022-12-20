@@ -1,16 +1,30 @@
 #include "PhonemesE.h"
-#include "Phonemes.h"
+#include "PhonemesIO.h"
 #include "WaveOutputHelper.h"
 
 namespace SRS22 {
 
-	PhonemesH Phonemes::globalPhonemes;
-
-	void Phonemes::PlayPhoneme(PhonemeE key) {
-		WaveOutputHelper::globalSingleton->Play(*(cache[key]->wav));
+	PhonemesIO::PhonemesIO() : IOCommon() {
+		IOCOMMON_SETCLASSNAME;
 	}
 
-	void Phonemes::Init() {
+	PhonemesIO::~PhonemesIO() {
+	}
+
+	void PhonemesIO::Shutdown() {
+		IOCommon::Shutdown();
+	}
+
+	void PhonemesIO::PreTick() {
+		IOCommon::PreTick();
+	}
+
+	void PhonemesIO::PostTick() {
+		IOCommon::PostTick();
+	}
+
+	bool PhonemesIO::Init() {
+		IOCommon::Init();
 		std::string phonemesPath = "./phonemes/";
 		InitPhoneme(PhonemeE::A, phonemesPath + "a.wav");
 		InitPhoneme(PhonemeE::AE, phonemesPath + "ae.wav");
@@ -41,10 +55,18 @@ namespace SRS22 {
 		InitPhoneme(PhonemeE::W, phonemesPath + "w.wav");
 		InitPhoneme(PhonemeE::X, phonemesPath + "x.wav");
 		InitPhoneme(PhonemeE::Z, phonemesPath + "z.wav");
-		InitPhoneme(PhonemeE::ZH, phonemesPath + "zh.wav");
+		InitPhoneme(PhonemeE::ZH, phonemesPath + "zh.wav"); 
+
+		return true;
 	}
 
-	void Phonemes::InitPhoneme(PhonemeE key, std::string file) {
+	void PhonemesIO::PlayPhoneme(PhonemeE key) {
+		if (key != PhonemeE::SPACE) {
+			WaveOutputHelper::globalSingleton->Play(*(cache[key]->wav));
+		}
+	}
+
+	void PhonemesIO::InitPhoneme(PhonemeE key, std::string file) {
 		cache[key] = std::make_shared<Phoneme>(key, file);
 	}
 

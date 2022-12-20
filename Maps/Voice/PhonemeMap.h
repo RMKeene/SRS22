@@ -1,8 +1,8 @@
 #pragma once
 #include "../../SRSUnit.h"
+#include "../../HardwareIO/PhonemesE.h"
 
-#define TextOutMap_Width 16
-#define TextOutMap_Height 16
+#define PhonemeMap_Width ((int)PhonemeE::MAXENUM)
 
 namespace SRS22 {
 	/// <summary>
@@ -10,20 +10,19 @@ namespace SRS22 {
 	/// There is a threshold for minimal charge to fire off a character.
 	/// Coded as X is lower 4 bits, Y is upper 4 bits ASCII.
 	/// </summary>
-	class TextOutMap : public SRSUnit
+	class PhonemeMap : public SRSUnit
 	{
 	public:
 		/// <summary>
 		/// implemented as
-		/// SRSUnit("TextOutMap",
+		/// SRSUnit("PhonemeMap",
 		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 		/// 	cv::Vec3f(0.0, 0.0, 0.0),
 		/// 	TextOutMap_Width,
-		///     TextOutMap_Height,
-		/// 	"The \"Keyboard\" out the text window.")
+		/// 	"The \"Voice\" out the audio system.")
 		/// </summary>
-		TextOutMap(Brain* br);
-		~TextOutMap();
+		PhonemeMap(Brain* br);
+		~PhonemeMap();
 
 		virtual void ComputeNextState() override;
 		virtual void LatchNewState() override;

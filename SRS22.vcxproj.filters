@@ -365,11 +365,14 @@
     <ClInclude Include="Maps\Draw\DrawInMap.h">
       <Filter>Source\Maps\Draw</Filter>
     </ClInclude>
-    <ClInclude Include="HardwareIO\Phonemes.h">
+    <ClInclude Include="HardwareIO\PhonemesIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
     <ClInclude Include="HardwareIO\PhonemesE.h">
       <Filter>Source\HardwareIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Voice\PhonemeMap.h">
+      <Filter>Source\Maps\Voice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -556,8 +559,11 @@
     <ClCompile Include="Maps\Draw\DrawInMap.cpp">
       <Filter>Source\Maps\Draw</Filter>
     </ClCompile>
-    <ClCompile Include="HardwareIO\Phonemes.cpp">
+    <ClCompile Include="HardwareIO\PhonemesIO.cpp">
       <Filter>Source\HardwareIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Voice\PhonemeMap.cpp">
+      <Filter>Source\Maps\Voice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

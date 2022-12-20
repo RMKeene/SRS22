@@ -223,7 +223,7 @@
     <ClInclude Include="HardwareIO\CameraAttnSpotIO.h" />
     <ClInclude Include="HardwareIO\CameraInIO.h" />
     <ClInclude Include="HardwareIO\IOCommon.h" />
-    <ClInclude Include="HardwareIO\Phonemes.h" />
+    <ClInclude Include="HardwareIO\PhonemesIO.h" />
     <ClInclude Include="HardwareIO\PhonemesE.h" />
     <ClInclude Include="HardwareIO\ScreenAttnSpotIO.h" />
     <ClInclude Include="HardwareIO\ScreenInputIO.h" />
@@ -249,6 +249,7 @@
     <ClInclude Include="Maps\Screen\ScreenMotionXYMap.h" />
     <ClInclude Include="Maps\Text\TextCurrentCharMap.h" />
     <ClInclude Include="Maps\Text\TextOutMap.h" />
+    <ClInclude Include="Maps\Voice\PhonemeMap.h" />
     <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="MonitorFrame.h" />
     <ClInclude Include="OpenCVHelpers.h" />
@@ -335,7 +336,7 @@
     <ClCompile Include="HardwareIO\CameraAttnSpotIO.cpp" />
     <ClCompile Include="HardwareIO\CameraInIO.cpp" />
     <ClCompile Include="HardwareIO\IOCommon.cpp" />
-    <ClCompile Include="HardwareIO\Phonemes.cpp" />
+    <ClCompile Include="HardwareIO\PhonemesIO.cpp" />
     <ClCompile Include="HardwareIO\ScreenAttnSpotIO.cpp" />
     <ClCompile Include="HardwareIO\ScreenInputIO.cpp" />
     <ClCompile Include="HardwareIO\TextInIO.cpp" />
@@ -358,6 +359,7 @@
     <ClCompile Include="Maps\Screen\ScreenMotionXYMap.cpp" />
     <ClCompile Include="Maps\Text\TextCurrentCharMap.cpp" />
     <ClCompile Include="Maps\Text\TextOutMap.cpp" />
+    <ClCompile Include="Maps\Voice\PhonemeMap.cpp" />
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
     <ClCompile Include="OpenCVHelpers.cpp" />

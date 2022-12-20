@@ -17,7 +17,7 @@
 #include "HardwareIO/WhiteboardOutIO.h"
 #include "HardwareIO/ScreenAttnSpotIO.h"
 #include "HardwareIO/CameraAttnSpotIO.h"
-#include "HardwareIO/Phonemes.h"
+#include "HardwareIO/PhonemesIO.h"
 
 namespace SRS22 {
 	using namespace std;
@@ -45,9 +45,9 @@ namespace SRS22 {
 
 		AudioCaptureIO audioInput;
 		AudioOutIO audioOut;
-		Phonemes phonemesOut;
 		CameraAttnSpotIO cameraFovea;
 		CameraInIO cameraInput;
+		PhonemesIO phonemesOut;
 		ScreenAttnSpotIO screenFovea;
 		ScreenInputIO screenInput;
 		TextInIO textIn;
