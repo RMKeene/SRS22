@@ -34,7 +34,7 @@ namespace SRS22 {
 		void put(float v, int layer, int row, int col);
 
 		/// <summary>
-		/// The cv::Mat size() function. 
+		/// The cv::Mat size() function.
 		/// </summary>
 		/// <returns></returns>
 		const cv::MatSize matSize();

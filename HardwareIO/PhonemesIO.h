@@ -7,7 +7,6 @@
 #include "WaveInputHelper.h"
 
 namespace SRS22 {
-
 	class Phoneme {
 	public:
 		PhonemeE key;
@@ -30,7 +29,6 @@ namespace SRS22 {
 		PhonemesIO();
 		~PhonemesIO();
 
-
 		virtual bool Init();
 		virtual void Shutdown();
 
@@ -48,6 +46,4 @@ namespace SRS22 {
 	private:
 		void InitPhoneme(PhonemeE key, std::string file);
 	};
-
-
 }

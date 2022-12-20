@@ -20,7 +20,7 @@ namespace SRS22 {
 		BrainH br = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 		br->textIn.TakeClearInput();
 	}
-	
+
 	void TopTextFrame::OnTextInChar(wxKeyEvent& event) {
 		// Not working for Japanese and such. Pretty much just ASCII.
 		BrainH br = GlobalWorld::GlobalWorldInstance.GetBrain(0);

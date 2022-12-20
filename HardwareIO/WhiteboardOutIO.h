@@ -32,7 +32,7 @@ namespace SRS22 {
 			outputQueue.push_front(pt);
 		}
 
-		static bool GetNextQueuedPt(WhiteboardPt & pt /* out */) {
+		static bool GetNextQueuedPt(WhiteboardPt& pt /* out */) {
 			std::lock_guard<std::recursive_mutex> lk(mtx);
 			if (outputQueue.size() > 0) {
 				pt = outputQueue.back();

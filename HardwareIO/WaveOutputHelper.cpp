@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	SoLoud::Soloud soloudInst;
-	
+
 	WaveOutputHelperH WaveOutputHelper::globalSingleton = nullptr;
 
 	WaveOutputHelper::WaveOutputHelper() {

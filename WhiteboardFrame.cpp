@@ -76,11 +76,10 @@ namespace SRS22 {
 	/// <param name="dotSize"></param>
 	void WhiteboardFrame::OnDrawPixel(wxColor c, wxPoint pt, int dotSize) {
 		BrainH br = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-		WhiteboardPt Wpt(c.Red(), c.Green(), c.Blue(), 1.0f, 
-			std::clamp(pt.x / (float)canvas.GetSize().x, 0.0f, 1.0f), 
+		WhiteboardPt Wpt(c.Red(), c.Green(), c.Blue(), 1.0f,
+			std::clamp(pt.x / (float)canvas.GetSize().x, 0.0f, 1.0f),
 			std::clamp(pt.y / (float)canvas.GetSize().y, 0.0f, 1.0f));
 
 		br->whiteboardIn.EnqueuePoint(Wpt);
 	}
-
 }

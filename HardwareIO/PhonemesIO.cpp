@@ -3,7 +3,6 @@
 #include "WaveOutputHelper.h"
 
 namespace SRS22 {
-
 	PhonemesIO::PhonemesIO() : IOCommon() {
 		IOCOMMON_SETCLASSNAME;
 	}
@@ -55,7 +54,7 @@ namespace SRS22 {
 		InitPhoneme(PhonemeE::W, phonemesPath + "w.wav");
 		InitPhoneme(PhonemeE::X, phonemesPath + "x.wav");
 		InitPhoneme(PhonemeE::Z, phonemesPath + "z.wav");
-		InitPhoneme(PhonemeE::ZH, phonemesPath + "zh.wav"); 
+		InitPhoneme(PhonemeE::ZH, phonemesPath + "zh.wav");
 
 		return true;
 	}
@@ -78,7 +77,5 @@ namespace SRS22 {
 	}
 
 	Phoneme::~Phoneme() {
-
 	}
-
 }

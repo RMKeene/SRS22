@@ -160,7 +160,6 @@ namespace SRS22 {
 		AddMap(make_shared<TextCurrentCharMap>(this));
 		AddMap(make_shared<TextOutMap>(this));
 
-
 		// Anonymouse Maps (the cortex)
 
 		// Compile the SRS system relationships.

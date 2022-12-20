@@ -72,7 +72,7 @@ namespace SRS22 {
 	}
 
 	void SRSUnit::ComputeNextState() {
-		if(doDecay)
+		if (doDecay)
 			nextM.charges = M.charges * decayFactor;
 	}
 
