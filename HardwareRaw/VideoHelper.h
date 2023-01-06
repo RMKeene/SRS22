@@ -1,6 +1,6 @@
 #pragma once
 #include "../pch.h"
-#include "IOCommon.h"
+#include "../HardwareIO/IOCommon.h"
 
 using namespace cv;
 

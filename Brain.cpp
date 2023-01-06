@@ -18,6 +18,7 @@
 #include "Maps/Draw/DrawOutMap.h"
 #include "Maps/Draw/DrawInMap.h"
 #include "Maps/Voice/PhonemeMap.h"
+#include "Maps/Hearing/HearingMap.h"
 
 using namespace concurrency;
 
@@ -50,6 +51,8 @@ namespace SRS22 {
 		PostTick();
 
 		tickCount++;
+		// Used for ticks per second over in MonitorFrame::OnMonitorFrameTickTimer
+		tickCountRescent++;
 	}
 
 	void Brain::PreTick() {
@@ -147,6 +150,8 @@ namespace SRS22 {
 
 		AddMap(make_shared<DrawInMap>(this));
 		AddMap(make_shared<DrawOutMap>(this));
+
+		AddMap(make_shared<HearingMap>(this));
 
 		AddMap(make_shared<PhonemeMap>(this));
 

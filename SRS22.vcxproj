@@ -229,12 +229,12 @@
     <ClInclude Include="HardwareIO\ScreenInputIO.h" />
     <ClInclude Include="HardwareIO\TextInIO.h" />
     <ClInclude Include="HardwareIO\TextOutIO.h" />
-    <ClInclude Include="HardwareIO\VideoHelper.h" />
-    <ClInclude Include="HardwareIO\WaveInputHelper.h" />
-    <ClInclude Include="HardwareIO\WaveOutputHelper.h" />
     <ClInclude Include="HardwareIO\WhiteboardInIO.h" />
     <ClInclude Include="HardwareIO\WhiteboardOutIO.h" />
     <ClInclude Include="HardwareIO\WhiteboardPt.h" />
+    <ClInclude Include="HardwareRaw\VideoHelper.h" />
+    <ClInclude Include="HardwareRaw\WaveInputHelper.h" />
+    <ClInclude Include="HardwareRaw\WaveOutputHelper.h" />
     <ClInclude Include="ini.h" />
     <ClInclude Include="Maps\Camera\CameraAttnSpotMap.h" />
     <ClInclude Include="Maps\Camera\CameraDifferenceMap.h" />
@@ -242,6 +242,7 @@
     <ClInclude Include="Maps\Camera\CameraMotionXYMap.h" />
     <ClInclude Include="Maps\Draw\DrawInMap.h" />
     <ClInclude Include="Maps\Draw\DrawOutMap.h" />
+    <ClInclude Include="Maps\Hearing\HearingMap.h" />
     <ClInclude Include="Maps\RandomMap.h" />
     <ClInclude Include="Maps\Screen\ScreenAttnSpotMap.h" />
     <ClInclude Include="Maps\Screen\ScreenDifferenceMap.h" />
@@ -298,6 +299,7 @@
     <ClInclude Include="soloud\include\soloud_wavstream.h" />
     <ClInclude Include="SRS22.h" />
     <ClInclude Include="SRS22UIgen.h" />
+    <ClInclude Include="SRSMath.h" />
     <ClInclude Include="SRSUnitDisplay.h" />
     <ClInclude Include="SRSLog.h" />
     <ClInclude Include="SRSUnit.h" />
@@ -341,11 +343,11 @@
     <ClCompile Include="HardwareIO\ScreenInputIO.cpp" />
     <ClCompile Include="HardwareIO\TextInIO.cpp" />
     <ClCompile Include="HardwareIO\TextOutIO.cpp" />
-    <ClCompile Include="HardwareIO\VideoHelper.cpp" />
-    <ClCompile Include="HardwareIO\WaveInputHelper.cpp" />
-    <ClCompile Include="HardwareIO\WaveOutputHelper.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardInIO.cpp" />
     <ClCompile Include="HardwareIO\WhiteboardOutIO.cpp" />
+    <ClCompile Include="HardwareRaw\VideoHelper.cpp" />
+    <ClCompile Include="HardwareRaw\WaveInputHelper.cpp" />
+    <ClCompile Include="HardwareRaw\WaveOutputHelper.cpp" />
     <ClCompile Include="Maps\Camera\CameraAttnSpotMap.cpp" />
     <ClCompile Include="Maps\Camera\CameraDifferenceMap.cpp" />
     <ClCompile Include="Maps\Camera\CameraFoveaMap.cpp" />
@@ -378,6 +380,7 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SRS22.cpp" />
     <ClCompile Include="SRS22UIgen.cpp" />
+    <ClCompile Include="SRSMath.cpp" />
     <ClCompile Include="SRSUnitDisplay.cpp" />
     <ClCompile Include="SRSLog.cpp" />
     <ClCompile Include="SRSUnit.cpp" />
@@ -425,6 +428,7 @@
     <Image Include="res\userimages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Maps\Hearing\HearingMap.cpp" />
     <None Include="packages.config" />
     <None Include="README.md" />
     <None Include="res\SRS22.rc2" />

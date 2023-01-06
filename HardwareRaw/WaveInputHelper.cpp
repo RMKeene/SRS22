@@ -1,8 +1,12 @@
 #include "WaveInputHelper.h"
 #include <codecvt>
 #include "../StringConversionHelpers.h"
+#include <stdlib.h>
+
+#define SRS22SAMPLEFREQ 11025
 
 namespace SRS22 {
+	// As single buffer of data. We shoot for 1/10th second of audio. We have 2 of these so they ping pong smoothly.
 	typedef struct WAV_HEADER {
 		/* RIFF Chunk Descriptor */
 		uint8_t RIFF[4] = { 'R', 'I', 'F', 'F' }; // RIFF Header Magic header
@@ -14,21 +18,30 @@ namespace SRS22 {
 		uint16_t AudioFormat = 1; // Audio format 1=PCM, 6=mulaw, 7=alaw, 257=IBM
 								  // Mu-Law, 258=IBM A-Law, 259=ADPCM
 		uint16_t NumOfChan = 1;   // Number of channels 1=Mono 2=Stereo
-		uint32_t SamplesPerSec = 12000;   // Sampling Frequency in Hz
-		uint32_t bytesPerSec = 12000; // bytes per second
+		uint32_t SamplesPerSec = SRS22SAMPLEFREQ;   // Sampling Frequency in Hz
+		uint32_t bytesPerSec = SRS22SAMPLEFREQ; // bytes per second
 		uint16_t blockAlign = 1;          // 2=16-bit mono, 4=16-bit stereo
 		uint16_t bitsPerSample = 8;      // Number of bits per sample
 		/* "data" sub-chunk */
 		uint8_t Subchunk2ID[4] = { 'd', 'a', 't', 'a' }; // "data"  string
-		uint32_t Subchunk2Size; // Sampled data length
+		uint32_t Subchunk2Size = SRS22SAMPLEFREQ / 10; // Sampled data length
 	} wav_hdr;
 
 	using SRS22::StringConversionHelpers;
+
+	int WaveInputHelper::lastPacketSize = -1;
+	int WaveInputHelper::totalBytesIn = 0;
+	int WaveInputHelper::callbackCounter = 0;
 
 	WaveInputHelper::WaveInputHelper() {
 	}
 
 	WaveInputHelper::~WaveInputHelper() {
+	}
+
+	void WaveInputHelper_Callback(HDRVR hdrvr, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2) {
+		WaveInputHelper* theThisPtr = (WaveInputHelper*)dwUser;
+		theThisPtr->TakeInputEvent(hdrvr, uMsg, dwUser, dw1, dw2);
 	}
 
 	void WaveInputHelper::Init() {
@@ -46,9 +59,9 @@ namespace SRS22 {
 			printf("Access WaveIn channel SUCCEED!");
 		}
 
-		SetWaveFormat(&waveInFormat, 1, 1, 12000, 1, 8, 0);
+		SetWaveFormat(&waveInFormat, 1, 1, SRS22SAMPLEFREQ, 1, 8, 0);
 
-		res = waveInOpen(&waveInHandle, WAVE_MAPPER, &waveInFormat, (DWORD)NULL, 0L, CALLBACK_WINDOW);
+		res = waveInOpen(&waveInHandle, WAVE_MAPPER, &waveInFormat, (DWORD_PTR)&WaveInputHelper_Callback, (DWORD_PTR)this, CALLBACK_FUNCTION | WAVE_FORMAT_DIRECT);
 		if (res != MMSYSERR_NOERROR)
 		{
 			sprintf(lpTemp, "Open wave input channel FAILED: Error_Code = 0x%x", res);
@@ -59,14 +72,14 @@ namespace SRS22 {
 		{
 			printf("Open wave input channel SUCCEED!");
 		}
+		StartRecord(&waveInHandle);
 	}
 
 	// Set wave format when sampling the audio
+	// Typical call SetWaveFormat(&waveInFormat, 1, 1, SRS22SAMPLEFREQ, 1, 8, 0);
 	int WaveInputHelper::SetWaveFormat(WAVEFORMATEX* wf, int wFormatTag, int nChannels, int nSamplesPerSec,
 		int nBlockAlign, int wBitsPerSample, int cbSize)
 	{
-		//int res;
-
 		wf->wFormatTag = wFormatTag;
 		wf->nChannels = nChannels;
 		wf->nSamplesPerSec = nSamplesPerSec;
@@ -74,58 +87,12 @@ namespace SRS22 {
 		wf->wBitsPerSample = wBitsPerSample;
 		wf->cbSize = cbSize;
 		wf->nAvgBytesPerSec = nSamplesPerSec * wBitsPerSample / 8;
-
-		// IAudioClient *pIAudioClient = NULL;
-		//res = pIAudioClient->IsFormatSupported( AUDCLNT_SHAREMODE_EXCLUSIVE, (const PWAVEFORMATEX)wf, NULL);
-		//if ( res != MMSYSERR_NOERROR )
-		//{
-		//	_debug_print("Access WaveIn channel FAILED!",1);
-		//	return -1;
-		//}
-		//else
-		//{
-		//	_debug_print("Access WaveIn channel SUCCEED!");
-		//}
 		return 0;
 	}
 
-	// Open wave input channel
-	int WaveInputHelper::OpenWaveIn(HWAVEIN* hWaveIn, WAVEFORMATEX* wf)
-	{
-		int res;
-		char lpTemp[256];
-
-		res = waveInGetNumDevs();
-		if (!res)
-		{
-			_debug_print("Access WaveIn channel FAILED!", 1);
-			return -1;
-		}
-		else
-		{
-			_debug_print("Access WaveIn channel SUCCEED!");
-		}
-
-		// Open wave input channel
-		res = waveInOpen(hWaveIn, WAVE_MAPPER, wf, (DWORD)NULL, 0L, CALLBACK_WINDOW);
-		if (res != MMSYSERR_NOERROR)
-		{
-			sprintf(lpTemp, "Open wave input channel FAILED£¬Error_Code = 0x%x", res);
-			_debug_print(lpTemp, 1);
-			return -1;
-		}
-		else
-		{
-			_debug_print("Open wave input channel SUCCEED!");
-		}
-		return 0;
-	}
-
-	// Prepare Wave In Header and allocate memory
 	int WaveInputHelper::PrepareWaveIn(HWAVEIN* hWaveIn, WAVEHDR* waveHeader, DWORD dataSize)
 	{
 		int res;
-		char lpTemp[256];
 
 		waveHeader->dwBufferLength = dataSize;
 		waveHeader->dwBytesRecorded = 0;
@@ -139,25 +106,27 @@ namespace SRS22 {
 		res = waveInPrepareHeader(*hWaveIn, waveHeader, sizeof(WAVEHDR));
 		if (res != MMSYSERR_NOERROR)
 		{
-			sprintf(lpTemp, "Cannot prepare wave in header£¬Error_Code = 0x%03X", res);
+			char lpTemp[256];
+			sprintf(lpTemp, "Cannot prepare wave in header: Error_Code = 0x%03X", res);
 			_debug_print(lpTemp, 1);
 			return -1;
 		}
 		else
 		{
-			_debug_print("Prepare wave in header SUCCEED!");
+			//_debug_print("Prepare wave in header SUCCEED!");
 		}
 
 		res = waveInAddBuffer(*hWaveIn, waveHeader, sizeof(WAVEHDR));
 		if (res != MMSYSERR_NOERROR)
 		{
-			sprintf(lpTemp, "Cannot add buffer for wave in£¬Error_Code = 0x%03X", res);
+			char lpTemp[256];
+			sprintf(lpTemp, "Cannot add buffer for wave in: Error_Code = 0x%03X", res);
 			_debug_print(lpTemp, 1);
 			return -1;
 		}
 		else
 		{
-			_debug_print("Add buffer for wave in SUCCEED!");
+			//_debug_print("Add buffer for wave in SUCCEED!");
 		}
 		return 0;
 	}
@@ -167,6 +136,27 @@ namespace SRS22 {
 	{
 		int res;
 
+		// Prepare twice to ping pong. At SRS22SAMPLEFREQ  samples per sec we want 10 buffers per second so 1200 samples.
+		res = PrepareWaveIn(&waveInHandle, &waveHeader1, SRS22SAMPLEFREQ / 10);
+		if (res != MMSYSERR_NOERROR)
+		{
+			_debug_print("PrepareWaveIn FAILED!", 1);
+			return -1;
+		}
+		else
+		{
+			//_debug_print("PrepareWaveIn ok.", 1);
+		}
+		res = PrepareWaveIn(&waveInHandle, &waveHeader2, SRS22SAMPLEFREQ / 10);
+		if (res != MMSYSERR_NOERROR)
+		{
+			_debug_print("PrepareWaveIn FAILED!", 1);
+			return -1;
+		}
+		else
+		{
+			//_debug_print("PrepareWaveIn ok.", 1);
+		}
 		res = waveInStart(*hWaveIn);
 		if (res != MMSYSERR_NOERROR)
 		{
@@ -175,7 +165,7 @@ namespace SRS22 {
 		}
 		else
 		{
-			_debug_print("Start recording...", 1);
+			//_debug_print("Start recording...", 1);
 		}
 		return 0;
 	}
@@ -185,27 +175,13 @@ namespace SRS22 {
 	{
 		int res;
 
-		res = waveInGetPosition(*hWaveIn, mmTime, sizeof(MMTIME));
-		if (res != MMSYSERR_NOERROR)
-		{
-			_debug_print("Get Position of wave in FAILED!", 1);
-			return -1;
-		}
-		else
-		{
-			_debug_print("Get Position of wave in SUCCEED!");
-		}
-
 		res = waveInStop(*hWaveIn);
 		if (res != MMSYSERR_NOERROR)
 		{
 			_debug_print("Stop recording FAILED!", 1);
 			return -1;
 		}
-		else
-		{
-			_debug_print("Stop recording SUCCEED!");
-		}
+		//_debug_print("Stop recording SUCCEED!");
 
 		res = waveInReset(*hWaveIn);
 		if (res != MMSYSERR_NOERROR)
@@ -213,20 +189,52 @@ namespace SRS22 {
 			_debug_print("Reset wave in memory FAILED!", 1);
 			return -1;
 		}
-		else
-		{
-			_debug_print("Reset wave in memory SUCCEED!");
-		}
+		//_debug_print("Reset wave in memory SUCCEED!");
 
 		return 0;
+	}
+
+	void WaveInputHelper::TakeInputEvent(HDRVR hdrvr, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2) {
+		callbackCounter++;
+		PWAVEHDR h = (PWAVEHDR)dw1;
+
+		switch (uMsg) {
+		case WIM_OPEN:
+			break;
+		case WIM_CLOSE:
+			break;
+		case WIM_DATA:
+			TakeWaveDataIn(h);
+			break;
+		default:
+			break;
+		}
+	}
+
+	void WaveInputHelper::TakeWaveDataIn(PWAVEHDR h) {
+		if (h->dwBytesRecorded <= 0) {
+			return;
+		}
+		lastPacketSize = h->dwBytesRecorded;
+		totalBytesIn += lastPacketSize;
+
+		// Do work to extract certain frequencies.
+
+
+		// Add in the same buffer again so it is the next after the current.
+		// This gives us continuous recording forever.
+		int res = waveInAddBuffer(waveInHandle, h, sizeof(WAVEHDR));
+		if (res != MMSYSERR_NOERROR)
+		{
+			char lpTemp[256];
+			sprintf(lpTemp, "Cannot add buffer for wave in: Error_Code = 0x%03X", res);
+			_debug_print(lpTemp, 1);
+		}
 	}
 
 	// Save recorded speech to file
 	int WaveInputHelper::SaveRecordtoFile(const char* fileName, WAVEFORMATEX* wf, HWAVEIN* hWaveIn, WAVEHDR* waveHeader, MMTIME* mmTime)
 	{
-		//int res;
-		DWORD NumToWrite = 0;
-		DWORD dwNumber = 0;
 		static wchar_t fnameW[1024];
 		StringConversionHelpers::CharToWChar(fileName, fnameW, 1024);
 
@@ -242,37 +250,7 @@ namespace SRS22 {
 		out.flush();
 		out.close();
 
-		_debug_print("SaveRecordtoFile SUCCEED!", 1);
-
-		return 0;
-	}
-
-	// Release wave in memory
-	int WaveInputHelper::ReleaseWaveIn(HWAVEIN* hWaveIn, WAVEHDR* waveHeader)
-	{
-		long long res;
-
-		res = waveInUnprepareHeader(*hWaveIn, waveHeader, sizeof(WAVEHDR));
-		if (res != MMSYSERR_NOERROR)
-		{
-			_debug_print("UnPrepare Wave In Header FAILED!", 1);
-			return -1;
-		}
-		else
-		{
-			_debug_print("UnPrepare Wave In Header SUCCEED!");
-		}
-
-		res = (long long)GlobalFree(GlobalHandle(waveHeader->lpData));
-		if (res != MMSYSERR_NOERROR)
-		{
-			_debug_print("Global Free FAILED!", 1);
-			return -1;
-		}
-		else
-		{
-			_debug_print("Global Free SUCCEED!");
-		}
+		//_debug_print("SaveRecordtoFile SUCCEED!", 1);
 
 		return 0;
 	}
@@ -289,7 +267,7 @@ namespace SRS22 {
 		}
 		else
 		{
-			_debug_print("Close wave in SUCCEED!");
+			//_debug_print("Close wave in SUCCEED!");
 		}
 		return 0;
 	}

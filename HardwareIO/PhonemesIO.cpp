@@ -1,6 +1,6 @@
 #include "PhonemesE.h"
 #include "PhonemesIO.h"
-#include "WaveOutputHelper.h"
+#include "../HardwareRaw/WaveOutputHelper.h"
 
 namespace SRS22 {
 	PhonemesIO::PhonemesIO() : IOCommon() {

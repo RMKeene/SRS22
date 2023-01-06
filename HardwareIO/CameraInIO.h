@@ -1,7 +1,7 @@
 #pragma once
 #include "IOCommon.h"
 #include "../Rect.h"
-#include "VideoHelper.h"
+#include "../HardwareRaw/VideoHelper.h"
 
 namespace SRS22 {
 	class CameraInIO : IOCommon

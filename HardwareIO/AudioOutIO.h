@@ -3,7 +3,7 @@
 #include <dshow.h>
 
 #include "IOCommon.h"
-#include "WaveOutputHelper.h"
+#include "../HardwareRaw/WaveOutputHelper.h"
 
 namespace SRS22 {
 	class AudioOutIO : IOCommon

@@ -4,7 +4,7 @@
 #include "IOCommon.h"
 #include "PhonemesE.h"
 #include <soloud_wav.h>
-#include "WaveInputHelper.h"
+#include "../HardwareRaw/WaveInputHelper.h"
 
 namespace SRS22 {
 	class Phoneme {

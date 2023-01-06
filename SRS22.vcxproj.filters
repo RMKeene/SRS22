@@ -39,6 +39,12 @@
     <Filter Include="Source\Maps\Draw">
       <UniqueIdentifier>{b855610a-28fc-45e2-b10b-10b7c69bc168}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Maps\Hearing">
+      <UniqueIdentifier>{324c0df7-2770-49d5-9213-0190661664c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\HardwareRaw">
+      <UniqueIdentifier>{6f23f0e5-7d84-48b4-a1c6-faa56aaf4c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRS22.h">
@@ -260,12 +266,6 @@
     <ClInclude Include="HardwareIO\ScreenInputIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="HardwareIO\WaveInputHelper.h">
-      <Filter>Source\HardwareIO</Filter>
-    </ClInclude>
-    <ClInclude Include="HardwareIO\WaveOutputHelper.h">
-      <Filter>Source\HardwareIO</Filter>
-    </ClInclude>
     <ClInclude Include="HardwareIO\AudioOutIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
@@ -279,9 +279,6 @@
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
     <ClInclude Include="HardwareIO\TextOutIO.h">
-      <Filter>Source\HardwareIO</Filter>
-    </ClInclude>
-    <ClInclude Include="HardwareIO\VideoHelper.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
     <ClInclude Include="GlobalWorld.h">
@@ -374,6 +371,21 @@
     <ClInclude Include="Maps\Voice\PhonemeMap.h">
       <Filter>Source\Maps\Voice</Filter>
     </ClInclude>
+    <ClInclude Include="Maps\Hearing\HearingMap.h">
+      <Filter>Source\Maps\Hearing</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareRaw\VideoHelper.h">
+      <Filter>Source\HardwareRaw</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareRaw\WaveInputHelper.h">
+      <Filter>Source\HardwareRaw</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareRaw\WaveOutputHelper.h">
+      <Filter>Source\HardwareRaw</Filter>
+    </ClInclude>
+    <ClInclude Include="SRSMath.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -457,12 +469,6 @@
     <ClCompile Include="HardwareIO\ScreenInputIO.cpp">
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
-    <ClCompile Include="HardwareIO\WaveInputHelper.cpp">
-      <Filter>Source\HardwareIO</Filter>
-    </ClCompile>
-    <ClCompile Include="HardwareIO\WaveOutputHelper.cpp">
-      <Filter>Source\HardwareIO</Filter>
-    </ClCompile>
     <ClCompile Include="HardwareIO\AudioOutIO.cpp">
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
@@ -483,9 +489,6 @@
     </ClCompile>
     <ClCompile Include="GlobalWorld.cpp">
       <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="HardwareIO\VideoHelper.cpp">
-      <Filter>Source\HardwareIO</Filter>
     </ClCompile>
     <ClCompile Include="HardwareIO\CameraAttnSpotIO.cpp">
       <Filter>Source\HardwareIO</Filter>
@@ -564,6 +567,21 @@
     </ClCompile>
     <ClCompile Include="Maps\Voice\PhonemeMap.cpp">
       <Filter>Source\Maps\Voice</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareRaw\VideoHelper.cpp">
+      <Filter>Source\HardwareRaw</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareRaw\WaveInputHelper.cpp">
+      <Filter>Source\HardwareRaw</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareRaw\WaveOutputHelper.cpp">
+      <Filter>Source\HardwareRaw</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Hearing\HearingMap.cpp">
+      <Filter>Source\Maps\Hearing</Filter>
+    </ClCompile>
+    <ClCompile Include="SRSMath.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

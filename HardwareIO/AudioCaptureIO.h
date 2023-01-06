@@ -3,13 +3,15 @@
 #include <dshow.h>
 
 #include "IOCommon.h"
-#include "WaveInputHelper.h"
+#include "../HardwareRaw/WaveInputHelper.h"
 
 namespace SRS22 {
 	class AudioCaptureIO : IOCommon
 	{
 	public:
 		WaveInputHelper inputHelper;
+		void* buffer = NULL;
+		int bufferSize = 0;
 
 		AudioCaptureIO();
 		~AudioCaptureIO();
@@ -29,5 +31,9 @@ namespace SRS22 {
 		void CaptureSegment();
 
 		void UnitTest();
+
+		void DebugAudioInputDevices();
+		HRESULT EnumerateDevices(IEnumMoniker** ppEnum);
+		void DisplayDeviceInformation(IEnumMoniker* pEnum);
 	};
 }

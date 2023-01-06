@@ -7,8 +7,8 @@
 #include "SRSUnit.h"
 #include "HardwareIO/ScreenInputIO.h"
 #include "HardwareIO/AudioCaptureIO.h"
-#include "HardwareIO/WaveInputHelper.h"
-#include "HardwareIO/WaveOutputHelper.h"
+#include "HardwareRaw/WaveInputHelper.h"
+#include "HardwareRaw/WaveOutputHelper.h"
 #include "HardwareIO/AudioOutIO.h"
 #include "HardwareIO/CameraInIO.h"
 #include "HardwareIO/TextInIO.h"
@@ -36,6 +36,8 @@ namespace SRS22 {
 		float minFarDistance = 100.0f;
 
 		long long tickCount = 0;
+		long long tickCountRescent = 0;
+		int ticksPerSecondLatest = 1;
 
 		/// <summary>
 		/// If -1 the free run. Else step this many times, usualy 1, down to 0 then stop.

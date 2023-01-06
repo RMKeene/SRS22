@@ -98,6 +98,9 @@ namespace SRS22 {
 				Convert2ValueMatBitmapTowxBitmap_CV_32FC1(chgs, w, h, bitmap, 255.0f, scaleX, scaleY);
 				chosenMapBitmap->SetBitmap(bitmap);
 			}
+			//else if (m.value()->displayMode == SRSUnitDisplayModes::BARGRAPH) {
+			// TODO bar graph
+			//}
 			else {
 				wxBitmap bitmap(w, h, 24);
 
@@ -197,13 +200,25 @@ namespace SRS22 {
 	void MonitorFrame::OnVideoInChanged(wxCommandEvent& event) {
 	}
 
+	// On Windows the call sleep(1) will sleep from 1 to 15 ms. This Tick callback at the fastest gets called
+	// about 10x per sec even if the interval set in wxWindows is less than 100ms.
+	// TODO - Seperate the Brains onto their own threads.
+	// See https://randomascii.wordpress.com/2020/10/04/windows-timer-resolution-the-great-rule-change/
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
 		// Milliseconds since the epoc.
 		long long timeTicks = SRS22::GetTimeTicksMs();
 		auto brain0 = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 
-		std::string s = "Tick Count: ";
-		TickCountText->SetLabelText(s + std::to_string(brain0->tickCount));
+		TickCountText->SetLabelText(wxString::Format("Ticks: %lld", brain0->tickCount));
+		float intervalMs = (float)event.GetInterval();
+		if (intervalMs > 0.0f) {
+			brain0->ticksPerSecondLatest = (int)((brain0->tickCountRescent * 1000) / intervalMs);
+			TicksPerSecondText->SetLabelText(wxString::Format("Ticks/Sec.: %d", brain0->ticksPerSecondLatest));
+		}
+		else {
+			TicksPerSecondText->SetLabelText(wxString::Format("Ticks/Sec.: ---"));
+		}
+		brain0->tickCountRescent = 0;
 
 		GlobalWorld::GlobalWorldInstance.TickAll();
 		if (RunButton->GetValue()) {
@@ -227,7 +242,18 @@ namespace SRS22 {
 				hasSetupVideoInDroplist = true;
 			}
 		}
+
+		if (WaveInputHelper::totalBytesIn < 4000) {
+			lastInSizeText->SetLabelText(wxString::Format("Last In Size: %d, total %d", WaveInputHelper::lastPacketSize, WaveInputHelper::totalBytesIn));
+		}
+		else if (WaveInputHelper::totalBytesIn < 2000000) {
+			lastInSizeText->SetLabelText(wxString::Format("Last In Size: %d, total %d k", WaveInputHelper::lastPacketSize, WaveInputHelper::totalBytesIn / 1024));
+		}
+		else {
+			lastInSizeText->SetLabelText(wxString::Format("Last In Size: %d, total %d M", WaveInputHelper::lastPacketSize, WaveInputHelper::totalBytesIn / (1024 * 1024)));
+		}
 	}
+
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
 	}
