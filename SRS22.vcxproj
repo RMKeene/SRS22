@@ -233,6 +233,7 @@
     <ClInclude Include="HardwareIO\WhiteboardOutIO.h" />
     <ClInclude Include="HardwareIO\WhiteboardPt.h" />
     <ClInclude Include="HardwareRaw\VideoHelper.h" />
+    <ClInclude Include="HardwareRaw\WaveInConstants.h" />
     <ClInclude Include="HardwareRaw\WaveInputHelper.h" />
     <ClInclude Include="HardwareRaw\WaveOutputHelper.h" />
     <ClInclude Include="ini.h" />

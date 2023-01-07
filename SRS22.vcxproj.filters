@@ -386,6 +386,9 @@
     <ClInclude Include="SRSMath.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="HardwareRaw\WaveInConstants.h">
+      <Filter>Source\HardwareRaw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">

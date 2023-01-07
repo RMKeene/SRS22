@@ -20,17 +20,10 @@ namespace SRS22 {
 	void HearingMap::ComputeNextState() {
 		SRSUnit::ComputeNextState();
 
-		//auto phonemesOut = IOCommon::GetIO<PhonemesIO>();
-		//
-		//int row;
-		//int col;
-		//int depth;
-		//float v;
-		//if (M.FindMaxValue(0.25f, col, row, depth, v)) {
-		//	nextM.put(0.0f, row, col);
-		//	PhonemeE c = (PhonemeE)(col & 0x00FF);
-		//	phonemesOut->PlayPhoneme(c);
-		//}
+		auto waveIn = IOCommon::GetIO<AudioCaptureIO>();
+		for (int i = 0; i < SRS22FREQCOUNT; i++) {
+			nextM.put(waveIn->inputHelper.frequencyAmplitudes[i], i);
+		}
 	}
 
 	void HearingMap::LatchNewState() {

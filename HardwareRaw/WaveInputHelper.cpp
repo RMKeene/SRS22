@@ -2,10 +2,13 @@
 #include <codecvt>
 #include "../StringConversionHelpers.h"
 #include <stdlib.h>
+#include "WaveInConstants.h"
+#include "../SRSMath.h"
 
-#define SRS22SAMPLEFREQ 11025
 
 namespace SRS22 {
+	int WaveInputHelpersFreqs[SRS22FREQCOUNT] = SRS22FREQS;
+
 	// As single buffer of data. We shoot for 1/10th second of audio. We have 2 of these so they ping pong smoothly.
 	typedef struct WAV_HEADER {
 		/* RIFF Chunk Descriptor */
@@ -15,7 +18,7 @@ namespace SRS22 {
 		/* "fmt" sub-chunk */
 		uint8_t fmt[4] = { 'f', 'm', 't', ' ' }; // FMT header
 		uint32_t Subchunk1Size = 16;           // Size of the fmt chunk
-		uint16_t AudioFormat = 1; // Audio format 1=PCM, 6=mulaw, 7=alaw, 257=IBM
+		uint16_t AudioFormat = 6; // Audio format 1=PCM, 6=mulaw, 7=alaw, 257=IBM
 								  // Mu-Law, 258=IBM A-Law, 259=ADPCM
 		uint16_t NumOfChan = 1;   // Number of channels 1=Mono 2=Stereo
 		uint32_t SamplesPerSec = SRS22SAMPLEFREQ;   // Sampling Frequency in Hz
@@ -24,7 +27,7 @@ namespace SRS22 {
 		uint16_t bitsPerSample = 8;      // Number of bits per sample
 		/* "data" sub-chunk */
 		uint8_t Subchunk2ID[4] = { 'd', 'a', 't', 'a' }; // "data"  string
-		uint32_t Subchunk2Size = SRS22SAMPLEFREQ / 10; // Sampled data length
+		uint32_t Subchunk2Size = SRS22FFTSIZE; // Sampled data length
 	} wav_hdr;
 
 	using SRS22::StringConversionHelpers;
@@ -48,6 +51,9 @@ namespace SRS22 {
 		int res;
 		char lpTemp[256];
 
+		for (int i = 0; i < SRS22FREQCOUNT; i++) 
+			frequencyAmplitudes[i] = 0.0f;
+
 		res = waveInGetNumDevs();
 		if (!res)
 		{
@@ -61,7 +67,7 @@ namespace SRS22 {
 
 		SetWaveFormat(&waveInFormat, 1, 1, SRS22SAMPLEFREQ, 1, 8, 0);
 
-		res = waveInOpen(&waveInHandle, WAVE_MAPPER, &waveInFormat, (DWORD_PTR)&WaveInputHelper_Callback, (DWORD_PTR)this, CALLBACK_FUNCTION | WAVE_FORMAT_DIRECT);
+		res = waveInOpen(&waveInHandle, WAVE_MAPPER, &waveInFormat, (DWORD_PTR)&WaveInputHelper_Callback, (DWORD_PTR)this, CALLBACK_FUNCTION);
 		if (res != MMSYSERR_NOERROR)
 		{
 			sprintf(lpTemp, "Open wave input channel FAILED: Error_Code = 0x%x", res);
@@ -136,8 +142,8 @@ namespace SRS22 {
 	{
 		int res;
 
-		// Prepare twice to ping pong. At SRS22SAMPLEFREQ  samples per sec we want 10 buffers per second so 1200 samples.
-		res = PrepareWaveIn(&waveInHandle, &waveHeader1, SRS22SAMPLEFREQ / 10);
+		// Prepare twice to ping pong. At SRS22SAMPLEFREQ  samples per sec we want 10 buffers per second so SRS22FFTSIZE (1024) samples.
+		res = PrepareWaveIn(&waveInHandle, &waveHeader1, SRS22FFTSIZE);
 		if (res != MMSYSERR_NOERROR)
 		{
 			_debug_print("PrepareWaveIn FAILED!", 1);
@@ -147,7 +153,7 @@ namespace SRS22 {
 		{
 			//_debug_print("PrepareWaveIn ok.", 1);
 		}
-		res = PrepareWaveIn(&waveInHandle, &waveHeader2, SRS22SAMPLEFREQ / 10);
+		res = PrepareWaveIn(&waveInHandle, &waveHeader2, SRS22FFTSIZE);
 		if (res != MMSYSERR_NOERROR)
 		{
 			_debug_print("PrepareWaveIn FAILED!", 1);
@@ -218,8 +224,11 @@ namespace SRS22 {
 		lastPacketSize = h->dwBytesRecorded;
 		totalBytesIn += lastPacketSize;
 
-		// Do work to extract certain frequencies.
-
+		// Max freq is SRS22SAMPLEMAXFREQ which is 2756 hz.
+		// TODO - Multithread.
+		for (int i = 0; i < SRS22FREQCOUNT; i++) {
+			frequencyAmplitudes[i] = SRS22::SingleFreqDetect(h->lpData, h->dwBytesRecorded, WaveInputHelpersFreqs[i]);
+		}
 
 		// Add in the same buffer again so it is the next after the current.
 		// This gives us continuous recording forever.

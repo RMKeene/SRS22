@@ -1,5 +1,6 @@
 #pragma once
 #include <mmeapi.h>
+#include "WaveInConstants.h"
 
 namespace SRS22 {
 	class WaveInputHelper
@@ -14,6 +15,8 @@ namespace SRS22 {
 		// We use two so the underlying system will automatically ping-pong them smoothly.
 		WAVEHDR waveHeader1;		
 		WAVEHDR waveHeader2;
+
+		float frequencyAmplitudes[SRS22FREQCOUNT];
 
 		WaveInputHelper();
 		~WaveInputHelper();

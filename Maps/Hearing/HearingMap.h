@@ -1,7 +1,8 @@
 #pragma once
 #include "../../SRSUnit.h"
+#include "../../HardwareRaw/WaveInConstants.h"
 
-#define HearingMap_Width 8
+#define HearingMap_Width SRS22FREQCOUNT
 
 namespace SRS22 {
 	/// <summary>
