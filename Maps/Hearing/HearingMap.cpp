@@ -21,7 +21,7 @@ namespace SRS22 {
 		SRSUnit::ComputeNextState();
 
 		auto waveIn = IOCommon::GetIO<AudioCaptureIO>();
-		for (int i = 0; i < SRS22FREQCOUNT; i++) {
+		for (int i = 0; i < SRS22FFTRESULTSIZE; i++) {
 			nextM.put(waveIn->inputHelper.frequencyAmplitudes[i], i);
 		}
 	}

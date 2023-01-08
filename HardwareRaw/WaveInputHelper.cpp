@@ -4,10 +4,11 @@
 #include <stdlib.h>
 #include "WaveInConstants.h"
 #include "../SRSMath.h"
+#include <algorithm>
+#include <mmreg.h>
 
 
 namespace SRS22 {
-	int WaveInputHelpersFreqs[SRS22FREQCOUNT] = SRS22FREQS;
 
 	// As single buffer of data. We shoot for 1/10th second of audio. We have 2 of these so they ping pong smoothly.
 	typedef struct WAV_HEADER {
@@ -51,7 +52,7 @@ namespace SRS22 {
 		int res;
 		char lpTemp[256];
 
-		for (int i = 0; i < SRS22FREQCOUNT; i++) 
+		for (int i = 0; i < SRS22FFTRESULTSIZE; i++)
 			frequencyAmplitudes[i] = 0.0f;
 
 		res = waveInGetNumDevs();
@@ -65,7 +66,7 @@ namespace SRS22 {
 			printf("Access WaveIn channel SUCCEED!");
 		}
 
-		SetWaveFormat(&waveInFormat, 1, 1, SRS22SAMPLEFREQ, 1, 8, 0);
+		SetWaveFormat(&waveInFormat, WAVE_FORMAT_MULAW, 1, SRS22SAMPLEFREQ, 1, 8, 0);
 
 		res = waveInOpen(&waveInHandle, WAVE_MAPPER, &waveInFormat, (DWORD_PTR)&WaveInputHelper_Callback, (DWORD_PTR)this, CALLBACK_FUNCTION);
 		if (res != MMSYSERR_NOERROR)
@@ -224,10 +225,21 @@ namespace SRS22 {
 		lastPacketSize = h->dwBytesRecorded;
 		totalBytesIn += lastPacketSize;
 
-		// Max freq is SRS22SAMPLEMAXFREQ which is 2756 hz.
-		// TODO - Multithread.
-		for (int i = 0; i < SRS22FREQCOUNT; i++) {
-			frequencyAmplitudes[i] = SRS22::SingleFreqDetect(h->lpData, h->dwBytesRecorded, WaveInputHelpersFreqs[i]);
+		for (int i = 0; i < SRS22FFTSIZE; i++) {
+			fftTempBuffer[i] = ulaw2linear(h->lpData[i]);
+			fftTempBuffer[i] = h->lpData[i];
+		}
+		// In place computation.
+		int fftscale = fix_fftr(fftTempBuffer, SRS22FFTEXP, FIT_FFT_FORWARD);
+		// Since we called the real only the result is interleaved real and immaginary parts.
+		// So convert to amplitude
+		for (int i = 0; i < SRS22FFTRESULTSIZE; i++) {
+			const int realIdx = i * 2;
+			const int realPart = fftTempBuffer[realIdx];
+			const int immaginaryPart = fftTempBuffer[realIdx + 1];
+			const float a2 = realPart * realPart + immaginaryPart * immaginaryPart;
+			const float a = SRSFastSqrt(a2) / 40.0f;
+			frequencyAmplitudes[i] = std::clamp(a, 0.0f, 1.0f);
 		}
 
 		// Add in the same buffer again so it is the next after the current.
@@ -302,7 +314,7 @@ namespace SRS22 {
 			StringConversionHelpers::CharToWChar("Debug Message", titleW, 128);
 			MessageBox(NULL, contentW, titleW, MB_OK);
 #endif
-		}
+	}
 		else
 		{
 #ifdef _DEBUG_
@@ -312,6 +324,6 @@ namespace SRS22 {
 			MessageBox(NULL, CString(content), CString("Hint"), MB_OK);
 #endif
 #endif
-		}
+}
 	}
 }

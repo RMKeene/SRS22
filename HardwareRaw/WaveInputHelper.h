@@ -16,7 +16,8 @@ namespace SRS22 {
 		WAVEHDR waveHeader1;		
 		WAVEHDR waveHeader2;
 
-		float frequencyAmplitudes[SRS22FREQCOUNT];
+		short fftTempBuffer[SRS22FFTSIZE];
+		float frequencyAmplitudes[SRS22FFTRESULTSIZE];
 
 		WaveInputHelper();
 		~WaveInputHelper();

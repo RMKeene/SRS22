@@ -215,6 +215,7 @@
     <ClInclude Include="ConnectivityTriple.h" />
     <ClInclude Include="convertmattowxbmp.h" />
     <ClInclude Include="FastRand.h" />
+    <ClInclude Include="fit_fft.h" />
     <ClInclude Include="GlobalWorld.h" />
     <ClInclude Include="GoodnessFunction.h" />
     <ClInclude Include="HardwareIO\AttnSpotBaseIO.h" />
@@ -331,6 +332,7 @@
     <ClCompile Include="ConnectivityTriple.cpp" />
     <ClCompile Include="convertmattowxbmp.cpp" />
     <ClCompile Include="FastRand.cpp" />
+    <ClCompile Include="fit_fft.cpp" />
     <ClCompile Include="GlobalWorld.cpp" />
     <ClCompile Include="GoodnessFunction.cpp" />
     <ClCompile Include="HardwareIO\AttnSpotBaseIO.cpp" />

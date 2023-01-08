@@ -2,7 +2,7 @@
 #include "../../SRSUnit.h"
 #include "../../HardwareRaw/WaveInConstants.h"
 
-#define HearingMap_Width SRS22FREQCOUNT
+#define HearingMap_Width SRS22FFTRESULTSIZE
 
 namespace SRS22 {
 	/// <summary>

@@ -389,6 +389,9 @@
     <ClInclude Include="HardwareRaw\WaveInConstants.h">
       <Filter>Source\HardwareRaw</Filter>
     </ClInclude>
+    <ClInclude Include="fit_fft.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -584,6 +587,9 @@
       <Filter>Source\Maps\Hearing</Filter>
     </ClCompile>
     <ClCompile Include="SRSMath.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="fit_fft.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
