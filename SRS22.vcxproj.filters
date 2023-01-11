@@ -392,6 +392,9 @@
     <ClInclude Include="fit_fft.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="MapUIDs.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">

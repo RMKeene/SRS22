@@ -2,6 +2,7 @@
 #include "pch.h"
 #include <opencv2/core.hpp>
 
+#include "MapUIDs.h"
 #include "PatternMatchingSystem.h"
 #include "GoodnessFunction.h"
 #include "ConnectivityTriple.h"
@@ -12,7 +13,6 @@
 namespace SRS22 {
 	class SRSUnit
 	{
-		static unsigned short nextUID;
 	public:
 		Brain* myBrain = NULL;
 
@@ -22,7 +22,7 @@ namespace SRS22 {
 		std::vector<std::shared_ptr<SRSUnit>> nearMaps;
 		std::vector<std::shared_ptr<SRSUnit>> farMaps;
 
-		const unsigned short UID;
+		const MapUidE UID;
 
 		/// <summary>
 		/// How the Monitor app should display this Concept Map.
@@ -70,16 +70,18 @@ namespace SRS22 {
 		const std::string CVTypeString() { return OpenCVHelpers::CVTypeToStr(M.charges.type()); }
 
 		/// <summary>
-		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap"
+		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap". 
+		/// In the case of cortex maps it may not be the class name.
 		/// </summary>
 		/// <param name="MapName"></param>
+		/// <param name="UID">Must be glbally unique. See MapUIDs.h</param>
 		/// <param name="ctrip"></param>
 		/// <param name="location"></param>
 		/// <param name="cols"></param>
 		/// <param name="MapDescription"></param>
-		SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription);
-		SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription);
-		SRSUnit(Brain* br, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
+		SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription);
+		SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription);
+		SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
 
 		~SRSUnit();
 

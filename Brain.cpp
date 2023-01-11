@@ -39,12 +39,12 @@ namespace SRS22 {
 		PreTick();
 
 		// Call all SRSUnit ProcessState in parallel
-		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<std::string, std::shared_ptr<SRSUnit>> n) {
+		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<SRSUnit>> n) {
 			n.second->ComputeNextState();
 			});
 
 		// Call all SRSUnit LatchNewState in parallel.
-		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<std::string, std::shared_ptr<SRSUnit>> n) {
+		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<SRSUnit>> n) {
 			n.second->LatchNewState();
 			});
 
@@ -196,7 +196,8 @@ namespace SRS22 {
 	}
 
 	void Brain::AddMap(shared_ptr<SRSUnit> m) {
-		conceptMaps[m->MapName] = m;
+		conceptMaps[m->UID] = m;
+		conceptMapsByName[m->MapName] = m;
 	}
 
 	void Brain::DoNStep(int n) {
@@ -216,13 +217,21 @@ namespace SRS22 {
 	}
 
 	void Brain::PostCreateAllSRSUnits() {
-		for (std::pair<std::string, std::shared_ptr<SRSUnit>> u : conceptMaps)
+		for (std::pair<MapUidE, std::shared_ptr<SRSUnit>> u : conceptMaps)
 			u.second->PostCreate(*this);
 	}
 
-	optional<shared_ptr<SRSUnit>> Brain::FindMapByName(string n) {
+	optional<shared_ptr<SRSUnit>> Brain::FindMap(MapUidE n) {
 		auto m = conceptMaps.find(n);
 		if (m != conceptMaps.end()) {
+			return m->second;
+		}
+		return std::nullopt;
+	}
+
+	optional<shared_ptr<SRSUnit>> Brain::FindMapByName(string n) {
+		auto m = conceptMapsByName.find(n);
+		if (m != conceptMapsByName.end()) {
 			return m->second;
 		}
 		return std::nullopt;

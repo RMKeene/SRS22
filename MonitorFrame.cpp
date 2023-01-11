@@ -26,7 +26,7 @@ namespace SRS22 {
 		BrainH b = GlobalWorld::GlobalWorldInstance.brains[0];
 		ViewMapChoice->Clear();
 		ViewMapChoice->AppendString(wxString("None"));
-		for (auto m : b->conceptMaps) {
+		for (auto m : b->conceptMapsByName) {
 			ViewMapChoice->AppendString(wxString(m.first));
 		}
 	}

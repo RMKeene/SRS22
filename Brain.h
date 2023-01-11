@@ -25,7 +25,8 @@ namespace SRS22 {
 	class Brain
 	{
 	public:
-		map<std::string, std::shared_ptr<SRSUnit>> conceptMaps;
+		map<MapUidE, std::shared_ptr<SRSUnit>> conceptMaps;
+		map<std::string, std::shared_ptr<SRSUnit>> conceptMapsByName;
 
 		/// <summary>
 		/// Threshold for ConnectivityTriple that defines range B.
@@ -85,6 +86,7 @@ namespace SRS22 {
 
 		void PostCreateAllSRSUnits();
 
+		optional<shared_ptr<SRSUnit>> FindMap(MapUidE n);
 		optional<shared_ptr<SRSUnit>> FindMapByName(string n);
 
 	private:
