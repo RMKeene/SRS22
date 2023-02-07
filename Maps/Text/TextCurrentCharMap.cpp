@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	TextCurrentCharMap::TextCurrentCharMap(Brain* br) :
-		SRSUnit(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap",
+		ConceptMap(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			TextCurrentCharMap_Width,
@@ -19,7 +19,7 @@ namespace SRS22 {
 	}
 
 	void TextCurrentCharMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto textInUI = IOCommon::GetIO<TextInIO>();
 		TextIOType c;
@@ -31,6 +31,6 @@ namespace SRS22 {
 	}
 
 	void TextCurrentCharMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

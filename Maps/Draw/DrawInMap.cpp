@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	DrawInMap::DrawInMap(Brain* br) :
-		SRSUnit(br, MapUidE::DRAWIN_MAP, "DrawInMap",
+		ConceptMap(br, MapUidE::DRAWIN_MAP, "DrawInMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			DrawInMap_Width,
@@ -17,7 +17,7 @@ namespace SRS22 {
 	}
 
 	void DrawInMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto whiteboard = IOCommon::GetIO<WhiteboardInIO>();
 		WhiteboardPt pt;
@@ -37,6 +37,6 @@ namespace SRS22 {
 	}
 
 	void DrawInMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

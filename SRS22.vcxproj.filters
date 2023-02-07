@@ -248,7 +248,7 @@
     <ClInclude Include="SRSLog.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="SRSUnit.h">
+    <ClInclude Include="ConceptMap.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="tinyfloat.h">
@@ -395,6 +395,12 @@
     <ClInclude Include="MapUIDs.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="CortexChunk.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="BrainLocatable.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -460,7 +466,7 @@
     <ClCompile Include="SRSLog.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="SRSUnit.cpp">
+    <ClCompile Include="ConceptMap.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="tinyfloat.cpp">
@@ -593,6 +599,12 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="fit_fft.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BrainLocatable.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CortexChunk.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

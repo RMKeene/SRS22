@@ -10,7 +10,7 @@ namespace SRS22 {
 	{
 	public:
 		/// <summary>
-		/// Fraction (0.0 to 1.0) if connections to SRSUnit self.
+		/// Fraction (0.0 to 1.0) if connections to ConceptMap self.
 		/// A + B + C must equal 1.0f.
 		/// </summary>
 		const float selfFract;

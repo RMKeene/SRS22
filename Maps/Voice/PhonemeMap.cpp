@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	PhonemeMap::PhonemeMap(Brain* br) :
-		SRSUnit(br, MapUidE::PHONEME_MAP, "PhonemeMap",
+		ConceptMap(br, MapUidE::PHONEME_MAP, "PhonemeMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			PhonemeMap_Width,
@@ -18,7 +18,7 @@ namespace SRS22 {
 	}
 
 	void PhonemeMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto phonemesOut = IOCommon::GetIO<PhonemesIO>();
 
@@ -34,6 +34,6 @@ namespace SRS22 {
 	}
 
 	void PhonemeMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

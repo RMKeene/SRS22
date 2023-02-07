@@ -34,11 +34,11 @@ namespace SRS22 {
 		/// Fill the connections list with a sparse snapshot of
 		/// the entire Brain state, moderated by the Connedctivity Triple ctrip.
 		/// </summary>
-		void MakeSemiRandomConnections(Brain& brain, std::shared_ptr<SRSUnit> map);
+		void MakeSemiRandomConnections(Brain& brain, std::shared_ptr<ConceptMap> map);
 
 		/// <summary>
 		/// It is now T + DeltaT so snapshot the current local SRS22 ConceptState.
 		/// </summary>
-		void SnapSRS22MapState(std::shared_ptr<SRSUnit> map);
+		void SnapSRS22MapState(std::shared_ptr<ConceptMap> map);
 	};
 }

@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	RandomMap::RandomMap(Brain* br) :
-		SRSUnit(br, MapUidE::RANDOM_MAP, "RandomMap",
+		ConceptMap(br, MapUidE::RANDOM_MAP, "RandomMap",
 			ConnectivityTriple(0.1f, 0.1f, 0.8f, 0),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, RandomMap_Width, RandomMap_Height,
@@ -18,13 +18,13 @@ namespace SRS22 {
 	}
 
 	void RandomMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		cv::setRNGSeed(cv::getTickCount());
 		cv::randu(nextM.charges, 0.0f, 1.0f);
 	}
 
 	void RandomMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

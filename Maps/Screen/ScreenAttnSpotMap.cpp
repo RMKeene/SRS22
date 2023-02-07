@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	ScreenAttnSpotMap::ScreenAttnSpotMap(Brain* br) :
-		SRSUnit(br, MapUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotMap",
+		ConceptMap(br, MapUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			ScreenAttnSpotMap_Width,
@@ -20,7 +20,7 @@ namespace SRS22 {
 	}
 
 	void ScreenAttnSpotMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		// TODO - Currently hardwired with no blending.
 		auto motionXYSptr = myBrain->FindMapByName("ScreenMotionXYMap").value();
@@ -38,6 +38,6 @@ namespace SRS22 {
 	}
 
 	void ScreenAttnSpotMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

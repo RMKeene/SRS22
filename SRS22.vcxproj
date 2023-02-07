@@ -210,10 +210,12 @@
   <ItemGroup>
     <ClInclude Include="bmpfromocvpanel.h" />
     <ClInclude Include="Brain.h" />
+    <ClInclude Include="BrainLocatable.h" />
     <ClInclude Include="canvas.h" />
     <ClInclude Include="ConceptState.h" />
     <ClInclude Include="ConnectivityTriple.h" />
     <ClInclude Include="convertmattowxbmp.h" />
+    <ClInclude Include="CortexChunk.h" />
     <ClInclude Include="FastRand.h" />
     <ClInclude Include="fit_fft.h" />
     <ClInclude Include="GlobalWorld.h" />
@@ -305,7 +307,7 @@
     <ClInclude Include="SRSMath.h" />
     <ClInclude Include="SRSUnitDisplay.h" />
     <ClInclude Include="SRSLog.h" />
-    <ClInclude Include="SRSUnit.h" />
+    <ClInclude Include="ConceptMap.h" />
     <ClInclude Include="SRSUnitDisplayModes.h" />
     <ClInclude Include="StringConversionHelpers.h" />
     <ClInclude Include="targetver.h" />
@@ -328,10 +330,12 @@
   <ItemGroup>
     <ClCompile Include="bmpfromocvpanel.cpp" />
     <ClCompile Include="Brain.cpp" />
+    <ClCompile Include="BrainLocatable.cpp" />
     <ClCompile Include="canvas.cpp" />
     <ClCompile Include="ConceptState.cpp" />
     <ClCompile Include="ConnectivityTriple.cpp" />
     <ClCompile Include="convertmattowxbmp.cpp" />
+    <ClCompile Include="CortexChunk.cpp" />
     <ClCompile Include="FastRand.cpp" />
     <ClCompile Include="fit_fft.cpp" />
     <ClCompile Include="GlobalWorld.cpp" />
@@ -387,7 +391,7 @@
     <ClCompile Include="SRSMath.cpp" />
     <ClCompile Include="SRSUnitDisplay.cpp" />
     <ClCompile Include="SRSLog.cpp" />
-    <ClCompile Include="SRSUnit.cpp" />
+    <ClCompile Include="ConceptMap.cpp" />
     <ClCompile Include="StringConversionHelpers.cpp" />
     <ClCompile Include="TimeHelpers.cpp" />
     <ClCompile Include="tinyfloat.cpp" />

@@ -9,9 +9,10 @@
 #include "TransformFunction.h"
 #include "SRSUnitDisplayModes.h"
 #include "OpenCVHelpers.h"
+#include "BrainLocatable.h"
 
 namespace SRS22 {
-	class SRSUnit
+	class ConceptMap : public BrainLocatable
 	{
 	public:
 		Brain* myBrain = NULL;
@@ -19,8 +20,8 @@ namespace SRS22 {
 		std::string MapName;
 		std::string MapDescription;
 
-		std::vector<std::shared_ptr<SRSUnit>> nearMaps;
-		std::vector<std::shared_ptr<SRSUnit>> farMaps;
+		std::vector<std::shared_ptr<ConceptMap>> nearMaps;
+		std::vector<std::shared_ptr<ConceptMap>> farMaps;
 
 		const MapUidE UID;
 
@@ -28,11 +29,6 @@ namespace SRS22 {
 		/// How the Monitor app should display this Concept Map.
 		/// </summary>
 		SRSUnitDisplayModes displayMode = SRSUnitDisplayModes::COLOR;
-
-		/// <summary>
-		/// Brain location, 3D. Concept relevance location.
-		/// </summary>
-		const cv::Vec3f location;
 
 		const ConnectivityTriple ctrip;
 
@@ -79,11 +75,11 @@ namespace SRS22 {
 		/// <param name="location"></param>
 		/// <param name="cols"></param>
 		/// <param name="MapDescription"></param>
-		SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription);
-		SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription);
-		SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int rows, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
 
-		~SRSUnit();
+		~ConceptMap();
 
 		/// <summary>
 		/// Called after all SRSUnits have been created and added to the Brain.
@@ -107,7 +103,7 @@ namespace SRS22 {
 
 		/// <summary>
 		/// After processIO has been called on all SRSUnits, this gets called to transfer the nextM state to M.
-		/// Gets called in parallel for all SRSUnits. So must be just state transfer inside the SRSUnit.
+		/// Gets called in parallel for all SRSUnits. So must be just state transfer inside the ConceptMap.
 		/// This is NOT the place to do any post processing on the next state!
 		/// </summary>
 		virtual void LatchNewState();

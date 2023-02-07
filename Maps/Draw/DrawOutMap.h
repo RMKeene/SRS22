@@ -1,5 +1,5 @@
 #pragma once
-#include "../../SRSUnit.h"
+#include "../../ConceptMap.h"
 
 /// x, y, blend, r, g, b
 #define DrawOutMap_Width 6
@@ -19,12 +19,12 @@ namespace SRS22 {
 	///  x, y, blend, r, g, b which is 6 elements matching DrawOutMap_Width
 	/// All being range 0.0 to 1.0 charge vales. Every tick if bland is > BLEND_MIN it outputs to the drawing board, then clears all to 0.0
 	/// </summary>
-	class DrawOutMap : public SRSUnit
+	class DrawOutMap : public ConceptMap
 	{
 	public:
 		/// <summary>
 		/// implemented as
-		/// SRSUnit("DrawOutMap",
+		/// ConceptMap("DrawOutMap",
 		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 		/// 	cv::Vec3f(0.0, 0.0, 0.0),
 		/// 	DrawOutMap_Width,

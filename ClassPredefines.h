@@ -11,7 +11,7 @@ namespace SRS22 {
 	class Pattern;
 	class PatternMatchingSystem;
 	class Reaper;
-	class SRSUnit;
+	class ConceptMap;
 	class TransformFunction;
 
 }

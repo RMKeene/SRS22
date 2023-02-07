@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	CameraAttnSpotMap::CameraAttnSpotMap(Brain* br) :
-		SRSUnit(br, MapUidE::CAMERAATTNSPOT_MAP, "CameraAttnSpotMap",
+		ConceptMap(br, MapUidE::CAMERAATTNSPOT_MAP, "CameraAttnSpotMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			CameraAttnSpotMap_Width,
@@ -20,7 +20,7 @@ namespace SRS22 {
 	}
 
 	void CameraAttnSpotMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto motionXY = static_cast<CameraMotionXYMap*>(myBrain->FindMapByName("CameraMotionXYMap").value().get());
 		float X = motionXY->M.get(0);
@@ -37,6 +37,6 @@ namespace SRS22 {
 	}
 
 	void CameraAttnSpotMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

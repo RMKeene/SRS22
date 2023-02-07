@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	DrawOutMap::DrawOutMap(Brain* br) :
-		SRSUnit(br, MapUidE::DRAWOUT_MAP, "DrawOutMap",
+		ConceptMap(br, MapUidE::DRAWOUT_MAP, "DrawOutMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			DrawOutMap_Width,
@@ -17,7 +17,7 @@ namespace SRS22 {
 	}
 
 	void DrawOutMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		if (M.get(DrawOUtMap_Blend) < DrawOutMap_MinBlend)
 			return;
@@ -42,6 +42,6 @@ namespace SRS22 {
 	}
 
 	void DrawOutMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

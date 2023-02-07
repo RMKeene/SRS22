@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "PatternConnection.h"
-#include "SRSUnit.h"
+#include "ConceptMap.h"
 
 namespace SRS22 {
-	PatternConnection::PatternConnection(std::shared_ptr<SRSUnit> map, int mapIdx) :
+	PatternConnection::PatternConnection(std::shared_ptr<ConceptMap> map, int mapIdx) :
 		map(map), mapIdx(mapIdx) {
 	}
 }

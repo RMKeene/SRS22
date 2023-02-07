@@ -120,7 +120,7 @@ namespace SRS22 {
 
 			chosenMapBitmap->Refresh();
 
-			std::shared_ptr<SRSUnit> mv = m.value();
+			std::shared_ptr<ConceptMap> mv = m.value();
 			wxString s;
 			s << "[" << mv->Width() <<
 				", " << mv->Height() <<

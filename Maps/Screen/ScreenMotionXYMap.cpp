@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	ScreenMotionXYMap::ScreenMotionXYMap(Brain* br) :
-		SRSUnit(br, MapUidE::SCREENMOTION_MAP, "ScreenMotionXYMap",
+		ConceptMap(br, MapUidE::SCREENMOTION_MAP, "ScreenMotionXYMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			ScreenMotionXYMap_Width,
@@ -20,7 +20,7 @@ namespace SRS22 {
 	}
 
 	void ScreenMotionXYMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		if (screenIn->currentAbsDifferenceLowRes.empty() == false) {
@@ -50,6 +50,6 @@ namespace SRS22 {
 	}
 
 	void ScreenMotionXYMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

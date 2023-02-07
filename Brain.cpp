@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Brain.h"
-#include "SRSUnit.h"
+#include "ConceptMap.h"
 #include "FastRand.h"
 #include <tchar.h>
 #include <ppl.h>
@@ -38,13 +38,13 @@ namespace SRS22 {
 			SingleStepCount--;
 		PreTick();
 
-		// Call all SRSUnit ProcessState in parallel
-		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<SRSUnit>> n) {
+		// Call all ConceptMap ProcessState in parallel
+		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
 			n.second->ComputeNextState();
 			});
 
-		// Call all SRSUnit LatchNewState in parallel.
-		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<SRSUnit>> n) {
+		// Call all ConceptMap LatchNewState in parallel.
+		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
 			n.second->LatchNewState();
 			});
 
@@ -92,7 +92,7 @@ namespace SRS22 {
 	}
 
 	std::optional<PatternConnection> Brain::GetRandomNeuron(
-		shared_ptr<SRSUnit> origin) {
+		shared_ptr<ConceptMap> origin) {
 		for (int i = 0; i < 2; i++) {
 			float r = static_cast <float> (xorshf96()) / static_cast <float> (RAND_MAX);
 			if (r < origin->ctrip.selfFract) { // Select random neuron from self
@@ -103,7 +103,7 @@ namespace SRS22 {
 			}
 			else if (r < origin->ctrip.nearbyFract) { // Select from near concepts
 				if (origin->nearMaps.size() > 0) {
-					shared_ptr<SRSUnit> other = origin->nearMaps[xorshf96() % origin->nearMaps.size()];
+					shared_ptr<ConceptMap> other = origin->nearMaps[xorshf96() % origin->nearMaps.size()];
 					if (other->entriesCount() > 0) {
 						PatternConnection c(origin, xorshf96() % other->entriesCount());
 						return std::optional<PatternConnection>{ c };
@@ -112,7 +112,7 @@ namespace SRS22 {
 			}
 			else { // Select from far concepts
 				if (origin->farMaps.size()) {
-					shared_ptr<SRSUnit> other = origin->farMaps[xorshf96() % origin->farMaps.size()];
+					shared_ptr<ConceptMap> other = origin->farMaps[xorshf96() % origin->farMaps.size()];
 					if (other->entriesCount() > 0) {
 						PatternConnection c(origin, xorshf96() % other->entriesCount());
 						return std::optional<PatternConnection>{ c };
@@ -195,7 +195,7 @@ namespace SRS22 {
 		whiteboardOut.UnitTest();
 	}
 
-	void Brain::AddMap(shared_ptr<SRSUnit> m) {
+	void Brain::AddMap(shared_ptr<ConceptMap> m) {
 		conceptMaps[m->UID] = m;
 		conceptMapsByName[m->MapName] = m;
 	}
@@ -217,11 +217,11 @@ namespace SRS22 {
 	}
 
 	void Brain::PostCreateAllSRSUnits() {
-		for (std::pair<MapUidE, std::shared_ptr<SRSUnit>> u : conceptMaps)
+		for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> u : conceptMaps)
 			u.second->PostCreate(*this);
 	}
 
-	optional<shared_ptr<SRSUnit>> Brain::FindMap(MapUidE n) {
+	optional<shared_ptr<ConceptMap>> Brain::FindMap(MapUidE n) {
 		auto m = conceptMaps.find(n);
 		if (m != conceptMaps.end()) {
 			return m->second;
@@ -229,7 +229,7 @@ namespace SRS22 {
 		return std::nullopt;
 	}
 
-	optional<shared_ptr<SRSUnit>> Brain::FindMapByName(string n) {
+	optional<shared_ptr<ConceptMap>> Brain::FindMapByName(string n) {
 		auto m = conceptMapsByName.find(n);
 		if (m != conceptMapsByName.end()) {
 			return m->second;

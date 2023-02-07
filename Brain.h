@@ -4,7 +4,7 @@
 
 #include <list>
 #include <string>
-#include "SRSUnit.h"
+#include "ConceptMap.h"
 #include "HardwareIO/ScreenInputIO.h"
 #include "HardwareIO/AudioCaptureIO.h"
 #include "HardwareRaw/WaveInputHelper.h"
@@ -25,8 +25,8 @@ namespace SRS22 {
 	class Brain
 	{
 	public:
-		map<MapUidE, std::shared_ptr<SRSUnit>> conceptMaps;
-		map<std::string, std::shared_ptr<SRSUnit>> conceptMapsByName;
+		map<MapUidE, std::shared_ptr<ConceptMap>> conceptMaps;
+		map<std::string, std::shared_ptr<ConceptMap>> conceptMapsByName;
 
 		/// <summary>
 		/// Threshold for ConnectivityTriple that defines range B.
@@ -82,18 +82,18 @@ namespace SRS22 {
 		pair<bool, string> Load(string fileName);
 		bool Store(string fileName);
 
-		std::optional<PatternConnection> GetRandomNeuron(shared_ptr<SRSUnit> origin);
+		std::optional<PatternConnection> GetRandomNeuron(shared_ptr<ConceptMap> origin);
 
 		void PostCreateAllSRSUnits();
 
-		optional<shared_ptr<SRSUnit>> FindMap(MapUidE n);
-		optional<shared_ptr<SRSUnit>> FindMapByName(string n);
+		optional<shared_ptr<ConceptMap>> FindMap(MapUidE n);
+		optional<shared_ptr<ConceptMap>> FindMapByName(string n);
 
 	private:
 		void PreTick();
 		void PostTick();
 
-		void AddMap(shared_ptr<SRSUnit> m);
+		void AddMap(shared_ptr<ConceptMap> m);
 	};
 
 	typedef std::shared_ptr<Brain> BrainH;

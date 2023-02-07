@@ -9,9 +9,9 @@ namespace SRS22 {
 	Pattern::~Pattern() {
 	}
 
-	void Pattern::MakeSemiRandomConnections(Brain& brain, std::shared_ptr<SRSUnit> map) {
+	void Pattern::MakeSemiRandomConnections(Brain& brain, std::shared_ptr<ConceptMap> map) {
 	}
 
-	void Pattern::SnapSRS22MapState(std::shared_ptr<SRSUnit> map) {
+	void Pattern::SnapSRS22MapState(std::shared_ptr<ConceptMap> map) {
 	}
 }

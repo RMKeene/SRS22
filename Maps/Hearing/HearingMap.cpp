@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	HearingMap::HearingMap(Brain* br) :
-		SRSUnit(br, MapUidE::HEARING_MAP, "HearingMap",
+		ConceptMap(br, MapUidE::HEARING_MAP, "HearingMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			HearingMap_Width,
@@ -18,7 +18,7 @@ namespace SRS22 {
 	}
 
 	void HearingMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto waveIn = IOCommon::GetIO<AudioCaptureIO>();
 		for (int i = 0; i < SRS22FFTRESULTSIZE; i++) {
@@ -27,6 +27,6 @@ namespace SRS22 {
 	}
 
 	void HearingMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

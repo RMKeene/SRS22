@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	ScreenDifferenceMap::ScreenDifferenceMap(Brain* br) :
-		SRSUnit(br, MapUidE::SCREENDIFFERENCE_MAP, "ScreenDifferenceMap",
+		ConceptMap(br, MapUidE::SCREENDIFFERENCE_MAP, "ScreenDifferenceMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, ScreenInputIO::AbsDiffHeight, ScreenInputIO::AbsDiffWidth,
@@ -18,7 +18,7 @@ namespace SRS22 {
 	}
 
 	void ScreenDifferenceMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		// currentAbsDifferenceLowRes is 8UC4 format so we convert.
@@ -34,6 +34,6 @@ namespace SRS22 {
 	}
 
 	void ScreenDifferenceMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

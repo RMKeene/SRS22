@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	CameraMotionXYMap::CameraMotionXYMap(Brain* br) :
-		SRSUnit(br, MapUidE::CAMERAMOTIONXY_MAP, "CameraMotionXYMap",
+		ConceptMap(br, MapUidE::CAMERAMOTIONXY_MAP, "CameraMotionXYMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			CameraMotionXYMap_Width,
@@ -20,7 +20,7 @@ namespace SRS22 {
 	}
 
 	void CameraMotionXYMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		if (cameraIn->currentAbsDifferenceLowRes.empty() == false) {
@@ -49,6 +49,6 @@ namespace SRS22 {
 	}
 
 	void CameraMotionXYMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	TextOutMap::TextOutMap(Brain* br) :
-		SRSUnit(br, MapUidE::TEXTOUT_MAP, "TextOutMap",
+		ConceptMap(br, MapUidE::TEXTOUT_MAP, "TextOutMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			TextOutMap_Width,
@@ -19,7 +19,7 @@ namespace SRS22 {
 	}
 
 	void TextOutMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto textOutUI = IOCommon::GetIO<TextOutIO>();
 
@@ -35,6 +35,6 @@ namespace SRS22 {
 	}
 
 	void TextOutMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }

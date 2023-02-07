@@ -1,55 +1,59 @@
 #include "pch.h"
-#include "SRSUnit.h"
+#include "ConceptMap.h"
 #include "ConnectivityTriple.h"
 #include "Brain.h"
+#include "BrainLocatable.h"
 
 namespace SRS22 {
 
-	SRSUnit::SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int cols, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int cols, std::string MapDescription) :
+		BrainLocatable(location),
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
-		ctrip(ctrip), location(location), M(cols), nextM(cols),
+		ctrip(ctrip), M(cols), nextM(cols),
 		MapDescription(MapDescription) {
 	}
 
-	SRSUnit::SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int rows, int cols, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int rows, int cols, std::string MapDescription) :
+		BrainLocatable(location), 
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
-		ctrip(ctrip), location(location), M(rows, cols), nextM(rows, cols),
+		ctrip(ctrip),  M(rows, cols), nextM(rows, cols),
 		MapDescription(MapDescription) {
 	}
 
-	SRSUnit::SRSUnit(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription) :
+		BrainLocatable(location), 
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
-		ctrip(ctrip), location(location), M(layers, rows, cols), nextM(layers, rows, cols),
+		ctrip(ctrip), M(layers, rows, cols), nextM(layers, rows, cols),
 		MapDescription(MapDescription) {
 	}
 
-	SRSUnit::~SRSUnit() {
+	ConceptMap::~ConceptMap() {
 	}
 
-	const cv::MatSize SRSUnit::matSize() {
+	const cv::MatSize ConceptMap::matSize() {
 		return M.matSize();
 	}
 
-	const int SRSUnit::entriesCount() {
+	const int ConceptMap::entriesCount() {
 		return M.entriesCount();
 	}
 
-	const int SRSUnit::byteCount() {
+	const int ConceptMap::byteCount() {
 		return M.byteCount();
 	}
 
-	void SRSUnit::PostCreate(Brain& b) {
+	void ConceptMap::PostCreate(Brain& b) {
 		nearMaps.clear();
 		farMaps.clear();
 
-		std::list<std::shared_ptr<SRSUnit>> nearMapsList;
-		std::list<std::shared_ptr<SRSUnit>> farMapsList;
+		std::list<std::shared_ptr<ConceptMap>> nearMapsList;
+		std::list<std::shared_ptr<ConceptMap>> farMapsList;
 
 		float near2 = b.maxNearDistance * b.maxNearDistance;
 		float far2 = b.minFarDistance * b.minFarDistance;
@@ -70,16 +74,16 @@ namespace SRS22 {
 		farMaps.assign(farMapsList.begin(), farMapsList.end());
 	}
 
-	void SRSUnit::ComputeNextState() {
+	void ConceptMap::ComputeNextState() {
 		if (doDecay)
 			nextM.charges = M.charges * decayFactor;
 	}
 
-	void SRSUnit::LatchNewState() {
+	void ConceptMap::LatchNewState() {
 		ConceptState::Copy(nextM, M);
 	}
 
-	std::string SRSUnit::Debug() {
+	std::string ConceptMap::Debug() {
 		std::string ret = M.Debug();
 		return ret;
 	}

@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	CameraFoveaMap::CameraFoveaMap(Brain* br) :
-		SRSUnit(br, MapUidE::CAMERAFOVEA_MAP, "CameraFoveaMap",
+		ConceptMap(br, MapUidE::CAMERAFOVEA_MAP, "CameraFoveaMap",
 			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width,
@@ -18,7 +18,7 @@ namespace SRS22 {
 	}
 
 	void CameraFoveaMap::ComputeNextState() {
-		SRSUnit::ComputeNextState();
+		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		auto fovea = IOCommon::GetIO<CameraAttnSpotIO>();
@@ -29,6 +29,6 @@ namespace SRS22 {
 	}
 
 	void CameraFoveaMap::LatchNewState() {
-		SRSUnit::LatchNewState();
+		ConceptMap::LatchNewState();
 	}
 }
