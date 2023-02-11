@@ -3,7 +3,6 @@
 #include "fit_fft.h"
 
 namespace SRS22 {
-
 	float SRSFastSqrt(float x);
 
 	// Convert ulawbyte to 16 bit signed amplitude.

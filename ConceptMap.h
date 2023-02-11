@@ -5,7 +5,6 @@
 #include "MapUIDs.h"
 #include "PatternMatchingSystem.h"
 #include "GoodnessFunction.h"
-#include "ConnectivityTriple.h"
 #include "TransformFunction.h"
 #include "SRSUnitDisplayModes.h"
 #include "OpenCVHelpers.h"
@@ -20,17 +19,12 @@ namespace SRS22 {
 		std::string MapName;
 		std::string MapDescription;
 
-		std::vector<std::shared_ptr<ConceptMap>> nearMaps;
-		std::vector<std::shared_ptr<ConceptMap>> farMaps;
-
 		const MapUidE UID;
 
 		/// <summary>
 		/// How the Monitor app should display this Concept Map.
 		/// </summary>
 		SRSUnitDisplayModes displayMode = SRSUnitDisplayModes::COLOR;
-
-		const ConnectivityTriple ctrip;
 
 	private: // See SetDecayFactors()
 		// IO maps tend to overwrite the M every frame so one can just turn this off.
@@ -66,7 +60,7 @@ namespace SRS22 {
 		const std::string CVTypeString() { return OpenCVHelpers::CVTypeToStr(M.charges.type()); }
 
 		/// <summary>
-		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap". 
+		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap".
 		/// In the case of cortex maps it may not be the class name.
 		/// </summary>
 		/// <param name="MapName"></param>
@@ -75,9 +69,9 @@ namespace SRS22 {
 		/// <param name="location"></param>
 		/// <param name="cols"></param>
 		/// <param name="MapDescription"></param>
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int cols, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int rows, int cols, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, ConnectivityTriple ctrip, const cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, const cv::Vec3f location, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, const cv::Vec3f location, int rows, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
 
 		~ConceptMap();
 

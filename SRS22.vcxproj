@@ -216,6 +216,7 @@
     <ClInclude Include="ConnectivityTriple.h" />
     <ClInclude Include="convertmattowxbmp.h" />
     <ClInclude Include="CortexChunk.h" />
+    <ClInclude Include="CortexNeuron.h" />
     <ClInclude Include="FastRand.h" />
     <ClInclude Include="fit_fft.h" />
     <ClInclude Include="GlobalWorld.h" />
@@ -336,6 +337,7 @@
     <ClCompile Include="ConnectivityTriple.cpp" />
     <ClCompile Include="convertmattowxbmp.cpp" />
     <ClCompile Include="CortexChunk.cpp" />
+    <ClCompile Include="CortexNeuron.cpp" />
     <ClCompile Include="FastRand.cpp" />
     <ClCompile Include="fit_fft.cpp" />
     <ClCompile Include="GlobalWorld.cpp" />

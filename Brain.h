@@ -18,6 +18,8 @@
 #include "HardwareIO/ScreenAttnSpotIO.h"
 #include "HardwareIO/CameraAttnSpotIO.h"
 #include "HardwareIO/PhonemesIO.h"
+#include "CortexNeuron.h"
+#include "CortexChunk.h"
 
 namespace SRS22 {
 	using namespace std;
@@ -27,6 +29,7 @@ namespace SRS22 {
 	public:
 		map<MapUidE, std::shared_ptr<ConceptMap>> conceptMaps;
 		map<std::string, std::shared_ptr<ConceptMap>> conceptMapsByName;
+		std::list< std::shared_ptr<CortexChunk>> cortexChunks;
 
 		/// <summary>
 		/// Threshold for ConnectivityTriple that defines range B.
@@ -82,8 +85,6 @@ namespace SRS22 {
 		pair<bool, string> Load(string fileName);
 		bool Store(string fileName);
 
-		std::optional<PatternConnection> GetRandomNeuron(shared_ptr<ConceptMap> origin);
-
 		void PostCreateAllSRSUnits();
 
 		optional<shared_ptr<ConceptMap>> FindMap(MapUidE n);
@@ -94,6 +95,7 @@ namespace SRS22 {
 		void PostTick();
 
 		void AddMap(shared_ptr<ConceptMap> m);
+		void AddCortexChunk(shared_ptr<CortexChunk> c);
 	};
 
 	typedef std::shared_ptr<Brain> BrainH;

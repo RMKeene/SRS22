@@ -10,21 +10,21 @@ namespace SRS22 {
 	{
 	public:
 		/// <summary>
-		/// Fraction (0.0 to 1.0) if connections to ConceptMap self.
+		/// Fraction (0.0 to 1.0) if connections to CortexChunk self.
 		/// A + B + C must equal 1.0f.
 		/// </summary>
 		const float selfFract;
 		/// <summary>
-		/// Fraction (0.0 to 1.0) if connections to neaby SRSUnits.
+		/// Fraction (0.0 to 1.0) if connections to neaby CortexChunk and/or ConcpetMaps.
 		/// </summary>
 		const float nearbyFract;
 		/// <summary>
-		/// Fraction (0.0 to 1.0) if connections to far SRSUnits.
+		/// Fraction (0.0 to 1.0) if connections to far CortexChunk and/or ConcpetMaps.
 		/// </summary>
 		const float farFract;
 
 		/// <summary>
-		/// How many connections this map should have generated on setup.
+		/// How many connections this CortexNeuron should have generated on setup.
 		/// You may get less than or equal to that many connections.
 		/// May be zero to turn off connectivity to other maps.
 		/// </summary>

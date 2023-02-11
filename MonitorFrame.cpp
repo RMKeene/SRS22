@@ -129,7 +129,6 @@ namespace SRS22 {
 			chosenMapText1->SetLabelText(s);
 
 			s.Clear();
-			s << "CTrip [" << mv->ctrip.selfFract << ", " << mv->ctrip.nearbyFract << ", " << mv->ctrip.farFract << "]";
 			s << " Mtchs " << mv->matchSystem.knownPatterns.size();
 			chosenMapText2->SetLabelText(s);
 			chosenMapText3->SetLabel(mv->MapDescription);
@@ -253,7 +252,6 @@ namespace SRS22 {
 			lastInSizeText->SetLabelText(wxString::Format("Last In Size: %d, total %d M", WaveInputHelper::lastPacketSize, WaveInputHelper::totalBytesIn / (1024 * 1024)));
 		}
 	}
-
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
 	}

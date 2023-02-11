@@ -40,7 +40,6 @@ namespace SRS22 {
 		//int bytesRead = inputHelper.CaptureToBuffer(&buffer, &bufferSize);
 	}
 
-
 #pragma comment(lib, "strmiids")
 
 	void AudioCaptureIO::DebugAudioInputDevices() {
@@ -121,5 +120,4 @@ namespace SRS22 {
 			pMoniker->Release();
 		}
 	}
-
 }

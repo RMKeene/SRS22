@@ -1,8 +1,7 @@
-#include "SRSMath.h" 
+#include "SRSMath.h"
 #include "HardwareRaw/WaveInConstants.h"
 
 namespace SRS22 {
-
 	float SRSFastSqrt(float x)
 	{
 		const float xhalf = 0.5f * x;
@@ -28,5 +27,4 @@ namespace SRS22 {
 
 		return(sample);
 	}
-
 }

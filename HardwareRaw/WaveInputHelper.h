@@ -13,7 +13,7 @@ namespace SRS22 {
 		HWAVEIN waveInHandle;
 		// WAVEWHDR is also a single buffer of some length.
 		// We use two so the underlying system will automatically ping-pong them smoothly.
-		WAVEHDR waveHeader1;		
+		WAVEHDR waveHeader1;
 		WAVEHDR waveHeader2;
 
 		short fftTempBuffer[SRS22FFTSIZE];
@@ -27,7 +27,7 @@ namespace SRS22 {
 		int SetWaveFormat(WAVEFORMATEX* wf, int wFormatTag, int nChannels, int nSamplesPerSec,
 			int nBlockAlign, int wBitsPerSample, int cbSize);
 
-		// Prepare Wave In Header and allocate memory and add the buffer.  
+		// Prepare Wave In Header and allocate memory and add the buffer.
 		// If called multiple times will just keep adding more buffers
 		// that get ping ponged.
 		int PrepareWaveIn(HWAVEIN* hWaveIn, WAVEHDR* waveHeader, DWORD dataSize);

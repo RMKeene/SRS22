@@ -7,9 +7,7 @@
 #include <algorithm>
 #include <mmreg.h>
 
-
 namespace SRS22 {
-
 	// As single buffer of data. We shoot for 1/10th second of audio. We have 2 of these so they ping pong smoothly.
 	typedef struct WAV_HEADER {
 		/* RIFF Chunk Descriptor */
@@ -314,7 +312,7 @@ namespace SRS22 {
 			StringConversionHelpers::CharToWChar("Debug Message", titleW, 128);
 			MessageBox(NULL, contentW, titleW, MB_OK);
 #endif
-	}
+		}
 		else
 		{
 #ifdef _DEBUG_
@@ -324,6 +322,6 @@ namespace SRS22 {
 			MessageBox(NULL, CString(content), CString("Hint"), MB_OK);
 #endif
 #endif
-}
+		}
 	}
 }

@@ -4,7 +4,6 @@
 #define FIT_FFT_REVERSE 1
 
 namespace SRS22 {
-
 	/*
 	  fix_fft() - perform forward/inverse fast Fourier transform.
 	  fr[n],fi[n] are real and imaginary arrays, both INPUT AND
@@ -34,7 +33,7 @@ namespace SRS22 {
 	  real and imaginary samples in the complex array.
 
 	  The return value is the scale of the resulting data.  If values are
-	  going to overflow 16 bit signed then it down shifts. So after returning from fix_fftr 
+	  going to overflow 16 bit signed then it down shifts. So after returning from fix_fftr
 	  If it is not 0 then you have to upshift the data by the returned shift count and it is then more than 16 bit
 	  wide results.
 

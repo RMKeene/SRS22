@@ -8,7 +8,6 @@
 namespace SRS22 {
 	ScreenMotionXYMap::ScreenMotionXYMap(Brain* br) :
 		ConceptMap(br, MapUidE::SCREENMOTION_MAP, "ScreenMotionXYMap",
-			ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 			cv::Vec3f(0.0, 0.0, 0.0),
 			ScreenMotionXYMap_Width,
 			"The XY location of the maximum frame to frame difference.") {

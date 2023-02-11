@@ -36,7 +36,6 @@
 #define LOG2_N_WAVE 10      /* log2(N_WAVE) */
 
 namespace SRS22 {
-
 	/*
 	  Henceforth "short" implies 16-bit word. If this is not
 	  the case in your architecture, please replace "short"
@@ -309,5 +308,4 @@ namespace SRS22 {
 			scale = fix_fft(fi, fr, m - 1, inverse);
 		return scale;
 	}
-
 }

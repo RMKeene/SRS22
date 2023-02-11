@@ -91,39 +91,6 @@ namespace SRS22 {
 		return false;
 	}
 
-	std::optional<PatternConnection> Brain::GetRandomNeuron(
-		shared_ptr<ConceptMap> origin) {
-		for (int i = 0; i < 2; i++) {
-			float r = static_cast <float> (xorshf96()) / static_cast <float> (RAND_MAX);
-			if (r < origin->ctrip.selfFract) { // Select random neuron from self
-				if (origin->entriesCount() > 0) {
-					PatternConnection c(origin, xorshf96() % origin->entriesCount());
-					return std::optional<PatternConnection>{ c };
-				}
-			}
-			else if (r < origin->ctrip.nearbyFract) { // Select from near concepts
-				if (origin->nearMaps.size() > 0) {
-					shared_ptr<ConceptMap> other = origin->nearMaps[xorshf96() % origin->nearMaps.size()];
-					if (other->entriesCount() > 0) {
-						PatternConnection c(origin, xorshf96() % other->entriesCount());
-						return std::optional<PatternConnection>{ c };
-					}
-				}
-			}
-			else { // Select from far concepts
-				if (origin->farMaps.size()) {
-					shared_ptr<ConceptMap> other = origin->farMaps[xorshf96() % origin->farMaps.size()];
-					if (other->entriesCount() > 0) {
-						PatternConnection c(origin, xorshf96() % other->entriesCount());
-						return std::optional<PatternConnection>{ c };
-					}
-				}
-			}
-		}
-
-		return std::nullopt;
-	}
-
 	void Brain::Init() {
 		// Hardware I/O setups.
 		screenInput.Init();
@@ -165,7 +132,8 @@ namespace SRS22 {
 		AddMap(make_shared<TextCurrentCharMap>(this));
 		AddMap(make_shared<TextOutMap>(this));
 
-		// Anonymouse Maps (the cortex)
+		// The Cortex
+		AddCortexChunk(make_shared<CortexChunk>(cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40)));
 
 		// Compile the SRS system relationships.
 		PostCreateAllSRSUnits();
@@ -198,6 +166,10 @@ namespace SRS22 {
 	void Brain::AddMap(shared_ptr<ConceptMap> m) {
 		conceptMaps[m->UID] = m;
 		conceptMapsByName[m->MapName] = m;
+	}
+
+	void Brain::AddCortexChunk(shared_ptr<CortexChunk> c) {
+		cortexChunks.push_back(c);
 	}
 
 	void Brain::DoNStep(int n) {
