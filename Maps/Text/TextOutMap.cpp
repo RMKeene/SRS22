@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	TextOutMap::TextOutMap(Brain* br) :
-		ConceptMap(br, MapUidE::TEXTOUT_MAP, "TextOutMap",
+		ConceptMap(br, MapUidE::TEXTOUT_MAP, true, "TextOutMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			TextOutMap_Width,
 			TextOutMap_Height,

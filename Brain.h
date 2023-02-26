@@ -18,7 +18,6 @@
 #include "HardwareIO/ScreenAttnSpotIO.h"
 #include "HardwareIO/CameraAttnSpotIO.h"
 #include "HardwareIO/PhonemesIO.h"
-#include "CortexNeuron.h"
 #include "CortexChunk.h"
 
 namespace SRS22 {
@@ -89,6 +88,20 @@ namespace SRS22 {
 
 		optional<shared_ptr<ConceptMap>> FindMap(MapUidE n);
 		optional<shared_ptr<ConceptMap>> FindMapByName(string n);
+
+		/// <summary>
+		/// Find and return a random point (neuron) in the brain.
+		/// - Uses ct to give the ration of connection to far, near or self (from) neurons.
+		/// - The result will have a BrainLocation lower or equal in Z in the brain.
+		/// - Never returns outConnection equal to from.
+		/// - outConnection will never be to a ConceptMap with a false isConnectable.
+		/// </summary>
+		/// <param name="ct"></param>
+		/// <param name="lcation"></param>
+		/// <param name="outConnection"></param>
+		/// <returns>True on success.</returns>
+		bool GetRandomConnectionPoint(CortexChunk& from, const int fromOffset, const ConnectivityTriple& ct, const cv::Vec3f& location,
+			/* Out */ PatternConnection& outConnection);
 
 	private:
 		void PreTick();

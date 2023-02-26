@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	TextCurrentCharMap::TextCurrentCharMap(Brain* br) :
-		ConceptMap(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap",
+		ConceptMap(br, MapUidE::TEXTCCURRENTCHAR_MAP, true, "TextCurrentCharMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			TextCurrentCharMap_Width,
 			TextCurrentCharMap_Height,

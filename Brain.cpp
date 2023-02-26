@@ -36,16 +36,21 @@ namespace SRS22 {
 			return;
 		if (SingleStepCount > 0)
 			SingleStepCount--;
+
 		PreTick();
 
-		// Call all ConceptMap ProcessState in parallel
 		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
 			n.second->ComputeNextState();
 			});
+		parallel_for_each(begin(cortexChunks), end(cortexChunks), [&](std::shared_ptr<CortexChunk> n) {
+			n->ComputeNextState();
+			});
 
-		// Call all ConceptMap LatchNewState in parallel.
 		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
 			n.second->LatchNewState();
+			});
+		parallel_for_each(begin(cortexChunks), end(cortexChunks), [&](std::shared_ptr<CortexChunk> n) {
+			n->LatchNewState();
 			});
 
 		PostTick();
@@ -133,7 +138,7 @@ namespace SRS22 {
 		AddMap(make_shared<TextOutMap>(this));
 
 		// The Cortex
-		AddCortexChunk(make_shared<CortexChunk>(cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40)));
+		AddCortexChunk(make_shared<CortexChunk>(cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40), 0.02f));
 
 		// Compile the SRS system relationships.
 		PostCreateAllSRSUnits();
@@ -207,5 +212,46 @@ namespace SRS22 {
 			return m->second;
 		}
 		return std::nullopt;
+	}
+
+	bool Brain::GetRandomConnectionPoint(CortexChunk& from, const int fromOffset, const ConnectivityTriple& ct, const cv::Vec3f& location,
+		/* Out */ PatternConnection& outConnection) {
+
+		int antiLockupCount = 4;
+
+		do {
+			antiLockupCount--;
+
+			const float r = fastRandFloat();
+			if (r < ct.selfFract) { // Self connection
+				outConnection.target = &from;
+				outConnection.linearOffset = from.GetRandomLinearOffset();
+			}
+			else if (r < ct.selfFract + ct.nearbyFract && from.nearChunks.size() > 0) { // Nearby connection
+				const float fracNth = fastRandFloat() * from.nearChunks.size();
+				int nth = (int)fracNth;
+				outConnection.target = nullptr;
+				for (auto it = from.nearChunks.begin(); it != from.nearChunks.end() && nth > 0; it++) {
+					outConnection.target = it->get();
+					nth--;
+				}
+			}
+			else if (from.farChunks.size() > 0) { // Far connection
+				const float fracNth = fastRandFloat() * from.farChunks.size();
+				int nth = (int)fracNth;
+				outConnection.target = nullptr;
+				for (auto it = from.farChunks.begin(); it != from.farChunks.end() && nth > 0; it++) {
+					outConnection.target = it->get();
+					nth--;
+				}
+			}
+		} while (
+			(PatternConnection::equals(outConnection, &from, fromOffset) 
+				|| !outConnection.target->isConnectableFlag
+				// The check that concept space Z is less than from's Z is already checked when near and far lists are filled.
+				)
+			&& antiLockupCount > 0);
+
+		return antiLockupCount > 0;
 	}
 }

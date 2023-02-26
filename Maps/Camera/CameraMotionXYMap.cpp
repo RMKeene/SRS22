@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	CameraMotionXYMap::CameraMotionXYMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERAMOTIONXY_MAP, "CameraMotionXYMap",
+		ConceptMap(br, MapUidE::CAMERAMOTIONXY_MAP, true, "CameraMotionXYMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			CameraMotionXYMap_Width,
 			"The XY location of the maximum frame to frame difference.") {

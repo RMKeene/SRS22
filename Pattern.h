@@ -6,26 +6,30 @@
 namespace SRS22 {
 	/// <summary>
 	/// The state of the entire Brain some delta T before the associated ConceptState in a Pattern Matching System.
+	/// Plus, the state of some subset of the Brain a **few ticks later**. So two full snapshots of the entire brain state.
+	/// 
+	/// But...
+	/// 
 	/// Since one can not snapshot the entire brain a few 100k times, we instead
-	/// snapshot some of the ConceptState, some of nearby ConceptMap, and some of far ConceptMaps.
-	/// The three way balance is called a Connectivity Triple (in the Concept Map that owns
-	/// this Pattern Matching System) and thus this Pattern. And Delta T comes from the ConceptMap.
+	/// snapshot sparse representations.
+	/// We do a three way ratio of very near, near and far Brain state. 
+	/// The three way balance is called a Connectivity Triple in the CortexChunk that owns
+	/// this Pattern. And Delta T comes from the CortexChunk.
+	/// 
+	/// 
 	/// </summary>
 	class Pattern
 	{
 	public:
-		int localCMapOffset;
-		int localCMapSkip;
 
 		/// <summary>
-		/// Connections and their state at time T.
+		/// Input Connections and what their state was at time T.
 		/// </summary>
-		std::list<std::shared_ptr<PatternConnection>> connections;
-
+		std::list<std::shared_ptr<PatternConnection>> inputConnections;
 		/// <summary>
-		/// What state the owner SRS22 was in at T plus DeltaT after connection was snapped.
+		/// Output connections and what their state was at time T + delta.
 		/// </summary>
-		std::shared_ptr< ConceptState> stateAtTPlusDeltaT;
+		std::list<std::shared_ptr<PatternConnection>> outputConnections;
 
 		Pattern();
 		~Pattern();
@@ -39,6 +43,6 @@ namespace SRS22 {
 		/// <summary>
 		/// It is now T + DeltaT so snapshot the current local SRS22 ConceptState.
 		/// </summary>
-		void SnapSRS22MapState(std::shared_ptr<ConceptMap> map);
+		void SnapSRS22BrainState(std::shared_ptr<ConceptMap> map);
 	};
 }

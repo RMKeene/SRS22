@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	PhonemeMap::PhonemeMap(Brain* br) :
-		ConceptMap(br, MapUidE::PHONEME_MAP, "PhonemeMap",
+		ConceptMap(br, MapUidE::PHONEME_MAP, true, "PhonemeMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			PhonemeMap_Width,
 			"The \"Voice\" out the audio system.") {

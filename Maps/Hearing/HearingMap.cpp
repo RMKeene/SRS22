@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	HearingMap::HearingMap(Brain* br) :
-		ConceptMap(br, MapUidE::HEARING_MAP, "HearingMap",
+		ConceptMap(br, MapUidE::HEARING_MAP, true, "HearingMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			HearingMap_Width,
 			"The \"Hearing\" input from the audio system.") {

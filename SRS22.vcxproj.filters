@@ -401,7 +401,7 @@
     <ClInclude Include="BrainLocatable.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="CortexNeuron.h">
+    <ClInclude Include="BrainConnectable.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
@@ -608,9 +608,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="CortexChunk.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="CortexNeuron.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

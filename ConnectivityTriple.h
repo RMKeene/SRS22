@@ -5,6 +5,9 @@
 #include <cassert>
 
 namespace SRS22 {
+	/// This is the inverted ⅄ connectivity triple mentioned in the paper.
+	/// We assume all neurons in a CortexChunk or Concept map have
+	/// the same location for connectivity distance purposes.
 	/// See paper Connectivity Triples ⅄, and Brain maxNearDistance and minFarDistance
 	class ConnectivityTriple
 	{
@@ -33,7 +36,7 @@ namespace SRS22 {
 		ConnectivityTriple(float selfFraction, float nearbyFraction, float farFraction, int desiredConnectionCount) :
 			selfFract(selfFraction), nearbyFract(nearbyFraction), farFract(farFraction), desiredConnectionCount(desiredConnectionCount) {
 			// A + B + C must equal 1.0f
-			assert(selfFraction + nearbyFraction + farFraction > 0.99f && selfFraction + nearbyFraction + farFraction < 1.01f);
+			assert(fabs(1.0f - (selfFraction + nearbyFraction + farFraction)) < 0.0001f);
 			assert(desiredConnectionCount >= 0);
 		}
 

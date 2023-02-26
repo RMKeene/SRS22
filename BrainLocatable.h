@@ -7,10 +7,8 @@ namespace SRS22 {
 	/// A brain part that can have a location in 3D space in a Brain.
 	/// An immutable class.
 	///
-	/// This is the inverted ⅄ connectivity triple mentioned in the paper.
-	/// We assume all neurons in a CortexChunk or Concept map have
-	/// the same location for connectivity distance purposes.
-	/// See paper Connectivity Triples ⅄, and Brain maxNearDistance and minFarDistance
+	/// Ranges of x, y, z are 0.0 to 1.0. Lower Z are more concrete, higher z is more abstract. 
+	/// x,y defines general concept categories.
 	/// </summary>
 	class BrainLocatable
 	{

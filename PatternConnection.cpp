@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "PatternConnection.h"
-#include "ConceptMap.h"
 
 namespace SRS22 {
-	PatternConnection::PatternConnection(std::shared_ptr<ConceptMap> map, int mapIdx) :
-		map(map), mapIdx(mapIdx) {
+
+	PatternConnection::PatternConnection(BrainConnectable* target, int linearOffset) :
+		target(target), linearOffset(linearOffset), ExpectedCharge(0.0f) {
 	}
+
 }

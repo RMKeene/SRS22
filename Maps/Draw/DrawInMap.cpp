@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	DrawInMap::DrawInMap(Brain* br) :
-		ConceptMap(br, MapUidE::DRAWIN_MAP, "DrawInMap",
+		ConceptMap(br, MapUidE::DRAWIN_MAP, true, "DrawInMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			DrawInMap_Width,
 			"Whiteboard pen in from screen. The SRS \"feels\" when you draw.") {

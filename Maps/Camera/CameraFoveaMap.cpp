@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	CameraFoveaMap::CameraFoveaMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERAFOVEA_MAP, "CameraFoveaMap",
+		ConceptMap(br, MapUidE::CAMERAFOVEA_MAP, false, "CameraFoveaMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width,
 			"Raw pixel map of center of camera fovea in color.") {

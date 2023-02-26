@@ -9,9 +9,10 @@
 #include "SRSUnitDisplayModes.h"
 #include "OpenCVHelpers.h"
 #include "BrainLocatable.h"
+#include "BrainConnectable.h"
 
 namespace SRS22 {
-	class ConceptMap : public BrainLocatable
+	class ConceptMap : public BrainLocatable, public BrainConnectable
 	{
 	public:
 		Brain* myBrain = NULL;
@@ -69,9 +70,9 @@ namespace SRS22 {
 		/// <param name="location"></param>
 		/// <param name="cols"></param>
 		/// <param name="MapDescription"></param>
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, const cv::Vec3f location, int cols, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, const cv::Vec3f location, int rows, int cols, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int rows, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
 
 		~ConceptMap();
 
@@ -103,5 +104,13 @@ namespace SRS22 {
 		virtual void LatchNewState();
 
 		virtual std::string Debug();
+
+		int GetRandomLinearOffset() override;
+		void GenerateNearFarLists() {};
+
+		float GetChargeValue(const int linearOffset) override;
+		void SetChargeValue(const int linearOffset, const float c) override;
+		void AddToChargeValue(const int linearOffset, const float c) override;
+
 	};
 }
