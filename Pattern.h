@@ -16,6 +16,8 @@ namespace SRS22 {
 	/// The three way balance is called a Connectivity Triple in the CortexChunk that owns
 	/// this Pattern. And Delta T comes from the CortexChunk.
 	/// 
+	/// The Pattern has a Charge which is how well it matched on the previous tick.
+	/// 
 	/// 
 	/// </summary>
 	class Pattern
@@ -31,12 +33,15 @@ namespace SRS22 {
 		/// </summary>
 		std::list<std::shared_ptr<PatternConnection>> outputConnections;
 
+		float charge = 0.0f;
+		float nextCharge = 0.0f;
+
 		Pattern();
 		~Pattern();
 
 		/// <summary>
 		/// Fill the connections list with a sparse snapshot of
-		/// the entire Brain state, moderated by the Connedctivity Triple ctrip.
+		/// the entire Brain state, moderated by the Connectivity Triple ctrip.
 		/// </summary>
 		void MakeSemiRandomConnections(Brain& brain, std::shared_ptr<ConceptMap> map);
 
@@ -44,5 +49,6 @@ namespace SRS22 {
 		/// It is now T + DeltaT so snapshot the current local SRS22 ConceptState.
 		/// </summary>
 		void SnapSRS22BrainState(std::shared_ptr<ConceptMap> map);
+
 	};
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CortexChunk.h"
+#include "Pattern.h"
 #include "FastRand.h"
 
 namespace SRS22 {
@@ -17,15 +18,15 @@ namespace SRS22 {
 	}
 
 	float CortexChunk::GetChargeValue(const int linearOffset) {
-
+		return patterns.at(linearOffset)->charge;
 	}
 
 	void CortexChunk::SetChargeValue(const int linearOffset, const float c) {
-
+		patterns.at(linearOffset)->charge = c;
 	}
 
 	void CortexChunk::AddToChargeValue(const int linearOffset, const float c) {
-
+		patterns.at(linearOffset)->charge += c;
 	}
 
 }
