@@ -23,12 +23,12 @@ namespace SRS22 {
 		AttnSpotBaseIO::Shutdown();
 	}
 
-	void CameraAttnSpotIO::PreTick() {
-		AttnSpotBaseIO::PreTick();
+	void CameraAttnSpotIO::PreTickHardwareAndIO() {
+		AttnSpotBaseIO::PreTickHardwareAndIO();
 	}
 
-	void CameraAttnSpotIO::PostTick() {
-		AttnSpotBaseIO::PostTick();
+	void CameraAttnSpotIO::PostTickHardwareAndUI() {
+		AttnSpotBaseIO::PostTickHardwareAndUI();
 	}
 
 	void CameraAttnSpotIO::ForceToBeSubclassed() {}

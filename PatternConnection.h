@@ -10,12 +10,17 @@ namespace SRS22 {
 	class PatternConnection
 	{
 	public:
+		/// <summary>
+		/// The target this connection connects to. If nullptr then no connection.
+		/// </summary>
 		BrainConnectable * target;
 		/// <summary>
-		/// Linear index in map.M.charges or map.NextM.charges or CortexChunk
+		/// Linear index in map.M.charges or map.NextM.charges or CortexChunk.patterns. (Each pattern has a charge.)
 		/// </summary>
 		int linearOffset;
 		float ExpectedCharge;
+
+		PatternConnection() : target(nullptr), linearOffset(0), ExpectedCharge(0.0f) {}
 
 		PatternConnection(BrainConnectable* target, int linearOffset);
 

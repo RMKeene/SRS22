@@ -7,4 +7,7 @@ namespace SRS22 {
 	const float tinyfloat::TINYFLOATSCALE = 64.0f;
 	const int tinyfloat::TINYFLOATSMIN = 0;
 	const int tinyfloat::TINYFLOATSMAX = 255;
+	// Actually 0.0000001 greater than the max error.
+	const float tinyfloat::TINYFLOATTOLLERANCE = 0.015626f;
+
 }

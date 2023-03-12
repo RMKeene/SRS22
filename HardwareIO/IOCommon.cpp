@@ -23,10 +23,10 @@ namespace SRS22 {
 	void IOCommon::Shutdown() {
 	}
 
-	void IOCommon::PreTick() {
+	void IOCommon::PreTickHardwareAndIO() {
 	}
 
-	void IOCommon::PostTick() {
+	void IOCommon::PostTickHardwareAndUI() {
 	}
 
 	void IOCommon::UnitTest() {

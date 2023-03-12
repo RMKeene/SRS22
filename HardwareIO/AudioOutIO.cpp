@@ -19,12 +19,12 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void AudioOutIO::PreTick() {
-		IOCommon::PreTick();
+	void AudioOutIO::PreTickHardwareAndIO() {
+		IOCommon::PreTickHardwareAndIO();
 	}
 
-	void AudioOutIO::PostTick() {
-		IOCommon::PostTick();
+	void AudioOutIO::PostTickHardwareAndUI() {
+		IOCommon::PostTickHardwareAndUI();
 	}
 
 	void AudioOutIO::UnitTest() {

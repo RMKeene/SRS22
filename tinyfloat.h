@@ -24,7 +24,9 @@ namespace SRS22 {
 		static const float TINYFLOATSCALE;
 		static const int TINYFLOATSMIN;
 		static const int TINYFLOATSMAX;
+		static const float TINYFLOATTOLLERANCE;
 
+		// Note: inline functions do not show as lines of code covered.
 		static inline float tf2f(const tinyfloat& tf) {
 			return ((float)tf.v - TINYFLOATOFFSETF) / TINYFLOATSCALE;
 		}
@@ -40,6 +42,10 @@ namespace SRS22 {
 			return tinyfloat(f2tfprim(f));
 		}
 
-		tinyfloat operator=(tinyfloat f) {}
+		tinyfloat operator=(float f) {
+			v = f2tfprim(f);
+			return *this;
+		}
+
 	};
 }

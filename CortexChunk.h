@@ -6,6 +6,7 @@
 #include "ConnectivityTriple.h"
 #include "BrainLocatable.h"
 #include "BrainConnectable.h"
+#include "Tickable.h"
 
 namespace SRS22 {
 
@@ -14,7 +15,7 @@ namespace SRS22 {
 	/// All Patterns have the same location (BrainLocatable).
 	/// All Patterns in a chunk are considered "very near" or "self" distance from each other.
 	/// </summary>
-	class CortexChunk : public BrainLocatable, public BrainConnectable
+	class CortexChunk : public BrainLocatable, public BrainConnectable, public Tickable
 	{
 	public:
 		/// <summary>
@@ -54,10 +55,14 @@ namespace SRS22 {
 			farChunks.clear();
 			patterns.clear();
 		}
+		
+		void PostCreate(Brain& brain);
 
-		void ComputeNextState();
+		void FillNearAndFarChunkCache(SRS22::Brain& brain);
 
-		void LatchNewState();
+		void ComputeNextState() override;
+
+		void LatchNewState() override;
 
 		int GetRandomLinearOffset() override;
 

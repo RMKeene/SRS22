@@ -20,11 +20,11 @@ namespace SRS22 {
 		/// <summary>
 		/// Called for each IOCommon at the start of tick in Brain.
 		/// </summary>
-		virtual void PreTick() override;
+		virtual void PreTickHardwareAndIO() override;
 		/// <summary>
 		/// Called for each IOCommon at the end of tick in Brain.
 		/// </summary>
-		virtual void PostTick() override;
+		virtual void PostTickHardwareAndUI() override;
 
 		virtual void ForceToBeSubclassed() override;
 

@@ -32,7 +32,7 @@ namespace SRS22 {
 
 		/// <summary>
 		/// Threshold for ConnectivityTriple that defines range B.
-		/// If distance of ConceptMap <= maxNearDistance thern it is in B range,
+		/// If distance of ConceptMap <= maxNearDistance then it is in B range,
 		/// if >= minFarDistance then it is range C.
 		/// </summary>
 		float maxNearDistance = 50.0f;
@@ -79,19 +79,24 @@ namespace SRS22 {
 		void Pause();
 		void Continue();
 
+		/// <summary>
+		/// The core Tick of the Brain called frequently. See Tickable for the phases of a Tick.
+		/// This is where single stepping is controlled. Calls SequenceCoreBrainTick().
+		/// </summary>
 		void Tick();
 
 		pair<bool, string> Load(string fileName);
 		bool Store(string fileName);
 
-		void PostCreateAllSRSUnits();
+		void PostCreateAllConceptMaps();
+		void PostCreateAllCortexChunks();
 
 		optional<shared_ptr<ConceptMap>> FindMap(MapUidE n);
 		optional<shared_ptr<ConceptMap>> FindMapByName(string n);
 
 		/// <summary>
 		/// Find and return a random point (neuron) in the brain.
-		/// - Uses ct to give the ration of connection to far, near or self (from) neurons.
+		/// - Uses ct to give the ratio of connection to far, near or self (from) neurons.
 		/// - The result will have a BrainLocation lower or equal in Z in the brain.
 		/// - Never returns outConnection equal to from.
 		/// - outConnection will never be to a ConceptMap with a false isConnectable.
@@ -100,12 +105,15 @@ namespace SRS22 {
 		/// <param name="lcation"></param>
 		/// <param name="outConnection"></param>
 		/// <returns>True on success.</returns>
-		bool GetRandomConnectionPoint(CortexChunk& from, const int fromOffset, const ConnectivityTriple& ct, const cv::Vec3f& location,
-			/* Out */ PatternConnection& outConnection);
+		bool GetRandomConnectionPoint(CortexChunk& from, const int fromOffset,
+			/* Out */ std::shared_ptr<PatternConnection> outConnection);
 
 	private:
-		void PreTick();
-		void PostTick();
+		// PreTick(), ComputeNextState(), LatchNewState(), PostTick()
+		// This is where multiprocessor parallelism happens.
+		void SequenceCoreBrainTick();
+		void PreTickHardwareAndIO();
+		void PostTickHardwareAndUI();
 
 		void AddMap(shared_ptr<ConceptMap> m);
 		void AddCortexChunk(shared_ptr<CortexChunk> c);

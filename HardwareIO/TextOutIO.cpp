@@ -22,12 +22,12 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void TextOutIO::PreTick() {
-		IOCommon::PreTick();
+	void TextOutIO::PreTickHardwareAndIO() {
+		IOCommon::PreTickHardwareAndIO();
 	}
 
-	void TextOutIO::PostTick() {
-		IOCommon::PostTick();
+	void TextOutIO::PostTickHardwareAndUI() {
+		IOCommon::PostTickHardwareAndUI();
 	}
 
 	void TextOutIO::UnitTest() {

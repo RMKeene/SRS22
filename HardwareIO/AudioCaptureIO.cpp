@@ -24,13 +24,13 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void AudioCaptureIO::PreTick() {
-		IOCommon::PreTick();
+	void AudioCaptureIO::PreTickHardwareAndIO() {
+		IOCommon::PreTickHardwareAndIO();
 		CaptureSegment();
 	}
 
-	void AudioCaptureIO::PostTick() {
-		IOCommon::PostTick();
+	void AudioCaptureIO::PostTickHardwareAndUI() {
+		IOCommon::PostTickHardwareAndUI();
 	}
 
 	void AudioCaptureIO::UnitTest() {

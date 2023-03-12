@@ -38,8 +38,8 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void ScreenInputIO::PreTick() {
-		IOCommon::PreTick();
+	void ScreenInputIO::PreTickHardwareAndIO() {
+		IOCommon::PreTickHardwareAndIO();
 		if (!currentScreen.empty())
 			currentScreen.copyTo(previousScreen);
 		if (!currentScreenLowRes.empty())
@@ -59,8 +59,8 @@ namespace SRS22 {
 		}
 	}
 
-	void ScreenInputIO::PostTick() {
-		IOCommon::PostTick();
+	void ScreenInputIO::PostTickHardwareAndUI() {
+		IOCommon::PostTickHardwareAndUI();
 	}
 
 	int ScreenInputIO::GetScreenWidthWin32() {

@@ -45,6 +45,12 @@
     <Filter Include="Source\HardwareRaw">
       <UniqueIdentifier>{6f23f0e5-7d84-48b4-a1c6-faa56aaf4c89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\UnitTest">
+      <UniqueIdentifier>{3325774f-810e-48e0-b22d-5ec69d5d5f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\NewFilter1">
+      <UniqueIdentifier>{121adac9-2fe2-44a5-b57c-7d8f33df587a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRS22.h">
@@ -404,6 +410,9 @@
     <ClInclude Include="BrainConnectable.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Tickable.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -610,6 +619,7 @@
     <ClCompile Include="CortexChunk.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Tickable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SRS22.rc">

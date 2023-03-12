@@ -10,9 +10,10 @@
 #include "OpenCVHelpers.h"
 #include "BrainLocatable.h"
 #include "BrainConnectable.h"
+#include "Tickable.h"
 
 namespace SRS22 {
-	class ConceptMap : public BrainLocatable, public BrainConnectable
+	class ConceptMap : public BrainLocatable, public BrainConnectable, public Tickable
 	{
 	public:
 		Brain* myBrain = NULL;
@@ -94,14 +95,14 @@ namespace SRS22 {
 		/// Process all inputs and system state, compare patterns, do transforms.
 		/// Do NOT change M, just manipulate nextM state. Gets called in parallel for all SRSUnits.
 		/// </summary>
-		virtual void ComputeNextState();
+		virtual void ComputeNextState() override;
 
 		/// <summary>
 		/// After processIO has been called on all SRSUnits, this gets called to transfer the nextM state to M.
 		/// Gets called in parallel for all SRSUnits. So must be just state transfer inside the ConceptMap.
 		/// This is NOT the place to do any post processing on the next state!
 		/// </summary>
-		virtual void LatchNewState();
+		virtual void LatchNewState() override;
 
 		virtual std::string Debug();
 

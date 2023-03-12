@@ -37,7 +37,16 @@ namespace SRS22 {
 		if (SingleStepCount > 0)
 			SingleStepCount--;
 
-		PreTick();
+		SequenceCoreBrainTick();
+
+		tickCount++;
+		// Used for ticks per second over in MonitorFrame::OnMonitorFrameTickTimer
+		tickCountRescent++;
+	}
+
+	void Brain::SequenceCoreBrainTick()
+	{
+		PreTickHardwareAndIO();
 
 		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
 			n.second->ComputeNextState();
@@ -53,39 +62,35 @@ namespace SRS22 {
 			n->LatchNewState();
 			});
 
-		PostTick();
-
-		tickCount++;
-		// Used for ticks per second over in MonitorFrame::OnMonitorFrameTickTimer
-		tickCountRescent++;
+		PostTickHardwareAndUI();
 	}
 
-	void Brain::PreTick() {
-		screenInput.PreTick();
-		screenFovea.PreTick();
-		audioInput.PreTick();
-		audioOut.PreTick();
-		cameraInput.PreTick();
-		cameraFovea.PreTick();
-		phonemesOut.PreTick();
-		textIn.PreTick();
-		textOut.PreTick();
-		whiteboardIn.PreTick();
-		whiteboardOut.PreTick();
+	void Brain::PreTickHardwareAndIO() {
+		screenInput.PreTickHardwareAndIO();
+		screenFovea.PreTickHardwareAndIO();
+		audioInput.PreTickHardwareAndIO();
+		audioOut.PreTickHardwareAndIO();
+		cameraInput.PreTickHardwareAndIO();
+		cameraFovea.PreTickHardwareAndIO();
+		phonemesOut.PreTickHardwareAndIO();
+		textIn.PreTickHardwareAndIO();
+		textOut.PreTickHardwareAndIO();
+		whiteboardIn.PreTickHardwareAndIO();
+		whiteboardOut.PreTickHardwareAndIO();
 	}
 
-	void Brain::PostTick() {
-		screenFovea.PostTick();
-		screenInput.PostTick();
-		audioInput.PostTick();
-		audioOut.PostTick();
-		cameraFovea.PostTick();
-		cameraInput.PostTick();
-		phonemesOut.PostTick();
-		textIn.PostTick();
-		textOut.PostTick();
-		whiteboardIn.PostTick();
-		whiteboardOut.PostTick();
+	void Brain::PostTickHardwareAndUI() {
+		screenFovea.PostTickHardwareAndUI();
+		screenInput.PostTickHardwareAndUI();
+		audioInput.PostTickHardwareAndUI();
+		audioOut.PostTickHardwareAndUI();
+		cameraFovea.PostTickHardwareAndUI();
+		cameraInput.PostTickHardwareAndUI();
+		phonemesOut.PostTickHardwareAndUI();
+		textIn.PostTickHardwareAndUI();
+		textOut.PostTickHardwareAndUI();
+		whiteboardIn.PostTickHardwareAndUI();
+		whiteboardOut.PostTickHardwareAndUI();
 	}
 
 	pair<bool, string> Brain::Load(string fileName) {
@@ -141,7 +146,7 @@ namespace SRS22 {
 		AddCortexChunk(make_shared<CortexChunk>(cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40), 0.02f));
 
 		// Compile the SRS system relationships.
-		PostCreateAllSRSUnits();
+		PostCreateAllConceptMaps();
 	}
 
 	void Brain::Shutdown() {
@@ -193,9 +198,14 @@ namespace SRS22 {
 		SingleStepCount = -1;
 	}
 
-	void Brain::PostCreateAllSRSUnits() {
+	void Brain::PostCreateAllConceptMaps() {
 		for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> u : conceptMaps)
 			u.second->PostCreate(*this);
+	}
+
+	void Brain::PostCreateAllCortexChunks() {
+		for (std::shared_ptr<CortexChunk> c : cortexChunks)
+			c->PostCreate(*this);
 	}
 
 	optional<shared_ptr<ConceptMap>> Brain::FindMap(MapUidE n) {
@@ -214,8 +224,8 @@ namespace SRS22 {
 		return std::nullopt;
 	}
 
-	bool Brain::GetRandomConnectionPoint(CortexChunk& from, const int fromOffset, const ConnectivityTriple& ct, const cv::Vec3f& location,
-		/* Out */ PatternConnection& outConnection) {
+	bool Brain::GetRandomConnectionPoint(CortexChunk& from, const int fromOffset,
+		/* Out */ std::shared_ptr<PatternConnection> outConnection) {
 
 		int antiLockupCount = 4;
 
@@ -223,32 +233,33 @@ namespace SRS22 {
 			antiLockupCount--;
 
 			const float r = fastRandFloat();
-			if (r < ct.selfFract) { // Self connection
-				outConnection.target = &from;
-				outConnection.linearOffset = from.GetRandomLinearOffset();
+			if (r < from.ctrip.selfFract) { // Self connection
+				outConnection->target = &from;
 			}
-			else if (r < ct.selfFract + ct.nearbyFract && from.nearChunks.size() > 0) { // Nearby connection
+			else if (r < from.ctrip.selfFract + from.ctrip.nearbyFract && from.nearChunks.size() > 0) { // Nearby connection
 				const float fracNth = fastRandFloat() * from.nearChunks.size();
 				int nth = (int)fracNth;
-				outConnection.target = nullptr;
+				outConnection->target = nullptr;
 				for (auto it = from.nearChunks.begin(); it != from.nearChunks.end() && nth > 0; it++) {
-					outConnection.target = it->get();
+					outConnection->target = it->get();
 					nth--;
 				}
 			}
 			else if (from.farChunks.size() > 0) { // Far connection
+				// Pick a random chunk
 				const float fracNth = fastRandFloat() * from.farChunks.size();
 				int nth = (int)fracNth;
-				outConnection.target = nullptr;
+				outConnection->target = nullptr;
 				for (auto it = from.farChunks.begin(); it != from.farChunks.end() && nth > 0; it++) {
-					outConnection.target = it->get();
+					outConnection->target = it->get();
 					nth--;
 				}
 			}
+			if(outConnection->target != nullptr)
+				outConnection->linearOffset = outConnection->target->GetRandomLinearOffset();
 		} while (
-			(PatternConnection::equals(outConnection, &from, fromOffset) 
-				|| !outConnection.target->isConnectableFlag
-				// The check that concept space Z is less than from's Z is already checked when near and far lists are filled.
+			(PatternConnection::equals(*outConnection, &from, fromOffset) 
+				|| !outConnection->target->isConnectableFlag
 				)
 			&& antiLockupCount > 0);
 

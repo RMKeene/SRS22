@@ -23,12 +23,12 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void ScreenAttnSpotIO::PreTick() {
-		IOCommon::PreTick();
+	void ScreenAttnSpotIO::PreTickHardwareAndIO() {
+		IOCommon::PreTickHardwareAndIO();
 	}
 
-	void ScreenAttnSpotIO::PostTick() {
-		IOCommon::PostTick();
+	void ScreenAttnSpotIO::PostTickHardwareAndUI() {
+		IOCommon::PostTickHardwareAndUI();
 	}
 
 	void ScreenAttnSpotIO::ForceToBeSubclassed() {}

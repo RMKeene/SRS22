@@ -22,11 +22,11 @@ namespace SRS22 {
 		/// <summary>
 		/// Called for each IOCommon at the start of tick in Brain.
 		/// </summary>
-		virtual void PreTick();
+		virtual void PreTickHardwareAndIO();
 		/// <summary>
 		/// Called for each IOCommon at the end of tick in Brain.
 		/// </summary>
-		virtual void PostTick();
+		virtual void PostTickHardwareAndUI();
 
 		void CaptureSegment();
 

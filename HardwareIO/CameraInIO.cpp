@@ -31,13 +31,13 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void CameraInIO::PreTick() {
-		IOCommon::PreTick();
+	void CameraInIO::PreTickHardwareAndIO() {
+		IOCommon::PreTickHardwareAndIO();
 		AcquireFrame();
 	}
 
-	void CameraInIO::PostTick() {
-		IOCommon::PostTick();
+	void CameraInIO::PostTickHardwareAndUI() {
+		IOCommon::PostTickHardwareAndUI();
 	}
 
 	void CameraInIO::UnitTest() {

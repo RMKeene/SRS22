@@ -14,12 +14,12 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void PhonemesIO::PreTick() {
-		IOCommon::PreTick();
+	void PhonemesIO::PreTickHardwareAndIO() {
+		IOCommon::PreTickHardwareAndIO();
 	}
 
-	void PhonemesIO::PostTick() {
-		IOCommon::PostTick();
+	void PhonemesIO::PostTickHardwareAndUI() {
+		IOCommon::PostTickHardwareAndUI();
 	}
 
 	bool PhonemesIO::Init() {

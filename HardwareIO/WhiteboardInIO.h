@@ -19,11 +19,11 @@ namespace SRS22 {
 		/// <summary>
 		/// Called at the start of tick in Brain.
 		/// </summary>
-		virtual void PreTick();
+		virtual void PreTickHardwareAndIO();
 		/// <summary>
 		/// Called at the end of tick in Brain.
 		/// </summary>
-		virtual void PostTick();
+		virtual void PostTickHardwareAndUI();
 
 		virtual void UnitTest();
 

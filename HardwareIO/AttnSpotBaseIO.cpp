@@ -26,12 +26,12 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void AttnSpotBaseIO::PreTick() {
-		IOCommon::PreTick();
+	void AttnSpotBaseIO::PreTickHardwareAndIO() {
+		IOCommon::PreTickHardwareAndIO();
 	}
 
-	void AttnSpotBaseIO::PostTick() {
-		IOCommon::PostTick();
+	void AttnSpotBaseIO::PostTickHardwareAndUI() {
+		IOCommon::PostTickHardwareAndUI();
 	}
 
 	void AttnSpotBaseIO::UnitTest() {

@@ -20,5 +20,25 @@ namespace SRS22 {
 
 		BrainLocatable(const cv::Vec3f location) : location(location) {
 		}
+
+		/// <summary>
+		/// Distance squared between this BrainLocatable's location and other's location.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		inline const float distanceSquared(BrainLocatable& other) {
+			return (location[0] - other.location[0]) * (location[0] - other.location[0]) +
+				(location[1] - other.location[1]) * (location[1] - other.location[1]) +
+				(location[2] - other.location[2]) * (location[2] - other.location[2]);
+		}
+
+		/// <summary>
+		/// Distance between this BrainLocatable's location and other's location.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		inline const float distance(BrainLocatable& other) {
+			return sqrt(distanceSquared(other));
+		}
 	};
 }
