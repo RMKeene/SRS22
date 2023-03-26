@@ -26,19 +26,24 @@ namespace SRS22 {
 	public:
 
 		/// <summary>
-		/// Input Connections and what their state was at time T.
+		/// Input Connections and what their state was at time T. Also if size is 0 then it means this Pattern is not populated.
+		/// See isPopulated()
 		/// </summary>
-		std::list<std::shared_ptr<PatternConnection>> inputConnections;
+		std::vector<std::shared_ptr<PatternConnection>> inputConnections;
 		/// <summary>
 		/// Output connections and what their state was at time T + delta.
 		/// </summary>
-		std::list<std::shared_ptr<PatternConnection>> outputConnections;
+		std::vector<std::shared_ptr<PatternConnection>> outputConnections;
 
 		float charge = 0.0f;
 		float nextCharge = 0.0f;
+		float staleness = -10000.0f;
+		int tickCountdownUntilLearnOutputs = -1;
 
 		Pattern();
 		~Pattern();
+
+		boolean isPopulated() { return inputConnections.size() > 0; }
 
 		virtual void ComputeNextState() override;
 		virtual void LatchNewState() override;
@@ -49,6 +54,11 @@ namespace SRS22 {
 		/// This is the state seen "now".
 		/// </summary>
 		void MakeSemiRandomInputConnections(Brain& brain, CortexChunk& ct, const int patternSelfOffset);
+
+		/// <summary>
+		/// Set the delay counter so in the delta T future we snapshot the output connections.
+		/// </summary>
+		void BeginLearningDelay(CortexChunk& ct);
 
 		/// <summary>
 		/// It is now T + DeltaT so snapshot the current local SRS22 ConceptState 

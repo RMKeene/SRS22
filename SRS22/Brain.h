@@ -48,6 +48,16 @@ namespace SRS22 {
 		/// </summary>
 		int SingleStepCount = 0;
 
+		/// <summary>
+		/// How good the system feels. + is good, - is bad, range about -1 to 1
+		/// </summary>
+		float overallGoodness = 0.0f;
+		/// <summary>
+		/// Tempered derivative of overallGoodness.
+		/// </summary>
+		float overallGoodnessRateOfChange = 0.0f;
+		float overallGoodnessRateOfChangeThreshold = 0.1f;
+
 		AudioCaptureIO audioInput;
 		AudioOutIO audioOut;
 		CameraAttnSpotIO cameraFovea;
@@ -107,6 +117,12 @@ namespace SRS22 {
 		/// <returns>True on success.</returns>
 		bool GetRandomConnectionPoint(CortexChunk& from, const int fromOffset,
 			/* Out */ std::shared_ptr<PatternConnection> outConnection);
+
+		/// <summary>
+		/// The world for this brain is improving. Thus it should learn this state.
+		/// </summary>
+		/// <returns></returns>
+		bool TheWorldIsGettingBetter() { return overallGoodnessRateOfChange > overallGoodnessRateOfChangeThreshold; }
 
 	private:
 		// PreTick(), ComputeNextState(), LatchNewState(), PostTick()

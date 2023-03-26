@@ -36,13 +36,16 @@ namespace SRS22 {
 		/// </summary>
 		std::vector<std::shared_ptr <Pattern>> patterns;
 
+		Brain& brain;
+
 		/// <summary>
 		/// Cached lists of which ConceptMaps and/or CortexChunks are nearby in concept 3d space.
 		/// </summary>
 		std::vector<std::shared_ptr<BrainConnectable>> nearChunks;
 		std::vector<std::shared_ptr<BrainConnectable>> farChunks;
 
-		CortexChunk(const cv::Vec3f location, const int maxPatterns, const ConnectivityTriple ctrip, const float growthRate) :
+		CortexChunk(Brain& brain,const cv::Vec3f location, const int maxPatterns, const ConnectivityTriple ctrip, const float growthRate) :
+			brain(brain),
 			BrainLocatable(location),
 			maxPatterns(maxPatterns),
 			ctrip(ctrip),
@@ -56,19 +59,36 @@ namespace SRS22 {
 			patterns.clear();
 		}
 		
-		void PostCreate(Brain& brain);
+		void PostCreate();
 
-		void FillNearAndFarChunkCache(SRS22::Brain& brain);
+		void FillNearAndFarChunkCache();
 
 		void ComputeNextState() override;
 
 		void LatchNewState() override;
 
 		int GetRandomLinearOffset() override;
+		/// <summary>
+		/// Get firstly an unused offset, or if all used, get the most stale.
+		/// </summary>
+		/// <returns></returns>
+		std::optional<int> GetLinearOffsetToPopulate();
 
 		float GetChargeValue(const int linearOffset) override;
 		void SetChargeValue(const int linearOffset, const float c) override;
 		void AddToChargeValue(const int linearOffset, const float c) override;
+
+		/// <summary>
+		/// True if you should try to add a new pattern in this Chunk. False if you shouldn't.
+		/// </summary>
+		/// <returns></returns>
+		bool ShouldAddNewPattern();
+
+		/// <summary>
+		/// Try to add a pattern. Returns true if successful.
+		/// </summary>
+		/// <returns></returns>
+		bool TryToAddNewPattern();
 
 	};
 }

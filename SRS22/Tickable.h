@@ -18,5 +18,6 @@ class Tickable
 		virtual void ComputeNextState() {}
 		virtual void LatchNewState() {}
 		virtual void PostTickHardwareAndUI() {}
+		virtual void LearningPhase() {}
 };
 

@@ -27,7 +27,7 @@ namespace SRS22 {
 		/// <summary>
 		/// A.linearOffset == B.linearOffset && A.target == B.target
 		/// 
-		/// Checkes linearOffset first for speed as that is much more likely to be unequal.
+		/// Checks linearOffset first for speed as that is much more likely to be unequal.
 		/// </summary>
 		/// <param name="A"></param>
 		/// <param name="B"></param>
@@ -43,16 +43,16 @@ namespace SRS22 {
 		/// <summary>
 		/// A.linearOffset != B.linearOffset || A.target != B.target
 		/// 
-		/// Checkes linearOffset first for speed as that is much more likely to be unequal.
+		/// Checks linearOffset first for speed as that is much more likely to be unequal.
 		/// </summary>
 		/// <param name="A"></param>
 		/// <param name="B"></param>
 		/// <returns></returns>
-		inline static bool unequals(const PatternConnection& A, const PatternConnection& B) {
+		inline static bool unequal(const PatternConnection& A, const PatternConnection& B) {
 			return A.linearOffset != B.linearOffset || A.target != B.target;
 		}
 
-		inline static bool unequals(const PatternConnection& A, const BrainConnectable* Btarget, const int Boffset) {
+		inline static bool unequal(const PatternConnection& A, const BrainConnectable* Btarget, const int Boffset) {
 			return A.linearOffset != Boffset || A.target != Btarget;
 		}
 	};

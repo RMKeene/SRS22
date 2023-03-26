@@ -61,6 +61,9 @@ namespace SRS22 {
 		parallel_for_each(begin(cortexChunks), end(cortexChunks), [&](std::shared_ptr<CortexChunk> n) {
 			n->LatchNewState();
 			});
+		parallel_for_each(begin(cortexChunks), end(cortexChunks), [&](std::shared_ptr<CortexChunk> n) {
+			n->LearningPhase();
+			});
 
 		PostTickHardwareAndUI();
 	}
@@ -143,7 +146,7 @@ namespace SRS22 {
 		AddMap(make_shared<TextOutMap>(this));
 
 		// The Cortex
-		AddCortexChunk(make_shared<CortexChunk>(cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40), 0.02f));
+		AddCortexChunk(make_shared<CortexChunk>(*this, cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40, 4), 0.02f));
 
 		// Compile the SRS system relationships.
 		PostCreateAllConceptMaps();
@@ -205,7 +208,7 @@ namespace SRS22 {
 
 	void Brain::PostCreateAllCortexChunks() {
 		for (std::shared_ptr<CortexChunk> c : cortexChunks)
-			c->PostCreate(*this);
+			c->PostCreate();
 	}
 
 	optional<shared_ptr<ConceptMap>> Brain::FindMap(MapUidE n) {
@@ -233,10 +236,10 @@ namespace SRS22 {
 			antiLockupCount--;
 
 			const float r = fastRandFloat();
-			if (r < from.ctrip.selfFract) { // Self connection
+			if (r < from.ctrip.selfFraction) { // Self connection
 				outConnection->target = &from;
 			}
-			else if (r < from.ctrip.selfFract + from.ctrip.nearbyFract && from.nearChunks.size() > 0) { // Nearby connection
+			else if (r < from.ctrip.selfFraction + from.ctrip.nearbyFraction && from.nearChunks.size() > 0) { // Nearby connection
 				const float fracNth = fastRandFloat() * from.nearChunks.size();
 				int nth = (int)fracNth;
 				outConnection->target = nullptr;
@@ -255,10 +258,10 @@ namespace SRS22 {
 					nth--;
 				}
 			}
-			if(outConnection->target != nullptr)
+			if (outConnection->target != nullptr)
 				outConnection->linearOffset = outConnection->target->GetRandomLinearOffset();
 		} while (
-			(PatternConnection::equals(*outConnection, &from, fromOffset) 
+			(PatternConnection::equals(*outConnection, &from, fromOffset)
 				|| !outConnection->target->isConnectableFlag
 				)
 			&& antiLockupCount > 0);

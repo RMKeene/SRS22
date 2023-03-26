@@ -4,7 +4,7 @@
 namespace SRS22 {
 	/// <summary>
 	/// Either a ConceptMap or a CortexChunk that has some array of charges that can be read or written
-	/// such that one deoes not have to know which class the target is. 
+	/// such that one does not have to know which class the target is. 
 	/// 
 	/// A LinearOffset is a single integer offset in the charge array (M) of the target. E.g. a 3D ConceptMap X,Y,Z converted to
 	/// a single linear offset.

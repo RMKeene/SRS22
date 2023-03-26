@@ -7,8 +7,18 @@
 namespace SRS22 {
 
 	void CortexChunk::ComputeNextState() {
+		int i = 0;
 		for (auto& p : patterns) {
+			if (p->tickCountdownUntilLearnOutputs > 0) {
+				p->tickCountdownUntilLearnOutputs--;
+				if (p->tickCountdownUntilLearnOutputs == 0) {
+					p->MakeSemiRandomOutputConnections(brain, *this, i);
+					p->tickCountdownUntilLearnOutputs = -1; // Turn off counter.
+				}
+			}
 			p->ComputeNextState();
+
+			i++;
 		}
 	}
 
@@ -18,6 +28,19 @@ namespace SRS22 {
 
 	int CortexChunk::GetRandomLinearOffset() {
 		return fastRand() % patterns.size();
+	}
+
+	optional<int> CortexChunk::GetLinearOffsetToPopulate() {
+		optional<int> maxStaleOffset = nullopt;
+		float maxStaleValue = -20000.0f;
+		for (int i = 0; i < patterns.size(); i++) {
+			if (patterns.at(i)->staleness < maxStaleValue) {
+				maxStaleOffset = i;
+				maxStaleValue = patterns.at(i)->staleness;
+			}
+		}
+
+		return maxStaleOffset;
 	}
 
 	float CortexChunk::GetChargeValue(const int linearOffset) {
@@ -32,24 +55,48 @@ namespace SRS22 {
 		patterns.at(linearOffset)->charge += c;
 	}
 
-	void CortexChunk::PostCreate(Brain& brain) {
-		FillNearAndFarChunkCache(brain);
+	void CortexChunk::PostCreate() {
+		FillNearAndFarChunkCache();
 	}
 
-	void CortexChunk::FillNearAndFarChunkCache(SRS22::Brain& brain)
+	void CortexChunk::FillNearAndFarChunkCache()
 	{
 		const float near2 = brain.maxNearDistance * brain.maxNearDistance;
 		const float far2 = brain.minFarDistance * brain.minFarDistance;
 		// Fill nearChunks and farChunks
 		for (auto ch = brain.cortexChunks.begin(); ch != brain.cortexChunks.end(); ch++) {
 			if (ch->get() != this) {
-				if (this->distanceSquared(**ch) < near2) {
+				if (this->distanceSquared(**ch) <= near2) {
 					nearChunks.push_back(*ch);
 				}
-				else if (this->distanceSquared(**ch) > far2) {
+				else if (this->distanceSquared(**ch) >= far2) {
 					farChunks.push_back(*ch);
 				}
 			}
 		}
 	}
+
+	bool CortexChunk::ShouldAddNewPattern() {
+		return brain.TheWorldIsGettingBetter();
+	}
+
+	bool CortexChunk::TryToAddNewPattern() {
+		if (ShouldAddNewPattern()) {
+			optional<int> i = GetLinearOffsetToPopulate();
+			if (i.has_value()) {
+				if (patterns.at(i.value()).get() == nullptr) {
+					patterns.at(i.value()) = std::make_shared<Pattern>();
+				}
+				patterns.at(i.value())->MakeSemiRandomInputConnections(brain, *this, i.value());
+				patterns.at(i.value())->BeginLearningDelay(*this);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+
 }

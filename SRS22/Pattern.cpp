@@ -11,6 +11,8 @@ namespace SRS22 {
 	}
 
 	void Pattern::ComputeNextState() {
+
+
 		// Compute the next state of the charge.
 		// This is a simple summation of the fabs(input charges - expected charge).
 		// The output charges are computed in the output connections.
@@ -30,32 +32,35 @@ namespace SRS22 {
 	void Pattern::MakeSemiRandomInputConnections(Brain& brain, CortexChunk& ct, const int patternSelfOffset) {
 		if (inputConnections.size() != ct.ctrip.desiredConnectionCount) {
 			// Clear the list and start over. Saves on reallocating.
-			inputConnections.clear();
+			inputConnections.resize(ct.ctrip.desiredConnectionCount);
 		}
 		for (int i = ct.ctrip.desiredConnectionCount; i > 0; i--) {
-			// Choose by fractions of ctrip
-			std::shared_ptr<PatternConnection> conn = std::make_shared<PatternConnection>();
-			if (!brain.GetRandomConnectionPoint(ct, patternSelfOffset, conn)) {
-				// Failed to find a connection point, so mark it as invalid and keep going.
-				conn->target = nullptr;
+			if (inputConnections[i] == nullptr)
+				inputConnections[i] = std::make_shared<PatternConnection>(); {
 			}
-			inputConnections.push_front(conn);
+			if (!brain.GetRandomConnectionPoint(ct, patternSelfOffset, inputConnections[i])) {
+				// Failed to find a connection point, so mark it as invalid and keep going.
+				inputConnections[i]->target = nullptr;
+			}
 		}
+	}
+
+	void Pattern::BeginLearningDelay(CortexChunk& ct) {
+		tickCountdownUntilLearnOutputs = ct.ctrip.learningDeltaT;
 	}
 
 	void Pattern::MakeSemiRandomOutputConnections(Brain& brain, CortexChunk& ct, const int patternSelfOffset) {
 		if (outputConnections.size() != ct.ctrip.desiredConnectionCount) {
-			// Clear the list and start over. Saves on reallocating.
-			outputConnections.clear();
+			outputConnections.resize(ct.ctrip.desiredConnectionCount);
 		}
 		for (int i = ct.ctrip.desiredConnectionCount; i > 0; i--) {
-			// Choose by fractions of ctrip
-			std::shared_ptr<PatternConnection> conn = std::make_shared<PatternConnection>();
-			if (!brain.GetRandomConnectionPoint(ct, patternSelfOffset, conn)) {
-				// Failed to find a connection point, so mark it as invalid and keep going.
-				conn->target = nullptr;
+			if (outputConnections[i] == nullptr) {
+				outputConnections[i] = std::make_shared<PatternConnection>();
 			}
-			outputConnections.push_front(conn);
+			if (!brain.GetRandomConnectionPoint(ct, patternSelfOffset, outputConnections[i])) {
+				// Failed to find a connection point, so mark it as invalid and keep going.
+				outputConnections[i]->target = nullptr;
+			}
 		}
 	}
 }
