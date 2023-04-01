@@ -39,7 +39,7 @@ namespace SRS22 {
 		float minFarDistance = 100.0f;
 
 		long long tickCount = 0;
-		long long tickCountRescent = 0;
+		long long tickCountRecent = 0;
 		int ticksPerSecondLatest = 1;
 
 		/// <summary>

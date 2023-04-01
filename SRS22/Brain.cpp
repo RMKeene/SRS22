@@ -41,7 +41,7 @@ namespace SRS22 {
 
 		tickCount++;
 		// Used for ticks per second over in MonitorFrame::OnMonitorFrameTickTimer
-		tickCountRescent++;
+		tickCountRecent++;
 	}
 
 	void Brain::SequenceCoreBrainTick()

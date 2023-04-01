@@ -211,13 +211,13 @@ namespace SRS22 {
 		TickCountText->SetLabelText(wxString::Format("Ticks: %lld", brain0->tickCount));
 		float intervalMs = (float)event.GetInterval();
 		if (intervalMs > 0.0f) {
-			brain0->ticksPerSecondLatest = (int)((brain0->tickCountRescent * 1000) / intervalMs);
+			brain0->ticksPerSecondLatest = (int)((brain0->tickCountRecent * 1000) / intervalMs);
 			TicksPerSecondText->SetLabelText(wxString::Format("Ticks/Sec.: %d", brain0->ticksPerSecondLatest));
 		}
 		else {
 			TicksPerSecondText->SetLabelText(wxString::Format("Ticks/Sec.: ---"));
 		}
-		brain0->tickCountRescent = 0;
+		brain0->tickCountRecent = 0;
 
 		GlobalWorld::GlobalWorldInstance.TickAll();
 		if (RunButton->GetValue()) {

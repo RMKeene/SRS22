@@ -413,6 +413,9 @@
     <ClInclude Include="Tickable.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="SRS22LogTaker.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -620,6 +623,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Tickable.cpp" />
+    <ClCompile Include="SRS22LogTaker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SRS22.rc">

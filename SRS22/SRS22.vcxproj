@@ -395,6 +395,7 @@
     <ClInclude Include="soloud\include\soloud_waveshaperfilter.h" />
     <ClInclude Include="soloud\include\soloud_wavstream.h" />
     <ClInclude Include="SRS22.h" />
+    <ClInclude Include="SRS22LogTaker.h" />
     <ClInclude Include="SRS22UIgen.h" />
     <ClInclude Include="SRSMath.h" />
     <ClInclude Include="SRSUnitDisplay.h" />
@@ -482,6 +483,7 @@
     <ClCompile Include="Rect.h" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SRS22.cpp" />
+    <ClCompile Include="SRS22LogTaker.cpp" />
     <ClCompile Include="SRS22UIgen.cpp" />
     <ClCompile Include="SRSMath.cpp" />
     <ClCompile Include="SRSUnitDisplay.cpp" />

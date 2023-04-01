@@ -1,5 +1,6 @@
 #pragma once
 #include "Brain.h"
+#include "SRS22LogTaker.h"
 
 namespace SRS22 {
 	/// <summary>
@@ -11,7 +12,12 @@ namespace SRS22 {
 	{
 		bool isExiting = false;
 	public:
+		/// <summary>
+		/// Note that this is not a pointer.  It is a concrete instance.
+		/// </summary>
 		static GlobalWorld GlobalWorldInstance;
+
+		SRS22LogTaker* logTaker = nullptr;
 
 		std::array <BrainH, 1> brains;
 

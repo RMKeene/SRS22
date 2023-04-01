@@ -7,10 +7,11 @@
 #include "TopTextFrame.h"
 #include "WhiteboardFrame.h"
 #include "TopVideoFrame.h"
+#include "SRS22LogTaker.h"
 
 namespace SRS22 {
 	// Define a new application type, each program should derive a class from wxApp
-	class SRS22App : public wxApp
+	class SRS22App : public wxApp, public SRS22LogTaker
 	{
 	public:
 		SRS22App();
@@ -23,7 +24,10 @@ namespace SRS22 {
 		// return: if OnInit() returns false, the application terminates)
 		virtual bool OnInit() wxOVERRIDE;
 
-		MonitorFrame* monitorFrame;
+		static MonitorFrame* monitorFrame;
+
+		// Inherited via SRS22LogTaker
+		void TakeLog(std::string msg, LogLevels logLevel) override;
 
 	private:
 		wxLocale m_locale;
