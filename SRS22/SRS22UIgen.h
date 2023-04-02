@@ -58,6 +58,9 @@ class MonitorFrameGen : public wxFrame
 		wxButton* resetLayoutButton;
 		wxButton* TerstAButton;
 		wxButton* TestBButton;
+		wxButton* GoodButton;
+		wxButton* BadButton;
+		wxStaticText* overallGoodnessLabel;
 		wxStaticText* m_staticText91;
 		wxChoice* AudioInChoiceDropbox;
 		wxStaticText* m_staticText181;
@@ -105,6 +108,8 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnResetLayoutButton( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTestAClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTestBClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnGoodClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBadClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioInDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioVolumeIn( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }

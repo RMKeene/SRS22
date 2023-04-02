@@ -184,6 +184,16 @@ namespace SRS22 {
 		topVideoFrame->Raise();
 	}
 
+	void MonitorFrame::OnGoodClicked(wxCommandEvent& event) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		b->GoodJob();
+	}
+
+	void MonitorFrame::OnBadClicked(wxCommandEvent& event) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		b->BadJob();
+	}
+
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {
 	}
 
@@ -218,6 +228,8 @@ namespace SRS22 {
 			TicksPerSecondText->SetLabelText(wxString::Format("Ticks/Sec.: ---"));
 		}
 		brain0->tickCountRecent = 0;
+
+		overallGoodnessLabel->SetLabelText(wxString::Format("Goodness: %f", brain0->overallGoodness));
 
 		GlobalWorld::GlobalWorldInstance.TickAll();
 		if (RunButton->GetValue()) {

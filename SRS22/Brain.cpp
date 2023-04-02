@@ -146,7 +146,7 @@ namespace SRS22 {
 		AddMap(make_shared<TextOutMap>(this));
 
 		// The Cortex
-		AddCortexChunk(make_shared<CortexChunk>(*this, cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40, 4), 0.02f));
+		AddCortexChunk(make_shared<CortexChunk>(*this, "Cortex1", cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40, 4), 0.02f));
 
 		// Compile the SRS system relationships.
 		PostCreateAllConceptMaps();
@@ -155,7 +155,7 @@ namespace SRS22 {
 	void Brain::Shutdown() {
 		screenFovea.Shutdown();
 		screenInput.Shutdown();
-		audioInput.Shutdown();
+		// audioInput.Shutdown(); // Hangs
 		audioOut.Shutdown();
 		cameraInput.Shutdown();
 		textIn.Shutdown();

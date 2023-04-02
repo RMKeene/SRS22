@@ -3,6 +3,7 @@
 #include "Pattern.h"
 #include "FastRand.h"
 #include "Brain.h"
+#include "SRS22LogTaker.h"
 
 namespace SRS22 {
 
@@ -20,6 +21,8 @@ namespace SRS22 {
 
 			i++;
 		}
+		if(brain.ShouldLearn())
+			growthSum += growthRate * brain.overallGoodnessRateOfChange;
 	}
 
 	void CortexChunk::LatchNewState() {
@@ -89,6 +92,7 @@ namespace SRS22 {
 				}
 				patterns.at(i.value())->MakeSemiRandomInputConnections(brain, *this, i.value());
 				patterns.at(i.value())->BeginLearningDelay(*this);
+				SRS22LogTaker::LogInfo("Created new pattern in chunk " + name);
 				return true;
 			}
 			else {

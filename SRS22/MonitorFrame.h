@@ -27,6 +27,8 @@ namespace SRS22 {
 		void OnSaveLayoutButton(wxCommandEvent& event) override;
 		void OnReloadLayoutButton(wxCommandEvent& event) override;
 		void OnResetLayoutButton(wxCommandEvent& event) override;
+		void OnGoodClicked(wxCommandEvent& event) override;
+		void OnBadClicked(wxCommandEvent& event) override;
 		void OnAudioInDeviceChoiceChanged(wxCommandEvent& event) override;
 		void OnAudioVolumeIn(wxScrollEvent& event) override;
 		void OnAudioOutDeviceChoiceChanged(wxCommandEvent& event) override;

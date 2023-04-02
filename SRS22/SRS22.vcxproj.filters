@@ -251,9 +251,6 @@
     <ClInclude Include="Reaper.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="SRSLog.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="ConceptMap.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -476,9 +473,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Reaper.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="SRSLog.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="ConceptMap.cpp">

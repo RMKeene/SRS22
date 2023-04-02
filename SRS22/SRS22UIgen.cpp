@@ -114,6 +114,28 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	MonitorControl->Add( sbSizer11, 0, wxEXPAND, 5 );
 	
+	wxStaticBoxSizer* sbSizer111;
+	sbSizer111 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Reward/Punish") ), wxVERTICAL );
+	
+	wxBoxSizer* bSizer16;
+	bSizer16 = new wxBoxSizer( wxHORIZONTAL );
+	
+	GoodButton = new wxButton( sbSizer111->GetStaticBox(), wxID_ANY, wxT("Good!"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer16->Add( GoodButton, 0, wxALL, 5 );
+	
+	BadButton = new wxButton( sbSizer111->GetStaticBox(), wxID_ANY, wxT("Bad!"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer16->Add( BadButton, 0, wxALL, 5 );
+	
+	
+	sbSizer111->Add( bSizer16, 1, wxEXPAND, 5 );
+	
+	overallGoodnessLabel = new wxStaticText( sbSizer111->GetStaticBox(), wxID_ANY, wxT("Goodness: 0.0"), wxDefaultPosition, wxDefaultSize, 0 );
+	overallGoodnessLabel->Wrap( -1 );
+	sbSizer111->Add( overallGoodnessLabel, 0, wxALL, 5 );
+	
+	
+	MonitorControl->Add( sbSizer111, 0, wxEXPAND, 5 );
+	
 	
 	MonitorControl->Add( 0, 0, 0, wxEXPAND, 5 );
 	
@@ -351,6 +373,8 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	resetLayoutButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnResetLayoutButton ), NULL, this );
 	TerstAButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestAClicked ), NULL, this );
 	TestBButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestBClicked ), NULL, this );
+	GoodButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnGoodClicked ), NULL, this );
+	BadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	AudioInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
@@ -406,6 +430,8 @@ MonitorFrameGen::~MonitorFrameGen()
 	resetLayoutButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnResetLayoutButton ), NULL, this );
 	TerstAButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestAClicked ), NULL, this );
 	TestBButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestBClicked ), NULL, this );
+	GoodButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnGoodClicked ), NULL, this );
+	BadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	AudioInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );

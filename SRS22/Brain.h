@@ -73,6 +73,8 @@ namespace SRS22 {
 		Brain();
 		~Brain();
 
+		inline boolean ShouldLearn() { return overallGoodnessRateOfChange >= overallGoodnessRateOfChangeThreshold; }
+
 		/// <summary>
 		/// Called just before Win Main Message Loop starts iterating.
 		/// </summary>
@@ -123,6 +125,15 @@ namespace SRS22 {
 		/// </summary>
 		/// <returns></returns>
 		bool TheWorldIsGettingBetter() { return overallGoodnessRateOfChange > overallGoodnessRateOfChangeThreshold; }
+		/// <summary>
+		/// Tell the brain it just did something good. From button on the UI
+		/// </summary>
+		void GoodJob() { overallGoodness += 0.5f; }
+		/// <summary>
+		/// Tell the brain it just did something bad.From button on the UI
+		/// </summary>
+		void BadJob() { overallGoodness -= 0.5f; }
+
 
 	private:
 		// PreTick(), ComputeNextState(), LatchNewState(), PostTick()

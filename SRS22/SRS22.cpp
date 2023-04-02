@@ -14,7 +14,7 @@ namespace SRS22 {
 		// on the first day of the week.
 		m_locale(wxLANGUAGE_DEFAULT)
 	{
-		SRS22::SetLogTaker(this);
+		SRS22LogTaker::SetLogTaker(this);
 		Settings::globalSettings.Load();
 	}
 
@@ -30,9 +30,11 @@ namespace SRS22 {
 		monitorFrame = new MonitorFrame(nullptr);
 
 		monitorFrame->LogRichText->Clear();
+
 		wxLog::SetActiveTarget(new wxLogStderr());
 		//wxLog::SetActiveTarget(new wxLogWindow(monitorFrame, "Log", true, false));
-		LogInfo("SRS22App V0.1.0 Startup");
+
+		SRS22LogTaker::LogInfo("SRS22App V0.1.0 Startup");
 
 		monitorFrame->LoadMapChoices();
 		monitorFrame->Show(true);
@@ -45,45 +47,45 @@ namespace SRS22 {
 
 	void SRS22App::TakeLog(std::string msg, LogLevels logLevel) {
 		switch (logLevel) {
-		case LOG_ERROR:
+		case LogLevels::LOG_ERROR:
 			wxLogError("%s", msg.c_str());
 			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 0, 0));
 			break;
-		case DEBUG:
+		case LogLevels::DEBUG:
 			wxLogDebug("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(0, 255, 0));
+			monitorFrame->LogRichText->BeginTextColour(wxColor(240, 255, 240));
 			break;
-		case INFO:
+		case LogLevels::INFO:
 			wxLogInfo("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(0, 0, 255));
+			monitorFrame->LogRichText->BeginTextColour(wxColor(240, 240, 255));
 			break;
-		case WARNING:
+		case LogLevels::WARNING:
 			wxLogWarning("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 255, 0));
+			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 255, 220));
 			break;
-		case VERBOSE:
+		case LogLevels::VERBOSE:
 			wxLogVerbose("%s", msg.c_str());
 			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 255, 255));
 			break;
-		case MESSAGE:
+		case LogLevels::MESSAGE:
 			wxLogMessage("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(0, 255, 255));
+			monitorFrame->LogRichText->BeginTextColour(wxColor(220, 255, 255));
 			break;
-		case TRACE:
+		case LogLevels::TRACE:
 			wxLogTrace("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 0, 255));
+			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 220, 255));
 			break;
-		case STATUS:
+		case LogLevels::STATUS:
 			wxLogStatus("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 0, 255));
+			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 220, 255));
 			break;
-		case SYSERROR:
+		case LogLevels::SYSERROR:
 			wxLogSysError("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 0, 255));
+			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 200, 255));
 			break;
-		case FATAL_ERROR:
+		case LogLevels::FATAL_ERROR:
 			wxLogFatalError("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 0, 255));
+			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 190, 255));
 			break;
 		default:
 			wxLogInfo("%s", msg.c_str());

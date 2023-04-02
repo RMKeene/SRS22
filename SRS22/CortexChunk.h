@@ -19,6 +19,10 @@ namespace SRS22 {
 	{
 	public:
 		/// <summary>
+		/// Arbitrary name so it is easier to comprehend.
+		/// </summary>
+		const std::string name;
+		/// <summary>
 		/// Once we hit this then we start replacing the most stale Pattern with a new one on growth tick.
 		/// </summary>
 		const int maxPatterns;
@@ -27,10 +31,15 @@ namespace SRS22 {
 		/// </summary>
 		const ConnectivityTriple ctrip;
 		/// <summary>
-		/// Added every tick. When growthSum hits 1.0 then growthSum is reset to 0 and a new Pattern is acquired.
+		/// growthRate * brain.overallGoodnessRateOfChange added every tick if brain.ShouldLearn. 
+		/// When growthSum hits 1.0 then growthSum is reset to 0.0 and a new Pattern is acquired.
 		/// Moderated by global goodness factor.
 		/// </summary>
 		const float growthRate;
+		/// <summary>
+		/// See growthRate.
+		/// </summary>
+		float growthSum = 0.0f;
 		/// <summary>
 		/// How many patterns currently in this chunk. 
 		/// </summary>
@@ -44,7 +53,17 @@ namespace SRS22 {
 		std::vector<std::shared_ptr<BrainConnectable>> nearChunks;
 		std::vector<std::shared_ptr<BrainConnectable>> farChunks;
 
-		CortexChunk(Brain& brain,const cv::Vec3f location, const int maxPatterns, const ConnectivityTriple ctrip, const float growthRate) :
+		/// <summary>
+		/// A chunk of the cortex.
+		/// </summary>
+		/// <param name="brain">Owner</param>
+		/// <param name="name_or_emptyStr">Either a human friendly name or "" for "NoName"</param>
+		/// <param name="location">The concept coordinates of the Chunk.</param>
+		/// <param name="maxPatterns"></param>
+		/// <param name="ctrip"></param>
+		/// <param name="growthRate"></param>
+		CortexChunk(Brain& brain, std::string name_or_emptyStr, const cv::Vec3f location, const int maxPatterns, const ConnectivityTriple ctrip, const float growthRate) :
+			name(name_or_emptyStr.length() > 0 ? name_or_emptyStr : "NoName"),
 			brain(brain),
 			BrainLocatable(location),
 			maxPatterns(maxPatterns),
@@ -58,7 +77,7 @@ namespace SRS22 {
 			farChunks.clear();
 			patterns.clear();
 		}
-		
+
 		void PostCreate();
 
 		void FillNearAndFarChunkCache();

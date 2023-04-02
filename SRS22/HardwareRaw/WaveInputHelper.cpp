@@ -180,14 +180,6 @@ namespace SRS22 {
 	{
 		int res;
 
-		res = waveInStop(*hWaveIn);
-		if (res != MMSYSERR_NOERROR)
-		{
-			_debug_print("Stop recording FAILED!", 1);
-			return -1;
-		}
-		//_debug_print("Stop recording SUCCEED!");
-
 		res = waveInReset(*hWaveIn);
 		if (res != MMSYSERR_NOERROR)
 		{
@@ -195,6 +187,14 @@ namespace SRS22 {
 			return -1;
 		}
 		//_debug_print("Reset wave in memory SUCCEED!");
+
+		res = waveInStop(*hWaveIn);
+		if (res != MMSYSERR_NOERROR)
+		{
+			_debug_print("Stop recording FAILED!", 1);
+			return -1;
+		}
+		//_debug_print("Stop recording SUCCEED!");
 
 		return 0;
 	}
