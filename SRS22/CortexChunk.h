@@ -70,6 +70,8 @@ namespace SRS22 {
 			ctrip(ctrip),
 			growthRate(growthRate)
 		{
+			for (int i = 0; i < maxPatterns; i++)
+				patterns.push_back(std::make_shared<Pattern>());
 		}
 
 		~CortexChunk() {
@@ -85,6 +87,8 @@ namespace SRS22 {
 		void ComputeNextState() override;
 
 		void LatchNewState() override;
+
+		void LearningPhase() override;
 
 		int GetRandomLinearOffset() override;
 		/// <summary>

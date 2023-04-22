@@ -43,6 +43,10 @@ namespace SRS22 {
 		Pattern();
 		~Pattern();
 
+		/// <summary>
+		/// Just return inputConnections.size() > 0;
+		/// </summary>
+		/// <returns></returns>
 		boolean isPopulated() { return inputConnections.size() > 0; }
 
 		virtual void ComputeNextState() override;

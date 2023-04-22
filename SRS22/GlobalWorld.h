@@ -24,6 +24,7 @@ namespace SRS22 {
 		GlobalWorld() {
 			brains[0] = make_shared<Brain>();
 			brains[0]->Init();
+			SRS22LogTaker::LogInfo("Global World: 1 brain.");
 		}
 
 		~GlobalWorld() {

@@ -65,6 +65,10 @@ namespace SRS22 {
 			n->LearningPhase();
 			});
 
+		overallGoodnessRateOfChange = overallGoodnessRateOfChange * 0.95f + overallGoodness - overallGoodnessPrevious;
+		overallGoodness *= 0.98f;
+		overallGoodnessPrevious = overallGoodness;
+
 		PostTickHardwareAndUI();
 	}
 
@@ -236,10 +240,12 @@ namespace SRS22 {
 			antiLockupCount--;
 
 			const float r = fastRandFloat();
-			if (r < from.ctrip.selfFraction) { // Self connection
+			if (r < from.ctrip.selfFraction ||
+				(from.nearChunks.size() == 0 && from.farChunks.size() == 0)) { // Self connection
 				outConnection->target = &from;
 			}
-			else if (r < from.ctrip.selfFraction + from.ctrip.nearbyFraction && from.nearChunks.size() > 0) { // Nearby connection
+			else if ((r < from.ctrip.selfFraction + from.ctrip.nearbyFraction && from.nearChunks.size() > 0) ||
+				(from.nearChunks.size() > 0 && from.farChunks.size() == 0)) { // Nearby connection
 				const float fracNth = fastRandFloat() * from.nearChunks.size();
 				int nth = (int)fracNth;
 				outConnection->target = nullptr;

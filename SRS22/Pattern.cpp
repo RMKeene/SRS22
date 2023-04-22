@@ -34,7 +34,7 @@ namespace SRS22 {
 			// Clear the list and start over. Saves on reallocating.
 			inputConnections.resize(ct.ctrip.desiredConnectionCount);
 		}
-		for (int i = ct.ctrip.desiredConnectionCount; i > 0; i--) {
+		for (int i = 0; i < ct.ctrip.desiredConnectionCount; i++) {
 			if (inputConnections[i] == nullptr)
 				inputConnections[i] = std::make_shared<PatternConnection>(); {
 			}
@@ -53,7 +53,7 @@ namespace SRS22 {
 		if (outputConnections.size() != ct.ctrip.desiredConnectionCount) {
 			outputConnections.resize(ct.ctrip.desiredConnectionCount);
 		}
-		for (int i = ct.ctrip.desiredConnectionCount; i > 0; i--) {
+		for (int i = 0; i < ct.ctrip.desiredConnectionCount; i++) {
 			if (outputConnections[i] == nullptr) {
 				outputConnections[i] = std::make_shared<PatternConnection>();
 			}

@@ -21,7 +21,7 @@ namespace SRS22 {
 
 			i++;
 		}
-		if(brain.ShouldLearn())
+		if (brain.ShouldLearn())
 			growthSum += growthRate * brain.overallGoodnessRateOfChange;
 	}
 
@@ -29,15 +29,29 @@ namespace SRS22 {
 
 	}
 
+	void CortexChunk::LearningPhase() {
+		if (growthSum >= 1.0f) {
+			growthSum = 0.0f;
+			TryToAddNewPattern();
+		}
+	}
+
 	int CortexChunk::GetRandomLinearOffset() {
 		return fastRand() % patterns.size();
 	}
 
+	/// <summary>
+	/// Get offset to either a unused pattern, or if all in use ( isPopulated() ) to the least used pattern.
+	/// </summary>
+	/// <returns></returns>
 	optional<int> CortexChunk::GetLinearOffsetToPopulate() {
 		optional<int> maxStaleOffset = nullopt;
 		float maxStaleValue = -20000.0f;
 		for (int i = 0; i < patterns.size(); i++) {
-			if (patterns.at(i)->staleness < maxStaleValue) {
+			const bool isNPop = !patterns.at(i)->isPopulated();
+			if (isNPop || patterns.at(i)->staleness > maxStaleValue) {
+				if (isNPop)
+					return i;
 				maxStaleOffset = i;
 				maxStaleValue = patterns.at(i)->staleness;
 			}

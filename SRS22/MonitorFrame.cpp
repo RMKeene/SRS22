@@ -216,7 +216,7 @@ namespace SRS22 {
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
 		// Milliseconds since the epoc.
 		long long timeTicks = SRS22::GetTimeTicksMs();
-		auto brain0 = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		BrainH brain0 = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 
 		TickCountText->SetLabelText(wxString::Format("Ticks: %lld", brain0->tickCount));
 		float intervalMs = (float)event.GetInterval();
@@ -229,7 +229,10 @@ namespace SRS22 {
 		}
 		brain0->tickCountRecent = 0;
 
-		overallGoodnessLabel->SetLabelText(wxString::Format("Goodness: %f", brain0->overallGoodness));
+		overallGoodnessLabel->SetLabelText(wxString::Format("Goodness: %6.4f  Change: %6.4f  Brain0 Learn %6.4f", 
+			brain0->overallGoodness, 
+			brain0->overallGoodnessRateOfChange, 
+			brain0->cortexChunks.front()->growthSum));
 
 		GlobalWorld::GlobalWorldInstance.TickAll();
 		if (RunButton->GetValue()) {
