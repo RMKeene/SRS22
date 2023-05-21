@@ -10,7 +10,7 @@ namespace SRS22 {
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, CameraInIO::AbsDiffHeight, CameraInIO::AbsDiffWidth,
 			"A low resolution version of the camera view processed for frame to frame motion differences.") {
-		SetDecayFactors(false);
+		SetDecayFactors(0.0f);
 	}
 
 	CameraDifferenceMap::~CameraDifferenceMap() {
@@ -21,7 +21,7 @@ namespace SRS22 {
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		if (cameraIn->currentAbsDifferenceLowRes.empty() == false) {
-			cameraIn->currentAbsDifferenceLowRes.copyTo(nextM.charges);
+			nextM.charges += cameraIn->currentAbsDifferenceLowRes;
 		}
 	}
 

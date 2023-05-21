@@ -29,10 +29,9 @@ namespace SRS22 {
 		SRSUnitDisplayModes displayMode = SRSUnitDisplayModes::COLOR;
 
 	private: // See SetDecayFactors()
-		// IO maps tend to overwrite the M every frame so one can just turn this off.
-		// Regular Maps in the general SRS system do decay charge levels.
-		// If true then at the beginning of ComputeNextState, nextM = M * decayFactor;
-		bool doDecay = true;
+		/// <summary>
+		/// 0.0 is instant decay, 1.0 is infinitely slow decay. This is decay toward 0.0 per tick as a multiplicative factor.
+		/// </summary>
 		float decayFactor = 1.0f;
 
 	public:
@@ -44,8 +43,7 @@ namespace SRS22 {
 		/// <param name="decayFactor"></param>
 		/// <param name="fatigueInactiveDecay"></param>
 		/// <param name="fatigueActiveDecay"></param>
-		void SetDecayFactors(bool doDecay = true, float decayFactor = 1.0f) {
-			this->doDecay = doDecay;
+		void SetDecayFactors(float decayFactor = 1.0f) {
 			this->decayFactor = decayFactor;
 		}
 
@@ -93,12 +91,12 @@ namespace SRS22 {
 
 		/// <summary>
 		/// Process all inputs and system state, compare patterns, do transforms.
-		/// Do NOT change M, just manipulate nextM state. Gets called in parallel for all SRSUnits.
+		/// Do NOT change M, just add or subtract from nextM state. Gets called in parallel for all SRSUnits.
 		/// </summary>
 		virtual void ComputeNextState() override;
 
 		/// <summary>
-		/// After processIO has been called on all SRSUnits, this gets called to transfer the nextM state to M.
+		/// After processIO has been called on all SRSUnits, this gets called to decay M and then add the nextM state to M.
 		/// Gets called in parallel for all SRSUnits. So must be just state transfer inside the ConceptMap.
 		/// This is NOT the place to do any post processing on the next state!
 		/// </summary>

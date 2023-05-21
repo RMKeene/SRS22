@@ -61,12 +61,15 @@ namespace SRS22 {
 	}
 
 	void ConceptMap::ComputeNextState() {
-		if (doDecay)
-			nextM.charges = M.charges * decayFactor;
+
 	}
 
+	/// <summary>
+	/// Decay and then add nextM to M. The set nextM to zeros.
+	/// </summary>
 	void ConceptMap::LatchNewState() {
-		ConceptState::Copy(nextM, M);
+		M.charges = M.charges * decayFactor + nextM.charges;
+		nextM.charges = 0.0f;
 	}
 
 	std::string ConceptMap::Debug() {

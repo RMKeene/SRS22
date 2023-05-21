@@ -74,8 +74,14 @@ namespace SRS22 {
 
 	void ConceptState::Copy(ConceptState& fromM, ConceptState& toM) {
 		//if (fromM.charges.size().area() != toM.charges.size().area())
-		//	throw std::logic_error("Missmatched ConseptState sizes: Copy");
+		//	throw std::logic_error("Mismatched ConceptState sizes: Copy");
 		fromM.charges.copyTo(toM.charges);
+	}
+
+	void ConceptState::AddTo(ConceptState& fromM, ConceptState& toM) {
+		//if (fromM.charges.size().area() != toM.charges.size().area())
+		//	throw std::logic_error("Mismatched ConceptState sizes: AddTo");
+		cv::add(fromM.charges, toM.charges, toM.charges);
 	}
 
 	bool ConceptState::FindMaxValue(const float minV, OUT int& col, OUT int& row, OUT int& depth, OUT float& v) {

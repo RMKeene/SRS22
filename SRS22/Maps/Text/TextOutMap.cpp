@@ -11,7 +11,7 @@ namespace SRS22 {
 			TextOutMap_Height,
 			"The \"Keyboard\" out the text window.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
-		SetDecayFactors(true, 0.98f);
+		SetDecayFactors(0.98f);
 	}
 
 	TextOutMap::~TextOutMap() {

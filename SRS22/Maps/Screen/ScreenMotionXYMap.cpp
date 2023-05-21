@@ -12,7 +12,7 @@ namespace SRS22 {
 			ScreenMotionXYMap_Width,
 			"The XY location of the maximum frame to frame difference.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
-		SetDecayFactors(false);
+		SetDecayFactors(0.0f);
 	}
 
 	ScreenMotionXYMap::~ScreenMotionXYMap() {
@@ -43,8 +43,8 @@ namespace SRS22 {
 					}
 				}
 			}
-			nextM.charges.at<float>(0) = (float)maxX / (float)w;
-			nextM.charges.at<float>(1) = (float)maxY / (float)h;
+			nextM.charges.at<float>(0) += (float)maxX / (float)w;
+			nextM.charges.at<float>(1) += (float)maxY / (float)h;
 		}
 	}
 

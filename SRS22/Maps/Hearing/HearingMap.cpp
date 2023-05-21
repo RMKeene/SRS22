@@ -10,7 +10,7 @@ namespace SRS22 {
 			HearingMap_Width,
 			"The \"Hearing\" input from the audio system.") {
 		displayMode = SRSUnitDisplayModes::GRAY;
-		SetDecayFactors(true, 0.98f);
+		SetDecayFactors(0.98f);
 	}
 
 	HearingMap::~HearingMap() {
@@ -21,7 +21,7 @@ namespace SRS22 {
 
 		auto waveIn = IOCommon::GetIO<AudioCaptureIO>();
 		for (int i = 0; i < SRS22FFTRESULTSIZE; i++) {
-			nextM.put(waveIn->inputHelper.frequencyAmplitudes[i], i);
+			nextM.put(nextM.get(i) + waveIn->inputHelper.frequencyAmplitudes[i], i);
 		}
 	}
 

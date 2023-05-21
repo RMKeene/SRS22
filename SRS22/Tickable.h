@@ -5,7 +5,7 @@
 /// In the Brain is the only Tick() method and it is called frequently.
 /// Tickable defines the phases of the brain Tick that any object can participate in.
 /// 
-/// Order of call is PreTick, ComputeNextState, LatchNewState, PostTick.
+/// Order of call is PreTick, ComputeNextState, LatchNewState, PostTick, LearningPhase.
 /// Within each phase there is no assumption of order of execution.
 /// </summary>
 class Tickable
@@ -19,5 +19,6 @@ class Tickable
 		virtual void LatchNewState() {}
 		virtual void PostTickHardwareAndUI() {}
 		virtual void LearningPhase() {}
+		
 };
 

@@ -13,6 +13,7 @@ namespace SRS22 {
 			if (p->tickCountdownUntilLearnOutputs > 0) {
 				p->tickCountdownUntilLearnOutputs--;
 				if (p->tickCountdownUntilLearnOutputs == 0) {
+					SRS22LogTaker::LogInfo("Finish new pattern in chunk " + name);
 					p->MakeSemiRandomOutputConnections(brain, *this, i);
 					p->tickCountdownUntilLearnOutputs = -1; // Turn off counter.
 				}

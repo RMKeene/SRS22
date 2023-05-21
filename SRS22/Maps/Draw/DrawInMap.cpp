@@ -9,7 +9,7 @@ namespace SRS22 {
 			cv::Vec3f(0.0, 0.0, 0.0),
 			DrawInMap_Width,
 			"Whiteboard pen in from screen. The SRS \"feels\" when you draw.") {
-		SetDecayFactors(true, 0.9f);
+		SetDecayFactors(0.9f);
 	}
 
 	DrawInMap::~DrawInMap() {

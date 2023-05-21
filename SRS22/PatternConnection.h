@@ -15,7 +15,7 @@ namespace SRS22 {
 		/// </summary>
 		BrainConnectable * target;
 		/// <summary>
-		/// Linear index in map.M.charges or map.NextM.charges or CortexChunk.patterns. (Each pattern has a charge.)
+		/// Linear index in map.M.charges or map.nextM.charges or CortexChunk.patterns. (Each pattern has a charge.)
 		/// </summary>
 		int linearOffset;
 		float ExpectedCharge;

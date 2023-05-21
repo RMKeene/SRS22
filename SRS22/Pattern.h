@@ -37,6 +37,7 @@ namespace SRS22 {
 
 		float charge = 0.0f;
 		float nextCharge = 0.0f;
+		float relaxation = 0.01f;
 		float staleness = -10000.0f;
 		int tickCountdownUntilLearnOutputs = -1;
 

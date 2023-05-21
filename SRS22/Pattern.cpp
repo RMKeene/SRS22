@@ -11,8 +11,6 @@ namespace SRS22 {
 	}
 
 	void Pattern::ComputeNextState() {
-
-
 		// Compute the next state of the charge.
 		// This is a simple summation of the fabs(input charges - expected charge).
 		// The output charges are computed in the output connections.
@@ -22,11 +20,11 @@ namespace SRS22 {
 				sum += fabs(conn->target->GetChargeValue(conn->linearOffset) - conn->ExpectedCharge);
 			}
 		}
-		nextCharge = sum;
+		nextCharge = sum / inputConnections.size();
 	}
 
 	void Pattern::LatchNewState() {
-		charge = nextCharge;
+		charge = charge * relaxation + nextCharge;
 	}
 
 	void Pattern::MakeSemiRandomInputConnections(Brain& brain, CortexChunk& ct, const int patternSelfOffset) {

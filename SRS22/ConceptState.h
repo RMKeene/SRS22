@@ -63,7 +63,19 @@ namespace SRS22 {
 		/// <returns></returns>
 		float Compare(std::shared_ptr<ConceptState> other, const int skip = 1);
 
+		/// <summary>
+		/// fromM --> toM
+		/// </summary>
+		/// <param name="fromM"></param>
+		/// <param name="toM"></param>
 		static void Copy(ConceptState& fromM, ConceptState& toM);
+
+		/// <summary>
+		/// fromM + toM  --> toM
+		/// </summary>
+		/// <param name="fromM"></param>
+		/// <param name="toM"></param>
+		static void AddTo(ConceptState& fromM, ConceptState& toM);
 
 		/// <summary>
 		/// Decay all charges toward V. Each time tick V += (chargeValue - V) * relaxationRate;

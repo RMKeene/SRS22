@@ -10,7 +10,7 @@ namespace SRS22 {
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width,
 			"Raw pixel map of center of camera fovea in color.") {
-		SetDecayFactors(false);
+		SetDecayFactors(0.0f);
 	}
 
 	CameraFoveaMap::~CameraFoveaMap() {
@@ -23,8 +23,6 @@ namespace SRS22 {
 		auto fovea = IOCommon::GetIO<CameraAttnSpotIO>();
 		Rect r(Width(), Height(), fovea->GetPt());
 		cameraIn->GetSubRect(nextM.charges, r);
-		//std::string ss = CVMatrixInfo(nextM.charges);
-		//ss = CVMatrixInfo(cameraIn->currentScreen);
 	}
 
 	void CameraFoveaMap::LatchNewState() {

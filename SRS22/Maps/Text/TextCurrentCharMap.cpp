@@ -11,7 +11,7 @@ namespace SRS22 {
 			TextCurrentCharMap_Height,
 			"Last entered character ASCII Code.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
-		SetDecayFactors(true, 0.98f);
+		SetDecayFactors(0.98f);
 	}
 
 	TextCurrentCharMap::~TextCurrentCharMap() {
@@ -25,7 +25,7 @@ namespace SRS22 {
 		if (textInUI->GetCharacterIn(c)) {
 			uint x = c & 0x000F;
 			uint y = (c >> 4) & 0x000F;
-			nextM.put(1.0f, y, x);
+			nextM.put(nextM.get(y, x) + 1.0f, y, x);
 		}
 	}
 

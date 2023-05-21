@@ -12,7 +12,7 @@ namespace SRS22 {
 			CameraAttnSpotMap_Width,
 			"Raw pixel map of center of camera fovea in color.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
-		SetDecayFactors(false);
+		SetDecayFactors(0.0f);
 	}
 
 	CameraAttnSpotMap::~CameraAttnSpotMap() {
@@ -24,8 +24,8 @@ namespace SRS22 {
 		auto motionXY = static_cast<CameraMotionXYMap*>(myBrain->FindMapByName("CameraMotionXYMap").value().get());
 		float X = motionXY->M.get(0);
 		float Y = motionXY->M.get(1);
-		nextM.charges.at<float>(0) = motionXY->M.get(0);
-		nextM.charges.at<float>(1) = motionXY->M.get(1);
+		nextM.charges.at<float>(0) += motionXY->M.get(0);
+		nextM.charges.at<float>(1) += motionXY->M.get(1);
 
 		auto cameraVideo = IOCommon::GetIO<CameraInIO>();
 		float xx = M.get(0) * cameraVideo->GetCameraWidth();

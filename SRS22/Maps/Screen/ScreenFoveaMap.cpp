@@ -10,7 +10,7 @@ namespace SRS22 {
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, ScreenFoveaMap_Height, ScreenFoveaMap_Width,
 			"Raw pixel map of center of screen fovea in color.") {
-		SetDecayFactors(false);
+		SetDecayFactors(0.0f);
 	}
 
 	ScreenFoveaMap::~ScreenFoveaMap() {
@@ -23,8 +23,6 @@ namespace SRS22 {
 		auto fovea = IOCommon::GetIO<ScreenAttnSpotIO>();
 		Rect r(Width(), Height(), fovea->GetPt());
 		screenIn->GetSubRect(nextM.charges, r);
-		//std::string ss = CVMatrixInfo(nextM.charges);
-		//ss = CVMatrixInfo(screenIn->currentScreen);
 	}
 
 	void ScreenFoveaMap::LatchNewState() {

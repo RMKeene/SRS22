@@ -9,7 +9,7 @@ namespace SRS22 {
 			cv::Vec3f(0.0, 0.0, 0.0),
 			DrawOutMap_Width,
 			"Whiteboard pen out to screen.") {
-		SetDecayFactors(false);
+		SetDecayFactors(0.0f);
 	}
 
 	DrawOutMap::~DrawOutMap() {

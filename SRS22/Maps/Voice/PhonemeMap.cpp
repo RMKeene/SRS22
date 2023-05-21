@@ -10,7 +10,7 @@ namespace SRS22 {
 			PhonemeMap_Width,
 			"The \"Voice\" out the audio system.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
-		SetDecayFactors(true, 0.98f);
+		SetDecayFactors(0.98f);
 	}
 
 	PhonemeMap::~PhonemeMap() {
