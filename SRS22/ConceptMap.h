@@ -28,24 +28,16 @@ namespace SRS22 {
 		/// </summary>
 		SRSUnitDisplayModes displayMode = SRSUnitDisplayModes::COLOR;
 
-	private: // See SetDecayFactors()
+	private: 
 		/// <summary>
 		/// 0.0 is instant decay, 1.0 is infinitely slow decay. This is decay toward 0.0 per tick as a multiplicative factor.
+		/// <para>In LatchNextState:</para>
+		/// <code>M = M * decayFactor + nextM; 
+		/// nextM = 0.0;</code>
 		/// </summary>
 		float decayFactor = 1.0f;
 
 	public:
-		/// <summary>
-		/// Lets you set other than the standard decay factors. The parameter defaults are the defaults of the class
-		/// for all Maps.
-		/// In general Maps that are direct IO do not do decay.
-		/// </summary>
-		/// <param name="decayFactor"></param>
-		/// <param name="fatigueInactiveDecay"></param>
-		/// <param name="fatigueActiveDecay"></param>
-		void SetDecayFactors(float decayFactor = 1.0f) {
-			this->decayFactor = decayFactor;
-		}
 
 		PatternMatchingSystem matchSystem;
 		std::shared_ptr<GoodnessFunction> goodnessFunc;
@@ -64,14 +56,16 @@ namespace SRS22 {
 		/// In the case of cortex maps it may not be the class name.
 		/// </summary>
 		/// <param name="MapName"></param>
-		/// <param name="UID">Must be glbally unique. See MapUIDs.h</param>
+		/// <param name="UID">Must be globally unique. See MapUIDs.h</param>
 		/// <param name="ctrip"></param>
 		/// <param name="location"></param>
 		/// <param name="cols"></param>
+		/// <param name="decayFactor">0.0 means instant decay to zero before every tick. 1.0 is infinite sustain.
+		/// Done with multiplicative decay. In LatchNewState does <code>nextM = M * decayFactor; nextM = 0.0f;</code></param>
 		/// <param name="MapDescription"></param>
-		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int cols, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int rows, int cols, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int rows, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, float decayFactor, std::string MapDescription);
 
 		~ConceptMap();
 

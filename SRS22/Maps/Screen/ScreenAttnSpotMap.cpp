@@ -9,10 +9,9 @@ namespace SRS22 {
 	ScreenAttnSpotMap::ScreenAttnSpotMap(Brain* br) :
 		ConceptMap(br, MapUidE::SCREENATTNSPOT_MAP, true, "ScreenAttnSpotMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
-			ScreenAttnSpotMap_Width,
+			ScreenAttnSpotMap_Width, 0.0f,
 			"Raw pixel map of center of screen fovea in color.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
-		SetDecayFactors(false);
 	}
 
 	ScreenAttnSpotMap::~ScreenAttnSpotMap() {

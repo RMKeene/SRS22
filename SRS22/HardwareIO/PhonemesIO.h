@@ -12,8 +12,12 @@ namespace SRS22 {
 		PhonemeE key;
 		SoLoud::Wav* wav;
 		std::string fileName;
+		/// <summary>
+		/// For the ui and debugging. E.g. "AH"
+		/// </summary>
+		std::string name;
 
-		Phoneme(PhonemeE key, std::string name);
+		Phoneme(PhonemeE key, std::string name, std::string fileName);
 		~Phoneme();
 	};
 
@@ -43,7 +47,9 @@ namespace SRS22 {
 
 		void PlayPhoneme(PhonemeE key);
 
+		std::string keyToString(PhonemeE key);
+
 	private:
-		void InitPhoneme(PhonemeE key, std::string file);
+		void InitPhoneme(PhonemeE key, std::string name, std::string file);
 	};
 }

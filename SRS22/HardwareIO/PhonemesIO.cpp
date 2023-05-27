@@ -25,36 +25,38 @@ namespace SRS22 {
 	bool PhonemesIO::Init() {
 		IOCommon::Init();
 		std::string phonemesPath = "./phonemes/";
-		InitPhoneme(PhonemeE::A, phonemesPath + "a.wav");
-		InitPhoneme(PhonemeE::AE, phonemesPath + "ae.wav");
-		InitPhoneme(PhonemeE::AH, phonemesPath + "ah.wav");
-		InitPhoneme(PhonemeE::B, phonemesPath + "b.wav");
-		InitPhoneme(PhonemeE::D, phonemesPath + "d.wav");
-		InitPhoneme(PhonemeE::DH, phonemesPath + "dh.wav");
-		InitPhoneme(PhonemeE::E, phonemesPath + "e.wav");
-		InitPhoneme(PhonemeE::EE, phonemesPath + "ee.wav");
-		InitPhoneme(PhonemeE::F, phonemesPath + "f.wav");
-		InitPhoneme(PhonemeE::G, phonemesPath + "g.wav");
-		InitPhoneme(PhonemeE::I, phonemesPath + "i.wav");
-		InitPhoneme(PhonemeE::IE, phonemesPath + "ie.wav");
-		InitPhoneme(PhonemeE::K, phonemesPath + "k.wav");
-		InitPhoneme(PhonemeE::L, phonemesPath + "l.wav");
-		InitPhoneme(PhonemeE::M, phonemesPath + "m.wav");
-		InitPhoneme(PhonemeE::N, phonemesPath + "n.wav");
-		InitPhoneme(PhonemeE::NY, phonemesPath + "ny.wav");
-		InitPhoneme(PhonemeE::OH, phonemesPath + "oh.wav");
-		InitPhoneme(PhonemeE::OO, phonemesPath + "oo.wav");
-		InitPhoneme(PhonemeE::P, phonemesPath + "p.wav");
-		InitPhoneme(PhonemeE::R, phonemesPath + "r.wav");
-		InitPhoneme(PhonemeE::S, phonemesPath + "s.wav");
-		InitPhoneme(PhonemeE::SH, phonemesPath + "sh.wav");
-		InitPhoneme(PhonemeE::T, phonemesPath + "t.wav");
-		InitPhoneme(PhonemeE::TH, phonemesPath + "th.wav");
-		InitPhoneme(PhonemeE::V, phonemesPath + "v.wav");
-		InitPhoneme(PhonemeE::W, phonemesPath + "w.wav");
-		InitPhoneme(PhonemeE::X, phonemesPath + "x.wav");
-		InitPhoneme(PhonemeE::Z, phonemesPath + "z.wav");
-		InitPhoneme(PhonemeE::ZH, phonemesPath + "zh.wav");
+		// 0.010 seconds of silence.
+		InitPhoneme(PhonemeE::SPACE, "SPACE", phonemesPath + "space010.wav");
+		InitPhoneme(PhonemeE::A, "A", phonemesPath + "a.wav");
+		InitPhoneme(PhonemeE::AE, "AE", phonemesPath + "ae.wav");
+		InitPhoneme(PhonemeE::AH, "AH", phonemesPath + "ah.wav");
+		InitPhoneme(PhonemeE::B, "B", phonemesPath + "b.wav");
+		InitPhoneme(PhonemeE::D, "D", phonemesPath + "d.wav");
+		InitPhoneme(PhonemeE::DH, "DH", phonemesPath + "dh.wav");
+		InitPhoneme(PhonemeE::E, "E", phonemesPath + "e.wav");
+		InitPhoneme(PhonemeE::EE, "EE", phonemesPath + "ee.wav");
+		InitPhoneme(PhonemeE::F, "F", phonemesPath + "f.wav");
+		InitPhoneme(PhonemeE::G, "G", phonemesPath + "g.wav");
+		InitPhoneme(PhonemeE::I, "I", phonemesPath + "i.wav");
+		InitPhoneme(PhonemeE::IE, "IE", phonemesPath + "ie.wav");
+		InitPhoneme(PhonemeE::K, "K", phonemesPath + "k.wav");
+		InitPhoneme(PhonemeE::L, "L", phonemesPath + "l.wav");
+		InitPhoneme(PhonemeE::M, "M", phonemesPath + "m.wav");
+		InitPhoneme(PhonemeE::N, "N", phonemesPath + "n.wav");
+		InitPhoneme(PhonemeE::NY, "NY", phonemesPath + "ny.wav");
+		InitPhoneme(PhonemeE::OH, "OH", phonemesPath + "oh.wav");
+		InitPhoneme(PhonemeE::OO, "OO", phonemesPath + "oo.wav");
+		InitPhoneme(PhonemeE::P, "P", phonemesPath + "p.wav");
+		InitPhoneme(PhonemeE::R, "R", phonemesPath + "r.wav");
+		InitPhoneme(PhonemeE::S, "S", phonemesPath + "s.wav");
+		InitPhoneme(PhonemeE::SH, "SH", phonemesPath + "sh.wav");
+		InitPhoneme(PhonemeE::T, "T", phonemesPath + "t.wav");
+		InitPhoneme(PhonemeE::TH, "TH", phonemesPath + "th.wav");
+		InitPhoneme(PhonemeE::V, "V", phonemesPath + "v.wav");
+		InitPhoneme(PhonemeE::W, "W", phonemesPath + "w.wav");
+		InitPhoneme(PhonemeE::X, "X", phonemesPath + "x.wav");
+		InitPhoneme(PhonemeE::Z, "Z", phonemesPath + "z.wav");
+		InitPhoneme(PhonemeE::ZH, "ZH", phonemesPath + "zh.wav");
 
 		return true;
 	}
@@ -65,13 +67,18 @@ namespace SRS22 {
 		}
 	}
 
-	void PhonemesIO::InitPhoneme(PhonemeE key, std::string file) {
-		cache[key] = std::make_shared<Phoneme>(key, file);
+	std::string PhonemesIO::keyToString(PhonemeE key) {
+		return std::string("Phoneme: ") + this->cache[key]->fileName;
 	}
 
-	Phoneme::Phoneme(PhonemeE key, std::string fileName) {
+	void PhonemesIO::InitPhoneme(PhonemeE key, std::string name, std::string file) {
+		cache[key] = std::make_shared<Phoneme>(key, name, file);
+	}
+
+	Phoneme::Phoneme(PhonemeE key, std::string name, std::string fileName) {
 		this->key = key;
 		this->fileName = fileName;
+		this->name = name;
 		// Kluge code, we don't ever delete these.
 		this->wav = WaveOutputHelper::globalSingleton->LoadSoLoudWav(fileName);
 	}

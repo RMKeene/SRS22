@@ -7,9 +7,8 @@ namespace SRS22 {
 	DrawInMap::DrawInMap(Brain* br) :
 		ConceptMap(br, MapUidE::DRAWIN_MAP, true, "DrawInMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
-			DrawInMap_Width,
+			DrawInMap_Width, 0.5f,
 			"Whiteboard pen in from screen. The SRS \"feels\" when you draw.") {
-		SetDecayFactors(0.9f);
 	}
 
 	DrawInMap::~DrawInMap() {

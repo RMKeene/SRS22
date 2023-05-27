@@ -8,9 +8,8 @@ namespace SRS22 {
 	ScreenDifferenceMap::ScreenDifferenceMap(Brain* br) :
 		ConceptMap(br, MapUidE::SCREENDIFFERENCE_MAP, false, "ScreenDifferenceMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
-			3, ScreenInputIO::AbsDiffHeight, ScreenInputIO::AbsDiffWidth,
+			3, ScreenInputIO::AbsDiffHeight, ScreenInputIO::AbsDiffWidth, 0.0f,
 			"A low resolution version of the screen view processed for frame to frame motion differences.") {
-		SetDecayFactors(false);
 	}
 
 	ScreenDifferenceMap::~ScreenDifferenceMap() {

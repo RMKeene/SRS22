@@ -7,10 +7,9 @@ namespace SRS22 {
 	HearingMap::HearingMap(Brain* br) :
 		ConceptMap(br, MapUidE::HEARING_MAP, true, "HearingMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
-			HearingMap_Width,
+			HearingMap_Width, 0.98f,
 			"The \"Hearing\" input from the audio system.") {
 		displayMode = SRSUnitDisplayModes::GRAY;
-		SetDecayFactors(0.98f);
 	}
 
 	HearingMap::~HearingMap() {

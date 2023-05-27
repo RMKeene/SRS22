@@ -9,10 +9,9 @@ namespace SRS22 {
 	CameraAttnSpotMap::CameraAttnSpotMap(Brain* br) :
 		ConceptMap(br, MapUidE::CAMERAATTNSPOT_MAP, true, "CameraAttnSpotMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
-			CameraAttnSpotMap_Width,
+			CameraAttnSpotMap_Width, 0.0f,
 			"Raw pixel map of center of camera fovea in color.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
-		SetDecayFactors(0.0f);
 	}
 
 	CameraAttnSpotMap::~CameraAttnSpotMap() {

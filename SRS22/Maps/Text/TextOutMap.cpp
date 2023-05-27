@@ -8,10 +8,9 @@ namespace SRS22 {
 		ConceptMap(br, MapUidE::TEXTOUT_MAP, true, "TextOutMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			TextOutMap_Width,
-			TextOutMap_Height,
+			TextOutMap_Height, 0.98f,
 			"The \"Keyboard\" out the text window.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
-		SetDecayFactors(0.98f);
 	}
 
 	TextOutMap::~TextOutMap() {

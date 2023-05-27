@@ -5,37 +5,40 @@
 #include "BrainLocatable.h"
 
 namespace SRS22 {
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int cols, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int cols, float decayFactor, std::string MapDescription) :
 		BrainLocatable(location),
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
 		M(cols), 
 		nextM(cols),
+		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
 
 		isConnectableFlag = isConnectable;
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int rows, int cols, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int rows, int cols, float decayFactor, std::string MapDescription) :
 		BrainLocatable(location),
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
 		M(rows, cols), 
 		nextM(rows, cols),
+		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
 
 		isConnectableFlag = isConnectable;
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, float decayFactor, std::string MapDescription) :
 		BrainLocatable(location),
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
 		M(layers, rows, cols), 
 		nextM(layers, rows, cols),
+		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
 
 		isConnectableFlag = isConnectable;

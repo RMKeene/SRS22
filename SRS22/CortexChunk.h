@@ -19,7 +19,7 @@ namespace SRS22 {
 	{
 	public:
 		/// <summary>
-		/// Arbitrary name so it is easier to comprehend.
+		/// Arbitrary name so it is easier to comprehend and debug what is foing on.
 		/// </summary>
 		const std::string name;
 		/// <summary>
