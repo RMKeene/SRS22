@@ -26,6 +26,10 @@ namespace SRS22 {
 		AttnSpotBaseIO(Point p, int w, int h, Rect viewRect);
 		~AttnSpotBaseIO();
 
+		/// <summary>
+		/// The rect of the entire view the fovea is in. E.g. The whole camera view.
+		/// </summary>
+		/// <returns></returns>
 		const Rect& GetViewRect() { return _viewRect; }
 		/// <summary>
 		/// Where we are looking at in the Camera Rect.
@@ -33,7 +37,7 @@ namespace SRS22 {
 		/// <returns></returns>
 		const Rect& GetRect() { return rect; }
 		/// <summary>
-		/// Where we are loolking within View Rect. The center point of rect.
+		/// Where we are looking within View Rect. The center point of rect.
 		/// </summary>
 		Point GetPt() { return Point(rect.CenterX(), rect.CenterY()); }
 		/// <summary>

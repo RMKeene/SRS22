@@ -12,9 +12,52 @@ namespace SRS22 {
 		int w = 0;
 		int h = 0;
 
+
 		/// 3 x 480(rows) x 640(cols) range 0.0 to 1.0 for RGB colors.
 		cv::Mat currentFrame;
 		cv::Mat previousFrame;
+
+		/// <summary>
+		/// On every tick the fovea map fills this in. It then is used to efficiently derive various fovea
+		/// concept representations.
+		/// </summary>
+		Rect currentFoveaRect;
+
+		/// <summary>
+		/// The current fovea pixel values in the Camera.
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// </summary>
+		cv::Mat fovea;
+		/// <summary>
+		/// The Canny Edge Detection for the fovea.
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// </summary>
+		cv::Mat foveaEdges;
+		/// <summary>
+		/// The match on rotations of edges in the fovea.
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// </summary>
+		cv::Mat foveaAngles;
+		/// <summary>
+		/// Last frame to current frame difference in the fovea.
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// </summary>
+		cv::Mat foveaAbsDifference;
+		/// <summary>
+		/// How well centered circular features are on the fovea.
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// </summary>
+		cv::Mat foveaCentricity;
+		/// <summary>
+		/// How noisy the fovea is. Sum foveaEdges per pixel.
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// </summary>
+		cv::Mat foveaRoughness;
+		/// <summary>
+		/// A histogram of fovea RGB colors.
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// </summary>
+		cv::Mat foveaColorHistogram;
 
 		/// 3 x 48(rows) x 64(cols) range 0.0 to 1.0 for RGB colors.
 		cv::Mat currentFrameLowRes;

@@ -1,7 +1,11 @@
 #include "CameraInIO.h"
 #include "../OpenCVHelpers.h"
+#include "CameraAttnSpotIO.h"
+#include "../Maps/Camera/CameraFoveaMap.h"
 
 namespace SRS22 {
+	using namespace cv;
+
 	CameraInIO::CameraInIO() : IOCommon() {
 		IOCOMMON_SETCLASSNAME;
 	}
@@ -15,14 +19,24 @@ namespace SRS22 {
 		h = GetCameraHeightWin32();
 
 		int sizes[3] = { 3, h, w };
-		currentFrame = cv::Mat(3, sizes, CV_32FC1);
-		previousFrame = cv::Mat(3, sizes, CV_32FC1);
+		currentFrame = Mat(3, sizes, CV_32FC1);
+		previousFrame = Mat(3, sizes, CV_32FC1);
 
 		int sizesLowRes[3] = { 3,
 			(int)(h * VideoHelper::lowResScale),
 			(int)(w * VideoHelper::lowResScale) };
-		currentFrameLowRes = cv::Mat(3, sizesLowRes, CV_32FC1);
-		previousFrameLowRes = cv::Mat(3, sizesLowRes, CV_32FC1);
+		currentFrameLowRes = Mat(3, sizesLowRes, CV_32FC1);
+		previousFrameLowRes = Mat(3, sizesLowRes, CV_32FC1);
+
+		int sizesFovea[3] = { 3, CameraFoveaMap_Height, CameraFoveaMap_Height };
+		fovea = Mat(3, sizesFovea, CV_32FC1);
+		foveaAbsDifference = Mat(3, sizesFovea, CV_32FC1);
+		foveaAngles = Mat(3, sizesFovea, CV_32FC1);
+		foveaCentricity = Mat(3, sizesFovea, CV_32FC1);
+		foveaColorHistogram = Mat(3, sizesFovea, CV_32FC1);
+		foveaEdges = Mat(3, sizesFovea, CV_32FC1);
+		foveaRoughness = Mat(3, sizesFovea, CV_32FC1);
+
 		return true;
 	}
 
@@ -34,6 +48,25 @@ namespace SRS22 {
 	void CameraInIO::PreTickHardwareAndIO() {
 		IOCommon::PreTickHardwareAndIO();
 		AcquireFrame();
+
+		CameraAttnSpotIO* foveaIO = IOCommon::GetIO<CameraAttnSpotIO>();
+
+		Rect r(foveaIO->GetRect());
+		currentFoveaRect = r;
+		GetSubRect(fovea, r);
+
+		//try {
+		//	// Split Mat to 3 channels
+		//	Mat inbgr[3];
+		//	Mat outbgr[3];
+		//	split(fovea, inbgr);
+		//	//imshow("Fovea", fovea);
+		//
+		//	Sobel(inbgr[0], outbgr[0], CV_32F, 1, 0, 3);
+		//}
+		//catch (Exception e) {
+		//	std::cout << "Exception in CameraInIO::PreTickHardwareAndIO(): " << e.what() << std::endl;
+		//}
 	}
 
 	void CameraInIO::PostTickHardwareAndUI() {
@@ -69,7 +102,7 @@ namespace SRS22 {
 
 		if (currentFrameLowRes.empty() == false &&
 			previousFrameLowRes.empty() == false) {
-			cv::absdiff(currentFrameLowRes, previousFrameLowRes, currentAbsDifferenceLowRes);
+			absdiff(currentFrameLowRes, previousFrameLowRes, currentAbsDifferenceLowRes);
 		}
 		return true;
 	}

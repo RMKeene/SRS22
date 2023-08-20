@@ -26,6 +26,9 @@ namespace SRS22 {
 	class Brain
 	{
 	public:
+		/// <summary>
+		/// Never depend on iteration order of maps. They are multi-thread processed and in a hash table.
+		/// </summary>
 		map<MapUidE, std::shared_ptr<ConceptMap>> conceptMaps;
 		map<std::string, std::shared_ptr<ConceptMap>> conceptMapsByName;
 		std::list< std::shared_ptr<CortexChunk>> cortexChunks;
@@ -143,6 +146,10 @@ namespace SRS22 {
 		void PreTickHardwareAndIO();
 		void PostTickHardwareAndUI();
 
+		/// <summary>
+		/// Order of adding maps does not matter.  Never depend on iteration order.
+		/// </summary>
+		/// <param name="m"></param>
 		void AddMap(shared_ptr<ConceptMap> m);
 		void AddCortexChunk(shared_ptr<CortexChunk> c);
 	};

@@ -1,7 +1,7 @@
 #pragma once
 
 /// <summary>
-/// Never delete or reorder these, only add new map names.
+/// Never delete or reorder these, only add new map names. Otherwise saved brain snapshots will be corrupted.
 /// </summary>
 enum class MapUidE {
 	RANDOM_MAP = 0,
@@ -20,7 +20,9 @@ enum class MapUidE {
 	TEXTCCURRENTCHAR_MAP,
 	TEXTOUT_MAP,
 	PHONEME_MAP,
+	CAMERAFOVEAANGLE_MAP,
 
+	// Add new map keys before this comment but at the end of the above list.
 	// Always last.
 	MapUidECount
 };

@@ -21,7 +21,7 @@ namespace SRS22 {
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		auto fovea = IOCommon::GetIO<CameraAttnSpotIO>();
 		Rect r(Width(), Height(), fovea->GetPt());
-		cameraIn->GetSubRect(nextM.charges, r);
+		nextM.charges = cameraIn->fovea.clone();
 	}
 
 	void CameraFoveaMap::LatchNewState() {

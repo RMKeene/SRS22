@@ -106,4 +106,6 @@ namespace SRS22 {
 		void AddToChargeValue(const int linearOffset, const float c) override;
 
 	};
+
+	typedef std::shared_ptr<ConceptMap> ConceptMapH;
 }

@@ -19,6 +19,7 @@
 #include "Maps/Draw/DrawInMap.h"
 #include "Maps/Voice/PhonemeMap.h"
 #include "Maps/Hearing/HearingMap.h"
+#include "Maps/Camera/CameraFoveaAngleMap.h"
 
 using namespace concurrency;
 
@@ -129,6 +130,7 @@ namespace SRS22 {
 		// All Map instances. Keep in alphabetical order please.
 		AddMap(make_shared<CameraAttnSpotMap>(this));
 		AddMap(make_shared<CameraDifferenceMap>(this));
+		//AddMap(make_shared<CameraFoveaAngleMap>(this)); 
 		AddMap(make_shared<CameraFoveaMap>(this));
 		AddMap(make_shared<CameraMotionXYMap>(this));
 

@@ -335,9 +335,6 @@
     <ClInclude Include="Maps\Camera\CameraDifferenceMap.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Camera\CameraFoveaMap.h">
-      <Filter>Source\Maps\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="Maps\Camera\CameraMotionXYMap.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
@@ -412,6 +409,12 @@
     </ClInclude>
     <ClInclude Include="SRS22LogTaker.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Camera\CameraFoveaAngleMap.h">
+      <Filter>Source\Maps\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps\Camera\CameraFoveaMap.h">
+      <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -619,6 +622,9 @@
     <ClCompile Include="Tickable.cpp" />
     <ClCompile Include="SRS22LogTaker.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Camera\CameraFoveaAngleMap.cpp">
+      <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
