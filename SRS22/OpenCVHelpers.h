@@ -11,7 +11,7 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="m"></param>
 		/// <returns></returns>
-		static std::string CVMatrixInfo(cv::Mat& m);
+		static std::string CVMatrixInfo(const cv::Mat& m);
 
 		static std::string MapUIText(cv::Mat& m);
 
@@ -46,5 +46,46 @@ namespace SRS22 {
 		/// <param name="m"></param>
 		/// <returns></returns>
 		static int CVMatrixPlanes(const cv::Mat& m);
+
+		/// <summary>
+		/// Assumes the m is CV_32FC1. Like camera shots as float range 0.0 to 1.0.
+		/// Assumes m0, m1, m2 will be 2D matrices with rows equal to m.size[1] and cols equal to m.size[2].
+		/// 
+		/// Asserts 
+		/// <code>
+		/// assert(m.type() == CV_32FC3);
+		/// assert(m0.type() == CV_32FC1);
+		/// assert(m1.type() == CV_32FC1);
+		/// assert(m2.type() == CV_32FC1);
+		/// 
+		/// assert(m.rows == -1);
+		/// assert(m.cols == -1);
+		/// assert(m.size.dims() == 3);
+		/// assert(m0.rows == m.size[2]);
+		/// assert(m0.cols == m.size[1]);
+		/// assert(m1.rows == m.size[2]);
+		/// assert(m1.cols == m.size[1]);
+		/// assert(m2.rows == m.size[2]);
+		/// assert(m2.cols == m.size[1]);
+		/// </code>
+		/// </summary>
+		static void ExtractPlanes32FC1(const cv::Mat& m, cv::Mat& m0, cv::Mat& m1, cv::Mat& m2);
+		static void CombinePlanes32FC1(const cv::Mat& m0, const cv::Mat& m1, const cv::Mat& m2, cv::Mat& m);
+
+		static bool is_file_path_writable(const std::filesystem::path& file_path);
+		static void write_string_to_file(const std::filesystem::path& file_path, const std::string& file_contents);
+		/// <summary>
+		/// So far supports 3D 32FC1 x 3, or 8UC3 x1 images.
+		/// </summary>
+		/// <param name="output_file_path"></param>
+		/// <param name="mat"></param>
+		/// <param name="file_contents"></param>
+		/// <param name="doFileDump"></param>
+		/// <param name="doImShow"></param>
+		static void error_aware_imwrite_imshow(const std::filesystem::path& output_file_path, const cv::Mat& mat, bool doFileDump = false, bool doImShow = false);
+		/// <summary>
+		/// mat8UC3 must be a 2D image with cv::Vec3b pixels.
+		/// </summary>
+		static void error_aware_imwrite_8UC3(const std::filesystem::path& output_file_path, const cv::Mat& mat8UC3);
 	};
 }

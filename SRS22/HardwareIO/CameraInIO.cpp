@@ -2,9 +2,12 @@
 #include "../OpenCVHelpers.h"
 #include "CameraAttnSpotIO.h"
 #include "../Maps/Camera/CameraFoveaMap.h"
+#include "../OpenCVHelpers.h"
 
 namespace SRS22 {
 	using namespace cv;
+
+
 
 	CameraInIO::CameraInIO() : IOCommon() {
 		IOCOMMON_SETCLASSNAME;
@@ -54,19 +57,17 @@ namespace SRS22 {
 		Rect r(foveaIO->GetRect());
 		currentFoveaRect = r;
 		GetSubRect(fovea, r);
+		fovea = fovea.clone();
+		std::string info = OpenCVHelpers::CVMatrixInfo(fovea);
 
-		//try {
-		//	// Split Mat to 3 channels
-		//	Mat inbgr[3];
-		//	Mat outbgr[3];
-		//	split(fovea, inbgr);
-		//	//imshow("Fovea", fovea);
-		//
-		//	Sobel(inbgr[0], outbgr[0], CV_32F, 1, 0, 3);
-		//}
-		//catch (Exception e) {
-		//	std::cout << "Exception in CameraInIO::PreTickHardwareAndIO(): " << e.what() << std::endl;
-		//}
+		Mat red(fovea.size[1], fovea.size[1], CV_32FC1);
+		Mat green(fovea.size[1], fovea.size[1], CV_32FC1);
+		Mat blue(fovea.size[1], fovea.size[1], CV_32FC1);
+		OpenCVHelpers::ExtractPlanes32FC1(fovea, red, green, blue);
+
+		cv::Sobel(red, foveaEdges, CV_32FC1, 1, 1);
+
+		OpenCVHelpers::error_aware_imwrite_imshow("./keene.jpg", foveaEdges, true);
 	}
 
 	void CameraInIO::PostTickHardwareAndUI() {

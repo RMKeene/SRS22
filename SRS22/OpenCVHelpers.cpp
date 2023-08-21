@@ -3,6 +3,8 @@
 
 namespace SRS22 {
 	using namespace std;
+	using namespace cv;
+
 	string OpenCVHelpers::CVTypeToStr(const int type) {
 		string r;
 
@@ -26,7 +28,7 @@ namespace SRS22 {
 		return r;
 	}
 
-	std::string OpenCVHelpers::CVMatrixInfo(cv::Mat& m) {
+	std::string OpenCVHelpers::CVMatrixInfo(const cv::Mat& m) {
 		string r = CVTypeToStr(m.type());
 		r += " : dims=";
 		r += to_string(m.dims);
@@ -207,5 +209,158 @@ namespace SRS22 {
 		if (m.rows > 0)
 			return 1;
 		return m.size[m.dims - 3];
+	}
+
+	bool OpenCVHelpers::is_file_path_writable(const std::filesystem::path& file_path)
+	{
+		const auto status = std::filesystem::status(file_path);
+		const auto permissions = status.permissions();
+
+		// Check if the file or directory is writable
+		return (permissions & std::filesystem::perms::owner_write) != std::filesystem::perms::none ||
+			(permissions & std::filesystem::perms::group_write) != std::filesystem::perms::none ||
+			(permissions & std::filesystem::perms::others_write) != std::filesystem::perms::none;
+	}
+
+	void OpenCVHelpers::write_string_to_file(const std::filesystem::path& file_path, const std::string& file_contents)
+	{
+		std::ofstream file_writer;
+		file_writer.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		file_writer.open(file_path.wstring(), std::ios::out | std::ios::binary);
+		file_writer << file_contents;
+	}
+
+	void OpenCVHelpers::error_aware_imwrite_imshow(const std::filesystem::path& output_file_path, const cv::Mat& mat, bool doFileDump, bool doImShow)
+	{
+		if (mat.empty())
+		{
+			// No image.
+			return;
+		}
+
+		// Convert to dims == 2 and CV_8UC3
+		Mat rmat(mat.size[1], mat.size[2], CV_8UC3);
+		if (mat.type() != CV_8UC3 && mat.dims == 2) {
+			rmat = mat;
+		}
+		else if (mat.type() == CV_32FC1 && mat.cols == -1 && mat.rows == -1 && mat.size.dims() == 3) { // This matches the input camera and screen raw images and fovea.
+			Mat temp;
+			std::string im = CVMatrixInfo(mat);
+			mat.convertTo(temp, CV_8UC1, 255.0);
+			im = CVMatrixInfo(temp);
+			// Convert from 3 z planes to 1 RGB plane so CV_8UC1 planes to CV8UC3 pixels.
+			for (int y = 0; y < temp.size[1]; y++) {
+				for (int x = 0; x < temp.size[2]; x++) {
+					const Vec3b n = Vec3b(temp.at<uchar>(0, y, x), temp.at<uchar>(1, y, x), temp.at<uchar>(2, y, x));
+					rmat.at<Vec3b>(y, x) = n;
+				}
+			}
+			im = CVMatrixInfo(rmat);
+		}
+		else {
+			throw std::logic_error("Unsupported matrix type to save to disk or show. " + CVMatrixInfo(mat));
+		}
+
+		if (doFileDump) {
+			error_aware_imwrite_8UC3(output_file_path, rmat);
+		}
+
+		if (doImShow) {
+			imshow(output_file_path.string(), rmat);
+		}
+	}
+
+	void OpenCVHelpers::error_aware_imwrite_8UC3(const std::filesystem::path& output_file_path, const cv::Mat& mat8UC3) {
+		if (const auto parent_path = output_file_path.parent_path();
+			!is_directory(parent_path))
+		{
+			throw std::runtime_error("Parent directory did not exist: " + parent_path.string());
+		}
+
+		if (is_regular_file(output_file_path) && !is_file_path_writable(output_file_path))
+		{
+			throw std::runtime_error("File path is not writable");
+		}
+
+		const auto file_extension = output_file_path.extension().string();
+
+		std::vector<uchar> buffer;
+#define MB ((size_t)1024*1024)
+		buffer.resize(10 * MB);
+
+		//Mat rmat = imread("E:\\TruGolfTestData\\3DRenderedShots\\AP_1616_0\\Cam0_8.jpg");
+
+		if (const auto successfully_encoded = imencode(file_extension, mat8UC3, buffer);
+			!successfully_encoded)
+		{
+			throw std::runtime_error("Imagine encoding failed");
+		}
+
+		// Write to the file
+		const auto written_file_contents = std::string(buffer.begin(), buffer.end());
+		if (written_file_contents.empty())
+		{
+			throw std::runtime_error("Written image bytes were empty");
+		}
+
+		write_string_to_file(output_file_path, written_file_contents);
+	}
+
+	void OpenCVHelpers::ExtractPlanes32FC1(const cv::Mat& m, cv::Mat& m0, cv::Mat& m1, cv::Mat& m2) {
+		if (m.empty())
+			return;
+
+		assert(m.type() == CV_32FC1);
+		assert(m0.type() == CV_32FC1);
+		assert(m1.type() == CV_32FC1);
+		assert(m2.type() == CV_32FC1);
+
+		assert(m.rows == -1);
+		assert(m.cols == -1);
+		assert(m.size.dims() == 3);
+		assert(m0.rows == m.size[2]);
+		assert(m0.cols == m.size[1]);
+		assert(m1.rows == m.size[2]);
+		assert(m1.cols == m.size[1]);
+		assert(m2.rows == m.size[2]);
+		assert(m2.cols == m.size[1]);
+
+
+		for (int y = 0; y < m.size[1]; y++) {
+			for (int x = 0; x < m.size[2]; x++) {
+				m0.at<float>(y, x) = m.at<float>(0, y, x);
+				m1.at<float>(y, x) = m.at<float>(1, y, x);
+				m2.at<float>(y, x) = m.at<float>(2, y, x);
+			}
+		}
+
+	}
+
+	void OpenCVHelpers::CombinePlanes32FC1(const cv::Mat& m0, const cv::Mat& m1, const cv::Mat& m2, cv::Mat& m) {
+		if (m0.empty())
+			return;
+
+		assert(m.type() == CV_32FC1);
+		assert(m0.type() == CV_32FC1);
+		assert(m1.type() == CV_32FC1);
+		assert(m2.type() == CV_32FC1);
+
+		assert(m.rows == -1);
+		assert(m.cols == -1);
+		assert(m.size.dims() == 3);
+		assert(m0.rows == m.size[2]);
+		assert(m0.cols == m.size[1]);
+		assert(m1.rows == m.size[2]);
+		assert(m1.cols == m.size[1]);
+		assert(m2.rows == m.size[2]);
+		assert(m2.cols == m.size[1]);
+
+		for (int y = 0; y < m0.size[0]; y++) {
+			for (int x = 0; x < m0.size[1]; x++) {
+				m.at<float>(0, y, x) = m0.at<float>(y, x);
+				m.at<float>(1, y, x) = m1.at<float>(y, x);
+				m.at<float>(2, y, x) = m2.at<float>(y, x);
+			}
+		}
 	}
 }
