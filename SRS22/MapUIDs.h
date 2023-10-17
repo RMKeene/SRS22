@@ -20,6 +20,7 @@ enum class MapUidE {
 	TEXTCCURRENTCHAR_MAP,
 	TEXTOUT_MAP,
 	PHONEME_MAP,
+	CAMERAFOVEAEDGE_MAP,
 	CAMERAFOVEAANGLE_MAP,
 
 	// Add new map keys before this comment but at the end of the above list.

@@ -416,6 +416,9 @@
     <ClInclude Include="Maps\Camera\CameraFoveaMap.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Maps\Camera\CameraFoveaEdgesMap.h">
+      <Filter>Source\Maps\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -624,6 +627,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Maps\Camera\CameraFoveaAngleMap.cpp">
+      <Filter>Source\Maps\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps\Camera\CameraFoveaEdgesMap.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
   </ItemGroup>

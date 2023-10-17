@@ -239,7 +239,7 @@ namespace SRS22 {
 		}
 
 		// Convert to dims == 2 and CV_8UC3
-		Mat rmat(mat.size[1], mat.size[2], CV_8UC3);
+		Mat rmat(mat.size[0], mat.size[1], CV_8UC3);
 		if (mat.type() != CV_8UC3 && mat.dims == 2) {
 			rmat = mat;
 		}

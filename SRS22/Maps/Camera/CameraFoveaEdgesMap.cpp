@@ -1,28 +1,30 @@
 #include "../../pch.h"
 #include "CameraFoveaMap.h"
+#include "CameraFoveaEdgesMap.h"
 #include "../../HardwareIO/IOCommon.h"
 #include "../../HardwareIO/CameraInIO.h"
 #include "../../HardwareIO/CameraAttnSpotIO.h"
+#include "../../Brain.h"
 
 namespace SRS22 {
-	CameraFoveaMap::CameraFoveaMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERAFOVEA_MAP, false, "CameraFoveaMap",
+	CameraFoveaEdgesMap::CameraFoveaEdgesMap(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE_MAP, false, "CameraEdgesMap",
 			cv::Vec3f(0.0, 0.0, 0.0),
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
-			"Raw pixel map of center of camera fovea in color.") {
+			"Camera edges in fovea.") {
 	}
 
-	CameraFoveaMap::~CameraFoveaMap() {
+	CameraFoveaEdgesMap::~CameraFoveaEdgesMap() {
 	}
 
-	void CameraFoveaMap::ComputeNextState() {
+	void CameraFoveaEdgesMap::ComputeNextState() {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		nextM.charges = cameraIn->fovea.clone();
+		cameraIn->foveaEdges.copyTo(nextM.charges);
 	}
 
-	void CameraFoveaMap::LatchNewState() {
+	void CameraFoveaEdgesMap::LatchNewState() {
 		ConceptMap::LatchNewState();
 	}
 }

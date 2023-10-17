@@ -20,18 +20,8 @@ namespace SRS22 {
 	void CameraFoveaAngleMap::ComputeNextState() {
 		ConceptMap::ComputeNextState();
 
-		ConceptMap* foveaMap = myBrain->FindMap(MapUidE::CAMERAFOVEA_MAP).value().get();
-		cv::Mat fovea = foveaMap->M.charges;
-
-		int w = foveaMap->Width();
-		int h = foveaMap->Height();
-		assert(foveaMap->Depth() == 3);
-		// For each pixel do a vote on angle and x,y position much like Hough circle.
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
-				
-			}
-		}
+		auto cameraIn = IOCommon::GetIO<CameraInIO>();
+		cameraIn->foveaAngles.copyTo(nextM.charges);
 	}
 
 	void CameraFoveaAngleMap::LatchNewState() {
