@@ -69,8 +69,17 @@ namespace SRS22 {
 		/// assert(m2.cols == m.size[1]);
 		/// </code>
 		/// </summary>
-		static void ExtractPlanes32FC1(const cv::Mat& m, cv::Mat& m0, cv::Mat& m1, cv::Mat& m2);
-		static void CombinePlanes32FC1(const cv::Mat& m0, const cv::Mat& m1, const cv::Mat& m2, cv::Mat& m);
+		static void ExtractPlanes32FC1_3PlaneTo32FC1x3(const cv::Mat& m, cv::Mat& m0, cv::Mat& m1, cv::Mat& m2);
+		static void CombinePlanes32FC1x3to32FC1_3Plane(const cv::Mat& m0, const cv::Mat& m1, const cv::Mat& m2, cv::Mat& m);
+		/// <summary>
+		/// Assumes m1, m2, m3 are RGB 0 to 255 values, CV_8UC1 Matrices.
+		/// Assumes m0, m1, m2 are 2D so rows and cols are valid.
+		/// </summary>
+		/// <param name="m0"></param>
+		/// <param name="m1"></param>
+		/// <param name="m2"></param>
+		/// <param name="m"></param>
+		static void Combine8UC1x3To32FC1_3Plane(const cv::Mat& m0, const cv::Mat& m1, const cv::Mat& m2, cv::Mat& m);
 
 		static bool is_file_path_writable(const std::filesystem::path& file_path);
 		static void write_string_to_file(const std::filesystem::path& file_path, const std::string& file_contents);
@@ -87,5 +96,10 @@ namespace SRS22 {
 		/// mat8UC3 must be a 2D image with cv::Vec3b pixels.
 		/// </summary>
 		static void error_aware_imwrite_8UC3(const std::filesystem::path& output_file_path, const cv::Mat& mat8UC3);
+
+		static void Convert32FC1To8UC1(cv::Mat& in, cv::Mat& out)
+		{
+			in.convertTo(out, CV_8U, 255.0);
+		}
 	};
 }

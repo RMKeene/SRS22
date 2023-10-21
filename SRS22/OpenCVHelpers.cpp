@@ -239,7 +239,7 @@ namespace SRS22 {
 		}
 
 		// Convert to dims == 2 and CV_8UC3
-		Mat rmat(mat.size[0], mat.size[1], CV_8UC3);
+		Mat rmat(mat.size[1], mat.size[2], CV_8UC3);
 		if (mat.type() != CV_8UC3 && mat.dims == 2) {
 			rmat = mat;
 		}
@@ -248,6 +248,7 @@ namespace SRS22 {
 			std::string im = CVMatrixInfo(mat);
 			mat.convertTo(temp, CV_8UC1, 255.0);
 			im = CVMatrixInfo(temp);
+			std::string im2 = CVMatrixInfo(rmat);
 			// Convert from 3 z planes to 1 RGB plane so CV_8UC1 planes to CV8UC3 pixels.
 			for (int y = 0; y < temp.size[1]; y++) {
 				for (int x = 0; x < temp.size[2]; x++) {
@@ -306,11 +307,13 @@ namespace SRS22 {
 		write_string_to_file(output_file_path, written_file_contents);
 	}
 
-	void OpenCVHelpers::ExtractPlanes32FC1(const cv::Mat& m, cv::Mat& m0, cv::Mat& m1, cv::Mat& m2) {
+	void OpenCVHelpers::ExtractPlanes32FC1_3PlaneTo32FC1x3(const cv::Mat& m, cv::Mat& m0, cv::Mat& m1, cv::Mat& m2) {
 		if (m.empty())
 			return;
 
 		assert(m.type() == CV_32FC1);
+		if(m0.type() != CV_32FC1)
+			printf("");
 		assert(m0.type() == CV_32FC1);
 		assert(m1.type() == CV_32FC1);
 		assert(m2.type() == CV_32FC1);
@@ -336,14 +339,14 @@ namespace SRS22 {
 
 	}
 
-	void OpenCVHelpers::CombinePlanes32FC1(const cv::Mat& m0, const cv::Mat& m1, const cv::Mat& m2, cv::Mat& m) {
+	void OpenCVHelpers::CombinePlanes32FC1x3to32FC1_3Plane(const cv::Mat& m0, const cv::Mat& m1, const cv::Mat& m2, cv::Mat& m) {
 		if (m0.empty())
 			return;
 
-		assert(m.type() == CV_32FC1);
 		assert(m0.type() == CV_32FC1);
 		assert(m1.type() == CV_32FC1);
 		assert(m2.type() == CV_32FC1);
+		assert(m.type() == CV_32FC1);
 
 		assert(m.rows == -1);
 		assert(m.cols == -1);
@@ -360,6 +363,34 @@ namespace SRS22 {
 				m.at<float>(0, y, x) = m0.at<float>(y, x);
 				m.at<float>(1, y, x) = m1.at<float>(y, x);
 				m.at<float>(2, y, x) = m2.at<float>(y, x);
+			}
+		}
+	}
+
+	void OpenCVHelpers::Combine8UC1x3To32FC1_3Plane(const cv::Mat& m0, const cv::Mat& m1, const cv::Mat& m2, cv::Mat& m) {
+		if (m0.empty())
+			return;
+
+		assert(m0.type() == CV_8UC1);
+		assert(m1.type() == CV_8UC1);
+		assert(m2.type() == CV_8UC1);
+		assert(m.type() == CV_32FC1);
+
+		assert(m.rows == -1);
+		assert(m.cols == -1);
+		assert(m.size.dims() == 3);
+		assert(m0.rows == m.size[2]);
+		assert(m0.cols == m.size[1]);
+		assert(m1.rows == m.size[2]);
+		assert(m1.cols == m.size[1]);
+		assert(m2.rows == m.size[2]);
+		assert(m2.cols == m.size[1]);
+
+		for (int y = 0; y < m0.size[0]; y++) {
+			for (int x = 0; x < m0.size[1]; x++) {
+				m.at<float>(0, y, x) = (float)m0.at<uchar>(y, x) / 255.0f;
+				m.at<float>(1, y, x) = (float)m1.at<uchar>(y, x) / 255.0f;
+				m.at<float>(2, y, x) = (float)m2.at<uchar>(y, x) / 255.0f;
 			}
 		}
 	}

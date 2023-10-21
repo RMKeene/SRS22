@@ -131,8 +131,15 @@ namespace SRS22 {
 		// All Map instances. Keep in alphabetical order please.
 		AddMap(make_shared<CameraAttnSpotMap>(this));
 		AddMap(make_shared<CameraDifferenceMap>(this));
+		AddMap(make_shared<CameraFoveaAngleMap000>(this));
+		AddMap(make_shared<CameraFoveaAngleMap225>(this));
+		AddMap(make_shared<CameraFoveaAngleMap450>(this));
+		AddMap(make_shared<CameraFoveaAngleMap675>(this));
+		AddMap(make_shared<CameraFoveaAngleMap900>(this));
+		AddMap(make_shared<CameraFoveaAngleMap1125>(this));
+		AddMap(make_shared<CameraFoveaAngleMap1350>(this));
+		AddMap(make_shared<CameraFoveaAngleMap1575>(this));
 		AddMap(make_shared<CameraFoveaEdgesMap>(this));
-		AddMap(make_shared<CameraFoveaAngleMap>(this));
 		AddMap(make_shared<CameraFoveaMap>(this));
 		AddMap(make_shared<CameraMotionXYMap>(this));
 

@@ -18,6 +18,8 @@ namespace SRS22 {
 		/// <summary>
 		/// cv::Mat works with reverse order layers, rows, cols or Z, Y, X or depth, height, width.
 		/// sv::Mat.size() return a 1 or 2 or 3 element array of axis sizes in the above orders.
+		/// We do NOT us channels as in OpenCV channels. If some map is RGB information range 0 to 1 the 
+		/// dimensions are 3, H, W and are NOT H, W, RGB channels
 		/// </summary>
 		cv::Mat charges;
 

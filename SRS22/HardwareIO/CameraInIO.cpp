@@ -7,10 +7,36 @@
 namespace SRS22 {
 	using namespace cv;
 
+	CameraInIO::FoveaBundle::FoveaBundle(Mat fovea32F3) {
+		red32F = Mat(fovea32F3.size[1], fovea32F3.size[2], CV_32FC1);
+		green32F = Mat(fovea32F3.size[1], fovea32F3.size[2], CV_32FC1);
+		blue32F = Mat(fovea32F3.size[1], fovea32F3.size[2], CV_32FC1);
 
+		OpenCVHelpers::ExtractPlanes32FC1_3PlaneTo32FC1x3(fovea32F3, red32F, green32F, blue32F);
+		red32F.convertTo(red8U, CV_8UC1, 255.0);
+		green32F.convertTo(green8U, CV_8UC1, 255.0);
+		blue32F.convertTo(blue8U, CV_8UC1, 255.0);
+	}
+
+	void CameraInIO::FoveaBundle::TakeBack32F(cv::Mat red32, cv::Mat green32, cv::Mat blue32) {
+		red32F = red32.clone();
+		green32F = green32.clone();
+		blue32F = blue32.clone();
+		red32F.convertTo(red8U, CV_8UC1, 255.0);
+		green32F.convertTo(green8U, CV_8UC1, 255.0);
+		blue32F.convertTo(blue8U, CV_8UC1, 255.0);
+	}
+
+	Mat CameraInIO::FoveaBundle::GetOut32F3Clone() {
+
+		Mat out(red32F.cols, red32F.rows, CV_32FC1);
+		OpenCVHelpers::CombinePlanes32FC1x3to32FC1_3Plane(red32F, green32F, blue32F, out);
+		return out.clone();
+	}
 
 	CameraInIO::CameraInIO() : IOCommon() {
 		IOCOMMON_SETCLASSNAME;
+		prepRotatedLines();
 	}
 
 	CameraInIO::~CameraInIO() {
@@ -34,7 +60,16 @@ namespace SRS22 {
 		int sizesFovea[3] = { 3, CameraFoveaMap_Height, CameraFoveaMap_Height };
 		fovea = Mat(3, sizesFovea, CV_32FC1);
 		foveaAbsDifference = Mat(3, sizesFovea, CV_32FC1);
-		foveaAngles = Mat(3, sizesFovea, CV_32FC1);
+
+		foveaAngles000 = Mat(3, sizesFovea, CV_32FC1);
+		foveaAngles225 = Mat(3, sizesFovea, CV_32FC1);
+		foveaAngles450 = Mat(3, sizesFovea, CV_32FC1);
+		foveaAngles675 = Mat(3, sizesFovea, CV_32FC1);
+		foveaAngles900 = Mat(3, sizesFovea, CV_32FC1);
+		foveaAngles1125 = Mat(3, sizesFovea, CV_32FC1);
+		foveaAngles1350 = Mat(3, sizesFovea, CV_32FC1);
+		foveaAngles1575 = Mat(3, sizesFovea, CV_32FC1);
+
 		foveaCentricity = Mat(3, sizesFovea, CV_32FC1);
 		foveaColorHistogram = Mat(3, sizesFovea, CV_32FC1);
 		foveaEdges = Mat(3, sizesFovea, CV_32FC1);
@@ -52,6 +87,7 @@ namespace SRS22 {
 		IOCommon::PreTickHardwareAndIO();
 		AcquireFrame();
 
+		// Get the raw camera frame, then extract various concepts of the frame and fovea.
 		CameraAttnSpotIO* foveaIO = IOCommon::GetIO<CameraAttnSpotIO>();
 
 		Rect r(foveaIO->GetRect());
@@ -60,12 +96,87 @@ namespace SRS22 {
 		fovea = fovea.clone();
 		std::string info = OpenCVHelpers::CVMatrixInfo(fovea);
 
-		Mat red(fovea.size[1], fovea.size[1], CV_32FC1);
-		Mat green(fovea.size[1], fovea.size[1], CV_32FC1);
-		Mat blue(fovea.size[1], fovea.size[1], CV_32FC1);
-		OpenCVHelpers::ExtractPlanes32FC1(fovea, red, green, blue);
+		// Size is 3, 15, 15
+		FoveaBundle foveaBundle(fovea);
 
-		cv::Sobel(red, foveaEdges, CV_32FC1, 1, 1);
+		Mat cannyRed, cannyGreen, cannyBlue;
+		foveaBundle.Allocate8UCSpaces(cannyRed, cannyGreen, cannyBlue);
+		cv::Canny(foveaBundle.red8U, cannyRed, 100, 200);
+		cv::Canny(foveaBundle.green8U, cannyGreen, 100, 200);
+		cv::Canny(foveaBundle.blue8U, cannyBlue, 100, 200);
+		OpenCVHelpers::Combine8UC1x3To32FC1_3Plane(cannyRed, cannyGreen, cannyBlue, foveaEdges);
+
+		Mat foveaAnglesRed000, foveaAnglesGreen000, foveaAnglesBlue000;
+		Mat foveaAnglesRed225, foveaAnglesGreen225, foveaAnglesBlue225;
+		Mat foveaAnglesRed450, foveaAnglesGreen450, foveaAnglesBlue450;
+		Mat foveaAnglesRed675, foveaAnglesGreen675, foveaAnglesBlue675;
+		Mat foveaAnglesRed900, foveaAnglesGreen900, foveaAnglesBlue900;
+		Mat foveaAnglesRed1125, foveaAnglesGreen1125, foveaAnglesBlue1125;
+		Mat foveaAnglesRed1350, foveaAnglesGreen1350, foveaAnglesBlue1350;
+		Mat foveaAnglesRed1575, foveaAnglesGreen1575, foveaAnglesBlue1575;
+
+		foveaBundle.Allocate8UCSpaces(foveaAnglesRed000, foveaAnglesGreen000, foveaAnglesBlue000);
+		foveaBundle.Allocate8UCSpaces(foveaAnglesRed225, foveaAnglesGreen225, foveaAnglesBlue225);
+		foveaBundle.Allocate8UCSpaces(foveaAnglesRed450, foveaAnglesGreen450, foveaAnglesBlue450);
+		foveaBundle.Allocate8UCSpaces(foveaAnglesRed675, foveaAnglesGreen675, foveaAnglesBlue675);
+		foveaBundle.Allocate8UCSpaces(foveaAnglesRed900, foveaAnglesGreen900, foveaAnglesBlue900);
+		foveaBundle.Allocate8UCSpaces(foveaAnglesRed1125, foveaAnglesGreen1125, foveaAnglesBlue1125);
+		foveaBundle.Allocate8UCSpaces(foveaAnglesRed1350, foveaAnglesGreen1350, foveaAnglesBlue1350);
+		foveaBundle.Allocate8UCSpaces(foveaAnglesRed1575, foveaAnglesGreen1575, foveaAnglesBlue1575);
+		cv::filter2D(foveaBundle.red8U, foveaAnglesRed000, -1, rotatedLines000_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.green8U, foveaAnglesGreen000, -1, rotatedLines000_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.blue8U, foveaAnglesBlue000, -1, rotatedLines000_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.red8U, foveaAnglesRed225, -1, rotatedLines225_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.green8U, foveaAnglesGreen225, -1, rotatedLines225_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.blue8U, foveaAnglesBlue225, -1, rotatedLines225_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.red8U, foveaAnglesRed450, -1, rotatedLines450_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.green8U, foveaAnglesGreen450, -1, rotatedLines450_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.blue8U, foveaAnglesBlue450, -1, rotatedLines450_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.red8U, foveaAnglesRed675, -1, rotatedLines675_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.green8U, foveaAnglesGreen675, -1, rotatedLines675_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.blue8U, foveaAnglesBlue675, -1, rotatedLines675_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.red8U, foveaAnglesRed900, -1, rotatedLines900_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.green8U, foveaAnglesGreen900, -1, rotatedLines900_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.blue8U, foveaAnglesBlue900, -1, rotatedLines900_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.red8U, foveaAnglesRed1125, -1, rotatedLines1125_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.green8U, foveaAnglesGreen1125, -1, rotatedLines1125_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.blue8U, foveaAnglesBlue1125, -1, rotatedLines1125_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.red8U, foveaAnglesRed1350, -1, rotatedLines1350_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.green8U, foveaAnglesGreen1350, -1, rotatedLines1350_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.blue8U, foveaAnglesBlue1350, -1, rotatedLines1350_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.red8U, foveaAnglesRed1575, -1, rotatedLines1575_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.green8U, foveaAnglesGreen1575, -1, rotatedLines1575_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		cv::filter2D(foveaBundle.blue8U, foveaAnglesBlue1575, -1, rotatedLines1575_7x7_32FC1, cv::Point(-1, -1), 0.0, BORDER_CONSTANT);
+		for (int y = 0; y < foveaAnglesRed000.size[0]; y++) {
+			for (int x = 0; x < foveaAnglesRed000.size[1]; x++) {
+				std::string a = OpenCVHelpers::CVMatrixInfo(foveaAngles000);
+				std::string b = OpenCVHelpers::CVMatrixInfo(foveaAnglesRed000);
+				foveaAngles000.at<float>(0, y, x) = foveaAnglesRed000.at<uchar>(y, x) / 255.0f;
+				foveaAngles000.at<float>(1, y, x) = foveaAnglesGreen000.at<uchar>(y, x) / 255.0f;
+				foveaAngles000.at<float>(2, y, x) = foveaAnglesBlue000.at<uchar>(y, x) / 255.0f;
+				foveaAngles225.at<float>(0, y, x) = foveaAnglesRed225.at<uchar>(y, x) / 255.0f;
+				foveaAngles225.at<float>(1, y, x) = foveaAnglesGreen225.at<uchar>(y, x) / 255.0f;
+				foveaAngles225.at<float>(2, y, x) = foveaAnglesBlue225.at<uchar>(y, x) / 255.0f;
+				foveaAngles450.at<float>(0, y, x) = foveaAnglesRed450.at<uchar>(y, x) / 255.0f;
+				foveaAngles450.at<float>(1, y, x) = foveaAnglesGreen450.at<uchar>(y, x) / 255.0f;
+				foveaAngles450.at<float>(2, y, x) = foveaAnglesBlue450.at<uchar>(y, x) / 255.0f;
+				foveaAngles675.at<float>(0, y, x) = foveaAnglesRed675.at<uchar>(y, x) / 255.0f;
+				foveaAngles675.at<float>(1, y, x) = foveaAnglesGreen675.at<uchar>(y, x) / 255.0f;
+				foveaAngles675.at<float>(2, y, x) = foveaAnglesBlue675.at<uchar>(y, x) / 255.0f;
+				foveaAngles900.at<float>(0, y, x) = foveaAnglesRed900.at<uchar>(y, x) / 255.0f;
+				foveaAngles900.at<float>(1, y, x) = foveaAnglesGreen900.at<uchar>(y, x) / 255.0f;
+				foveaAngles900.at<float>(2, y, x) = foveaAnglesBlue900.at<uchar>(y, x) / 255.0f;
+				foveaAngles1125.at<float>(0, y, x) = foveaAnglesRed1125.at<uchar>(y, x) / 255.0f;
+				foveaAngles1125.at<float>(1, y, x) = foveaAnglesGreen1125.at<uchar>(y, x) / 255.0f;
+				foveaAngles1125.at<float>(2, y, x) = foveaAnglesBlue1125.at<uchar>(y, x) / 255.0f;
+				foveaAngles1350.at<float>(0, y, x) = foveaAnglesRed1350.at<uchar>(y, x) / 255.0f;
+				foveaAngles1350.at<float>(1, y, x) = foveaAnglesGreen1350.at<uchar>(y, x) / 255.0f;
+				foveaAngles1350.at<float>(2, y, x) = foveaAnglesBlue1350.at<uchar>(y, x) / 255.0f;
+				foveaAngles1575.at<float>(0, y, x) = foveaAnglesRed1575.at<uchar>(y, x) / 255.0f;
+				foveaAngles1575.at<float>(1, y, x) = foveaAnglesGreen1575.at<uchar>(y, x) / 255.0f;
+				foveaAngles1575.at<float>(2, y, x) = foveaAnglesBlue1575.at<uchar>(y, x) / 255.0f;
+			}
+		}
 
 		OpenCVHelpers::error_aware_imwrite_imshow("./keene.jpg", foveaEdges, true);
 	}
@@ -111,5 +222,100 @@ namespace SRS22 {
 	void CameraInIO::GetSubRect(cv::Mat& outM, const SRS22::Rect& region) {
 		// current image is CV_8UC3
 		OpenCVHelpers::CVGetSubRectRGB(vidHelper.currentImage3UC8, outM, region);
+	}
+
+	/// <summary>
+	/// Prepares the rotated line kernels for the fovea convolution.
+	/// rotatedLines000_7x7_32FC1 etc.
+	/// </summary>
+	void CameraInIO::prepRotatedLines() {
+		const int sz = 7;
+
+		rotatedLines000_7x7_32FC1 = cv::Mat::zeros(sz, sz, CV_32FC1);
+		rotatedLines225_7x7_32FC1 = cv::Mat::zeros(sz, sz, CV_32FC1);
+		rotatedLines450_7x7_32FC1 = cv::Mat::zeros(sz, sz, CV_32FC1);
+		rotatedLines675_7x7_32FC1 = cv::Mat::zeros(sz, sz, CV_32FC1);
+		rotatedLines900_7x7_32FC1 = cv::Mat::zeros(sz, sz, CV_32FC1);
+		rotatedLines1125_7x7_32FC1 = cv::Mat::zeros(sz, sz, CV_32FC1);
+		rotatedLines1350_7x7_32FC1 = cv::Mat::zeros(sz, sz, CV_32FC1);
+		rotatedLines1575_7x7_32FC1 = cv::Mat::zeros(sz, sz, CV_32FC1);
+
+		// 0 degrees
+		rotatedLines000_7x7_32FC1.at<float>(3, 3) = 1.0; // Center dot.
+		for (int n = 1; n <= 3; n++) {
+			//                                  Y    X
+			rotatedLines000_7x7_32FC1.at<float>(3, 3 + n) = 1.0f;
+			rotatedLines000_7x7_32FC1.at<float>(3, 3 - n) = 1.0f;
+		}
+		// 22.5 degrees
+		rotatedLines225_7x7_32FC1.at<float>(3, 3) = 1.0; // Center dot.
+		for (int n = 1; n <= 3; n++) {
+			//                                    Y        X
+			rotatedLines225_7x7_32FC1.at<float>(3 + n / 2, 3 + n) = 1.0f;
+			rotatedLines225_7x7_32FC1.at<float>(3 - n / 2, 3 - n) = 1.0f;
+		}
+		// 45 degrees
+		rotatedLines450_7x7_32FC1.at<float>(3, 3) = 1.0; // Center dot.
+		for (int n = 1; n <= 3; n++) {
+			//                                    Y      X
+			rotatedLines450_7x7_32FC1.at<float>(3 + n, 3 + n) = 1.0f;
+			rotatedLines450_7x7_32FC1.at<float>(3 - n, 3 - n) = 1.0f;
+		}
+		// 67.5 degrees
+		rotatedLines675_7x7_32FC1.at<float>(3, 3) = 1.0; // Center dot.
+		for (int n = 1; n <= 3; n++) {
+			//                                    Y      X
+			rotatedLines675_7x7_32FC1.at<float>(3 + n, 3 + n / 2) = 1.0f;
+			rotatedLines675_7x7_32FC1.at<float>(3 - n, 3 - n / 2) = 1.0f;
+		}
+		// 90 degrees
+		rotatedLines900_7x7_32FC1.at<float>(3, 3) = 1.0; // Center dot.
+		for (int n = 1; n <= 3; n++) {
+			//                                    Y    X
+			rotatedLines900_7x7_32FC1.at<float>(3 + n, 3) = 1.0f;
+			rotatedLines900_7x7_32FC1.at<float>(3 - n, 3) = 1.0f;
+		}
+		// 112.5 degrees
+		for (int n = 1; n <= 3; n++) {
+			//                                     Y        X
+			rotatedLines1125_7x7_32FC1.at<float>(3 + n, 3 - n / 2) = 1.0f;
+			rotatedLines1125_7x7_32FC1.at<float>(3 - n, 3 + n / 2) = 1.0f;
+		}
+		// 135 degrees
+		for (int n = 1; n <= 3; n++) {
+			//                                     Y      X
+			rotatedLines1350_7x7_32FC1.at<float>(3 + n, 3 - n) = 1.0f;
+			rotatedLines1350_7x7_32FC1.at<float>(3 - n, 3 + n) = 1.0f;
+		}
+		// 157.5 degrees
+		for (int n = 1; n <= 3; n++) {
+			//                                     Y          X
+			rotatedLines1575_7x7_32FC1.at<float>(3 + n / 2, 3 - n) = 1.0f;
+			rotatedLines1575_7x7_32FC1.at<float>(3 - n / 2, 3 + n) = 1.0f;
+		}
+	}
+
+	/// <summary>
+	/// For debug and validation displays the fovea convolution kernels.
+	/// E.g. rotatedLines000_7x7_32FC1 etc.
+	/// </summary>
+	void CameraInIO::imShowFoveaConvolutionKernels() {
+		cv::Mat m(7, 7, CV_8UC1);
+		OpenCVHelpers::Convert32FC1To8UC1(rotatedLines000_7x7_32FC1, m);
+		imshow("Fovea Kernel Rotated Line 0.0 deg", m);
+		OpenCVHelpers::Convert32FC1To8UC1(rotatedLines225_7x7_32FC1, m);
+		imshow("Fovea Kernel Rotated Line 22.5 deg", m);
+		OpenCVHelpers::Convert32FC1To8UC1(rotatedLines450_7x7_32FC1, m);
+		imshow("Fovea Kernel Rotated Line 45.0 deg", m);
+		OpenCVHelpers::Convert32FC1To8UC1(rotatedLines675_7x7_32FC1, m);
+		imshow("Fovea Kernel Rotated Line 67.5 deg", m);
+		OpenCVHelpers::Convert32FC1To8UC1(rotatedLines900_7x7_32FC1, m);
+		imshow("Fovea Kernel Rotated Line 90.0 deg", m);
+		OpenCVHelpers::Convert32FC1To8UC1(rotatedLines1125_7x7_32FC1, m);
+		imshow("Fovea Kernel Rotated Line 112.5 deg", m);
+		OpenCVHelpers::Convert32FC1To8UC1(rotatedLines1350_7x7_32FC1, m);
+		imshow("Fovea Kernel Rotated Line 135.0 deg", m);
+		OpenCVHelpers::Convert32FC1To8UC1(rotatedLines1575_7x7_32FC1, m);
+		imshow("Fovea Kernel Rotated Line 157.5 deg", m);
 	}
 }

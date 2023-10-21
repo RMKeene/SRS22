@@ -229,9 +229,9 @@ namespace SRS22 {
 		}
 		brain0->tickCountRecent = 0;
 
-		overallGoodnessLabel->SetLabelText(wxString::Format("Goodness: %6.4f  Change: %6.4f  Brain0 Learn %6.4f", 
-			brain0->overallGoodness, 
-			brain0->overallGoodnessRateOfChange, 
+		overallGoodnessLabel->SetLabelText(wxString::Format("Goodness: %6.4f  Change: %6.4f  Brain0 Learn %6.4f",
+			brain0->overallGoodness,
+			brain0->overallGoodnessRateOfChange,
 			brain0->cortexChunks.front()->growthSum));
 
 		GlobalWorld::GlobalWorldInstance.TickAll();
@@ -271,7 +271,11 @@ namespace SRS22 {
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
 	}
 
+
+	
 	void MonitorFrame::OnTestBClicked(wxCommandEvent& event) {
+		auto cameraIn = IOCommon::GetIO<CameraInIO>();
+		cameraIn->imShowFoveaConvolutionKernels();
 	}
 
 	void MonitorFrame::OnScrollMapMonitorMsSlider(wxScrollEvent& event) {
