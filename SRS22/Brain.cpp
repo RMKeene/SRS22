@@ -50,6 +50,13 @@ namespace SRS22 {
 	{
 		PreTickHardwareAndIO();
 
+		if (tickCount == 14)
+			printf("");
+
+		//for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
+		//	n.second->ComputeNextState();
+		//}
+
 		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
 			n.second->ComputeNextState();
 			});
@@ -192,6 +199,8 @@ namespace SRS22 {
 	}
 
 	void Brain::AddMap(shared_ptr<ConceptMap> m) {
+		if (conceptMaps.find(m->UID) != conceptMaps.end())
+			throw std::exception((std::string("Duplicate ConceptMap UID in Brain::AddMap: ") + m->MapName).c_str());
 		conceptMaps[m->UID] = m;
 		conceptMapsByName[m->MapName] = m;
 	}

@@ -269,10 +269,9 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
+
 	}
 
-
-	
 	void MonitorFrame::OnTestBClicked(wxCommandEvent& event) {
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->imShowFoveaConvolutionKernels();

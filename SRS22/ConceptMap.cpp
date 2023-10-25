@@ -3,6 +3,7 @@
 #include "ConnectivityTriple.h"
 #include "Brain.h"
 #include "BrainLocatable.h"
+#include "SRS22LogTaker.h"
 
 namespace SRS22 {
 	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int cols, float decayFactor, std::string MapDescription) :
@@ -64,7 +65,7 @@ namespace SRS22 {
 	}
 
 	void ConceptMap::ComputeNextState() {
-
+		SRS22LogTaker::LogInfo("ConceptMap::ComputeNextState() " + MapName);
 	}
 
 	/// <summary>

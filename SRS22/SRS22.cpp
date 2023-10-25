@@ -92,6 +92,9 @@ namespace SRS22 {
 			monitorFrame->LogRichText->BeginTextColour(wxColor(128, 128, 128));
 			break;
 		}
+		if (msg == "ConceptMap::ComputeNextState() CameraMotionXYMap") {
+			printf("");
+		}
 		monitorFrame->LogRichText->WriteText(msg);
 		monitorFrame->LogRichText->Newline();
 		monitorFrame->LogRichText->EndTextColour();
