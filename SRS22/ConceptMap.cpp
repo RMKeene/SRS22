@@ -65,7 +65,6 @@ namespace SRS22 {
 	}
 
 	void ConceptMap::ComputeNextState() {
-		SRS22LogTaker::LogInfo("ConceptMap::ComputeNextState() " + MapName);
 	}
 
 	/// <summary>

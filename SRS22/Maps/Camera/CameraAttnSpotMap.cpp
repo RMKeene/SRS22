@@ -1,4 +1,5 @@
 #include "../../pch.h"
+#include <memory>
 #include "CameraAttnSpotMap.h"
 #include "../../HardwareIO/IOCommon.h"
 #include "../../HardwareIO/CameraAttnSpotIO.h"
@@ -20,7 +21,7 @@ namespace SRS22 {
 	void CameraAttnSpotMap::ComputeNextState() {
 		ConceptMap::ComputeNextState();
 
-		auto motionXY = static_cast<CameraMotionXYMap*>(myBrain->FindMapByName("CameraMotionXYMap").value().get());
+		auto motionXY = std::dynamic_pointer_cast<CameraMotionXYMap>(myBrain->FindMapByName("CameraMotionXYMap").value());
 		float X = motionXY->M.get(0);
 		float Y = motionXY->M.get(1);
 		nextM.charges.at<float>(0) += motionXY->M.get(0);

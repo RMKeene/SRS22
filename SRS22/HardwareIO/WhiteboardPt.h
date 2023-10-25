@@ -38,7 +38,13 @@ public:
 		return static_cast<unsigned char>(std::clamp((float)pixel0To255 / 255.0f, 0.0f, 1.0f));
 	}
 
-	WhiteboardPt() {}
+	WhiteboardPt() :
+		r(0), g(0), b(0),
+		blend(0.0f),
+		x(0.0f), y(0.0f)
+	{
+	}
+
 
 	WhiteboardPt(float rCharge, float gCharge, float bCharge, float blendCharge, float xCharge, float yCharge) :
 		r(ChargeToColorUByte(rCharge)), g(ChargeToColorUByte(gCharge)), b(ChargeToColorUByte(bCharge)),

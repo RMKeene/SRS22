@@ -8,12 +8,15 @@
 namespace SRS22 {
 
 	MonitorFrame* SRS22App::monitorFrame = nullptr;
+	SRS22App* SRS22App::srs22AppGlobal = nullptr;
+
 
 	SRS22App::SRS22App() :
 		// Locale affects on the language used in the calendar, and may affect
 		// on the first day of the week.
 		m_locale(wxLANGUAGE_DEFAULT)
 	{
+		srs22AppGlobal = this;
 		SRS22LogTaker::SetLogTaker(this);
 		Settings::globalSettings.Load();
 	}
@@ -46,58 +49,12 @@ namespace SRS22 {
 	}
 
 	void SRS22App::TakeLog(std::string msg, LogLevels logLevel) {
-		switch (logLevel) {
-		case LogLevels::LOG_ERROR:
-			wxLogError("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 0, 0));
-			break;
-		case LogLevels::DEBUG:
-			wxLogDebug("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(240, 255, 240));
-			break;
-		case LogLevels::INFO:
-			wxLogInfo("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(240, 240, 255));
-			break;
-		case LogLevels::WARNING:
-			wxLogWarning("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 255, 220));
-			break;
-		case LogLevels::VERBOSE:
-			wxLogVerbose("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 255, 255));
-			break;
-		case LogLevels::MESSAGE:
-			wxLogMessage("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(220, 255, 255));
-			break;
-		case LogLevels::TRACE:
-			wxLogTrace("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 220, 255));
-			break;
-		case LogLevels::STATUS:
-			wxLogStatus("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 220, 255));
-			break;
-		case LogLevels::SYSERROR:
-			wxLogSysError("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 200, 255));
-			break;
-		case LogLevels::FATAL_ERROR:
-			wxLogFatalError("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(255, 190, 255));
-			break;
-		default:
-			wxLogInfo("%s", msg.c_str());
-			monitorFrame->LogRichText->BeginTextColour(wxColor(128, 128, 128));
-			break;
-		}
-		if (msg == "ConceptMap::ComputeNextState() CameraMotionXYMap") {
-			printf("");
-		}
-		monitorFrame->LogRichText->WriteText(msg);
-		monitorFrame->LogRichText->Newline();
-		monitorFrame->LogRichText->EndTextColour();
+		std::lock_guard<std::recursive_mutex> lock(SRS22LogTaker::logMutex);
 
+		LogEntry logEntry;
+		logEntry.msg = msg;
+		logEntry.logLevel = logLevel;
+		SRS22LogTaker::logQueue.push_back(logEntry);
 	}
+
 }

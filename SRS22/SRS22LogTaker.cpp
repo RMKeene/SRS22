@@ -2,6 +2,9 @@
 
 namespace SRS22 {
 
+	std::recursive_mutex SRS22LogTaker::logMutex;
+	std::list<LogEntry> SRS22LogTaker::logQueue;
+
 	SRS22LogTaker* SRS22LogTaker::globalLogTaker = nullptr;
 
 	LogLevels SRS22LogTaker::loggingLevel = LogLevels::INFO;

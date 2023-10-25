@@ -23,6 +23,11 @@ namespace SRS22 {
 		TRACE,
 	};
 
+	struct LogEntry {
+		std::string msg;
+		LogLevels logLevel;
+	};
+
 
 	/// <summary>
 	/// An interface for anything that can receive and process a log entry.
@@ -34,6 +39,9 @@ namespace SRS22 {
 
 		static SRS22LogTaker* globalLogTaker;
 		static LogLevels loggingLevel;
+
+		static std::recursive_mutex logMutex;
+		static std::list<LogEntry> logQueue;
 
 		static void SetLogTaker(SRS22LogTaker* logTaker);
 

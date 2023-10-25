@@ -25,6 +25,7 @@ namespace SRS22 {
 		virtual bool OnInit() wxOVERRIDE;
 
 		static MonitorFrame* monitorFrame;
+		static SRS22App* srs22AppGlobal;
 
 		// Inherited via SRS22LogTaker
 		void TakeLog(std::string msg, LogLevels logLevel) override;

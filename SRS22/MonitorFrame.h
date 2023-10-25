@@ -45,6 +45,8 @@ namespace SRS22 {
 
 		void RefreshMapMonitor(long long timeTicks);
 
+		void ProcessLogQueueInWindowThread();
+
 		TopTextFrame* topTextFrame;
 		WhiteboardFrame* whiteboardFrame;
 		TopVideoFrame* topVideoFrame;

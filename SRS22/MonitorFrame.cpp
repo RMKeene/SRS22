@@ -49,6 +49,7 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnMonitorWindowIdle(wxIdleEvent& event) {
+		// Note taht when the brain is active (not paused) this function is virtually never called.
 	}
 
 	void MonitorFrame::OnNewMapMonitorWindow(wxCommandEvent& event) {
@@ -214,6 +215,7 @@ namespace SRS22 {
 	// TODO - Seperate the Brains onto their own threads.
 	// See https://randomascii.wordpress.com/2020/10/04/windows-timer-resolution-the-great-rule-change/
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
+		ProcessLogQueueInWindowThread();
 		// Milliseconds since the epoc.
 		long long timeTicks = SRS22::GetTimeTicksMs();
 		BrainH brain0 = GlobalWorld::GlobalWorldInstance.GetBrain(0);
@@ -287,5 +289,67 @@ namespace SRS22 {
 		//wxClientDC dc(this);
 		// draw some text
 		//dc.DrawText(wxT("Testing"), 40, 60);
+	}
+
+	// Called in window idle
+	void MonitorFrame::ProcessLogQueueInWindowThread() {
+		std::lock_guard<std::recursive_mutex> lock(SRS22LogTaker::logMutex);
+		if (SRS22LogTaker::logQueue.size() == 0)
+			return;
+		LogEntry logEntry = SRS22LogTaker::logQueue.back();
+		SRS22LogTaker::logQueue.pop_back();
+
+		switch (logEntry.logLevel) {
+		case LogLevels::LOG_ERROR:
+			wxLogError("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(255, 0, 0));
+			break;
+		case LogLevels::DEBUG:
+			wxLogDebug("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(240, 255, 240));
+			break;
+		case LogLevels::INFO:
+			wxLogInfo("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(240, 240, 255));
+			break;
+		case LogLevels::WARNING:
+			wxLogWarning("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(255, 255, 220));
+			break;
+		case LogLevels::VERBOSE:
+			wxLogVerbose("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(255, 255, 255));
+			break;
+		case LogLevels::MESSAGE:
+			wxLogMessage("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(220, 255, 255));
+			break;
+		case LogLevels::TRACE:
+			wxLogTrace("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(255, 220, 255));
+			break;
+		case LogLevels::STATUS:
+			wxLogStatus("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(255, 220, 255));
+			break;
+		case LogLevels::SYSERROR:
+			wxLogSysError("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(255, 200, 255));
+			break;
+		case LogLevels::FATAL_ERROR:
+			wxLogFatalError("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(255, 190, 255));
+			break;
+		default:
+			wxLogInfo("%s", logEntry.msg.c_str());
+			LogRichText->BeginTextColour(wxColor(128, 128, 128));
+			break;
+		}
+
+		LogRichText->SetCaretPosition(-1);
+		LogRichText->SetInsertionPoint(0);
+		LogRichText->WriteText(logEntry.msg);
+		LogRichText->Newline();
+		LogRichText->EndTextColour();
 	}
 }
