@@ -90,6 +90,8 @@ namespace SRS22 {
 		// Get the raw camera frame, then extract various concepts of the frame and fovea.
 		CameraAttnSpotIO* foveaIO = IOCommon::GetIO<CameraAttnSpotIO>();
 
+		foveaPreviousFrame = fovea.clone();
+
 		Rect r(foveaIO->GetRect());
 		currentFoveaRect = r;
 		GetSubRect(fovea, r);
@@ -178,7 +180,10 @@ namespace SRS22 {
 			}
 		}
 
-		OpenCVHelpers::error_aware_imwrite_imshow("./keene.jpg", foveaEdges, true);
+		 absdiff(fovea, foveaPreviousFrame, foveaAbsDifference);
+
+
+		//OpenCVHelpers::error_aware_imwrite_imshow("./keene.jpg", foveaEdges, true);
 	}
 
 	void CameraInIO::PostTickHardwareAndUI() {

@@ -29,6 +29,7 @@ enum class MapUidE {
 	CAMERAFOVEAANGLE1125_MAP,
 	CAMERAFOVEAANGLE1350_MAP,
 	CAMERAFOVEAANGLE1575_MAP,
+	FOVEAABSDIFF_MAP,
 
 	// Add new map keys before this comment but at the end of the above list.
 	// Always last.

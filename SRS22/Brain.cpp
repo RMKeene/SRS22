@@ -21,6 +21,7 @@
 #include "Maps/Hearing/HearingMap.h"
 #include "Maps/Camera/CameraFoveaAngleMap.h"
 #include "Maps/Camera/CameraFoveaEdgesMap.h"
+#include "Maps/Camera/CameraFoveaAbsDiffMap.h"
 
 using namespace concurrency;
 
@@ -146,6 +147,7 @@ namespace SRS22 {
 		AddMap(make_shared<CameraFoveaAngleMap1125>(this));
 		AddMap(make_shared<CameraFoveaAngleMap1350>(this));
 		AddMap(make_shared<CameraFoveaAngleMap1575>(this));
+		AddMap(make_shared<CameraFoveaAbsDiffMap>(this));
 		AddMap(make_shared<CameraFoveaEdgesMap>(this));
 		AddMap(make_shared<CameraFoveaMap>(this));
 		AddMap(make_shared<CameraMotionXYMap>(this));
