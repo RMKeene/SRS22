@@ -10,6 +10,7 @@ namespace SRS22 {
 	class ScreenAttnSpotIO : public AttnSpotBaseIO
 	{
 	public:
+		static bool freezeAttnSpotPosition;
 
 		ScreenAttnSpotIO();
 		ScreenAttnSpotIO(Point p, int w, int h, Rect screenRect);

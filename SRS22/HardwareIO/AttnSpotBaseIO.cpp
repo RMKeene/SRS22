@@ -26,8 +26,15 @@ namespace SRS22 {
 		IOCommon::Shutdown();
 	}
 
-	void AttnSpotBaseIO::PreTickHardwareAndIO() {
+	void AttnSpotBaseIO::PreTickHardwareAndIO(bool freezeLocation) {
+		rectIsFrozen = freezeLocation;
+		Rect rr = rect;
+		frozenRect = rect;
 		IOCommon::PreTickHardwareAndIO();
+		previousRect = rr;
+		if (freezeLocation) {
+			rect = frozenRect;
+		}
 	}
 
 	void AttnSpotBaseIO::PostTickHardwareAndUI() {
@@ -42,12 +49,16 @@ namespace SRS22 {
 	}
 
 	void AttnSpotBaseIO::SetPt(Point& pt) {
-		rect.CenterOnInPlace(pt);
-		ForceOnScreen();
+		if (!rectIsFrozen) {
+			rect.CenterOnInPlace(pt);
+			ForceOnScreen();
+		}
 	}
 
 	void AttnSpotBaseIO::SetPt(const int x, const int y) {
-		rect.CenterOnInPlace(x, y);
-		ForceOnScreen();
+		if (!rectIsFrozen) {
+			rect.CenterOnInPlace(x, y);
+			ForceOnScreen();
+		}
 	}
 }

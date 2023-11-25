@@ -149,6 +149,14 @@ namespace SRS22 {
 		RefreshMapMonitor(SRS22::GetTimeTicksMs());
 	}
 
+	void MonitorFrame::OnFreezeFoveaCB(wxCommandEvent& event) {
+		CameraAttnSpotIO::freezeAttnSpotPosition = event.IsChecked();
+	}
+
+	void MonitorFrame::OnFreezeScreenAttnSpotCB(wxCommandEvent& event) {
+		ScreenAttnSpotIO::freezeAttnSpotPosition = event.IsChecked();
+	}
+
 	void MonitorFrame::OnRunToggleButton(wxCommandEvent& event) {
 		if (event.IsChecked())
 			GlobalWorld::GlobalWorldInstance.GetBrain(0)->Continue();

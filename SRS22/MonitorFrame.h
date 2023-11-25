@@ -37,6 +37,8 @@ namespace SRS22 {
 		void OnMonitorFrameTickTimer(wxTimerEvent& event) override;
 		void OnNewMapMonitorWindow(wxCommandEvent& event) override;
 		void OnMapChoiceChange(wxCommandEvent& event) override;
+		void OnFreezeFoveaCB(wxCommandEvent& event)  override;
+		void OnFreezeScreenAttnSpotCB(wxCommandEvent& event) override;
 		void OnTestAClicked(wxCommandEvent& event) override;
 		void OnTestBClicked(wxCommandEvent& event) override;
 		void OnScrollMapMonitorMsSlider(wxScrollEvent& event) override;

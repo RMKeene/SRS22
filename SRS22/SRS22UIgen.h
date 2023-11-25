@@ -27,11 +27,11 @@
 #include <wx/choice.h>
 #include <wx/slider.h>
 #include <wx/statline.h>
+#include <wx/checkbox.h>
 #include <wx/statbmp.h>
 #include <wx/richtext/richtextctrl.h>
 #include <wx/timer.h>
 #include <wx/frame.h>
-#include <wx/checkbox.h>
 #include <wx/textctrl.h>
 #include <wx/bmpbuttn.h>
 
@@ -74,6 +74,8 @@ class MonitorFrameGen : public wxFrame
 		wxStaticText* m_staticText911;
 		wxChoice* VideoInChoiceDropbox;
 		wxToggleButton* videoOnOffButton;
+		wxCheckBox* m_FreezeFoveaPosition;
+		wxCheckBox* m_freezeScreenAttnSpotCB;
 		wxStaticBitmap* AudioInFFTBitmapWidget;
 		wxStaticBitmap* AudioOutFFTBitmapWidget;
 		wxButton* ShowMapWindowButton;
@@ -116,6 +118,8 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnAudioVolumeOut( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnVideoInChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnVideoOnOffToggle( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnFreezeFoveaCB( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnFreezeScreenAttnSpotCB( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNewMapMonitorWindow( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapChoiceChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnScrollMapMonitorMsSlider( wxScrollEvent& event ) { event.Skip(); }

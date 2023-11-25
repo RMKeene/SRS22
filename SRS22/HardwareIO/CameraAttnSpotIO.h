@@ -10,6 +10,7 @@ namespace SRS22 {
 	class CameraAttnSpotIO : public AttnSpotBaseIO
 	{
 	public:
+		static bool freezeAttnSpotPosition;
 		CameraAttnSpotIO();
 		CameraAttnSpotIO(Point p, int w, int h, Rect cameraRect);
 		~CameraAttnSpotIO();

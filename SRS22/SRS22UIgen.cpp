@@ -214,6 +214,12 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	videoOnOffButton->SetValue( true ); 
 	bSizer31->Add( videoOnOffButton, 0, wxALL, 5 );
 	
+	m_FreezeFoveaPosition = new wxCheckBox( sbSizer13->GetStaticBox(), wxID_ANY, wxT("Freeze Fovea Pos."), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( m_FreezeFoveaPosition, 0, wxALL, 5 );
+	
+	m_freezeScreenAttnSpotCB = new wxCheckBox( sbSizer13->GetStaticBox(), wxID_ANY, wxT("Freeze Screen Attn. Spot"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( m_freezeScreenAttnSpotCB, 0, wxALL, 5 );
+	
 	
 	bSizer30->Add( bSizer31, 0, wxEXPAND, 5 );
 	
@@ -397,6 +403,8 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	AudioOutVolume->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeOut ), NULL, this );
 	VideoInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnVideoInChanged ), NULL, this );
 	videoOnOffButton->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnVideoOnOffToggle ), NULL, this );
+	m_FreezeFoveaPosition->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnFreezeFoveaCB ), NULL, this );
+	m_freezeScreenAttnSpotCB->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnFreezeScreenAttnSpotCB ), NULL, this );
 	ShowMapWindowButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNewMapMonitorWindow ), NULL, this );
 	ViewMapChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnMapChoiceChange ), NULL, this );
 	mapMonitorRefreshDelay->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );
@@ -454,6 +462,8 @@ MonitorFrameGen::~MonitorFrameGen()
 	AudioOutVolume->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeOut ), NULL, this );
 	VideoInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnVideoInChanged ), NULL, this );
 	videoOnOffButton->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnVideoOnOffToggle ), NULL, this );
+	m_FreezeFoveaPosition->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnFreezeFoveaCB ), NULL, this );
+	m_freezeScreenAttnSpotCB->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnFreezeScreenAttnSpotCB ), NULL, this );
 	ShowMapWindowButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNewMapMonitorWindow ), NULL, this );
 	ViewMapChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnMapChoiceChange ), NULL, this );
 	mapMonitorRefreshDelay->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnScrollMapMonitorMsSlider ), NULL, this );

@@ -1,6 +1,8 @@
 #include "CameraAttnSpotIO.h"
 
 namespace SRS22 {
+	bool CameraAttnSpotIO::freezeAttnSpotPosition = false;
+
 	CameraAttnSpotIO::CameraAttnSpotIO() :
 		AttnSpotBaseIO() {
 		IOCOMMON_SETCLASSNAME;
@@ -24,7 +26,7 @@ namespace SRS22 {
 	}
 
 	void CameraAttnSpotIO::PreTickHardwareAndIO() {
-		AttnSpotBaseIO::PreTickHardwareAndIO();
+		AttnSpotBaseIO::PreTickHardwareAndIO(freezeAttnSpotPosition);
 	}
 
 	void CameraAttnSpotIO::PostTickHardwareAndUI() {

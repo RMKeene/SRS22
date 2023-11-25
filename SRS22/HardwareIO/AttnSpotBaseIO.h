@@ -21,18 +21,21 @@ namespace SRS22 {
 		void ForceOnScreen();
 	public:
 		Rect rect;
+		Rect frozenRect;
+		Rect previousRect;
+		bool rectIsFrozen = false;
 
 		AttnSpotBaseIO();
 		AttnSpotBaseIO(Point p, int w, int h, Rect viewRect);
 		~AttnSpotBaseIO();
 
 		/// <summary>
-		/// The rect of the entire view the fovea is in. E.g. The whole camera view.
+		/// The rect of the entire view the fovea is in. E.g. The whole camera or screen view.
 		/// </summary>
 		/// <returns></returns>
 		const Rect& GetViewRect() { return _viewRect; }
 		/// <summary>
-		/// Where we are looking at in the Camera Rect.
+		/// Where we are looking at in the Camera (or Screen) Rect.
 		/// </summary>
 		/// <returns></returns>
 		const Rect& GetRect() { return rect; }
@@ -41,7 +44,7 @@ namespace SRS22 {
 		/// </summary>
 		Point GetPt() { return Point(rect.CenterX(), rect.CenterY()); }
 		/// <summary>
-		/// Set the centr of attention in the view.
+		/// Set the center of attention in the view.
 		/// </summary>
 		/// <param name="pt"></param>
 		void SetPt(Point& pt);
@@ -56,7 +59,7 @@ namespace SRS22 {
 		/// <summary>
 		/// Called for each IOCommon at the start of tick in Brain.
 		/// </summary>
-		virtual void PreTickHardwareAndIO();
+		virtual void PreTickHardwareAndIO(bool freezeLocation);
 		/// <summary>
 		/// Called for each IOCommon at the end of tick in Brain.
 		/// </summary>

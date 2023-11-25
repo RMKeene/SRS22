@@ -1,6 +1,8 @@
 #include "ScreenAttnSpotIO.h"
 
 namespace SRS22 {
+	bool ScreenAttnSpotIO::freezeAttnSpotPosition = false;
+
 	ScreenAttnSpotIO::ScreenAttnSpotIO() :
 		AttnSpotBaseIO() {
 		IOCOMMON_SETCLASSNAME;
@@ -20,15 +22,15 @@ namespace SRS22 {
 	}
 
 	void ScreenAttnSpotIO::Shutdown() {
-		IOCommon::Shutdown();
+		AttnSpotBaseIO::Shutdown();
 	}
 
 	void ScreenAttnSpotIO::PreTickHardwareAndIO() {
-		IOCommon::PreTickHardwareAndIO();
+		AttnSpotBaseIO::PreTickHardwareAndIO(freezeAttnSpotPosition);
 	}
 
 	void ScreenAttnSpotIO::PostTickHardwareAndUI() {
-		IOCommon::PostTickHardwareAndUI();
+		AttnSpotBaseIO::PostTickHardwareAndUI();
 	}
 
 	void ScreenAttnSpotIO::ForceToBeSubclassed() {}
