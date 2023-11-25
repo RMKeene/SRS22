@@ -59,6 +59,7 @@ namespace SRS22 {
 
 		int sizesFovea[3] = { 3, CameraFoveaMap_Height, CameraFoveaMap_Height };
 		fovea = Mat(3, sizesFovea, CV_32FC1);
+		foveaBlurred = Mat(3, sizesFovea, CV_32FC1);
 		foveaAbsDifference = Mat(3, sizesFovea, CV_32FC1);
 
 		foveaAngles000 = Mat(3, sizesFovea, CV_32FC1);
@@ -97,9 +98,21 @@ namespace SRS22 {
 		GetSubRect(fovea, r);
 		fovea = fovea.clone();
 		std::string info = OpenCVHelpers::CVMatrixInfo(fovea);
-
 		// Size is 3, 15, 15
 		FoveaBundle foveaBundle(fovea);
+
+		float foveaCX = r.halfW();
+		float foveaCY = r.halfH();
+
+		Mat foveaBlurredRed32FC1;
+		Mat foveaBlurredGreen32FC1;
+		Mat foveaBlurredBlue32FC1;
+		foveaBundle.Allocate32FCSpaces(foveaBlurredRed32FC1, foveaBlurredGreen32FC1, foveaBlurredBlue32FC1);
+		cv::GaussianBlur(foveaBundle.red32F, foveaBlurredRed32FC1, cv::Size(3, 3), 0.0);
+		cv::GaussianBlur(foveaBundle.green32F, foveaBlurredGreen32FC1, cv::Size(3, 3), 0.0);
+		cv::GaussianBlur(foveaBundle.blue32F, foveaBlurredBlue32FC1, cv::Size(3, 3), 0.0);
+		FoveaBundle foveaBundleBlurred(foveaBlurred);
+		foveaBundleBlurred.TakeBack32F(foveaBlurredRed32FC1, foveaBlurredGreen32FC1, foveaBlurredBlue32FC1);
 
 		Mat cannyRed, cannyGreen, cannyBlue;
 		foveaBundle.Allocate8UCSpaces(cannyRed, cannyGreen, cannyBlue);
@@ -180,7 +193,27 @@ namespace SRS22 {
 			}
 		}
 
-		 absdiff(fovea, foveaPreviousFrame, foveaAbsDifference);
+		absdiff(fovea, foveaPreviousFrame, foveaAbsDifference);
+
+		// https://docs.opencv.org/3.4/d4/d70/tutorial_hough_circle.html
+		Mat circlesRed, circlesGreen, circlesBlue;
+		std::vector<Vec3f> circles;
+		HoughCircles(foveaBundleBlurred.red8U, circles, HOUGH_GRADIENT, 
+			1, /* db, ratio of accumulator to image size. */
+			2 /* min dist between circles */,
+			100 /* Canny edge detector high threshold */,
+			30 /* Circle center detection thresh. Small is more false hits, higher is less hits but may miss some circles. */,
+			2 /* min circle radius */, 
+			64 /* max circle radius */);
+		// Now make bright spots where circle centers are but only if the centers are very near the fovea center.
+		for (Vec3f i : circles) {
+			// i is X, Y, Radius
+			if (abs(i[0] - foveaCX) < 2 && abs(i[1] - foveaCY) < 2) {
+				
+			}
+		}
+
+		OpenCVHelpers::Combine8UC1x3To32FC1_3Plane(cannyRed, cannyGreen, cannyBlue, foveaEdges);
 
 
 		//OpenCVHelpers::error_aware_imwrite_imshow("./keene.jpg", foveaEdges, true);

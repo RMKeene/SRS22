@@ -98,6 +98,7 @@ namespace SRS22 {
 		/// </summary>
 		cv::Mat fovea;
 		cv::Mat foveaPreviousFrame;
+		cv::Mat foveaBlurred;
 		/// <summary>
 		/// The Canny Edge Detection for the fovea. (or Sobel maybe)
 		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
