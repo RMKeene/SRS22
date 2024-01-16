@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "TextInIO.h"
 
 namespace SRS22 {

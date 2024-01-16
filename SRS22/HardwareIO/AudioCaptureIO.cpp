@@ -1,3 +1,4 @@
+#include "../../pch.h"
 #include "AudioCaptureIO.h"
 
 namespace SRS22 {

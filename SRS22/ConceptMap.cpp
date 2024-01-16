@@ -1,63 +1,49 @@
 #include "pch.h"
 #include "ConceptMap.h"
-#include "ConnectivityTriple.h"
 #include "Brain.h"
-#include "BrainLocatable.h"
-#include "SRS22LogTaker.h"
+#include <string>
+#include <format>
+#include "MapUIDs.h"
 
 namespace SRS22 {
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int cols, float decayFactor, std::string MapDescription) :
-		BrainLocatable(location),
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
-		M(cols), 
-		nextM(cols),
+		cols(cols),
+		rows(1),
+		depth(1),
+		totalSize(cols),
 		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
-
-		isConnectableFlag = isConnectable;
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int rows, int cols, float decayFactor, std::string MapDescription) :
-		BrainLocatable(location),
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int rows, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
-		M(rows, cols), 
-		nextM(rows, cols),
+		cols(cols),
+		rows(rows),
+		depth(1),
+		totalSize(cols* rows),
 		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
 
-		isConnectableFlag = isConnectable;
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, float decayFactor, std::string MapDescription) :
-		BrainLocatable(location),
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int layers, int rows, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
-		M(layers, rows, cols), 
-		nextM(layers, rows, cols),
+		cols(cols),
+		rows(rows),
+		depth(layers),
+		totalSize(cols* rows* layers),
 		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
-
-		isConnectableFlag = isConnectable;
 	}
 
 	ConceptMap::~ConceptMap() {
-	}
-
-	const cv::MatSize ConceptMap::matSize() {
-		return M.matSize();
-	}
-
-	const int ConceptMap::entriesCount() {
-		return M.entriesCount();
-	}
-
-	const int ConceptMap::byteCount() {
-		return M.byteCount();
 	}
 
 	void ConceptMap::PostCreate(Brain& b) {
@@ -71,30 +57,11 @@ namespace SRS22 {
 	/// Decay and then add nextM to M. The set nextM to zeros.
 	/// </summary>
 	void ConceptMap::LatchNewState() {
-		M.charges = M.charges * decayFactor + nextM.charges;
-		nextM.charges = 0.0f;
+		// Cortex does the next state transfer of nextCharge to charge.
 	}
 
 	std::string ConceptMap::Debug() {
-		std::string ret = M.Debug();
-		return ret;
-	}
-
-	int ConceptMap::GetRandomLinearOffset() {
-		return M.entriesCount();
-	}
-
-	float ConceptMap::GetChargeValue(const int linearOffset) {
-		return *(((float*)M.charges.data) + linearOffset);
-	}
-
-	void ConceptMap::SetChargeValue(const int linearOffset, const float c) {
-		*(((float*)M.charges.data) + linearOffset) = c;
-	}
-
-	void ConceptMap::AddToChargeValue(const int linearOffset, const float c) {
-		float* p = (((float*)M.charges.data) + linearOffset);
-		*p = *p + c;
+		return std::format("");
 	}
 
 }

@@ -1,25 +1,26 @@
 #pragma once
-#include "pch.h"
-#include <opencv2/core.hpp>
 
 #include "MapUIDs.h"
-#include "PatternMatchingSystem.h"
 #include "GoodnessFunction.h"
-#include "TransformFunction.h"
 #include "SRSUnitDisplayModes.h"
-#include "OpenCVHelpers.h"
-#include "BrainLocatable.h"
-#include "BrainConnectable.h"
 #include "Tickable.h"
+#include <string>
 
 namespace SRS22 {
-	class ConceptMap : public BrainLocatable, public BrainConnectable, public Tickable
+	class ConceptMap : public Tickable
 	{
 	public:
 		Brain* myBrain = NULL;
 
 		std::string MapName;
 		std::string MapDescription;
+		const int cols;
+		const int rows;
+		const int depth;
+		/// <summary>
+		/// cols * rows * depth
+		/// </summary>
+		const int totalSize;
 
 		const MapUidE UID;
 
@@ -39,17 +40,13 @@ namespace SRS22 {
 
 	public:
 
-		PatternMatchingSystem matchSystem;
 		std::shared_ptr<GoodnessFunction> goodnessFunc;
 
-		ConceptState M;
-		ConceptState nextM;
-
-		const int Width() { if (M.charges.dims < 3) return M.charges.cols; else return M.charges.size[2]; }
-		const int Height() { if (M.charges.dims < 3) return M.charges.rows; else return M.charges.size[1]; }
-		const int Depth() { if (M.charges.dims < 3) return 1; else return M.charges.size[0]; }
-		const int CVType() { return M.charges.type(); }
-		const std::string CVTypeString() { return OpenCVHelpers::CVTypeToStr(M.charges.type()); }
+		const int Width() const { return cols; }
+		const int Cols() const { return cols; }
+		const int Height() const { return rows; }
+		const int Rows() const { return rows; }
+		const int Depth() const { return depth; }
 
 		/// <summary>
 		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap".
@@ -63,15 +60,15 @@ namespace SRS22 {
 		/// <param name="decayFactor">0.0 means instant decay to zero before every tick. 1.0 is infinite sustain.
 		/// Done with multiplicative decay. In LatchNewState does <code>nextM = M * decayFactor; nextM = 0.0f;</code></param>
 		/// <param name="MapDescription"></param>
-		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int cols, float decayFactor, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int rows, int cols, float decayFactor, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, bool isConnectable, std::string MapName, const cv::Vec3f location, int layers, int rows, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int rows, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int layers, int rows, int cols, float decayFactor, std::string MapDescription);
 
 		~ConceptMap();
 
 		/// <summary>
 		/// Called after all SRSUnits have been created and added to the Brain.
-		/// This is where we cache all the precalculated nearMaps and farMaps
+		/// This is where we cache all the pre-calculated nearMaps and farMaps
 		/// </summary>
 		void PostCreate(Brain& b);
 
@@ -97,14 +94,6 @@ namespace SRS22 {
 		virtual void LatchNewState() override;
 
 		virtual std::string Debug();
-
-		int GetRandomLinearOffset() override;
-		void GenerateNearFarLists() {};
-
-		float GetChargeValue(const int linearOffset) override;
-		void SetChargeValue(const int linearOffset, const float c) override;
-		void AddToChargeValue(const int linearOffset, const float c) override;
-
 	};
 
 	typedef std::shared_ptr<ConceptMap> ConceptMapH;

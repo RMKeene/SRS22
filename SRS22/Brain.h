@@ -1,14 +1,10 @@
 #pragma once
-#include "pch.h"
-#include "ClassPredefines.h"
 
-#include <list>
 #include <string>
+#include "ClassPredefines.h"
 #include "ConceptMap.h"
 #include "HardwareIO/ScreenInputIO.h"
 #include "HardwareIO/AudioCaptureIO.h"
-#include "HardwareRaw/WaveInputHelper.h"
-#include "HardwareRaw/WaveOutputHelper.h"
 #include "HardwareIO/AudioOutIO.h"
 #include "HardwareIO/CameraInIO.h"
 #include "HardwareIO/TextInIO.h"
@@ -18,7 +14,8 @@
 #include "HardwareIO/ScreenAttnSpotIO.h"
 #include "HardwareIO/CameraAttnSpotIO.h"
 #include "HardwareIO/PhonemesIO.h"
-#include "CortexChunk.h"
+#include "Cortex.h"
+#include "IOMapToCortext.h"
 
 namespace SRS22 {
 	using namespace std;
@@ -26,27 +23,21 @@ namespace SRS22 {
 	class Brain
 	{
 	public:
+
+		IOMapToContext ioMapToContext;
+
 		/// <summary>
 		/// Never depend on iteration order of maps. They are multi-thread processed and in a hash table.
 		/// </summary>
 		map<MapUidE, std::shared_ptr<ConceptMap>> conceptMaps;
 		map<std::string, std::shared_ptr<ConceptMap>> conceptMapsByName;
-		std::list< std::shared_ptr<CortexChunk>> cortexChunks;
-
-		/// <summary>
-		/// Threshold for ConnectivityTriple that defines range B.
-		/// If distance of ConceptMap <= maxNearDistance then it is in B range,
-		/// if >= minFarDistance then it is range C.
-		/// </summary>
-		float maxNearDistance = 50.0f;
-		float minFarDistance = 100.0f;
 
 		long long tickCount = 0;
 		long long tickCountRecent = 0;
 		int ticksPerSecondLatest = 1;
 
 		/// <summary>
-		/// If -1 the free run. Else step this many times, usualy 1, down to 0 then stop.
+		/// If -1 the free run. Else step this many times, usually 1, down to 0 then stop.
 		/// Assumes Tick() is getting called frequently.
 		/// </summary>
 		int SingleStepCount = 0;
@@ -73,6 +64,8 @@ namespace SRS22 {
 		TextOutIO textOut;
 		WhiteboardInIO whiteboardIn;
 		WhiteboardOutIO whiteboardOut;
+
+		Cortex* cortex;
 
 		Brain();
 		~Brain();
@@ -118,10 +111,10 @@ namespace SRS22 {
 		/// - outConnection will never be to a ConceptMap with a false isConnectable.
 		/// </summary>
 		/// <param name="ct"></param>
-		/// <param name="lcation"></param>
+		/// <param name="location"></param>
 		/// <param name="outConnection"></param>
 		/// <returns>True on success.</returns>
-		bool GetRandomConnectionPoint(CortexChunk& from, const int fromOffset,
+		bool GetRandomConnectionPoint(Cortex& from, const int fromOffset,
 			/* Out */ std::shared_ptr<PatternConnection> outConnection);
 
 		/// <summary>
@@ -151,7 +144,6 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="m"></param>
 		void AddMap(shared_ptr<ConceptMap> m);
-		void AddCortexChunk(shared_ptr<CortexChunk> c);
 	};
 
 	typedef std::shared_ptr<Brain> BrainH;

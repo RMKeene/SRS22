@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "WhiteboardOutIO.h"
 
 namespace SRS22 {

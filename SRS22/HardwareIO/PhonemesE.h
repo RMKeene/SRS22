@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../pch.h"
-
 /// <summary>
 /// Phoneme keys. Never change the order of these, never delete any. MAXENUM must always be last.
 /// </summary>

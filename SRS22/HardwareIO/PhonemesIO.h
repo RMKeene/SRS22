@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../pch.h"
 #include "IOCommon.h"
 #include "PhonemesE.h"
 #include <soloud_wav.h>

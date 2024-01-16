@@ -1,3 +1,4 @@
+#include "../../pch.h"
 #include "AudioOutIO.h"
 
 namespace SRS22 {

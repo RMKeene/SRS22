@@ -1,3 +1,4 @@
+#include "../../pch.h"
 #include "AttnSpotBaseIO.h"
 
 namespace SRS22 {

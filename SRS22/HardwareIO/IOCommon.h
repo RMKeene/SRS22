@@ -1,5 +1,4 @@
 #pragma once
-#include "../pch.h"
 
 #define IOCOMMON_SETCLASSNAME ioClassName = typeid(*this).name()
 
@@ -10,8 +9,8 @@ namespace SRS22 {
 	typedef unsigned short TextIOType;
 
 	/// <summary>
-	/// All Input and Outpout, such as camera, screen snapshot-er, audio in, voice out...
-	/// go through a IOCommon derrived class. The Brain overall system never talks to hardware such as Win32
+	/// All Input and Output, such as camera, screen snapshot-er, audio in, voice out...
+	/// go through a IOCommon derived class. The Brain overall system never talks to hardware such as Win32
 	/// audio code directly. In general low level hardware classes end in ...Helper, such as WaveOutputHelper.h
 	///
 	/// Often IOCommon subclasses calculate matricies used by more than one Map for processing.
@@ -19,7 +18,7 @@ namespace SRS22 {
 	/// current camera frame low resolution.
 	///
 	/// IOCommon sub class instances are all registered by class name in a global map, use
-	/// static IOCommon* GetIO(const std::string ioClassNm) to get at them. In the Brain creator and Barin::Init the
+	/// static IOCommon* GetIO(const std::string ioClassNm) to get at them. In the Brain creator and Brain::Init the
 	/// IOCommons get set up. There are never more than one instance of a IOCommon sub class.
 	///
 	/// Also see https://en.cppreference.com/w/cpp/memory/enable_shared_from_this

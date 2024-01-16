@@ -29,6 +29,13 @@ namespace SRS22 {
 	using namespace std;
 
 	Brain::Brain() {
+		overallGoodness = 0;
+		overallGoodnessPrevious = 0;
+		overallGoodnessRateOfChange = 0;
+		tickCount = 0;
+		tickCountRecent = 0;
+		SingleStepCount = -1;
+		cortex = new Cortex(*this, 0.02f);
 	}
 
 	Brain::~Brain() {
@@ -61,19 +68,11 @@ namespace SRS22 {
 		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
 			n.second->ComputeNextState();
 			});
-		parallel_for_each(begin(cortexChunks), end(cortexChunks), [&](std::shared_ptr<CortexChunk> n) {
-			n->ComputeNextState();
-			});
 
-		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-			n.second->LatchNewState();
-			});
-		parallel_for_each(begin(cortexChunks), end(cortexChunks), [&](std::shared_ptr<CortexChunk> n) {
-			n->LatchNewState();
-			});
-		parallel_for_each(begin(cortexChunks), end(cortexChunks), [&](std::shared_ptr<CortexChunk> n) {
-			n->LearningPhase();
-			});
+		cortex->ComputeNextState();
+		cortex->LatchNewState();
+		cortex->LatchNewState();
+		cortex->LearningPhase();
 
 		overallGoodnessRateOfChange = overallGoodnessRateOfChange * 0.95f + overallGoodness - overallGoodnessPrevious;
 		overallGoodness *= 0.98f;
@@ -136,7 +135,8 @@ namespace SRS22 {
 		cameraFovea.Init(Point(cameraInput.GetCameraWidth() / 2, cameraInput.GetCameraHeight() / 2),
 			64, 64, cameraInput.GetCameraRect());
 
-		// All Map instances. Keep in alphabetical order please.
+		// All Map instances. Keep in alphabetical order please. These calls also set the layout in linear space in the Cortex.
+		// So any additions in the middle will break disk saves.
 		AddMap(make_shared<CameraAttnSpotMap>(this));
 		AddMap(make_shared<CameraDifferenceMap>(this));
 		AddMap(make_shared<CameraFoveaAngleMap000>(this));
@@ -169,9 +169,6 @@ namespace SRS22 {
 		AddMap(make_shared<TextCurrentCharMap>(this));
 		AddMap(make_shared<TextOutMap>(this));
 
-		// The Cortex
-		AddCortexChunk(make_shared<CortexChunk>(*this, "Cortex1", cv::Vec3f(0, 0, 0), 1000, ConnectivityTriple(0.1f, 0.6f, 0.3f, 40, 4), 0.02f));
-
 		// Compile the SRS system relationships.
 		PostCreateAllConceptMaps();
 	}
@@ -203,12 +200,9 @@ namespace SRS22 {
 	void Brain::AddMap(shared_ptr<ConceptMap> m) {
 		if (conceptMaps.find(m->UID) != conceptMaps.end())
 			throw std::exception((std::string("Duplicate ConceptMap UID in Brain::AddMap: ") + m->MapName).c_str());
+		int cortexOffset = ioMapToContext.addMapping(m->MapName, m->entriesCount());
 		conceptMaps[m->UID] = m;
 		conceptMapsByName[m->MapName] = m;
-	}
-
-	void Brain::AddCortexChunk(shared_ptr<CortexChunk> c) {
-		cortexChunks.push_back(c);
 	}
 
 	void Brain::DoNStep(int n) {
@@ -233,8 +227,7 @@ namespace SRS22 {
 	}
 
 	void Brain::PostCreateAllCortexChunks() {
-		for (std::shared_ptr<CortexChunk> c : cortexChunks)
-			c->PostCreate();
+		cortex->PostCreate();
 	}
 
 	optional<shared_ptr<ConceptMap>> Brain::FindMap(MapUidE n) {
@@ -251,49 +244,5 @@ namespace SRS22 {
 			return m->second;
 		}
 		return std::nullopt;
-	}
-
-	bool Brain::GetRandomConnectionPoint(CortexChunk& from, const int fromOffset,
-		/* Out */ std::shared_ptr<PatternConnection> outConnection) {
-
-		int antiLockupCount = 4;
-
-		do {
-			antiLockupCount--;
-
-			const float r = fastRandFloat();
-			if (r < from.ctrip.selfFraction ||
-				(from.nearChunks.size() == 0 && from.farChunks.size() == 0)) { // Self connection
-				outConnection->target = &from;
-			}
-			else if ((r < from.ctrip.selfFraction + from.ctrip.nearbyFraction && from.nearChunks.size() > 0) ||
-				(from.nearChunks.size() > 0 && from.farChunks.size() == 0)) { // Nearby connection
-				const float fracNth = fastRandFloat() * from.nearChunks.size();
-				int nth = (int)fracNth;
-				outConnection->target = nullptr;
-				for (auto it = from.nearChunks.begin(); it != from.nearChunks.end() && nth > 0; it++) {
-					outConnection->target = it->get();
-					nth--;
-				}
-			}
-			else if (from.farChunks.size() > 0) { // Far connection
-				// Pick a random chunk
-				const float fracNth = fastRandFloat() * from.farChunks.size();
-				int nth = (int)fracNth;
-				outConnection->target = nullptr;
-				for (auto it = from.farChunks.begin(); it != from.farChunks.end() && nth > 0; it++) {
-					outConnection->target = it->get();
-					nth--;
-				}
-			}
-			if (outConnection->target != nullptr)
-				outConnection->linearOffset = outConnection->target->GetRandomLinearOffset();
-		} while (
-			(PatternConnection::equals(*outConnection, &from, fromOffset)
-				|| !outConnection->target->isConnectableFlag
-				)
-			&& antiLockupCount > 0);
-
-		return antiLockupCount > 0;
 	}
 }

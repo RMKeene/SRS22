@@ -1,3 +1,4 @@
+#include "../../pch.h"
 #include "CameraInIO.h"
 #include "../OpenCVHelpers.h"
 #include "CameraAttnSpotIO.h"

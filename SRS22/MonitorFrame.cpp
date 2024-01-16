@@ -1,3 +1,4 @@
+#include "pch.h""
 #include "MonitorFrame.h"
 #include "Settings.h"
 #include "StringConversionHelpers.h"

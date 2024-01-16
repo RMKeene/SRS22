@@ -1,5 +1,4 @@
 #pragma once
-#include "pch.h"
 
 /// <summary>
 /// In the Brain is the only Tick() method and it is called frequently.

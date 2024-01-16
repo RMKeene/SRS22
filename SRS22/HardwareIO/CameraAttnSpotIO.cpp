@@ -1,3 +1,4 @@
+#include "../../pch.h"
 #include "CameraAttnSpotIO.h"
 
 namespace SRS22 {

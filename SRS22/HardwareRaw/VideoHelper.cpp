@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "VideoHelper.h"
 #include <Mmsystem.h>
 #include <mfapi.h>

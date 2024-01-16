@@ -54,4 +54,7 @@
 
 #include "ini.h"
 
+#include "SRS22Constants.h"
+#include "ClassPredefines.h"
+
 #endif //PCH_H

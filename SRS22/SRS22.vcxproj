@@ -177,12 +177,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;WXUSINGDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <ConformanceMode>true</ConformanceMode>
@@ -301,13 +301,11 @@
   <ItemGroup>
     <ClInclude Include="bmpfromocvpanel.h" />
     <ClInclude Include="Brain.h" />
-    <ClInclude Include="BrainConnectable.h" />
-    <ClInclude Include="BrainLocatable.h" />
     <ClInclude Include="canvas.h" />
     <ClInclude Include="ConceptState.h" />
     <ClInclude Include="ConnectivityTriple.h" />
     <ClInclude Include="convertmattowxbmp.h" />
-    <ClInclude Include="CortexChunk.h" />
+    <ClInclude Include="Cortex.h" />
     <ClInclude Include="FastRand.h" />
     <ClInclude Include="fit_fft.h" />
     <ClInclude Include="GlobalWorld.h" />
@@ -332,6 +330,7 @@
     <ClInclude Include="HardwareRaw\WaveInputHelper.h" />
     <ClInclude Include="HardwareRaw\WaveOutputHelper.h" />
     <ClInclude Include="ini.h" />
+    <ClInclude Include="IOMapToCortext.h" />
     <ClInclude Include="Maps\Camera\CameraAttnSpotMap.h" />
     <ClInclude Include="Maps\Camera\CameraDifferenceMap.h" />
     <ClInclude Include="Maps\Camera\CameraFoveaEdgesMap.h" />
@@ -354,9 +353,6 @@
     <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="MonitorFrame.h" />
     <ClInclude Include="OpenCVHelpers.h" />
-    <ClInclude Include="Pattern.h" />
-    <ClInclude Include="PatternConnection.h" />
-    <ClInclude Include="PatternMatchingSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Reaper.h" />
@@ -398,6 +394,7 @@
     <ClInclude Include="soloud\include\soloud_waveshaperfilter.h" />
     <ClInclude Include="soloud\include\soloud_wavstream.h" />
     <ClInclude Include="SRS22.h" />
+    <ClInclude Include="SRS22Constants.h" />
     <ClInclude Include="SRS22LogTaker.h" />
     <ClInclude Include="SRS22UIgen.h" />
     <ClInclude Include="SRSMath.h" />
@@ -426,12 +423,11 @@
   <ItemGroup>
     <ClCompile Include="bmpfromocvpanel.cpp" />
     <ClCompile Include="Brain.cpp" />
-    <ClCompile Include="BrainLocatable.cpp" />
     <ClCompile Include="canvas.cpp" />
     <ClCompile Include="ConceptState.cpp" />
     <ClCompile Include="ConnectivityTriple.cpp" />
     <ClCompile Include="convertmattowxbmp.cpp" />
-    <ClCompile Include="CortexChunk.cpp" />
+    <ClCompile Include="Cortex.cpp" />
     <ClCompile Include="FastRand.cpp" />
     <ClCompile Include="fit_fft.cpp" />
     <ClCompile Include="GlobalWorld.cpp" />
@@ -472,9 +468,6 @@
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
     <ClCompile Include="OpenCVHelpers.cpp" />
-    <ClCompile Include="Pattern.cpp" />
-    <ClCompile Include="PatternConnection.cpp" />
-    <ClCompile Include="PatternMatchingSystem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">Create</PrecompiledHeader>
