@@ -4,6 +4,8 @@
 #include <string>
 #include <format>
 #include "MapUIDs.h"
+#include <opencv2/core/mat.hpp>
+#include <opencv2/core/hal/interface.h>
 
 namespace SRS22 {
 	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int cols, float decayFactor, std::string MapDescription) :
@@ -16,6 +18,10 @@ namespace SRS22 {
 		totalSize(cols),
 		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
+		numDims[0] = depth;
+		numDims[1] = rows;
+		numDims[2] = cols;
+
 	}
 
 	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int rows, int cols, float decayFactor, std::string MapDescription) :
@@ -28,22 +34,32 @@ namespace SRS22 {
 		totalSize(cols* rows),
 		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
-
+		numDims[0] = depth;
+		numDims[1] = rows;
+		numDims[2] = cols;
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int layers, int rows, int cols, float decayFactor, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int depth, int rows, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
 		UID(UID),
 		cols(cols),
 		rows(rows),
-		depth(layers),
-		totalSize(cols* rows* layers),
+		depth(depth),
+		totalSize(cols* rows* depth),
 		decayFactor(decayFactor),
 		MapDescription(MapDescription) {
+		numDims[0] = depth;
+		numDims[1] = rows;
+		numDims[2] = cols;
 	}
 
 	ConceptMap::~ConceptMap() {
+	}
+
+	void ConceptMap::setupCVMatMirrors() {
+		cortexAsMat = cv::Mat(3, numDims, CV_32FC1, &myBrain->cortex->neuronCharges[cortexStartIndex]);
+		cortexNextAsMat = cv::Mat(3, numDims, CV_32FC1, &myBrain->cortex->neuronChargesNext[cortexStartIndex]);
 	}
 
 	void ConceptMap::PostCreate(Brain& b) {

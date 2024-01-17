@@ -201,6 +201,8 @@ namespace SRS22 {
 		if (conceptMaps.find(m->UID) != conceptMaps.end())
 			throw std::exception((std::string("Duplicate ConceptMap UID in Brain::AddMap: ") + m->MapName).c_str());
 		int cortexOffset = ioMapToContext.addMapping(m->MapName, m->entriesCount());
+		m->cortexStartIndex = cortexOffset;
+		m->setupCVMatMirrors();
 		conceptMaps[m->UID] = m;
 		conceptMapsByName[m->MapName] = m;
 	}

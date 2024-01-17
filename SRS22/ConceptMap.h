@@ -5,6 +5,7 @@
 #include "SRSUnitDisplayModes.h"
 #include "Tickable.h"
 #include <string>
+#include <opencv2/core/mat.hpp>
 
 namespace SRS22 {
 	class ConceptMap : public Tickable
@@ -22,6 +23,27 @@ namespace SRS22 {
 		/// </summary>
 		const int totalSize;
 
+		/// <summary>
+		/// For easy use with cv::Mat. { depth, rows, cols }
+		/// </summary>
+		int numDims[3];
+
+		/// <summary>
+		/// The cortex segment allocated to this map extends from cortexStartIndex to cortexStartIndex + totalSize.
+		/// </summary>
+		int cortexStartIndex = -1;
+
+		/// <summary>
+		/// A cv::Mat with the actual memory backed by the Cortex.neuronCharges array segment.
+		/// NEVER change this cv::Mat. It is just a mirror of the Cortex.neuronCharges array segment.
+		/// </summary>
+		cv::Mat cortexAsMat;
+		/// <summary>
+		/// A cv::Mat with the actual memory backed by the Cortex.neuronChargesNext array segment.
+		/// NEVER change this cv::Mat. It is just a mirror of the Cortex.neuronChargesNext array segment.
+		/// </summary>
+		cv::Mat cortexNextAsMat;
+
 		const MapUidE UID;
 
 		/// <summary>
@@ -29,7 +51,7 @@ namespace SRS22 {
 		/// </summary>
 		SRSUnitDisplayModes displayMode = SRSUnitDisplayModes::COLOR;
 
-	private: 
+	private:
 		/// <summary>
 		/// 0.0 is instant decay, 1.0 is infinitely slow decay. This is decay toward 0.0 per tick as a multiplicative factor.
 		/// <para>In LatchNextState:</para>
@@ -62,13 +84,14 @@ namespace SRS22 {
 		/// <param name="MapDescription"></param>
 		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int cols, float decayFactor, std::string MapDescription);
 		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int rows, int cols, float decayFactor, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int layers, int rows, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int depth, int rows, int cols, float decayFactor, std::string MapDescription);
 
 		~ConceptMap();
 
+		void setupCVMatMirrors();
+
 		/// <summary>
 		/// Called after all SRSUnits have been created and added to the Brain.
-		/// This is where we cache all the pre-calculated nearMaps and farMaps
 		/// </summary>
 		void PostCreate(Brain& b);
 
