@@ -7,8 +7,7 @@
 
 namespace SRS22 {
 	ScreenMotionXYMap::ScreenMotionXYMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENMOTION_MAP, true, "ScreenMotionXYMap",
-			cv::Vec3f(0.0, 0.0, 0.0),
+		ConceptMap(br, MapUidE::SCREENMOTION_MAP, "ScreenMotionXYMap",
 			ScreenMotionXYMap_Width, 0.0f,
 			"The XY location of the maximum frame to frame difference.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;

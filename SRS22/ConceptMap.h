@@ -1,11 +1,14 @@
 #pragma once
 
+#include "ClassPredefines.h"
 #include "MapUIDs.h"
 #include "GoodnessFunction.h"
 #include "SRSUnitDisplayModes.h"
 #include "Tickable.h"
 #include <string>
 #include <opencv2/core/mat.hpp>
+#include "Brain.h"
+#include "MapUIDs.h"
 
 namespace SRS22 {
 	class ConceptMap : public Tickable
@@ -22,6 +25,7 @@ namespace SRS22 {
 		/// cols * rows * depth
 		/// </summary>
 		const int totalSize;
+		const int rowsXcols;
 
 		/// <summary>
 		/// For easy use with cv::Mat. { depth, rows, cols }
@@ -37,12 +41,12 @@ namespace SRS22 {
 		/// A cv::Mat with the actual memory backed by the Cortex.neuronCharges array segment.
 		/// NEVER change this cv::Mat. It is just a mirror of the Cortex.neuronCharges array segment.
 		/// </summary>
-		cv::Mat cortexAsMat;
+		cv::Mat M;
 		/// <summary>
 		/// A cv::Mat with the actual memory backed by the Cortex.neuronChargesNext array segment.
 		/// NEVER change this cv::Mat. It is just a mirror of the Cortex.neuronChargesNext array segment.
 		/// </summary>
-		cv::Mat cortexNextAsMat;
+		cv::Mat nextM;
 
 		const MapUidE UID;
 
@@ -76,8 +80,6 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="MapName"></param>
 		/// <param name="UID">Must be globally unique. See MapUIDs.h</param>
-		/// <param name="ctrip"></param>
-		/// <param name="location"></param>
 		/// <param name="cols"></param>
 		/// <param name="decayFactor">0.0 means instant decay to zero before every tick. 1.0 is infinite sustain.
 		/// Done with multiplicative decay. In LatchNewState does <code>nextM = M * decayFactor; nextM = 0.0f;</code></param>
@@ -87,6 +89,60 @@ namespace SRS22 {
 		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int depth, int rows, int cols, float decayFactor, std::string MapDescription);
 
 		~ConceptMap();
+
+		void put(int idx, float val);
+		float get(int idx);
+		void put(int row, int col, float val);
+		float get(int row, int col);
+		void put(int depth, int row, int col, float val);
+		float get(int depth, int row, int col);
+
+		void putNext(int idx, float val);
+		float getNext(int idx);
+		void putNext(int row, int col, float val);
+		float getNext(int row, int col);
+		void putNext(int depth, int row, int col, float val);
+		float getNext(int depth, int row, int col);
+
+		void add(int idx, float val);
+		void add(int row, int col, float val);
+		void add(int depth, int row, int col, float val);
+
+		void addNext(int idx, float val);
+		void addNext(int row, int col, float val);
+		void addNext(int depth, int row, int col, float val);
+
+		void sub(int idx, float val);
+		void sub(int row, int col, float val);
+		void sub(int depth, int row, int col, float val);
+
+		void subNext(int idx, float val);
+		void subNext(int row, int col, float val);
+		void subNext(int depth, int row, int col, float val);
+
+		void mul(int idx, float val);
+		void mul(int row, int col, float val);
+		void mul(int depth, int row, int col, float val);
+
+		void mulNext(int idx, float val);
+		void mulNext(int row, int col, float val);
+		void mulNext(int depth, int row, int col, float val);
+
+		void div(int idx, float val);
+		void div(int row, int col, float val);
+		void div(int depth, int row, int col, float val);
+
+		void divNext(int idx, float val);
+		void divNext(int row, int col, float val);
+		void divNext(int depth, int row, int col, float val);
+
+		void clamp(int idx, float min = -1.0f, float max = 1.0f);
+		void clamp(int row, int col, float min = -1.0f, float max = 1.0f);
+		void clamp(int depth, int row, int col, float min = -1.0f, float max = 1.0f);
+
+		void clampNext(int idx, float min = -1.0f, float max = 1.0f);
+		void clampNext(int row, int col, float min = -1.0f, float max = 1.0f);
+		void clampNext(int depth, int row, int col, float min = -1.0f, float max = 1.0f);
 
 		void setupCVMatMirrors();
 

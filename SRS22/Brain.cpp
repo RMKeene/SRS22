@@ -41,6 +41,14 @@ namespace SRS22 {
 	Brain::~Brain() {
 	}
 
+	void Brain::put(int idx, float val) { cortex->put(idx, val); }
+	float Brain::get(int idx) { return cortex->get(idx); }
+
+	void Brain::putNext(int idx, float val) { cortex->putNext(idx, val); }
+	float Brain::getNext(int idx) { return cortex->getNext(idx); }
+
+
+
 	void Brain::Tick() {
 		if (SingleStepCount == 0)
 			return;

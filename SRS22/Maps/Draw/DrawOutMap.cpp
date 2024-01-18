@@ -5,8 +5,7 @@
 
 namespace SRS22 {
 	DrawOutMap::DrawOutMap(Brain* br) :
-		ConceptMap(br, MapUidE::DRAWOUT_MAP, true, "DrawOutMap",
-			cv::Vec3f(0.0, 0.0, 0.0),
+		ConceptMap(br, MapUidE::DRAWOUT_MAP, "DrawOutMap",
 			DrawOutMap_Width, 0.0f,
 			"Whiteboard pen out to screen.") {
 	}

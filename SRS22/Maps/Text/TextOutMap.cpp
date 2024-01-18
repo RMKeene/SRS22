@@ -5,8 +5,7 @@
 
 namespace SRS22 {
 	TextOutMap::TextOutMap(Brain* br) :
-		ConceptMap(br, MapUidE::TEXTOUT_MAP, true, "TextOutMap",
-			cv::Vec3f(0.0, 0.0, 0.0),
+		ConceptMap(br, MapUidE::TEXTOUT_MAP, "TextOutMap",
 			TextOutMap_Width,
 			TextOutMap_Height, 0.98f,
 			"The \"Keyboard\" out the text window.") {

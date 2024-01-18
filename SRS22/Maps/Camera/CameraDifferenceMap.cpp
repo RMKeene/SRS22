@@ -6,8 +6,7 @@
 
 namespace SRS22 {
 	CameraDifferenceMap::CameraDifferenceMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERADIFFERENCE_MAP, false, "CameraDifferenceMap",
-			cv::Vec3f(0.0, 0.0, 0.0),
+		ConceptMap(br, MapUidE::CAMERADIFFERENCE_MAP, "CameraDifferenceMap",
 			3, CameraInIO::AbsDiffHeight, CameraInIO::AbsDiffWidth, 0.0f,
 			"A low resolution version of the camera view processed for frame to frame motion differences.") {
 	}

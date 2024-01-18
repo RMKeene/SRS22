@@ -6,8 +6,7 @@
 
 namespace SRS22 {
 	CameraFoveaAbsDiffMap::CameraFoveaAbsDiffMap(Brain* br) :
-		ConceptMap(br, MapUidE::FOVEAABSDIFF_MAP, false, "CameraFoveaAbsDiffMap",
-			cv::Vec3f(0.0, 0.0, 0.0),
+		ConceptMap(br, MapUidE::FOVEAABSDIFF_MAP, "CameraFoveaAbsDiffMap",
 			3, CameraFoveaMap_Height, CameraFoveaMap_Height, 0.0f,
 			"The attention spot of the fovea, diff since last frame.") {
 	}

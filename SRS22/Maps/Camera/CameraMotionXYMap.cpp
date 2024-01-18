@@ -7,8 +7,7 @@
 
 namespace SRS22 {
 	CameraMotionXYMap::CameraMotionXYMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERAMOTIONXY_MAP, true, "CameraMotionXYMap",
-			cv::Vec3f(0.0, 0.0, 0.0),
+		ConceptMap(br, MapUidE::CAMERAMOTIONXY_MAP, "CameraMotionXYMap",
 			CameraMotionXYMap_Width, 0.0f,
 			"The XY location of the maximum frame to frame difference.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;

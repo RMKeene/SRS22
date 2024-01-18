@@ -6,7 +6,7 @@ using namespace Gdiplus;
 
 namespace SRS22 {
 	void SRSUnitDisplay::DrawInDC(Graphics& g, Gdiplus::Rect& rect, std::shared_ptr<ConceptMap> u, bool showLabel, bool preClearToBlack) {
-		cv::Mat& mt = u->M.charges;
+		cv::Mat& mt = u->M;
 
 		Bitmap bm(mt.cols, mt.rows, PixelFormat24bppRGB);
 

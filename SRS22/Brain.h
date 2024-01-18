@@ -16,6 +16,8 @@
 #include "HardwareIO/PhonemesIO.h"
 #include "Cortex.h"
 #include "IOMapToCortext.h"
+#include <rpcndr.h>
+#include <map>
 
 namespace SRS22 {
 	using namespace std;
@@ -70,7 +72,13 @@ namespace SRS22 {
 		Brain();
 		~Brain();
 
-		inline boolean ShouldLearn() { return overallGoodnessRateOfChange >= overallGoodnessRateOfChangeThreshold; }
+		void put(int idx, float val);
+		float get(int idx);
+
+		void putNext(int idx, float val);
+		float getNext(int idx);
+
+		inline boolean ShouldLearn() const { return overallGoodnessRateOfChange >= overallGoodnessRateOfChangeThreshold; }
 
 		/// <summary>
 		/// Called just before Win Main Message Loop starts iterating.
@@ -104,24 +112,10 @@ namespace SRS22 {
 		optional<shared_ptr<ConceptMap>> FindMapByName(string n);
 
 		/// <summary>
-		/// Find and return a random point (neuron) in the brain.
-		/// - Uses ct to give the ratio of connection to far, near or self (from) neurons.
-		/// - The result will have a BrainLocation lower or equal in Z in the brain.
-		/// - Never returns outConnection equal to from.
-		/// - outConnection will never be to a ConceptMap with a false isConnectable.
-		/// </summary>
-		/// <param name="ct"></param>
-		/// <param name="location"></param>
-		/// <param name="outConnection"></param>
-		/// <returns>True on success.</returns>
-		bool GetRandomConnectionPoint(Cortex& from, const int fromOffset,
-			/* Out */ std::shared_ptr<PatternConnection> outConnection);
-
-		/// <summary>
 		/// The world for this brain is improving. Thus it should learn this state.
 		/// </summary>
 		/// <returns></returns>
-		bool TheWorldIsGettingBetter() { return overallGoodnessRateOfChange > overallGoodnessRateOfChangeThreshold; }
+		bool TheWorldIsGettingBetter() const { return overallGoodnessRateOfChange > overallGoodnessRateOfChangeThreshold; }
 		/// <summary>
 		/// Tell the brain it just did something good. From button on the UI
 		/// </summary>

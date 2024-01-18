@@ -55,6 +55,13 @@ namespace SRS22 {
 		~Cortex() {
 		}
 
+		inline void put(int idx, float val) { neuronCharges[idx] = val; }
+		inline float get(int idx) { return neuronCharges[idx]; }
+
+		inline void putNext(int idx, float val) { neuronChargesNext[idx] = val; }
+		inline float getNext(int idx) { return neuronChargesNext[idx]; }
+
+
 		void PostCreate();
 
 		void ComputeNextState() override;

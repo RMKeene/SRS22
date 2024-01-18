@@ -8,8 +8,7 @@
 
 namespace SRS22 {
 	CameraFoveaEdgesMap::CameraFoveaEdgesMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAEDGE_MAP, false, "CameraEdgesMap",
-			cv::Vec3f(0.0, 0.0, 0.0),
+		ConceptMap(br, MapUidE::CAMERAFOVEAEDGE_MAP, "CameraEdgesMap",
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera edges in fovea.") {
 	}
