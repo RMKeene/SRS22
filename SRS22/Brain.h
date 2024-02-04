@@ -1,7 +1,7 @@
 #pragma once
+#include "SRS22pch.h"
 
 #include <string>
-#include "ClassPredefines.h"
 #include "ConceptMap.h"
 #include "HardwareIO/ScreenInputIO.h"
 #include "HardwareIO/AudioCaptureIO.h"
@@ -14,13 +14,14 @@
 #include "HardwareIO/ScreenAttnSpotIO.h"
 #include "HardwareIO/CameraAttnSpotIO.h"
 #include "HardwareIO/PhonemesIO.h"
-#include "Cortex.h"
 #include "IOMapToCortext.h"
 #include <rpcndr.h>
 #include <map>
 
 namespace SRS22 {
 	using namespace std;
+
+	class Cortex;
 
 	class Brain
 	{

@@ -1,8 +1,7 @@
-#include "pch.h"
+#include "SRS22pch.h"
 #include "Brain.h"
+#include "Cortex.h"
 #include "ConceptMap.h"
-#include "FastRand.h"
-#include <tchar.h>
 #include <ppl.h>
 #include "Maps/Screen/ScreenFoveaMap.h"
 #include "Maps/Screen/ScreenAttnSpotMap.h"

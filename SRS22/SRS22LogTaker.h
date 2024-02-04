@@ -2,6 +2,11 @@
 
 #include <string>
 
+/// <summary>
+/// The LogTaker lets us have any outer program get log info from SRS22.  In our particular implementation
+/// we have a wxWidgets MonitorWindow that takes the log info and displays it in a window.  But we could have a different
+/// log taker that writes to a file, or a different one that sends the log info to a server, etc.
+/// </summary>
 namespace SRS22 {
 
 	/// <summary>

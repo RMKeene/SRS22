@@ -1,5 +1,3 @@
-#include "../../pch.h"
-
 #include "IOCommon.h"
 
 namespace SRS22 {

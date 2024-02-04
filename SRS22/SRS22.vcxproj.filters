@@ -59,7 +59,7 @@
     <ClInclude Include="Resource.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="SRS22pch.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="SRS22UIgen.h">
@@ -221,19 +221,10 @@
     <ClInclude Include="Brain.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="ConceptState.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectivityTriple.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="FastRand.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="GoodnessFunction.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="MatchSelector.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Reaper.h">
@@ -243,9 +234,6 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="tinyfloat.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformFunction.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="HardwareIO\AudioCaptureIO.h">
@@ -410,12 +398,15 @@
     <ClInclude Include="IOMapToCortext.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="MatchSelector.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="SRS22pch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Settings.cpp">
@@ -445,19 +436,10 @@
     <ClCompile Include="Brain.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="ConceptState.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectivityTriple.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="FastRand.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="GoodnessFunction.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="MatchSelector.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Reaper.cpp">
@@ -467,9 +449,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="tinyfloat.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformFunction.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="HardwareIO\AudioCaptureIO.cpp">
@@ -614,6 +593,7 @@
     <ClCompile Include="Maps\Camera\CameraFoveaAbsDiffMap.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="MatchSelector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SRS22.rc">

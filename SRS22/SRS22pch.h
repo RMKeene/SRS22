@@ -1,11 +1,15 @@
-// pch.h: This is a precompiled header file.
+// SRS22pch.h: This WAS a precompiled header file.
 // Files listed below are compiled only once, improving build performance for future builds.
 // This also affects IntelliSense performance, including code completion and many code browsing features.
 // However, files listed here are ALL re-compiled if any one of them is updated between builds.
 // Do not add files here that you will be updating frequently as this negates the performance advantage.
 
-#ifndef PCH_H
-#define PCH_H
+// Because we compile some external packages that require wierd Microsoft WIN32 stuf. we do not use 
+// pch.h nor stdafx.h. Instead we use SRS22pch.h. This file is included in every .cpp file in the project.
+// In the project options there is a "forced includes" option that includes this file in every .cpp file.
+// That is in SRS22 Project: Properties --> C/C++ --> Advanced --> Forced Include File.
+#ifndef SRS22PCH_H
+#define SRS22PCH_H
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -57,4 +61,4 @@
 #include "SRS22Constants.h"
 #include "ClassPredefines.h"
 
-#endif //PCH_H
+#endif //SRS22PCH_H

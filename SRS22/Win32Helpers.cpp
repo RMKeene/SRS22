@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "SRS22pch.h"
 #include "Win32Helpers.h"
 
 BITMAPINFOHEADER Win32Helpers::CreateBitmapHeader32BitRGB(int width, int height)

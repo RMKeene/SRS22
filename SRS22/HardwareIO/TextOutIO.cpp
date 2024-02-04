@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "../SRS22pch.h"
 #include "TextOutIO.h"
 
 namespace SRS22 {

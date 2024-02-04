@@ -181,9 +181,10 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;WXUSINGDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)SRS22pch.h</ForcedIncludeFiles>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <ConformanceMode>true</ConformanceMode>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -302,8 +303,6 @@
     <ClInclude Include="bmpfromocvpanel.h" />
     <ClInclude Include="Brain.h" />
     <ClInclude Include="canvas.h" />
-    <ClInclude Include="ConceptState.h" />
-    <ClInclude Include="ConnectivityTriple.h" />
     <ClInclude Include="convertmattowxbmp.h" />
     <ClInclude Include="Cortex.h" />
     <ClInclude Include="FastRand.h" />
@@ -353,7 +352,7 @@
     <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="MonitorFrame.h" />
     <ClInclude Include="OpenCVHelpers.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="SRS22pch.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Reaper.h" />
     <ClInclude Include="Resource.h" />
@@ -408,7 +407,6 @@
     <ClInclude Include="tinyfloat.h" />
     <ClInclude Include="TopTextFrame.h" />
     <ClInclude Include="TopVideoFrame.h" />
-    <ClInclude Include="TransformFunction.h" />
     <ClInclude Include="ui\ColorSquare16Black.bmp.h" />
     <ClInclude Include="ui\ColorSquare16Blue.bmp.h" />
     <ClInclude Include="ui\ColorSquare16Cyan.bmp.h" />
@@ -424,8 +422,6 @@
     <ClCompile Include="bmpfromocvpanel.cpp" />
     <ClCompile Include="Brain.cpp" />
     <ClCompile Include="canvas.cpp" />
-    <ClCompile Include="ConceptState.cpp" />
-    <ClCompile Include="ConnectivityTriple.cpp" />
     <ClCompile Include="convertmattowxbmp.cpp" />
     <ClCompile Include="Cortex.cpp" />
     <ClCompile Include="FastRand.cpp" />
@@ -468,7 +464,7 @@
     <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
     <ClCompile Include="OpenCVHelpers.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="SRS22pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='UnitTest|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -492,7 +488,6 @@
     <ClCompile Include="tinyfloat.cpp" />
     <ClCompile Include="TopTextFrame.cpp" />
     <ClCompile Include="TopVideoFrame.cpp" />
-    <ClCompile Include="TransformFunction.cpp" />
     <ClCompile Include="WhiteboardFrame.cpp" />
     <ClCompile Include="Win32Helpers.cpp" />
   </ItemGroup>

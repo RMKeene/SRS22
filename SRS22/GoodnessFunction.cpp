@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "SRS22pch.h"
 #include "GoodnessFunction.h"
 
 namespace SRS22 {

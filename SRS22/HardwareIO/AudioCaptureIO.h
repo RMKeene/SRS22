@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <dshow.h>
 
-#include "../pch.h"
+#include "../SRS22pch.h"
 #include "IOCommon.h"
 #include "../HardwareRaw/WaveInputHelper.h"
 

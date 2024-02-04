@@ -4,8 +4,8 @@
 
 namespace SRS22 {
 	/// <summary>
-	/// The global world that holds one or more Brains, and may have other world simulation attibutes.
-	/// The current (05/2022) implementation has a UI nad the world is the real world via camera, screen, microphone etc.
+	/// The global world that holds one or more Brains, and may have other world simulation attributes.
+	/// The current (05/2022) implementation has a UI and the world is the real world via camera, screen, microphone etc.
 	/// But there could be more than one Brain in some simulated world too.
 	/// </summary>
 	class GlobalWorld

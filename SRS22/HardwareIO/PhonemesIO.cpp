@@ -1,4 +1,3 @@
-#include "../../pch.h"
 #include "PhonemesE.h"
 #include "PhonemesIO.h"
 #include "../HardwareRaw/WaveOutputHelper.h"

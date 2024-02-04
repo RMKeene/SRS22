@@ -1,14 +1,13 @@
 #pragma once
 
-#include "ClassPredefines.h"
-#include "MapUIDs.h"
+#include "Brain.h"
 #include "GoodnessFunction.h"
+#include "MapUIDs.h"
+#include "MapUIDs.h"
 #include "SRSUnitDisplayModes.h"
 #include "Tickable.h"
-#include <string>
 #include <opencv2/core/mat.hpp>
-#include "Brain.h"
-#include "MapUIDs.h"
+#include <string>
 
 namespace SRS22 {
 	class ConceptMap : public Tickable
@@ -136,9 +135,12 @@ namespace SRS22 {
 		void divNext(int row, int col, float val);
 		void divNext(int depth, int row, int col, float val);
 
-		void clamp(int idx, float min = -1.0f, float max = 1.0f);
-		void clamp(int row, int col, float min = -1.0f, float max = 1.0f);
-		void clamp(int depth, int row, int col, float min = -1.0f, float max = 1.0f);
+		/// <summary>
+		/// Ends in two 'p' s to avoid conflict with the C++ keyword 'clamp'.
+		/// </summary>
+		void clampp(int idx, float min = -1.0f, float max = 1.0f);
+		void clampp(int row, int col, float min = -1.0f, float max = 1.0f);
+		void clampp(int depth, int row, int col, float min = -1.0f, float max = 1.0f);
 
 		void clampNext(int idx, float min = -1.0f, float max = 1.0f);
 		void clampNext(int row, int col, float min = -1.0f, float max = 1.0f);

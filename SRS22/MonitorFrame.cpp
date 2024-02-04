@@ -1,13 +1,9 @@
-#include "pch.h""
 #include "MonitorFrame.h"
-#include "Settings.h"
-#include "StringConversionHelpers.h"
 #include "GlobalWorld.h"
-#include "SRSUnitDisplay.h"
-#include <wx/dcclient.h>
 #include "convertmattowxbmp.h"
 #include "TimeHelpers.h"
-#include "HardwareIO/TextOutIO.h"
+#include "OpenCVHelpers.h"
+#include "ConceptMap.h"
 
 namespace SRS22 {
 	MonitorFrame::MonitorFrame(wxWindow* parent) :
@@ -50,7 +46,7 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnMonitorWindowIdle(wxIdleEvent& event) {
-		// Note taht when the brain is active (not paused) this function is virtually never called.
+		// Note that when the brain is active (not paused) this function is virtually never called.
 	}
 
 	void MonitorFrame::OnNewMapMonitorWindow(wxCommandEvent& event) {
@@ -61,13 +57,13 @@ namespace SRS22 {
 			auto m = GlobalWorld::GlobalWorldInstance.GetBrain(0)->FindMapByName(ViewMapChoice->GetStringSelection());
 			if (m.has_value() == false) // No such map.
 				return;
-			auto M = m.value()->M;
-			auto chgs = M.charges;
-			int w = chgs.cols;
-			int h = chgs.rows;
-			if (chgs.dims == 3) {
-				w = chgs.size[2];
-				h = chgs.size[1];
+			std::shared_ptr<ConceptMap> mv = m.value();
+			auto charges = mv->M;
+			int w = charges.cols;
+			int h = charges.rows;
+			if (charges.dims == 3) {
+				w = charges.size[2];
+				h = charges.size[1];
 			}
 
 			float scaleX = 1.0f;
@@ -81,7 +77,7 @@ namespace SRS22 {
 				h = 64;
 			}
 
-			if (chgs.dims == 2 && chgs.size[0] + chgs.size[1] == 2 + 1) {
+			if (charges.dims == 2 && charges.size[0] + charges.size[1] == 2 + 1) {
 				if (m.value()->displayMode == SRSUnitDisplayModes::TWOVALUECAMERA) {
 					w = w * 1.3;
 				}
@@ -97,7 +93,7 @@ namespace SRS22 {
 					this->Layout();
 					this->Fit();
 				}
-				Convert2ValueMatBitmapTowxBitmap_CV_32FC1(chgs, w, h, bitmap, 255.0f, scaleX, scaleY);
+				Convert2ValueMatBitmapTowxBitmap_CV_32FC1(charges, w, h, bitmap, 255.0f, scaleX, scaleY);
 				chosenMapBitmap->SetBitmap(bitmap);
 			}
 			//else if (m.value()->displayMode == SRSUnitDisplayModes::BARGRAPH) {
@@ -113,28 +109,23 @@ namespace SRS22 {
 					this->Layout();
 					this->Fit();
 				}
-				std::string ss = OpenCVHelpers::CVMatrixInfo(chgs);
-				if (chgs.type() == CV_32FC1)
-					ConvertMatBitmapTowxBitmap_CV_32FC1(chgs, w, h, bitmap, 255.0f, scaleX, scaleY);
+				std::string ss = OpenCVHelpers::CVMatrixInfo(charges);
+				if (charges.type() == CV_32FC1)
+					ConvertMatBitmapTowxBitmap_CV_32FC1(charges, w, h, bitmap, 255.0f, scaleX, scaleY);
 
 				chosenMapBitmap->SetBitmap(bitmap);
 			}
 
 			chosenMapBitmap->Refresh();
 
-			std::shared_ptr<ConceptMap> mv = m.value();
 			wxString s;
 			s << "[" << mv->Width() <<
 				", " << mv->Height() <<
 				", " << mv->Depth() << "]";
-			s << " at [" << mv->location[0] << ", " << mv->location[1] << ", " << mv->location[2] << "]";
 			chosenMapText1->SetLabelText(s);
-
-			s.Clear();
-			s << " Mtchs " << mv->matchSystem.knownPatterns.size();
-			chosenMapText2->SetLabelText(s);
+			chosenMapText2->SetLabelText(mv->MapName);
 			chosenMapText3->SetLabel(mv->MapDescription);
-			SelectedMapDetailLabel->SetLabel(OpenCVHelpers::MapUIText(mv->M.charges));
+			SelectedMapDetailLabel->SetLabel(OpenCVHelpers::MapUIText(mv->M));
 		}
 		else {
 			wxBitmap bitmap(64, 64, 24);
@@ -240,10 +231,9 @@ namespace SRS22 {
 		}
 		brain0->tickCountRecent = 0;
 
-		overallGoodnessLabel->SetLabelText(wxString::Format("Goodness: %6.4f  Change: %6.4f  Brain0 Learn %6.4f",
+		overallGoodnessLabel->SetLabelText(wxString::Format("Goodness: %6.4f  Change: %6.4f",
 			brain0->overallGoodness,
-			brain0->overallGoodnessRateOfChange,
-			brain0->cortexChunks.front()->growthSum));
+			brain0->overallGoodnessRateOfChange));
 
 		GlobalWorld::GlobalWorldInstance.TickAll();
 		if (RunButton->GetValue()) {

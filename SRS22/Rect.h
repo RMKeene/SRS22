@@ -1,4 +1,5 @@
 #pragma once
+#include "SRS22pch.h"
 #include "Point.h"
 namespace SRS22 {
 	/// <summary>

@@ -1,4 +1,4 @@
-#include "../../pch.h"
+#include "../../SRS22pch.h"
 #include "CameraMotionXYMap.h"
 #include "../../HardwareIO/IOCommon.h"
 #include "../../HardwareIO/CameraInIO.h"

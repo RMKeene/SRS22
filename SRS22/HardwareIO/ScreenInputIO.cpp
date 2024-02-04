@@ -1,4 +1,3 @@
-#include "../pch.h"
 #include "ScreenInputIO.h"
 #include "../Point.h"
 #include "../OpenCVHelpers.h"

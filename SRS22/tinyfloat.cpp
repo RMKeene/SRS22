@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "tinyfloat.h"
 
 namespace SRS22 {

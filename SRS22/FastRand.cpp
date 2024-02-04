@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "SRS22pch.h"
 #include "FastRand.h"
 
 namespace SRS22 {

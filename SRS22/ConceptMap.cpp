@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "ConceptMap.h"
 #include "Brain.h"
 #include <string>
@@ -129,9 +128,9 @@ namespace SRS22 {
 	void ConceptMap::divNext(int row, int col, float val) { myBrain->putNext(row * cols + col + cortexStartIndex, myBrain->getNext(row * cols + col + cortexStartIndex) / val); }
 	void ConceptMap::divNext(int depth, int row, int col, float val) { myBrain->putNext(depth * rowsXcols + row * cols + col + cortexStartIndex, myBrain->getNext(depth * rowsXcols + row * cols + col + cortexStartIndex) / val); }
 
-	void ConceptMap::clamp(int idx, float min = -1.0f, float max = 1.0f) { myBrain->put(idx + cortexStartIndex, std::clamp(myBrain->get(idx + cortexStartIndex), min, max)); }
-	void ConceptMap::clamp(int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->put(row * cols + col + cortexStartIndex, std::clamp(myBrain->get(row * cols + col + cortexStartIndex), min, max)); }
-	void ConceptMap::clamp(int depth, int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->put(depth * rowsXcols + row * cols + col + cortexStartIndex, std::clamp(myBrain->get(depth * rowsXcols + row * cols + col + cortexStartIndex), min, max)); }
+	void ConceptMap::clampp(int idx, float min = -1.0f, float max = 1.0f) { myBrain->put(idx + cortexStartIndex, std::clamp(myBrain->get(idx + cortexStartIndex), min, max)); }
+	void ConceptMap::clampp(int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->put(row * cols + col + cortexStartIndex, std::clamp(myBrain->get(row * cols + col + cortexStartIndex), min, max)); }
+	void ConceptMap::clampp(int depth, int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->put(depth * rowsXcols + row * cols + col + cortexStartIndex, std::clamp(myBrain->get(depth * rowsXcols + row * cols + col + cortexStartIndex), min, max)); }
 
 	void ConceptMap::clampNext(int idx, float min = -1.0f, float max = 1.0f) { myBrain->putNext(idx + cortexStartIndex, std::clamp(myBrain->getNext(idx + cortexStartIndex), min, max)); }
 	void ConceptMap::clampNext(int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->putNext(row * cols + col + cortexStartIndex, std::clamp(myBrain->getNext(row * cols + col + cortexStartIndex), min, max)); }

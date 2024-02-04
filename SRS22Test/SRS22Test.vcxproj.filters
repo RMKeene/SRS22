@@ -18,7 +18,7 @@
     <ClCompile Include="SRS22TinyFloatTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="SRS22pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\SRS22\tinyfloat.cpp">
@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="SRS22pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\SRS22\tinyfloat.h">
