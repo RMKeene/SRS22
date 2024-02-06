@@ -18,7 +18,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		nextM.charges = cameraIn->fovea.clone();
+		nextM = cameraIn->fovea.clone();
 	}
 
 	void CameraFoveaMap::LatchNewState() {

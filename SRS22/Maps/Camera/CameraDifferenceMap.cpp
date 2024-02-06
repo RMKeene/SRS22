@@ -19,7 +19,7 @@ namespace SRS22 {
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		if (cameraIn->currentAbsDifferenceLowRes.empty() == false) {
-			nextM.charges += cameraIn->currentAbsDifferenceLowRes;
+			nextM += cameraIn->currentAbsDifferenceLowRes;
 		}
 	}
 

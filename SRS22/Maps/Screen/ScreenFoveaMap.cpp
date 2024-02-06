@@ -20,7 +20,7 @@ namespace SRS22 {
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		auto fovea = IOCommon::GetIO<ScreenAttnSpotIO>();
 		Rect r(Width(), Height(), fovea->GetPt());
-		screenIn->GetSubRect(nextM.charges, r);
+		screenIn->GetSubRect(nextM, r);
 	}
 
 	void ScreenFoveaMap::LatchNewState() {

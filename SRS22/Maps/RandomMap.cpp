@@ -19,7 +19,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		cv::setRNGSeed(cv::getTickCount());
-		cv::randu(nextM.charges, 0.0f, 1.0f);
+		cv::randu(nextM, 0.0f, 1.0f);
 	}
 
 	void RandomMap::LatchNewState() {

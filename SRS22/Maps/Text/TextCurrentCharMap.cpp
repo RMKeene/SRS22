@@ -23,7 +23,7 @@ namespace SRS22 {
 		if (textInUI->GetCharacterIn(c)) {
 			uint x = c & 0x000F;
 			uint y = (c >> 4) & 0x000F;
-			nextM.put(nextM.get(y, x) + 1.0f, y, x);
+			putNext(y, x, getNext(y, x) + 1.0f);
 		}
 	}
 

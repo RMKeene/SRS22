@@ -109,7 +109,7 @@ namespace SRS22 {
 		void PostCreateAllConceptMaps();
 		void PostCreateAllCortexChunks();
 
-		optional<shared_ptr<ConceptMap>> FindMap(MapUidE n);
+		optional<shared_ptr<ConceptMap>> FindMap( MapUidE n);
 		optional<shared_ptr<ConceptMap>> FindMapByName(string n);
 
 		/// <summary>

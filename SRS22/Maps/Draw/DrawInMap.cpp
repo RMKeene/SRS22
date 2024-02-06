@@ -19,12 +19,12 @@ namespace SRS22 {
 		auto whiteboard = IOCommon::GetIO<WhiteboardInIO>();
 		WhiteboardPt pt;
 		if (whiteboard->GetNextQueuedPt(pt)) {
-			nextM.put(ColorUByteToCharge(pt.r), DrawInMap_R);
-			nextM.put(ColorUByteToCharge(pt.g), DrawInMap_G);
-			nextM.put(ColorUByteToCharge(pt.b), DrawInMap_B);
-			nextM.put(pt.blend, DrawInMap_Blend);
-			nextM.put(pt.x, DrawInMap_X);
-			nextM.put(pt.y, DrawInMap_Y);
+			putNext(DrawInMap_R, ColorUByteToCharge(pt.r));
+			putNext(DrawInMap_G, ColorUByteToCharge(pt.g));
+			putNext(DrawInMap_B, ColorUByteToCharge(pt.b));
+			putNext(DrawInMap_Blend, pt.blend);
+			putNext(DrawInMap_X, pt.x);
+			putNext(DrawInMap_Y, pt.y);
 		}
 	}
 

@@ -154,7 +154,7 @@ namespace SRS22 {
 		void PostCreate(Brain& b);
 
 		/// <summary>
-		/// return M.charges.size();
+		/// return M.size();
 		/// </summary>
 		/// <returns></returns>
 		const cv::MatSize matSize();

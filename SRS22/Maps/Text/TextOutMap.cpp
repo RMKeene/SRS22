@@ -25,7 +25,7 @@ namespace SRS22 {
 		int depth;
 		float v;
 		if (M.FindMaxValue(0.25f, col, row, depth, v)) {
-			nextM.put(0.0f, row, col);
+			putNext(row, col, 0.0f);
 			TextIOType c = ((row & 0x00FF) << 8) | (col & 0x00FF);
 			textOutUI->TakeCharacter(c);
 		}

@@ -16,26 +16,26 @@ namespace SRS22 {
 	void DrawOutMap::ComputeNextState() {
 		ConceptMap::ComputeNextState();
 
-		if (M.get(DrawOUtMap_Blend) < DrawOutMap_MinBlend)
+		if (get(DrawOUtMap_Blend) < DrawOutMap_MinBlend)
 			return;
 
 		auto whiteboard = IOCommon::GetIO<WhiteboardOutIO>();
-		WhiteboardPt pt(M.get(DrawOUtMap_R), M.get(DrawOUtMap_G), M.get(DrawOUtMap_B),
-			M.get(DrawOUtMap_Blend), M.get(DrawOUtMap_X), M.get(DrawOUtMap_Y));
+		WhiteboardPt pt(get(DrawOUtMap_R), get(DrawOUtMap_G), get(DrawOUtMap_B),
+			get(DrawOUtMap_Blend), get(DrawOUtMap_X), get(DrawOUtMap_Y));
 
 		whiteboard->EnqueuePoint(pt);
 
-		M.put(0.0f, DrawOUtMap_R);
-		M.put(0.0f, DrawOUtMap_G);
-		M.put(0.0f, DrawOUtMap_B);
-		M.put(0.0f, DrawOUtMap_Blend);
-		M.put(0.0f, DrawOUtMap_X);
-		M.put(0.0f, DrawOUtMap_Y);
+		put(DrawOUtMap_R, 0.0f);
+		put(DrawOUtMap_G, 0.0f);
+		put(DrawOUtMap_B, 0.0f);
+		put(DrawOUtMap_Blend, 0.0f);
+		put(DrawOUtMap_X, 0.0f);
+		put(DrawOUtMap_Y, 0.0f);
 	}
 
 	const unsigned char DrawOutMap::ChargeToColorUByte(const size_t MIndex)
 	{
-		return static_cast<unsigned char>(std::clamp(M.get(MIndex) * 255.0f, 0.0f, 255.0f));
+		return static_cast<unsigned char>(std::clamp(get(MIndex) * 255.0f, 0.0f, 255.0f));
 	}
 
 	void DrawOutMap::LatchNewState() {

@@ -21,14 +21,14 @@ namespace SRS22 {
 
 		// TODO - Currently hardwired with no blending.
 		auto motionXYSptr = myBrain->FindMapByName("ScreenMotionXYMap").value();
-		float X = motionXYSptr.get()->M.get(0);
-		float Y = motionXYSptr.get()->M.get(1);
-		nextM.charges.at<float>(0) += motionXYSptr.get()->M.get(0);
-		nextM.charges.at<float>(1) += motionXYSptr.get()->M.get(1);
+		float X = motionXYSptr.get()->get(0);
+		float Y = motionXYSptr.get()->get(1);
+		nextM.at<float>(0) += motionXYSptr.get()->get(0);
+		nextM.at<float>(1) += motionXYSptr.get()->get(1);
 
 		auto screenVideo = IOCommon::GetIO<ScreenInputIO>();
-		float xx = M.get(0) * screenVideo->GetScreenWidth();
-		float yy = M.get(1) * screenVideo->GetScreenHeight();
+		float xx = get(0) * screenVideo->GetScreenWidth();
+		float yy = get(1) * screenVideo->GetScreenHeight();
 
 		auto fovea = IOCommon::GetIO<ScreenAttnSpotIO>();
 		fovea->SetPt(xx, yy);

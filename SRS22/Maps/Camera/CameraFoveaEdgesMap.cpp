@@ -20,7 +20,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaEdges.copyTo(nextM.charges);
+		cameraIn->foveaEdges.copyTo(nextM);
 	}
 
 	void CameraFoveaEdgesMap::LatchNewState() {

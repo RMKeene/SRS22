@@ -25,7 +25,7 @@ namespace SRS22 {
 		int depth;
 		float v;
 		if (M.FindMaxValue(0.25f, col, row, depth, v)) {
-			nextM.put(-0.25f, row, col);
+			putNext(row, col , -0.25f);
 			PhonemeE c = (PhonemeE)(col & 0x00FF);
 			SRS22LogTaker::LogInfo("PhonemesMap::ComputeNextState : " + phonemesOut->keyToString(c));
 			phonemesOut->PlayPhoneme(c);

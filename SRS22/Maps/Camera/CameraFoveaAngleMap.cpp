@@ -20,7 +20,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaAngles000.copyTo(nextM.charges);
+		cameraIn->foveaAngles000.copyTo(nextM);
 	}
 
 	void CameraFoveaAngleMap000::LatchNewState() {
@@ -40,7 +40,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaAngles225.copyTo(nextM.charges);
+		cameraIn->foveaAngles225.copyTo(nextM);
 	}
 
 	void CameraFoveaAngleMap225::LatchNewState() {
@@ -60,7 +60,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaAngles450.copyTo(nextM.charges);
+		cameraIn->foveaAngles450.copyTo(nextM);
 	}
 
 	void CameraFoveaAngleMap450::LatchNewState() {
@@ -80,7 +80,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaAngles675.copyTo(nextM.charges);
+		cameraIn->foveaAngles675.copyTo(nextM);
 	}
 
 	void CameraFoveaAngleMap675::LatchNewState() {
@@ -100,7 +100,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaAngles900.copyTo(nextM.charges);
+		cameraIn->foveaAngles900.copyTo(nextM);
 	}
 
 	void CameraFoveaAngleMap900::LatchNewState() {
@@ -120,7 +120,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaAngles1125.copyTo(nextM.charges);
+		cameraIn->foveaAngles1125.copyTo(nextM);
 	}
 
 	void CameraFoveaAngleMap1125::LatchNewState() {
@@ -140,7 +140,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaAngles1350.copyTo(nextM.charges);
+		cameraIn->foveaAngles1350.copyTo(nextM);
 	}
 
 	void CameraFoveaAngleMap1350::LatchNewState() {
@@ -160,7 +160,7 @@ namespace SRS22 {
 		ConceptMap::ComputeNextState();
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
-		cameraIn->foveaAngles1575.copyTo(nextM.charges);
+		cameraIn->foveaAngles1575.copyTo(nextM);
 	}
 
 	void CameraFoveaAngleMap1575::LatchNewState() {
