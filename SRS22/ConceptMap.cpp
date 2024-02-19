@@ -1,5 +1,6 @@
 #include "ConceptMap.h"
 #include "Brain.h"
+#include "Cortex.h"
 #include <string>
 #include <format>
 #include "MapUIDs.h"
@@ -70,16 +71,11 @@ namespace SRS22 {
 
 	void ConceptMap::ComputeNextState() {
 	}
-
 	/// <summary>
 	/// Decay and then add nextM to M. The set nextM to zeros.
 	/// </summary>
 	void ConceptMap::LatchNewState() {
 		// Cortex does the next state transfer of nextCharge to charge.
-	}
-
-	std::string ConceptMap::Debug() {
-		return std::format("");
 	}
 
 	void ConceptMap::put(int idx, float val) { myBrain->put(idx + cortexStartIndex, val); }
@@ -128,13 +124,79 @@ namespace SRS22 {
 	void ConceptMap::divNext(int row, int col, float val) { myBrain->putNext(row * cols + col + cortexStartIndex, myBrain->getNext(row * cols + col + cortexStartIndex) / val); }
 	void ConceptMap::divNext(int depth, int row, int col, float val) { myBrain->putNext(depth * rowsXcols + row * cols + col + cortexStartIndex, myBrain->getNext(depth * rowsXcols + row * cols + col + cortexStartIndex) / val); }
 
-	void ConceptMap::clampp(int idx, float min = -1.0f, float max = 1.0f) { myBrain->put(idx + cortexStartIndex, std::clamp(myBrain->get(idx + cortexStartIndex), min, max)); }
-	void ConceptMap::clampp(int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->put(row * cols + col + cortexStartIndex, std::clamp(myBrain->get(row * cols + col + cortexStartIndex), min, max)); }
-	void ConceptMap::clampp(int depth, int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->put(depth * rowsXcols + row * cols + col + cortexStartIndex, std::clamp(myBrain->get(depth * rowsXcols + row * cols + col + cortexStartIndex), min, max)); }
+	void ConceptMap::clampp(int idx, float min, float max) { myBrain->put(idx + cortexStartIndex, std::clamp(myBrain->get(idx + cortexStartIndex), min, max)); }
+	void ConceptMap::clampp(int row, int col, float min, float max) { myBrain->put(row * cols + col + cortexStartIndex, std::clamp(myBrain->get(row * cols + col + cortexStartIndex), min, max)); }
+	void ConceptMap::clampp(int depth, int row, int col, float min, float max) { myBrain->put(depth * rowsXcols + row * cols + col + cortexStartIndex, std::clamp(myBrain->get(depth * rowsXcols + row * cols + col + cortexStartIndex), min, max)); }
 
-	void ConceptMap::clampNext(int idx, float min = -1.0f, float max = 1.0f) { myBrain->putNext(idx + cortexStartIndex, std::clamp(myBrain->getNext(idx + cortexStartIndex), min, max)); }
-	void ConceptMap::clampNext(int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->putNext(row * cols + col + cortexStartIndex, std::clamp(myBrain->getNext(row * cols + col + cortexStartIndex), min, max)); }
-	void ConceptMap::clampNext(int depth, int row, int col, float min = -1.0f, float max = 1.0f) { myBrain->putNext(depth * rowsXcols + row * cols + col + cortexStartIndex, std::clamp(myBrain->getNext(depth * rowsXcols + row * cols + col + cortexStartIndex), min, max)); }
+	void ConceptMap::clampNext(int idx, float min, float max) { myBrain->putNext(idx + cortexStartIndex, std::clamp(myBrain->getNext(idx + cortexStartIndex), min, max)); }
+	void ConceptMap::clampNext(int row, int col, float min, float max) { myBrain->putNext(row * cols + col + cortexStartIndex, std::clamp(myBrain->getNext(row * cols + col + cortexStartIndex), min, max)); }
+	void ConceptMap::clampNext(int depth, int row, int col, float min, float max) { myBrain->putNext(depth * rowsXcols + row * cols + col + cortexStartIndex, std::clamp(myBrain->getNext(depth * rowsXcols + row * cols + col + cortexStartIndex), min, max)); }
 
+	bool ConceptMap::FindMaxValue(const float minV, OUT int& col, OUT int& row, OUT int& depth, OUT float& v) {
+		bool hit = false;
+		// This translates to -FLT_MAX which is what we want.
+		v = std::numeric_limits<float>::lowest();
+		if (M.size.dims() == 1) {
+			row = 0;
+			depth = 0;
+			for (int c = 0; c < M.size[0]; c++) {
+				const float f = M.at<float>(c);
+				if (f > v) {
+					v = f;
+					col = c;
+					hit |= f > minV;
+				}
+			}
+		}
+		else if (M.size.dims() == 2) {
+			depth = 0;
+			for (int r = 0; r < M.size[0]; r++) {
+				for (int c = 0; c < M.size[1]; c++) {
+					const float f = M.at<float>(r, c);
+					if (f > v) {
+						v = f;
+						col = c;
+						row = r;
+						hit |= f > minV;
+					}
+				}
+			}
+		}
+		else { // Dim count is 3
+			depth = 0;
+			for (int d = 0; d < M.size[0]; d++) {
+				for (int r = 0; r < M.size[1]; r++) {
+					for (int c = 0; c < M.size[2]; c++) {
+						const float f = M.at<float>(d, r, c);
+						if (f > v) {
+							v = f;
+							col = c;
+							row = r;
+							depth = d;
+							hit |= f > minV;
+
+						}
+					}
+				}
+			}
+		}
+		return hit;
+	}
+
+	std::string ConceptMap::Debug() {
+		std::stringstream s;
+		s << "M.dims = " << M.dims;
+		s << " matSize=" << matSize();
+		s << " entriesCount=" << entriesCount();
+		s << " byteCount=" << byteCount();
+		s << " M.charges.dims = [";
+		for (int i = 0; i < M.dims; ++i) {
+			if (i) s << " X ";
+			s << M.size[i];
+		}
+		s << "] temp.channels = " << M.channels() << std::endl;
+
+		return s.str();
+	}
 
 }

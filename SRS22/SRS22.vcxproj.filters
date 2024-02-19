@@ -398,9 +398,6 @@
     <ClInclude Include="IOMapToCortext.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="MatchSelector.h">
-      <Filter>Source</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -593,7 +590,6 @@
     <ClCompile Include="Maps\Camera\CameraFoveaAbsDiffMap.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="MatchSelector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SRS22.rc">

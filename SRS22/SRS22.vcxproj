@@ -349,7 +349,6 @@
     <ClInclude Include="Maps\Text\TextOutMap.h" />
     <ClInclude Include="Maps\Voice\PhonemeMap.h" />
     <ClInclude Include="MapUIDs.h" />
-    <ClInclude Include="MatchSelector.h" />
     <ClInclude Include="MonitorFrame.h" />
     <ClInclude Include="OpenCVHelpers.h" />
     <ClInclude Include="SRS22pch.h" />

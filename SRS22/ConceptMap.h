@@ -1,9 +1,8 @@
 #pragma once
 
+#include "MapUIDs.h"
 #include "Brain.h"
 #include "GoodnessFunction.h"
-#include "MapUIDs.h"
-#include "MapUIDs.h"
 #include "SRSUnitDisplayModes.h"
 #include "Tickable.h"
 #include <opencv2/core/mat.hpp>
@@ -145,6 +144,16 @@ namespace SRS22 {
 		void clampNext(int idx, float min = -1.0f, float max = 1.0f);
 		void clampNext(int row, int col, float min = -1.0f, float max = 1.0f);
 		void clampNext(int depth, int row, int col, float min = -1.0f, float max = 1.0f);
+
+		/// <summary>
+		/// Find the maximum value in M and return the row, col, depth and value.
+		/// But not less than minV. If no value is greater than minV returns false.
+		/// If return is false, col, row, depth, v are indeterminant.
+		/// </summary>
+		/// <param name="idx"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		bool FindMaxValue(const float minV, OUT int& col, OUT int& row, OUT int& depth, OUT float& v);
 
 		void setupCVMatMirrors();
 

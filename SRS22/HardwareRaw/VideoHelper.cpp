@@ -111,7 +111,8 @@ namespace SRS22 {
 			UINT32  cchBufSize = 1024;
 			UINT32 cchLength = 0;
 			hr = a->GetString(MF_DEVSOURCE_ATTRIBUTE_FRIENDLY_NAME, Value, cchBufSize, &cchLength);
-			std::cout << "   Device:" << Value << std::endl;
+			// TODO make this wchar string work.
+			std::wcout << "   Device:" << Value << std::endl;
 			if (SUCCEEDED(hr)) {
 				listedDevices.push_back(std::wstring(Value));
 			}
