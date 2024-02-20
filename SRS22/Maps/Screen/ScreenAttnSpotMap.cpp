@@ -23,8 +23,8 @@ namespace SRS22 {
 		auto motionXYSptr = myBrain->FindMapByName("ScreenMotionXYMap").value();
 		float X = motionXYSptr.get()->get(0);
 		float Y = motionXYSptr.get()->get(1);
-		nextM.at<float>(0) += motionXYSptr.get()->get(0);
-		nextM.at<float>(1) += motionXYSptr.get()->get(1);
+		nextM.at<float>(0, 0, 0) += motionXYSptr.get()->get(0);
+		nextM.at<float>(0, 0, 1) += motionXYSptr.get()->get(1);
 
 		auto screenVideo = IOCommon::GetIO<ScreenInputIO>();
 		float xx = get(0) * screenVideo->GetScreenWidth();

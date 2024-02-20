@@ -28,7 +28,7 @@ namespace SRS22 {
 		/// <summary>
 		/// For easy use with cv::Mat. { depth, rows, cols }
 		/// </summary>
-		int numDims[3];
+		int dims[3];
 
 		/// <summary>
 		/// The cortex segment allocated to this map extends from cortexStartIndex to cortexStartIndex + totalSize.
@@ -42,7 +42,7 @@ namespace SRS22 {
 		cv::Mat M;
 		/// <summary>
 		/// A cv::Mat with the actual memory backed by the Cortex.neuronChargesNext array segment.
-		/// NEVER change this cv::Mat. It is just a mirror of the Cortex.neuronChargesNext array segment.
+		/// NEVER change this cv::Mat (except for I/O input). It is just a mirror of the Cortex.neuronChargesNext array segment.
 		/// </summary>
 		cv::Mat nextM;
 
@@ -161,14 +161,6 @@ namespace SRS22 {
 		/// Called after all SRSUnits have been created and added to the Brain.
 		/// </summary>
 		void PostCreate(Brain& b);
-
-		/// <summary>
-		/// return M.size();
-		/// </summary>
-		/// <returns></returns>
-		const cv::MatSize matSize();
-		const int entriesCount();
-		const int byteCount();
 
 		/// <summary>
 		/// Process all inputs and system state, compare patterns, do transforms.

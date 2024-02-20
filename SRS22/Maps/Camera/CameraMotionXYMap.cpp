@@ -40,8 +40,8 @@ namespace SRS22 {
 					}
 				}
 			}
-			nextM.at<float>(0) += (float)maxX / (float)w;
-			nextM.at<float>(1) += (float)maxY / (float)h;
+			nextM.at<float>(0, 0, 0) += (float)maxX / (float)w;
+			nextM.at<float>(0, 0, 1) += (float)maxY / (float)h;
 		}
 	}
 

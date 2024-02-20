@@ -19,9 +19,9 @@ namespace SRS22 {
 		decayFactor(decayFactor),
 		MapDescription(MapDescription),
 		rowsXcols(rows* cols) {
-		numDims[0] = depth;
-		numDims[1] = rows;
-		numDims[2] = cols;
+		dims[0] = depth;
+		dims[1] = rows;
+		dims[2] = cols;
 
 	}
 
@@ -36,9 +36,9 @@ namespace SRS22 {
 		decayFactor(decayFactor),
 		MapDescription(MapDescription),
 		rowsXcols(rows* cols) {
-		numDims[0] = depth;
-		numDims[1] = rows;
-		numDims[2] = cols;
+		dims[0] = depth;
+		dims[1] = rows;
+		dims[2] = cols;
 	}
 
 	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int depth, int rows, int cols, float decayFactor, std::string MapDescription) :
@@ -52,17 +52,17 @@ namespace SRS22 {
 		decayFactor(decayFactor),
 		MapDescription(MapDescription),
 		rowsXcols(rows* cols) {
-		numDims[0] = depth;
-		numDims[1] = rows;
-		numDims[2] = cols;
+		dims[0] = depth;
+		dims[1] = rows;
+		dims[2] = cols;
 	}
 
 	ConceptMap::~ConceptMap() {
 	}
 
 	void ConceptMap::setupCVMatMirrors() {
-		M = cv::Mat(3, numDims, CV_32FC1, &myBrain->cortex->neuronCharges[cortexStartIndex]);
-		nextM = cv::Mat(3, numDims, CV_32FC1, &myBrain->cortex->neuronChargesNext[cortexStartIndex]);
+		M = cv::Mat(3, dims, CV_32FC1, &myBrain->cortex->neuronCharges[cortexStartIndex]);
+		nextM = cv::Mat(3, dims, CV_32FC1, &myBrain->cortex->neuronChargesNext[cortexStartIndex]);
 	}
 
 	void ConceptMap::PostCreate(Brain& b) {
@@ -186,9 +186,7 @@ namespace SRS22 {
 	std::string ConceptMap::Debug() {
 		std::stringstream s;
 		s << "M.dims = " << M.dims;
-		s << " matSize=" << matSize();
-		s << " entriesCount=" << entriesCount();
-		s << " byteCount=" << byteCount();
+		s << " entriesCount=" << totalSize;
 		s << " M.charges.dims = [";
 		for (int i = 0; i < M.dims; ++i) {
 			if (i) s << " X ";

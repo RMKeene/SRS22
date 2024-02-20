@@ -8,6 +8,6 @@
 #define NEURON_INPUTS 50
 
 /// <summary>
-/// How many Neurons are in the Cortex.
+/// How many Neurons are in the Cortex. Must be larger than the total ConceptMap space at a bare minimum.
 /// </summary>
-#define TOTAL_NEURONS 1000
+#define TOTAL_NEURONS 700000

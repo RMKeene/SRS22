@@ -142,7 +142,21 @@ namespace SRS22 {
 								const int xx = x - region.X;
 								if (xx >= 0 && xx < outM.size[2] && x >= 0 && x < inputMatRGB.cols) {
 									if (inputMatRGB.type() == CV_8UC4) {
+
 										const cv::Vec4b& n = inputMatRGB.at<cv::Vec4b>(y, x);
+										try {
+											int sz0 = outM.size[0];
+											int sz1 = outM.size[1];
+											int sz2 = outM.size[2];
+											int n0 = n[0];
+											int n1 = n[1];
+											int n2 = n[2];
+
+											outM.at<float>(0, yy, xx) = n[0] / 255.0f;
+										}
+										catch (...) {
+											printf("");
+										}
 										outM.at<float>(0, yy, xx) = n[0] / 255.0f;
 										outM.at<float>(1, yy, xx) = n[1] / 255.0f;
 										outM.at<float>(2, yy, xx) = n[2] / 255.0f;
@@ -312,7 +326,7 @@ namespace SRS22 {
 			return;
 
 		assert(m.type() == CV_32FC1);
-		if(m0.type() != CV_32FC1)
+		if (m0.type() != CV_32FC1)
 			printf("");
 		assert(m0.type() == CV_32FC1);
 		assert(m1.type() == CV_32FC1);

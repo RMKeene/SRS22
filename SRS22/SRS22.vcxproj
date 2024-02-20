@@ -460,7 +460,6 @@
     <ClCompile Include="Maps\Text\TextCurrentCharMap.cpp" />
     <ClCompile Include="Maps\Text\TextOutMap.cpp" />
     <ClCompile Include="Maps\Voice\PhonemeMap.cpp" />
-    <ClCompile Include="MatchSelector.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
     <ClCompile Include="OpenCVHelpers.cpp" />
     <ClCompile Include="SRS22pch.cpp">
