@@ -123,17 +123,32 @@ bool ConvertMatBitmapTowxBitmap_CV_32FC1(
 
 	wxNativePixelData           pixelData(bitmap);
 	wxNativePixelData::Iterator pixelDataIt(pixelData);
+	
 
 	if (matBitmap.dims == 3) {
+		const int depth = matBitmap.size[0];
 		for (int row = 0; row < h; ++row)
 		{
 			pixelDataIt.MoveTo(pixelData, 0, row);
 
 			for (int col = 0; col < w; ++col, ++pixelDataIt)
 			{
-				pixelDataIt.Blue() = matBitmap.at<float>(0, row / scaleY, col / scaleX) * pixelScale;
-				pixelDataIt.Green() = matBitmap.at<float>(1, row / scaleY, col / scaleX) * pixelScale;
-				pixelDataIt.Red() = matBitmap.at<float>(2, row / scaleY, col / scaleX) * pixelScale;
+				float vv = matBitmap.at<float>(0, row / scaleY, col / scaleX) * pixelScale;
+				const unsigned char cc = vv;
+				pixelDataIt.Blue() = cc;
+				if (depth > 1) {
+					pixelDataIt.Green() = matBitmap.at<float>(1, row / scaleY, col / scaleX) * pixelScale;
+					if (depth > 2) {
+						pixelDataIt.Red() = matBitmap.at<float>(2, row / scaleY, col / scaleX) * pixelScale;
+					}
+					else {
+						pixelDataIt.Red() = cc;
+					}
+				}
+				else {
+					pixelDataIt.Green() = cc;
+					pixelDataIt.Red() = cc;
+				}
 			}
 		}
 	}

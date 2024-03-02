@@ -27,6 +27,8 @@ using namespace concurrency;
 namespace SRS22 {
 	using namespace std;
 
+	boolean Brain::doParallel = true;
+
 	Brain::Brain() {
 		overallGoodness = 0;
 		overallGoodnessPrevious = 0;
@@ -68,13 +70,17 @@ namespace SRS22 {
 		if (tickCount == 14)
 			printf("");
 
-		//for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
-		//	n.second->ComputeNextState();
-		//}
+		if (doParallel) {
+			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
+				n.second->ComputeNextState();
+				});
+		}
+		else {
+			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
+				n.second->ComputeNextState();
+			}
+		}
 
-		parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-			n.second->ComputeNextState();
-			});
 
 		cortex->ComputeNextState();
 		cortex->LatchNewState();

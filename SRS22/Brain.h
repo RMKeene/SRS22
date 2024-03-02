@@ -30,6 +30,11 @@ namespace SRS22 {
 		IOMapToContext ioMapToContext;
 
 		/// <summary>
+		/// Top level processing loop flag.
+		/// </summary>
+		static  boolean doParallel;
+
+		/// <summary>
 		/// Never depend on iteration order of maps. They are multi-thread processed and in a hash table.
 		/// </summary>
 		map<MapUidE, std::shared_ptr<ConceptMap>> conceptMaps;
@@ -109,7 +114,7 @@ namespace SRS22 {
 		void PostCreateAllConceptMaps();
 		void PostCreateAllCortexChunks();
 
-		optional<shared_ptr<ConceptMap>> FindMap( MapUidE n);
+		optional<shared_ptr<ConceptMap>> FindMap(MapUidE n);
 		optional<shared_ptr<ConceptMap>> FindMapByName(string n);
 
 		/// <summary>
