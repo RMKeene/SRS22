@@ -8,7 +8,7 @@
 namespace SRS22 {
 	RandomMap::RandomMap(Brain* br) :
 		ConceptMap(br, MapUidE::RANDOM_MAP, "RandomMap",
-			3, RandomMap_Width, RandomMap_Height,
+			RandomMap_Width, RandomMap_Height, 1.0f,
 			"A map that is always randomized every tick. A source of noise if needed.") {
 	}
 
