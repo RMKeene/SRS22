@@ -67,9 +67,6 @@ namespace SRS22 {
 	{
 		PreTickHardwareAndIO();
 
-		if (tickCount == 14)
-			printf("");
-
 		if (doParallel) {
 			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
 				n.second->ComputeNextState();
@@ -81,10 +78,25 @@ namespace SRS22 {
 			}
 		}
 
-
 		cortex->ComputeNextState();
+
+		// Copies next state to current state and decays all charges toward zero.
 		cortex->LatchNewState();
-		cortex->LatchNewState();
+
+		cortex->DecayNextTowardZero(doParallel);
+
+		// Decay nextState toward zero for the maps
+		if (doParallel) {
+			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
+				n.second->LatchNewState();
+				});
+		}
+		else {
+			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
+				n.second->LatchNewState();
+			}
+		}
+
 		cortex->LearningPhase();
 
 		overallGoodnessRateOfChange = overallGoodnessRateOfChange * 0.95f + overallGoodness - overallGoodnessPrevious;

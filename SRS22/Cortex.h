@@ -34,6 +34,8 @@ namespace SRS22 {
 		/// </summary>
 		float growthSum = 0.0f;
 
+		float neuronChargeDecayFactor = 0.95f;
+
 		Brain& brain;
 
 		Cortex(Brain& brain, const float growthRate) :
@@ -67,6 +69,7 @@ namespace SRS22 {
 		void ComputeNextState() override;
 
 		void LatchNewState() override;
+		void DecayNextTowardZero(boolean doParallel);
 
 		void LearningPhase() override;
 

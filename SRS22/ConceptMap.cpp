@@ -71,11 +71,16 @@ namespace SRS22 {
 
 	void ConceptMap::ComputeNextState() {
 	}
+
 	/// <summary>
-	/// Decay and then add nextM to M. The set nextM to zeros.
+	/// The cortex does the copy of nextState to state.
+	/// This base implementation decays the nextM toward zero charge.
+	/// Not multithreaded.
 	/// </summary>
 	void ConceptMap::LatchNewState() {
-		// Cortex does the next state transfer of nextCharge to charge.
+		//for (int i = cortexStartIndex; i < cortexStartIndex + totalSize; i++) {
+		//	myBrain->cortex->neuronChargesNext[i] = myBrain->cortex->neuronChargesNext[i] * decayFactor;
+		//}
 	}
 
 	void ConceptMap::put(int idx, float val) { myBrain->put(idx + cortexStartIndex, val); }
