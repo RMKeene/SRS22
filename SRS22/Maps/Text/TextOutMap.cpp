@@ -15,8 +15,8 @@ namespace SRS22 {
 	TextOutMap::~TextOutMap() {
 	}
 
-	void TextOutMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void TextOutMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto textOutUI = IOCommon::GetIO<TextOutIO>();
 
@@ -31,7 +31,7 @@ namespace SRS22 {
 		}
 	}
 
-	void TextOutMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void TextOutMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

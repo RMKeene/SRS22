@@ -13,16 +13,16 @@ namespace SRS22 {
 
 	CameraFoveaAngleMap000::~CameraFoveaAngleMap000() {
 	}
-
-	void CameraFoveaAngleMap000::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	
+	void CameraFoveaAngleMap000::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaAngles000.copyTo(nextM);
 	}
 
-	void CameraFoveaAngleMap000::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAngleMap000::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 
 	CameraFoveaAngleMap225::CameraFoveaAngleMap225(Brain* br) :
@@ -34,15 +34,15 @@ namespace SRS22 {
 	CameraFoveaAngleMap225::~CameraFoveaAngleMap225() {
 	}
 
-	void CameraFoveaAngleMap225::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaAngleMap225::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaAngles225.copyTo(nextM);
 	}
 
-	void CameraFoveaAngleMap225::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAngleMap225::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 
 	CameraFoveaAngleMap450::CameraFoveaAngleMap450(Brain* br) :
@@ -54,15 +54,15 @@ namespace SRS22 {
 	CameraFoveaAngleMap450::~CameraFoveaAngleMap450() {
 	}
 
-	void CameraFoveaAngleMap450::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaAngleMap450::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaAngles450.copyTo(nextM);
 	}
 
-	void CameraFoveaAngleMap450::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAngleMap450::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 
 	CameraFoveaAngleMap675::CameraFoveaAngleMap675(Brain* br) :
@@ -74,15 +74,15 @@ namespace SRS22 {
 	CameraFoveaAngleMap675::~CameraFoveaAngleMap675() {
 	}
 
-	void CameraFoveaAngleMap675::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaAngleMap675::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaAngles675.copyTo(nextM);
 	}
 
-	void CameraFoveaAngleMap675::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAngleMap675::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 
 	CameraFoveaAngleMap900::CameraFoveaAngleMap900(Brain* br) :
@@ -94,15 +94,15 @@ namespace SRS22 {
 	CameraFoveaAngleMap900::~CameraFoveaAngleMap900() {
 	}
 
-	void CameraFoveaAngleMap900::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaAngleMap900::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaAngles900.copyTo(nextM);
 	}
 
-	void CameraFoveaAngleMap900::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAngleMap900::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 
 	CameraFoveaAngleMap1125::CameraFoveaAngleMap1125(Brain* br) :
@@ -114,15 +114,15 @@ namespace SRS22 {
 	CameraFoveaAngleMap1125::~CameraFoveaAngleMap1125() {
 	}
 
-	void CameraFoveaAngleMap1125::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaAngleMap1125::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaAngles1125.copyTo(nextM);
 	}
 
-	void CameraFoveaAngleMap1125::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAngleMap1125::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 
 	CameraFoveaAngleMap1350::CameraFoveaAngleMap1350(Brain* br) :
@@ -134,15 +134,15 @@ namespace SRS22 {
 	CameraFoveaAngleMap1350::~CameraFoveaAngleMap1350() {
 	}
 
-	void CameraFoveaAngleMap1350::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaAngleMap1350::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaAngles1350.copyTo(nextM);
 	}
 
-	void CameraFoveaAngleMap1350::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAngleMap1350::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 
 	CameraFoveaAngleMap1575::CameraFoveaAngleMap1575(Brain* br) :
@@ -154,14 +154,14 @@ namespace SRS22 {
 	CameraFoveaAngleMap1575::~CameraFoveaAngleMap1575() {
 	}
 
-	void CameraFoveaAngleMap1575::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaAngleMap1575::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaAngles1575.copyTo(nextM);
 	}
 
-	void CameraFoveaAngleMap1575::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAngleMap1575::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

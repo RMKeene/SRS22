@@ -16,8 +16,8 @@ namespace SRS22 {
 	CameraMotionXYMap::~CameraMotionXYMap() {
 	}
 
-	void CameraMotionXYMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraMotionXYMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		if (cameraIn->currentAbsDifferenceLowRes.empty() == false) {
@@ -45,7 +45,7 @@ namespace SRS22 {
 		}
 	}
 
-	void CameraMotionXYMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraMotionXYMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

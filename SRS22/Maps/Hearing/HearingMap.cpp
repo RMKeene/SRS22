@@ -15,8 +15,8 @@ namespace SRS22 {
 	HearingMap::~HearingMap() {
 	}
 
-	void HearingMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void HearingMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto waveIn = IOCommon::GetIO<AudioCaptureIO>();
 		for (int i = 0; i < SRS22FFTRESULTSIZE; i++) {
@@ -24,7 +24,7 @@ namespace SRS22 {
 		}
 	}
 
-	void HearingMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void HearingMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

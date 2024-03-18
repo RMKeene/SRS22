@@ -14,8 +14,8 @@ namespace SRS22 {
 	CameraFoveaAbsDiffMap::~CameraFoveaAbsDiffMap() {
 	}
 
-	void CameraFoveaAbsDiffMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaAbsDiffMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		if (cameraIn->foveaAbsDifference.empty() == false) {
@@ -23,7 +23,7 @@ namespace SRS22 {
 		}
 	}
 
-	void CameraFoveaAbsDiffMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaAbsDiffMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

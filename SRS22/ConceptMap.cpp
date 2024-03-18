@@ -69,7 +69,7 @@ namespace SRS22 {
 
 	}
 
-	void ConceptMap::ComputeNextState() {
+	void ConceptMap::ComputeNextState(boolean doParallel) {
 	}
 
 	/// <summary>
@@ -77,7 +77,7 @@ namespace SRS22 {
 	/// This base implementation decays the nextM toward zero charge.
 	/// Not multithreaded.
 	/// </summary>
-	void ConceptMap::LatchNewState() {
+	void ConceptMap::LatchNewState(boolean doParallel) {
 		//for (int i = cortexStartIndex; i < cortexStartIndex + totalSize; i++) {
 		//	myBrain->cortex->neuronChargesNext[i] = myBrain->cortex->neuronChargesNext[i] * decayFactor;
 		//}

@@ -16,14 +16,14 @@ namespace SRS22 {
 	CameraFoveaEdgesMap::~CameraFoveaEdgesMap() {
 	}
 
-	void CameraFoveaEdgesMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaEdgesMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		cameraIn->foveaEdges.copyTo(nextM);
 	}
 
-	void CameraFoveaEdgesMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaEdgesMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

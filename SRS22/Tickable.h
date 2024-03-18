@@ -14,10 +14,10 @@ class Tickable
 		/// The hardware IO and UI PreTick for getting external and UI world state.
 		/// </summary>
 		virtual void PreTickHardwareAndIO() {}
-		virtual void ComputeNextState() {}
-		virtual void LatchNewState() {}
+		virtual void ComputeNextState(boolean doParallel) {}
+		virtual void LatchNewState(boolean doParallel) {}
 		virtual void PostTickHardwareAndUI() {}
-		virtual void LearningPhase() {}
+		virtual void LearningPhase(boolean doParallel) {}
 		
 };
 

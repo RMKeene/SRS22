@@ -69,35 +69,35 @@ namespace SRS22 {
 
 		if (doParallel) {
 			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-				n.second->ComputeNextState();
+				n.second->ComputeNextState(false);
 				});
 		}
 		else {
 			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
-				n.second->ComputeNextState();
+				n.second->ComputeNextState(false);
 			}
 		}
 
-		cortex->ComputeNextState();
+		cortex->ComputeNextState(doParallel);
 
 		// Copies next state to current state and decays all charges toward zero.
-		cortex->LatchNewState();
+		cortex->LatchNewState(doParallel);
 
 		cortex->DecayNextTowardZero(doParallel);
 
 		// Decay nextState toward zero for the maps
 		if (doParallel) {
 			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-				n.second->LatchNewState();
+				n.second->LatchNewState(false);
 				});
 		}
 		else {
 			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
-				n.second->LatchNewState();
+				n.second->LatchNewState(false);
 			}
 		}
 
-		cortex->LearningPhase();
+		cortex->LearningPhase(doParallel);
 
 		overallGoodnessRateOfChange = overallGoodnessRateOfChange * 0.95f + overallGoodness - overallGoodnessPrevious;
 		overallGoodness *= 0.98f;

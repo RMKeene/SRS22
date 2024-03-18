@@ -7,10 +7,25 @@
 
 namespace SRS22 {
 
-	void Cortex::ComputeNextState() {
-		//for(int i=0; i< TOTAL_NEURONS; i++) {
-			// TODO Neuron next state
-		//}
+	void Cortex::ComputeNextState(boolean doParallel) {
+		if (doParallel) {
+			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
+				float sum = 0.0f;
+				for (int k = 0; k < NEURON_INPUTS; k++) {
+					sum += neuronCharges[neuronInputs[i][k]] * neuronInputWeights[i][k];
+				}
+				neuronChargesNext[i] += clamp(sum, 0.0f, 1.0f);
+				});
+		}
+		else {
+			for (int i = 0; i < TOTAL_NEURONS; i++) {
+				float sum = 0.0f;
+				for (int k = 0; k < NEURON_INPUTS; k++) {
+					sum += neuronCharges[neuronInputs[i][k]] * neuronInputWeights[i][k];
+				}
+				neuronChargesNext[i] += clamp(sum, 0.0f, 1.0f);
+			}
+		}
 
 		if (brain.ShouldLearn())
 			growthSum += growthRate * brain.overallGoodnessRateOfChange;
@@ -19,7 +34,7 @@ namespace SRS22 {
 	/// <summary>
 	/// Copys the neuron charges next state to current state.
 	/// </summary>
-	void Cortex::LatchNewState() {
+	void Cortex::LatchNewState(boolean doParallel) {
 		memcpy_s(neuronCharges, sizeof(neuronCharges), neuronChargesNext, sizeof(neuronChargesNext));
 
 	}
@@ -37,7 +52,7 @@ namespace SRS22 {
 		}
 	}
 
-	void Cortex::LearningPhase() {
+	void Cortex::LearningPhase(boolean doParallel) {
 	}
 
 	void Cortex::PostCreate() {

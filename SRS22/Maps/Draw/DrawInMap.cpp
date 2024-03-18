@@ -13,8 +13,8 @@ namespace SRS22 {
 	DrawInMap::~DrawInMap() {
 	}
 
-	void DrawInMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void DrawInMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto whiteboard = IOCommon::GetIO<WhiteboardInIO>();
 		WhiteboardPt pt;
@@ -33,7 +33,7 @@ namespace SRS22 {
 		return (float)c / 255.0f;
 	}
 
-	void DrawInMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void DrawInMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

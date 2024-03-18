@@ -13,8 +13,8 @@ namespace SRS22 {
 	DrawOutMap::~DrawOutMap() {
 	}
 
-	void DrawOutMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void DrawOutMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		if (get(DrawOUtMap_Blend) < DrawOutMap_MinBlend)
 			return;
@@ -38,7 +38,7 @@ namespace SRS22 {
 		return static_cast<unsigned char>(std::clamp(get(MIndex) * 255.0f, 0.0f, 255.0f));
 	}
 
-	void DrawOutMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void DrawOutMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

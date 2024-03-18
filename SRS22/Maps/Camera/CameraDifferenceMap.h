@@ -20,7 +20,7 @@ namespace SRS22 {
 		CameraDifferenceMap(Brain* br);
 		~CameraDifferenceMap();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 }

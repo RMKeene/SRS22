@@ -16,8 +16,8 @@ namespace SRS22 {
 	ScreenMotionXYMap::~ScreenMotionXYMap() {
 	}
 
-	void ScreenMotionXYMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void ScreenMotionXYMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		if (screenIn->currentAbsDifferenceLowRes.empty() == false) {
@@ -46,7 +46,7 @@ namespace SRS22 {
 		}
 	}
 
-	void ScreenMotionXYMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void ScreenMotionXYMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

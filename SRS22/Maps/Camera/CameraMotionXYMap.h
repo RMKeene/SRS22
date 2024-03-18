@@ -23,7 +23,7 @@ namespace SRS22 {
 		CameraMotionXYMap(Brain* br);
 		~CameraMotionXYMap();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 }

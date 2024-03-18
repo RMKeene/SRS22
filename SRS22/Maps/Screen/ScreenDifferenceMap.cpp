@@ -14,8 +14,8 @@ namespace SRS22 {
 	ScreenDifferenceMap::~ScreenDifferenceMap() {
 	}
 
-	void ScreenDifferenceMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void ScreenDifferenceMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		// currentAbsDifferenceLowRes is 8UC4 format so we convert.
@@ -30,7 +30,7 @@ namespace SRS22 {
 		}
 	}
 
-	void ScreenDifferenceMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void ScreenDifferenceMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

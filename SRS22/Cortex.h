@@ -60,18 +60,18 @@ namespace SRS22 {
 		inline void put(int idx, float val) { neuronCharges[idx] = val; }
 		inline float get(int idx) { return neuronCharges[idx]; }
 
-		inline void putNext(int idx, float val) { neuronChargesNext[idx] = val; }
+		inline void putNext(int idx, float val) { neuronChargesNext[idx] = clamp(val, 0.0f, 1.0f); }
 		inline float getNext(int idx) { return neuronChargesNext[idx]; }
 
 
 		void PostCreate();
 
-		void ComputeNextState() override;
+		void ComputeNextState(boolean doParallel) override;
 
-		void LatchNewState() override;
+		void LatchNewState(boolean doParallel) override;
 		void DecayNextTowardZero(boolean doParallel);
 
-		void LearningPhase() override;
+		void LearningPhase(boolean doParallel) override;
 
 		inline int GetRandomLinearOffset() {
 			return fastRand() % TOTAL_NEURONS;

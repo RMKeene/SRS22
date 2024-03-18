@@ -166,14 +166,14 @@ namespace SRS22 {
 		/// Process all inputs and system state, compare patterns, do transforms.
 		/// Do NOT change M, just add or subtract from nextM state. Gets called in parallel for all SRSUnits.
 		/// </summary>
-		virtual void ComputeNextState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
 
 		/// <summary>
 		/// After processIO has been called on all SRSUnits, this gets called to decay M and then add the nextM state to M.
 		/// Gets called in parallel for all SRSUnits. So must be just state transfer inside the ConceptMap.
 		/// This is NOT the place to do any post processing on the next state!
 		/// </summary>
-		virtual void LatchNewState() override;
+		virtual void LatchNewState(boolean doParallel) override;
 
 		virtual std::string Debug();
 	};

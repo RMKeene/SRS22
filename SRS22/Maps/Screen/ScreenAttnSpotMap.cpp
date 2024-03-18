@@ -16,8 +16,8 @@ namespace SRS22 {
 	ScreenAttnSpotMap::~ScreenAttnSpotMap() {
 	}
 
-	void ScreenAttnSpotMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void ScreenAttnSpotMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		// TODO - Currently hardwired with no blending.
 		auto motionXYSptr = myBrain->FindMapByName("ScreenMotionXYMap").value();
@@ -34,7 +34,7 @@ namespace SRS22 {
 		fovea->SetPt(xx, yy);
 	}
 
-	void ScreenAttnSpotMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void ScreenAttnSpotMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

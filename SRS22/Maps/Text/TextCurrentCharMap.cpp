@@ -15,8 +15,8 @@ namespace SRS22 {
 	TextCurrentCharMap::~TextCurrentCharMap() {
 	}
 
-	void TextCurrentCharMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void TextCurrentCharMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto textInUI = IOCommon::GetIO<TextInIO>();
 		TextIOType c;
@@ -27,7 +27,7 @@ namespace SRS22 {
 		}
 	}
 
-	void TextCurrentCharMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void TextCurrentCharMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

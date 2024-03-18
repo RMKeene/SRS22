@@ -33,8 +33,8 @@ namespace SRS22 {
 		DrawInMap(Brain* br);
 		~DrawInMap();
 
-		virtual void ComputeNextState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
 		const float ColorUByteToCharge(const unsigned char c);
-		virtual void LatchNewState() override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 }

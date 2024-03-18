@@ -14,8 +14,8 @@ namespace SRS22 {
 	ScreenFoveaMap::~ScreenFoveaMap() {
 	}
 
-	void ScreenFoveaMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void ScreenFoveaMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		auto fovea = IOCommon::GetIO<ScreenAttnSpotIO>();
@@ -23,7 +23,7 @@ namespace SRS22 {
 		screenIn->GetSubRect(nextM, r);
 	}
 
-	void ScreenFoveaMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void ScreenFoveaMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

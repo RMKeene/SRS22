@@ -15,14 +15,14 @@ namespace SRS22 {
 	RandomMap::~RandomMap() {
 	}
 
-	void RandomMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void RandomMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		cv::setRNGSeed(cv::getTickCount());
 		cv::randu(nextM, 0.0f, 1.0f);
 	}
 
-	void RandomMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void RandomMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

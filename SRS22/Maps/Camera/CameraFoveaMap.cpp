@@ -14,14 +14,14 @@ namespace SRS22 {
 	CameraFoveaMap::~CameraFoveaMap() {
 	}
 
-	void CameraFoveaMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void CameraFoveaMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		nextM = cameraIn->fovea.clone();
 	}
 
-	void CameraFoveaMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void CameraFoveaMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

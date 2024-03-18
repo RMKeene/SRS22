@@ -15,8 +15,8 @@ namespace SRS22 {
 	PhonemeMap::~PhonemeMap() {
 	}
 
-	void PhonemeMap::ComputeNextState() {
-		ConceptMap::ComputeNextState();
+	void PhonemeMap::ComputeNextState(boolean doParallel) {
+		ConceptMap::ComputeNextState(doParallel);
 
 		auto phonemesOut = IOCommon::GetIO<PhonemesIO>();
 
@@ -32,7 +32,7 @@ namespace SRS22 {
 		}
 	}
 
-	void PhonemeMap::LatchNewState() {
-		ConceptMap::LatchNewState();
+	void PhonemeMap::LatchNewState(boolean doParallel) {
+		ConceptMap::LatchNewState(doParallel);
 	}
 }

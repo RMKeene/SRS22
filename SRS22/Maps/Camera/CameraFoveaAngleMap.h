@@ -17,8 +17,8 @@ namespace SRS22 {
 		CameraFoveaAngleMap000(Brain* br);
 		~CameraFoveaAngleMap000();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 	/// <summary>
@@ -30,8 +30,8 @@ namespace SRS22 {
 		CameraFoveaAngleMap225(Brain* br);
 		~CameraFoveaAngleMap225();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 	/// <summary>
@@ -43,8 +43,8 @@ namespace SRS22 {
 		CameraFoveaAngleMap450(Brain* br);
 		~CameraFoveaAngleMap450();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 	/// <summary>
@@ -56,8 +56,8 @@ namespace SRS22 {
 		CameraFoveaAngleMap675(Brain* br);
 		~CameraFoveaAngleMap675();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 	/// <summary>
@@ -69,8 +69,8 @@ namespace SRS22 {
 		CameraFoveaAngleMap900(Brain* br);
 		~CameraFoveaAngleMap900();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 	/// <summary>
@@ -82,8 +82,8 @@ namespace SRS22 {
 		CameraFoveaAngleMap1125(Brain* br);
 		~CameraFoveaAngleMap1125();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 	/// <summary>
@@ -95,8 +95,8 @@ namespace SRS22 {
 		CameraFoveaAngleMap1350(Brain* br);
 		~CameraFoveaAngleMap1350();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 	/// <summary>
@@ -108,8 +108,8 @@ namespace SRS22 {
 		CameraFoveaAngleMap1575(Brain* br);
 		~CameraFoveaAngleMap1575();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 }

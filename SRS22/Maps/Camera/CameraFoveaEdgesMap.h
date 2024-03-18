@@ -9,8 +9,8 @@ namespace SRS22 {
 		CameraFoveaEdgesMap(Brain* br);
 		~CameraFoveaEdgesMap();
 
-		virtual void ComputeNextState() override;
-		virtual void LatchNewState() override;
+		virtual void ComputeNextState(boolean doParallel) override;
+		virtual void LatchNewState(boolean doParallel) override;
 	};
 
 }
