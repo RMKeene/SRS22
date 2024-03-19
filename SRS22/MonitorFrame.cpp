@@ -218,7 +218,10 @@ namespace SRS22 {
 		ProcessLogQueueInWindowThread();
 		// Milliseconds since the epoc.
 		long long timeTicks = SRS22::GetTimeTicksMs();
+
 		BrainH brain0 = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+
+		brain0->doParallel = m_CPUParallelCB->GetValue();
 
 		TickCountText->SetLabelText(wxString::Format("Ticks: %lld", brain0->tickCount));
 		float intervalMs = (float)event.GetInterval();

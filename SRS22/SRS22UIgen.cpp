@@ -136,6 +136,22 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	MonitorControl->Add( sbSizer111, 0, wxEXPAND, 5 );
 	
+	wxStaticBoxSizer* sbSizer141;
+	sbSizer141 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("CPU") ), wxVERTICAL );
+	
+	wxBoxSizer* bSizer17;
+	bSizer17 = new wxBoxSizer( wxVERTICAL );
+	
+	m_CPUParallelCB = new wxCheckBox( sbSizer141->GetStaticBox(), wxID_ANY, wxT("Parallel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_CPUParallelCB->SetValue(true); 
+	bSizer17->Add( m_CPUParallelCB, 0, wxALL, 5 );
+	
+	
+	sbSizer141->Add( bSizer17, 1, wxEXPAND, 5 );
+	
+	
+	MonitorControl->Add( sbSizer141, 0, wxEXPAND, 5 );
+	
 	
 	MonitorControl->Add( 0, 0, 0, wxEXPAND, 5 );
 	

@@ -24,10 +24,10 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/statbox.h>
+#include <wx/checkbox.h>
 #include <wx/choice.h>
 #include <wx/slider.h>
 #include <wx/statline.h>
-#include <wx/checkbox.h>
 #include <wx/statbmp.h>
 #include <wx/richtext/richtextctrl.h>
 #include <wx/timer.h>
@@ -61,6 +61,7 @@ class MonitorFrameGen : public wxFrame
 		wxButton* GoodButton;
 		wxButton* BadButton;
 		wxStaticText* overallGoodnessLabel;
+		wxCheckBox* m_CPUParallelCB;
 		wxStaticText* m_staticText91;
 		wxChoice* AudioInChoiceDropbox;
 		wxStaticText* m_staticText181;

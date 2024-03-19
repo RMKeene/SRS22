@@ -53,6 +53,22 @@ namespace SRS22 {
 	}
 
 	void Cortex::LearningPhase(boolean doParallel) {
+		if (brain.ShouldLearn()) {
+			if (doParallel) {
+				Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
+					for (int k = 0; k < NEURON_INPUTS; k++) {
+						neuronInputWeights[i][k] += growthSum;
+					}
+					});
+			}
+			else {
+				for (int i = 0; i < TOTAL_NEURONS; i++) {
+					for (int k = 0; k < NEURON_INPUTS; k++) {
+						neuronInputWeights[i][k] += growthSum;
+					}
+				}
+			}
+		}
 	}
 
 	void Cortex::PostCreate() {
