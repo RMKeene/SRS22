@@ -80,23 +80,21 @@ namespace SRS22 {
 
 		cortex->ComputeNextState(doParallel);
 
-		// Copies next state to current state and decays all charges toward zero.
+		// Copies next state to current state.
 		cortex->LatchNewState(doParallel);
-
-		cortex->DecayNextTowardZero(doParallel);
-
-		// Decay nextState toward zero for the maps
+		// And now that the indicies are updated, re-setup the M and nextM matrices.
 		if (doParallel) {
 			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-				n.second->LatchNewState(false);
+				n.second->setupCVMatMirrors();
 				});
 		}
 		else {
 			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
-				n.second->LatchNewState(false);
+				n.second->setupCVMatMirrors();
 			}
 		}
 
+		cortex->DecayNextTowardZero(doParallel);
 		cortex->LearningPhase(doParallel);
 
 		overallGoodnessRateOfChange = overallGoodnessRateOfChange * 0.95f + overallGoodness - overallGoodnessPrevious;

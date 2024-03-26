@@ -11,3 +11,9 @@
 /// How many Neurons are in the Cortex. Must be larger than the total ConceptMap space at a bare minimum.
 /// </summary>
 #define TOTAL_NEURONS 700000
+
+/// <summary>
+/// In order to avoid memory copies and maximize memory locality, an keep the passes throught the entire cortex to a minimum,
+/// we kee the charge history (currnet charge, next charge, charge two ticks ag etc.) in a circular queue.
+/// This is how large the history is. Must be at a minimum 2, boing current charge and next charge.
+#define NEURON_HISTORY 3

@@ -50,6 +50,9 @@ namespace SRS22 {
 		/// </summary>
 		int SingleStepCount = 0;
 
+		float baseLEarningRate = 0.001f;
+		float learningRate = 0.001f;
+
 		/// <summary>
 		/// How good the system feels. + is good, - is bad, range about -1 to 1
 		/// </summary>

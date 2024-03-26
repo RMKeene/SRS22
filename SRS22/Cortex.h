@@ -13,15 +13,42 @@ namespace SRS22 {
 	class Cortex : public Tickable
 	{
 	public:
+		int neuronChargesCurrentIdx = 0;
+		int neuronChargesNextIdx = 1;
+
 		/// <summary>
-		/// On big chunk of Neurons in consecutive memory. This allows super fast copy from current to next state.
+		/// On big chunk of Neurons in consecutive memory.
 		/// Amenable to CUDA implementation. There is no Neuron class object.
+		/// 
+		/// NEURON_HISTORY is the circular queue of charge history.
+		/// neuronCharges[N][neuronChargesCurrentIdx] is the current charge.
+		/// neuronCharges[N][neuronChargesCurrentId+1] is the next charge being calculated.
+		/// If NEURON_HISTORY is greater than 2 then neuronCharges[N][neuronChargesCurrentIdx - 1] is what the current charge was 1 tick ago, etc.
+		/// Thus neuronChargesCurrentIdx gets incremented modulo NEURON_HISTORY every tick, and neuronChargesNextIdx is always neuronChargesCurrentIdx + 1 modulo NURON_HISTORY.
+		/// 
+		/// Laid out in memory as such that all the charges for a a ConceptMap are contiguous for a given neuronChargesCurrentIdx.
 		/// </summary>
-		float neuronCharges[TOTAL_NEURONS];
-		float neuronChargesNext[TOTAL_NEURONS];
-		int neuronTargets[TOTAL_NEURONS];
-		int neuronInputs[TOTAL_NEURONS][NEURON_INPUTS];
-		float neuronInputWeights[TOTAL_NEURONS][NEURON_INPUTS];
+		float neuronCharge[NEURON_HISTORY][TOTAL_NEURONS];
+		/// <summary>
+		/// What target neuron this neuron is trying to predict.
+		/// </summary>
+		int neuronTarget[TOTAL_NEURONS];
+		/// <summary>
+		/// The charge value of the target neuron when we have a match.
+		/// </summary>
+		float neuronTargetCharge[TOTAL_NEURONS];
+		/// <summary>
+		/// The neurons this neuron is listening to in order to predict the future state of the target.
+		/// </summary>
+		int neuronInputIdxs[TOTAL_NEURONS][NEURON_INPUTS];
+		/// <summary>
+		/// How confident we are that the input neuron is relevant to the output target's charge.
+		/// </summary>
+		float neuronInputConfidence[TOTAL_NEURONS][NEURON_INPUTS];
+		/// <summary>
+		/// The charge of the input neuron when we have a match.
+		/// </summary>
+		float neuronInputCharge[TOTAL_NEURONS][NEURON_INPUTS];
 
 		/// <summary>
 		/// growthRate * brain.overallGoodnessRateOfChange added every tick if brain.ShouldLearn. 
@@ -44,12 +71,14 @@ namespace SRS22 {
 		{
 			// Connect all neurons to random other targets, and random inputs.
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
-				neuronTargets[i] = GetRandomLinearOffsetExcept(i);
-				neuronCharges[i] = 0.0f;
-				neuronChargesNext[i] = 0.0f;
+				neuronTarget[i] = GetRandomLinearOffsetExcept(i);
+				for (int k = 0; k < NEURON_HISTORY; k++) {
+					neuronCharge[i][k] = fastRandFloat() * 0.5f;
+				}
 				for (int k = 0; k < NEURON_INPUTS; k++) {
-					neuronInputs[i][k] = GetRandomLinearOffsetExcept(k);
-					neuronInputWeights[i][k] = fastRandFloatPM();
+					neuronInputIdxs[i][k] = GetRandomLinearOffsetExcept(i);
+					neuronInputConfidence[i][k] = fastRandFloat() * 0.01f;
+					neuronInputCharge[i][k] = fastRandFloat();
 				}
 			}
 		}
@@ -57,11 +86,19 @@ namespace SRS22 {
 		~Cortex() {
 		}
 
-		inline void put(int idx, float val) { neuronCharges[idx] = val; }
-		inline float get(int idx) { return neuronCharges[idx]; }
+		inline void put(int idx, float val) { neuronCharge[idx][neuronChargesCurrentIdx] = val; }
+		inline float get(int idx) { return neuronCharge[idx][neuronChargesCurrentIdx]; }
 
-		inline void putNext(int idx, float val) { neuronChargesNext[idx] = clamp(val, 0.0f, 1.0f); }
-		inline float getNext(int idx) { return neuronChargesNext[idx]; }
+		inline void putNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] = clamp(val, 0.0f, 1.0f); }
+		inline float getNext(int idx) { return neuronCharge[idx][neuronChargesNextIdx]; }
+
+		inline void sumToNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] += val; }
+		inline void multiplyNextToNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] *= val; }
+
+		inline void tickIndicies() {
+			neuronChargesCurrentIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;
+			neuronChargesNextIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;
+		}
 
 
 		void PostCreate();

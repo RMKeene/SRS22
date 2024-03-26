@@ -12,18 +12,18 @@ namespace SRS22 {
 			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
 				float sum = 0.0f;
 				for (int k = 0; k < NEURON_INPUTS; k++) {
-					sum += neuronCharges[neuronInputs[i][k]] * neuronInputWeights[i][k];
+					sum += get(neuronInputIdxs[i][k]) * neuronInputCharge[i][k];
 				}
-				neuronChargesNext[i] += clamp(sum, 0.0f, 1.0f);
+				sumToNext(i, clamp(sum, 0.0f, 1.0f));
 				});
 		}
 		else {
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
 				float sum = 0.0f;
 				for (int k = 0; k < NEURON_INPUTS; k++) {
-					sum += neuronCharges[neuronInputs[i][k]] * neuronInputWeights[i][k];
+					sum += get(neuronInputIdxs[i][k]) * neuronInputCharge[i][k];
 				}
-				neuronChargesNext[i] += clamp(sum, 0.0f, 1.0f);
+				sumToNext(i, clamp(sum, 0.0f, 1.0f));
 			}
 		}
 
@@ -32,39 +32,41 @@ namespace SRS22 {
 	}
 
 	/// <summary>
-	/// Copys the neuron charges next state to current state.
+	/// Increments the tick indicies.
 	/// </summary>
 	void Cortex::LatchNewState(boolean doParallel) {
-		memcpy_s(neuronCharges, sizeof(neuronCharges), neuronChargesNext, sizeof(neuronChargesNext));
-
+		tickIndicies();
 	}
 
 	void Cortex::DecayNextTowardZero(boolean doParallel) {
 		if (doParallel) {
 			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
-				neuronChargesNext[i] *= neuronChargeDecayFactor;
+				multiplyNextToNext(i, neuronChargeDecayFactor);
 				});
 		}
 		else {
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
-				neuronChargesNext[i] *= neuronChargeDecayFactor;
+				multiplyNextToNext(i, neuronChargeDecayFactor);
 			}
 		}
 	}
 
 	void Cortex::LearningPhase(boolean doParallel) {
+		float learnFactor = brain.learningRate;
 		if (brain.ShouldLearn()) {
 			if (doParallel) {
 				Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
+					float C = get(i);
 					for (int k = 0; k < NEURON_INPUTS; k++) {
-						neuronInputWeights[i][k] += growthSum;
+						float delta = C - get(neuronInputIdxs[i][k]);
+						neuronInputCharge[i][k] += growthSum;
 					}
 					});
 			}
 			else {
 				for (int i = 0; i < TOTAL_NEURONS; i++) {
 					for (int k = 0; k < NEURON_INPUTS; k++) {
-						neuronInputWeights[i][k] += growthSum;
+						neuronInputCharge[i][k] += growthSum;
 					}
 				}
 			}
