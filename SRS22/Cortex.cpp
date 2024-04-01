@@ -1,8 +1,5 @@
 #include "SRS22pch.h"
 #include "Cortex.h"
-#include "FastRand.h"
-#include "Brain.h"
-#include "SRS22LogTaker.h"
 #include <ppl.h>
 
 namespace SRS22 {
@@ -10,25 +7,33 @@ namespace SRS22 {
 	void Cortex::ComputeNextState(boolean doParallel) {
 		if (doParallel) {
 			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
-				float sum = 0.0f;
-				for (int k = 0; k < NEURON_INPUTS; k++) {
-					sum += get(neuronInputIdxs[i][k]) * neuronInputCharge[i][k];
-				}
-				sumToNext(i, clamp(sum, 0.0f, 1.0f));
+				ComputeNextStateSingleNeuron(i);
 				});
 		}
 		else {
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
-				float sum = 0.0f;
-				for (int k = 0; k < NEURON_INPUTS; k++) {
-					sum += get(neuronInputIdxs[i][k]) * neuronInputCharge[i][k];
-				}
-				sumToNext(i, clamp(sum, 0.0f, 1.0f));
+				ComputeNextStateSingleNeuron(i);
 			}
 		}
 
 		if (brain.ShouldLearn())
 			growthSum += growthRate * brain.overallGoodnessRateOfChange;
+	}
+
+	void Cortex::ComputeNextStateSingleNeuron(const size_t& i)
+	{
+		// How much are you matching the inputs?
+		float sum = 0.0f;
+		for (int k = 0; k < NEURON_INPUTS; k++) {
+			sum += neuronDeltaFactor(i, k, NEURON_HISTORY_MINUS_ONE);
+		}
+
+		float excitation = sum / NEURON_MATCH_SOFTNESS;
+		sumToNext(i, excitation);
+		clampNeuronNext(i);
+
+		// So stimulate the target.
+		sumToNext(neuronTarget[i], get(i) * targetNeuronDeltaFactor(i) * NEURON_TARGET_STIMULATION_FACTOR);
 	}
 
 	/// <summary>

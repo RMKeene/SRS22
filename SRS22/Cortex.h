@@ -46,7 +46,7 @@ namespace SRS22 {
 		/// </summary>
 		float neuronInputConfidence[TOTAL_NEURONS][NEURON_INPUTS];
 		/// <summary>
-		/// The charge of the input neuron when we have a match.
+		/// The charge of the input neuron when we have a match. Thus the "expected charge".
 		/// </summary>
 		float neuronInputCharge[TOTAL_NEURONS][NEURON_INPUTS];
 
@@ -86,14 +86,45 @@ namespace SRS22 {
 		~Cortex() {
 		}
 
+		inline void clampNeuronNext(int idx) {
+			neuronCharge[idx][neuronChargesNextIdx] = clamp(neuronCharge[idx][neuronChargesNextIdx], 0.0f, 1.0f);
+		}
+
 		inline void put(int idx, float val) { neuronCharge[idx][neuronChargesCurrentIdx] = val; }
 		inline float get(int idx) { return neuronCharge[idx][neuronChargesCurrentIdx]; }
 
 		inline void putNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] = clamp(val, 0.0f, 1.0f); }
 		inline float getNext(int idx) { return neuronCharge[idx][neuronChargesNextIdx]; }
 
+		/// <summary>
+		/// agoTicks must be 1 >= agoTicks < NEURON_HISTORY, and it is asserted.
+		/// </summary>
+		/// <param name="idx"></param>
+		/// <param name="agoTicks"></param>
+		/// <returns></returns>
+		inline float getAgo(int idx, int agoTicks) { 
+			assert(agoTicks >= 1 && agoTicks < NEURON_HISTORY);
+			return neuronCharge[idx][(neuronChargesCurrentIdx - agoTicks) % NEURON_HISTORY]; 
+		}
+
 		inline void sumToNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] += val; }
 		inline void multiplyNextToNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] *= val; }
+
+		/// <summary>
+		/// The "delta factor" is how far off the pattern neuron charge is from the expected charge.  If it is the same then the factor is 1.0, and if
+		/// completely different then 0.0.
+		/// Confidence * (1 - abs(expected - actual))
+		inline float neuronDeltaFactor(int cortexIdx, int inputIdx, int agoTicks) {
+			return neuronInputConfidence[cortexIdx][inputIdx] * (1.0f - fabs(neuronInputCharge[cortexIdx][inputIdx] - neuronCharge[neuronInputIdxs[cortexIdx][inputIdx]][neuronChargesCurrentIdx]));
+		}
+
+		/// <summary>
+		/// The "delta factor" is how far off the target neuron charge is from the desired charge.  If it is the same then the factor is 1.0, and if
+		/// completely different then 0.0.
+		/// 1 - abs(desired - actual)
+		inline float targetNeuronDeltaFactor(int cortexIdx) {
+			return 1.0f - fabs(neuronTargetCharge[cortexIdx] - neuronCharge[neuronTarget[cortexIdx]][neuronChargesCurrentIdx]);
+		}
 
 		inline void tickIndicies() {
 			neuronChargesCurrentIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;
@@ -104,6 +135,8 @@ namespace SRS22 {
 		void PostCreate();
 
 		void ComputeNextState(boolean doParallel) override;
+
+		void ComputeNextStateSingleNeuron(const size_t& i);
 
 		void LatchNewState(boolean doParallel) override;
 		void DecayNextTowardZero(boolean doParallel);
