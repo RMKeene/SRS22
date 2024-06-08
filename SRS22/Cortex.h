@@ -111,7 +111,7 @@ namespace SRS22 {
 		inline void multiplyNextToNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] *= val; }
 
 		/// <summary>
-		/// The "delta factor" is how far off the pattern neuron charge is from the expected charge.  If it is the same then the factor is 1.0, and if
+		/// The "delta factor" is how far off the pattern  neuron charge is from the expected charge.  If it is the same then the factor is 1.0, and if
 		/// completely different then 0.0.
 		/// Confidence * (1 - abs(expected - actual))
 		inline float neuronDeltaFactor(int cortexIdx, int inputIdx, int agoTicks) {
