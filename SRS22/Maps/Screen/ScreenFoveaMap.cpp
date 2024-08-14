@@ -5,8 +5,8 @@
 #include "../../HardwareIO/ScreenAttnSpotIO.h"
 
 namespace SRS22 {
-	ScreenFoveaMap::ScreenFoveaMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENFOVEA_MAP, "ScreenFoveaMap",
+	ScreenFoveaMap::ScreenFoveaMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::SCREENFOVEA_MAP, "ScreenFoveaMap", computeNextStateEnabled,
 			3, ScreenFoveaMap_Height, ScreenFoveaMap_Width, 0.0f,
 			"Raw pixel map of center of screen fovea in color.") {
 	}

@@ -22,7 +22,7 @@ namespace SRS22 {
 		///     TextOutMap_Height,
 		/// 	"The \"Keyboard\" out the text window.")
 		/// </summary>
-		TextOutMap(Brain* br);
+		TextOutMap(Brain* br, bool computeNextStateEnabled = true);
 		~TextOutMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

@@ -27,6 +27,14 @@ namespace SRS22 {
 		static void CVGetSubRectRGB(cv::Mat& inputMatRGB, cv::Mat& outM, const SRS22::Rect& region);
 
 		/// <summary>
+		/// Clamp all values to min and max inclusive so min <= value <= max.
+		/// </summary>
+		/// <param name="m"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		static void ClampMatrix(cv::Mat& m, float min, float max);
+
+		/// <summary>
 		/// A straight conversion copy from 3UC8 to 3 planes F32.
 		/// If inputMatRGB is empty then does nothing.
 		/// </summary>

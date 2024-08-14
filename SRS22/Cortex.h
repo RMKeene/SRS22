@@ -4,6 +4,13 @@
 #include "Brain.h"
 #include "Tickable.h"
 #include "SRS22Constants.h"
+#include "SRSMath.h"
+
+#define neuronChargeValue(idx) neuronCharge[neuronChargesCurrentIdx][(idx)]
+#define neuronChargeValueNext(idx) neuronCharge[neuronChargesNextIdx][(idx)]
+
+// Turns on neuron index, range, and NaN validation.
+//#define VALIDATE_NEURONS
 
 namespace SRS22 {
 
@@ -72,8 +79,10 @@ namespace SRS22 {
 			// Connect all neurons to random other targets, and random inputs.
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
 				neuronTarget[i] = GetRandomLinearOffsetExcept(i);
-				for (int k = 0; k < NEURON_HISTORY; k++) {
-					neuronCharge[i][k] = fastRandFloat() * 0.5f;
+				neuronTargetCharge[i] = fastRandFloat() * 0.5f;
+				for (int h = 0; h < NEURON_HISTORY; h++) {
+					neuronCharge[h][i] = fastRandFloat() * 0.5f;
+					checkChargeRange(i, neuronCharge[h][i]);
 				}
 				for (int k = 0; k < NEURON_INPUTS; k++) {
 					neuronInputIdxs[i][k] = GetRandomLinearOffsetExcept(i);
@@ -86,15 +95,96 @@ namespace SRS22 {
 		~Cortex() {
 		}
 
-		inline void clampNeuronNext(int idx) {
-			neuronCharge[idx][neuronChargesNextIdx] = clamp(neuronCharge[idx][neuronChargesNextIdx], 0.0f, 1.0f);
+		inline void checkNeuronIdx(const int idx) {
+#ifdef VALIDATE_NEURONS
+			if (idx < 0 || idx >= TOTAL_NEURONS)
+				SRS22DebugBreak(idx, 0.0f);
+#endif
 		}
 
-		inline void put(int idx, float val) { neuronCharge[idx][neuronChargesCurrentIdx] = val; }
-		inline float get(int idx) { return neuronCharge[idx][neuronChargesCurrentIdx]; }
+		inline void checkNan(const int idx, const float val) {
+#ifdef VALIDATE_NEURONS
+			if (!isfinite((val)))
+				SRS22DebugBreak(idx, val);
+#endif
+		}
 
-		inline void putNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] = clamp(val, 0.0f, 1.0f); }
-		inline float getNext(int idx) { return neuronCharge[idx][neuronChargesNextIdx]; }
+		inline void checkNanByIdx(const int idx) {
+#ifdef VALIDATE_NEURONS
+			checkNan(idx, neuronChargeValue(idx));
+#endif
+		}
+
+		inline void checkNanByIdxNext(const int idx) {
+#ifdef VALIDATE_NEURONS
+			checkNan(idx, neuronChargeValueNext(idx));
+#endif
+		}
+
+		inline void checkChargeRange(const int idx, const float val) {
+#ifdef VALIDATE_NEURONS
+			checkNan(idx, val);
+			if (val < -0.1f || val > 1.1f)
+				SRS22DebugBreak(idx, val);
+#endif
+		}
+
+		inline void checkChargeRangeLiberal(const int idx, const float val) {
+#ifdef VALIDATE_NEURONS
+			checkNan(idx, val);
+			if (val < -10.0f || val > 10.5f)
+				SRS22DebugBreak(idx, val);
+#endif
+		}
+
+		inline void checkNeuronCharge(const int idx) {
+#ifdef VALIDATE_NEURONS
+			checkNeuronIdx(idx);
+			checkChargeRangeLiberal(idx, neuronChargeValue(idx));
+#endif
+		}
+
+		void doNanScan() {
+			for (int i = 0; i < TOTAL_NEURONS; i++) {
+				for (int h = 0; h < NEURON_HISTORY; h++) {
+					if (isnan(neuronCharge[h][i])) {
+						__debugbreak();
+					}
+					if (neuronCharge[h][i] < -0.1f || neuronCharge[h][i] > 1.1f) {
+						__debugbreak();
+					}
+				}
+			}
+		}
+
+		inline void clampNeuronNext(int idx) {
+			neuronChargeValue(idx) = clamp<float>(neuronChargeValueNext(idx), 0.0f, 1.0f);
+		}
+
+		inline void put(int idx, float val) { 
+			checkNeuronCharge(idx);
+			checkNan(idx, val);
+			neuronChargeValue(idx) = val;
+			checkNeuronCharge(idx);
+
+		}
+		inline float get(int idx) {
+			checkNeuronIdx(idx);
+			checkNan(idx, neuronChargeValue(idx));
+			return neuronChargeValue(idx);
+		}
+
+		inline void putNext(int idx, float val) {
+			checkNan(idx, val);
+			checkNeuronIdx(idx);
+			neuronChargeValueNext(idx) = clamp(val, 0.0f, 1.0f);
+			checkNanByIdxNext(idx);
+		}
+		inline float getNext(int idx) { 
+			checkNeuronIdx(idx);
+			checkNanByIdxNext(idx);
+			return neuronCharge[neuronChargesNextIdx][idx]; 
+		}
 
 		/// <summary>
 		/// agoTicks must be 1 >= agoTicks < NEURON_HISTORY, and it is asserted.
@@ -102,20 +192,33 @@ namespace SRS22 {
 		/// <param name="idx"></param>
 		/// <param name="agoTicks"></param>
 		/// <returns></returns>
-		inline float getAgo(int idx, int agoTicks) { 
+		inline float getAgo(int idx, int agoTicks) {
+			checkNeuronIdx(idx);
 			assert(agoTicks >= 1 && agoTicks < NEURON_HISTORY);
-			return neuronCharge[idx][(neuronChargesCurrentIdx - agoTicks) % NEURON_HISTORY]; 
+			checkNan(idx, neuronCharge[(neuronChargesCurrentIdx - agoTicks) % NEURON_HISTORY][idx]);
+			return neuronCharge[(neuronChargesCurrentIdx - agoTicks) % NEURON_HISTORY][idx];
 		}
 
-		inline void sumToNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] += val; }
-		inline void multiplyNextToNext(int idx, float val) { neuronCharge[idx][neuronChargesNextIdx] *= val; }
+		inline void sumToNext(int idx, float val) { 
+			checkNeuronCharge(idx);
+			neuronCharge[neuronChargesNextIdx][idx] += val;
+			checkNeuronCharge(idx);
+		}
+		inline void multiplyNextToNext(int idx, float val) { 
+			checkNan(idx, val);
+			neuronCharge[neuronChargesNextIdx][idx] *= val; 
+			checkNan(idx, neuronCharge[neuronChargesNextIdx][idx]);
+		}
 
 		/// <summary>
 		/// The "delta factor" is how far off the pattern  neuron charge is from the expected charge.  If it is the same then the factor is 1.0, and if
 		/// completely different then 0.0.
 		/// Confidence * (1 - abs(expected - actual))
 		inline float neuronDeltaFactor(int cortexIdx, int inputIdx, int agoTicks) {
-			return neuronInputConfidence[cortexIdx][inputIdx] * (1.0f - fabs(neuronInputCharge[cortexIdx][inputIdx] - neuronCharge[neuronInputIdxs[cortexIdx][inputIdx]][neuronChargesCurrentIdx]));
+			checkNeuronIdx(cortexIdx);
+			float f = neuronInputConfidence[cortexIdx][inputIdx] * (1.0f - fabs(neuronInputCharge[cortexIdx][inputIdx] - neuronCharge[neuronChargesCurrentIdx][neuronInputIdxs[cortexIdx][inputIdx]]));
+			checkNan(cortexIdx, f);
+			return f;
 		}
 
 		/// <summary>
@@ -123,7 +226,14 @@ namespace SRS22 {
 		/// completely different then 0.0.
 		/// 1 - abs(desired - actual)
 		inline float targetNeuronDeltaFactor(int cortexIdx) {
-			return 1.0f - fabs(neuronTargetCharge[cortexIdx] - neuronCharge[neuronTarget[cortexIdx]][neuronChargesCurrentIdx]);
+			checkNeuronCharge(cortexIdx);
+			checkNeuronIdx(neuronTarget[cortexIdx]);
+			checkChargeRangeLiberal((neuronTarget[cortexIdx]), neuronChargeValue(neuronTarget[cortexIdx]));
+			checkNeuronCharge(neuronTarget[cortexIdx]);
+			checkChargeRangeLiberal(cortexIdx, neuronTargetCharge[cortexIdx]);
+			float f = 1.0f - fabs(neuronTargetCharge[cortexIdx] - neuronCharge[neuronChargesCurrentIdx][neuronTarget[cortexIdx]]);
+			checkNeuronCharge(cortexIdx);
+			return f;
 		}
 
 		inline void tickIndicies() {
@@ -160,6 +270,5 @@ namespace SRS22 {
 		/// </summary>
 		/// <returns></returns>
 		bool ShouldAddNewPattern();
-
 	};
 }

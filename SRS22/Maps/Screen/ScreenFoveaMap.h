@@ -16,7 +16,7 @@ namespace SRS22 {
 		/// ConceptMap("ScreenFoveaMap", ctrip, location, 3, ScreenFoveaMap_Height, ScreenFoveaMap_Width,
 		///     "Raw pixel map of center of screen fovea in color.") {
 		/// </summary>
-		ScreenFoveaMap(Brain* br);
+		ScreenFoveaMap(Brain* br, bool computeNextStateEnabled = true);
 		~ScreenFoveaMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

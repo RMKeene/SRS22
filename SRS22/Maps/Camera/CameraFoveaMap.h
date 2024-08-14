@@ -19,7 +19,7 @@ namespace SRS22 {
 		/// 	1, CameraFoveaMap_Height, CameraFoveaMap_Width,
 		/// 	"Raw pixel map of center of camera fovea in color.")
 		/// </summary>
-		CameraFoveaMap(Brain* br);
+		CameraFoveaMap(Brain* br, bool computeNextStateEnabled = true);
 		~CameraFoveaMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

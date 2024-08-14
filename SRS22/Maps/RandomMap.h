@@ -11,7 +11,7 @@ namespace SRS22 {
 	class RandomMap : public ConceptMap
 	{
 	public:
-		RandomMap(Brain* br);
+		RandomMap(Brain* br, bool computeNextStateEnabled = true);
 		~RandomMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

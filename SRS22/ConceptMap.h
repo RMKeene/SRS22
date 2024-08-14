@@ -62,6 +62,8 @@ namespace SRS22 {
 		/// </summary>
 		float decayFactor = 1.0f;
 
+		bool computeNextStateEnabled = true;
+
 	public:
 
 		std::shared_ptr<GoodnessFunction> goodnessFunc;
@@ -82,11 +84,18 @@ namespace SRS22 {
 		/// <param name="decayFactor">0.0 means instant decay to zero before every tick. 1.0 is infinite sustain.
 		/// Done with multiplicative decay. In LatchNewState does <code>nextM = M * decayFactor; nextM = 0.0f;</code></param>
 		/// <param name="MapDescription"></param>
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int cols, float decayFactor, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int rows, int cols, float decayFactor, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, int depth, int rows, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEabled, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEabled, int rows, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEabled, int depth, int rows, int cols, float decayFactor, std::string MapDescription);
 
 		~ConceptMap();
+
+		bool isComputeNextStateEnabled() { return computeNextStateEnabled; }
+		/// <summary>
+		/// Turns on or off ComputeNextState and LatchNewState processing.
+		/// </summary>
+		/// <param name="e"></param>
+		void setComputeNextStateEnabled(bool e) { computeNextStateEnabled = e; }
 
 		void put(int idx, float val);
 		float get(int idx);

@@ -45,7 +45,8 @@ namespace SRS22 {
 		int ticksPerSecondLatest = 1;
 
 		/// <summary>
-		/// If -1 the free run. Else step this many times, usually 1, down to 0 then stop.
+		/// 0 is stopped, -1 is free run, 1 or more is steps to do.
+		/// If -1 then free run. Else step this many times, usually 1, down to 0 then stop.
 		/// Assumes Tick() is getting called frequently.
 		/// </summary>
 		int SingleStepCount = 0;
@@ -133,6 +134,14 @@ namespace SRS22 {
 		/// Tell the brain it just did something bad.From button on the UI
 		/// </summary>
 		void BadJob() { overallGoodness -= 0.5f; }
+
+		/// <summary>
+		/// Find a ConceptMap by the index in the Cortex.
+		/// Assumes you mean Brain[0].cortex.
+		/// </summary>
+		/// <param name="idx"></param>
+		/// <returns></returns>
+		static string FindMapByCortexIdx(int idx);
 
 
 	private:

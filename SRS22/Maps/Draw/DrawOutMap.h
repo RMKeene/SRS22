@@ -30,7 +30,7 @@ namespace SRS22 {
 		/// 	DrawOutMap_Width,
 		/// 	"Whiteboard pen out to screen.")
 		/// </summary>
-		DrawOutMap(Brain* br);
+		DrawOutMap(Brain* br, bool computeNextStateEnabled = true);
 		~DrawOutMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

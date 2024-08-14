@@ -6,8 +6,8 @@
 #include "../../OpenCVHelpers.h"
 
 namespace SRS22 {
-	ScreenMotionXYMap::ScreenMotionXYMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENMOTION_MAP, "ScreenMotionXYMap",
+	ScreenMotionXYMap::ScreenMotionXYMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::SCREENMOTION_MAP, "ScreenMotionXYMap", computeNextStateEnabled,
 			ScreenMotionXYMap_Width, 0.0f,
 			"The XY location of the maximum frame to frame difference.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;

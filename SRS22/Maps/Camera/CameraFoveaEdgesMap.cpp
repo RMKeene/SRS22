@@ -7,8 +7,8 @@
 #include "../../Brain.h"
 
 namespace SRS22 {
-	CameraFoveaEdgesMap::CameraFoveaEdgesMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAEDGE_MAP, "CameraEdgesMap",
+	CameraFoveaEdgesMap::CameraFoveaEdgesMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAEDGE_MAP, "CameraEdgesMap", computeNextStateEnabled,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera edges in fovea.") {
 	}

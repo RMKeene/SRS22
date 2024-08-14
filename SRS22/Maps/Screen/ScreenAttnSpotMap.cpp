@@ -6,8 +6,8 @@
 #include "../../Brain.h"
 
 namespace SRS22 {
-	ScreenAttnSpotMap::ScreenAttnSpotMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotMap",
+	ScreenAttnSpotMap::ScreenAttnSpotMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotMap", computeNextStateEnabled,
 			ScreenAttnSpotMap_Width, 0.0f,
 			"Raw pixel map of center of screen fovea in color.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;

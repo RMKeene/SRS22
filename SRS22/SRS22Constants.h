@@ -14,7 +14,7 @@
 
 /// <summary>
 /// In order to avoid memory copies and maximize memory locality, an keep the passes throught the entire cortex to a minimum,
-/// we kee the charge history (currnet charge, next charge, charge two ticks ag etc.) in a circular queue.
+/// we kee the charge history (current charge, next charge, charge two ticks ago etc.) in a circular queue.
 /// This is how large the history is. Must be at a minimum 2, boing current charge and next charge.
 /// </summary>
 #define NEURON_HISTORY 3

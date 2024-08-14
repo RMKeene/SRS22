@@ -2,6 +2,7 @@
 #include "Brain.h"
 #include "Cortex.h"
 #include "ConceptMap.h"
+#include "GlobalWorld.h"
 #include <ppl.h>
 #include "Maps/Screen/ScreenFoveaMap.h"
 #include "Maps/Screen/ScreenAttnSpotMap.h"
@@ -35,7 +36,7 @@ namespace SRS22 {
 		overallGoodnessRateOfChange = 0;
 		tickCount = 0;
 		tickCountRecent = 0;
-		SingleStepCount = -1;
+		SingleStepCount = 0;
 		cortex = new Cortex(*this, 0.02f);
 	}
 
@@ -69,12 +70,16 @@ namespace SRS22 {
 
 		if (doParallel) {
 			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-				n.second->ComputeNextState(false);
+				if (n.second->isComputeNextStateEnabled()) {
+					n.second->ComputeNextState(false);
+				}
 				});
 		}
 		else {
 			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
-				n.second->ComputeNextState(false);
+				if (n.second->isComputeNextStateEnabled()) {
+					n.second->ComputeNextState(false);
+				}
 			}
 		}
 
@@ -269,5 +274,15 @@ namespace SRS22 {
 			return m->second;
 		}
 		return std::nullopt;
+	}
+
+	string Brain::FindMapByCortexIdx(int idx) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.brains[0];
+		for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> u : b->conceptMaps) {
+			if (idx >= u.second->cortexStartIndex && idx < u.second->cortexStartIndex + u.second->totalSize) {
+				return u.second->MapName;
+			}
+		}
+		return std::format("{} index not in any map.", idx);
 	}
 }

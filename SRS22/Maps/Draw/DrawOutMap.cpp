@@ -4,8 +4,8 @@
 #include "../../HardwareIO/WhiteboardOutIO.h"
 
 namespace SRS22 {
-	DrawOutMap::DrawOutMap(Brain* br) :
-		ConceptMap(br, MapUidE::DRAWOUT_MAP, "DrawOutMap",
+	DrawOutMap::DrawOutMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::DRAWOUT_MAP, "DrawOutMap", computeNextStateEnabled,
 			DrawOutMap_Width, 0.0f,
 			"Whiteboard pen out to screen.") {
 	}

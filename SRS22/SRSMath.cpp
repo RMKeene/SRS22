@@ -1,7 +1,21 @@
 #include "SRSMath.h"
 #include "HardwareRaw/WaveInConstants.h"
+#include "Brain.h"
 
 namespace SRS22 {
+
+	void SRS22DebugBreak(int i, float f)
+	{
+		std::string conceptMap = Brain::FindMapByCortexIdx(i);
+		__debugbreak();
+	}
+
+	void SRS22DebugBreak(int i)
+	{
+		std::string conceptMap = Brain::FindMapByCortexIdx(i);
+		__debugbreak();
+	}
+
 	float SRSFastSqrt(float x)
 	{
 		const float xhalf = 0.5f * x;

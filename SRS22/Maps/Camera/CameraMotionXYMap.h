@@ -20,7 +20,7 @@ namespace SRS22 {
 		/// 	CameraMotionXYMap_Width,
 		/// 	"The XY location of the maximum frame to frame difference.")
 		/// </summary>
-		CameraMotionXYMap(Brain* br);
+		CameraMotionXYMap(Brain* br, bool computeNextStateEnabled = true);
 		~CameraMotionXYMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

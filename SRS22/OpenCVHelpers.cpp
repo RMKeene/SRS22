@@ -194,6 +194,21 @@ namespace SRS22 {
 		}
 	}
 
+	void OpenCVHelpers::ClampMatrix(cv::Mat& m, const float min, const float max) {
+		assert(m.type() == CV_32FC1);
+		assert(m.dims == 3);
+
+		for(int z = 0; z < m.size[0]; z++) {
+			for (int y = 0; y < m.size[1]; y++) {
+				for (int x = 0; x < m.size[2]; x++) {
+					float& v = m.at<float>(z, y, x);
+					if (v < min) v = min;
+					if (v > max) v = max;
+				}
+			}
+		}
+	}
+
 	void OpenCVHelpers::CVCopyRGBToMat(cv::Mat& inputMatRGB, cv::Mat& outM) {
 		if (inputMatRGB.empty())
 			return;

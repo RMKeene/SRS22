@@ -5,8 +5,8 @@
 #include "../../SRS22LogTaker.h"
 
 namespace SRS22 {
-	PhonemeMap::PhonemeMap(Brain* br) :
-		ConceptMap(br, MapUidE::PHONEME_MAP, "PhonemeMap",
+	PhonemeMap::PhonemeMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::PHONEME_MAP, "PhonemeMap", computeNextStateEnabled,
 			PhonemeMap_Width, 0.98f,
 			"The \"Voice\" out the audio system.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;

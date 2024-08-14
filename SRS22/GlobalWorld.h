@@ -19,6 +19,9 @@ namespace SRS22 {
 
 		SRS22LogTaker* logTaker = nullptr;
 
+		/// <summary>
+		/// The list of brains in the universe. For now only 1 Brain but someday...
+		/// </summary>
 		std::array <BrainH, 1> brains;
 
 		GlobalWorld() {

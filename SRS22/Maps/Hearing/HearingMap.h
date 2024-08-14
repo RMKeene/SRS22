@@ -21,7 +21,7 @@ namespace SRS22 {
 		/// 	HearingMap_Width,
 		/// 	"The \"Hearing\" input from the audio system.")
 		/// </summary>
-		HearingMap(Brain* br);
+		HearingMap(Brain* br, bool computeNextStateEnabled = true);
 		~HearingMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

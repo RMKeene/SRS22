@@ -3,10 +3,11 @@
 #include "../../HardwareIO/IOCommon.h"
 #include "../../HardwareIO/ScreenInputIO.h"
 #include "../../HardwareIO/ScreenAttnSpotIO.h"
+#include "../../SRSMath.h"
 
 namespace SRS22 {
-	ScreenDifferenceMap::ScreenDifferenceMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENDIFFERENCE_MAP, "ScreenDifferenceMap",
+	ScreenDifferenceMap::ScreenDifferenceMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::SCREENDIFFERENCE_MAP, "ScreenDifferenceMap", computeNextStateEnabled,
 			3, ScreenInputIO::AbsDiffHeight, ScreenInputIO::AbsDiffWidth, 0.0f,
 			"A low resolution version of the screen view processed for frame to frame motion differences.") {
 	}

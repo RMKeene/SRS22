@@ -17,7 +17,7 @@ namespace SRS22 {
 		/// 	3, ScreenInIO::AbsDiffHeight, ScreenInIO::AbsDiffWidth,
 		///		"A lower resolution version of the screen view processed for frame to frame motion differences.")
 		/// </summary>
-		ScreenDifferenceMap(Brain* br);
+		ScreenDifferenceMap(Brain* br, bool computeNextStateEnabled = true);
 		~ScreenDifferenceMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

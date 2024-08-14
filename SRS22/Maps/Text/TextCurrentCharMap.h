@@ -21,7 +21,7 @@ namespace SRS22 {
 		///     TextCurrentCharMap_Height,
 		/// 	"Last entered character ASCII Code")
 		/// </summary>
-		TextCurrentCharMap(Brain* br);
+		TextCurrentCharMap(Brain* br, bool computeNextStateEnabled = true);
 		~TextCurrentCharMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

@@ -6,7 +6,7 @@ namespace SRS22 {
 	class CameraFoveaEdgesMap : public ConceptMap
 	{
 	public:
-		CameraFoveaEdgesMap(Brain* br);
+		CameraFoveaEdgesMap(Brain* br, bool computeNextStateEnabled = true);
 		~CameraFoveaEdgesMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

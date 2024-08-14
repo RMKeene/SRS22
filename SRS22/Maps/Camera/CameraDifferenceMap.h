@@ -17,7 +17,7 @@ namespace SRS22 {
 		/// 	3, CameraInIO::AbsDiffHeight, CameraInIO::AbsDiffWidth,
 		///		"A lower resolution version of the camera view processed for frame to frame motion differences.")
 		/// </summary>
-		CameraDifferenceMap(Brain* br);
+		CameraDifferenceMap(Brain* br, bool computeNextStateEnabled = true);
 		~CameraDifferenceMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

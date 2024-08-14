@@ -4,8 +4,8 @@
 #include "../../Brain.h"
 
 namespace SRS22 {
-	TextCurrentCharMap::TextCurrentCharMap(Brain* br) :
-		ConceptMap(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap",
+	TextCurrentCharMap::TextCurrentCharMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap", computeNextStateEnabled,
 			TextCurrentCharMap_Width,
 			TextCurrentCharMap_Height, 0.98f,
 			"Last entered character ASCII Code.") {

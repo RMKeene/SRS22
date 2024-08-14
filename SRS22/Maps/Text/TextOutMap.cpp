@@ -4,8 +4,8 @@
 #include "../../Brain.h"
 
 namespace SRS22 {
-	TextOutMap::TextOutMap(Brain* br) :
-		ConceptMap(br, MapUidE::TEXTOUT_MAP, "TextOutMap",
+	TextOutMap::TextOutMap(Brain* br, bool computeNextStateEnabled) :
+		ConceptMap(br, MapUidE::TEXTOUT_MAP, "TextOutMap", computeNextStateEnabled,
 			TextOutMap_Width,
 			TextOutMap_Height, 0.98f,
 			"The \"Keyboard\" out the text window.") {

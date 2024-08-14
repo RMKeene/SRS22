@@ -8,9 +8,10 @@
 #include <opencv2/core/hal/interface.h>
 
 namespace SRS22 {
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int cols, float decayFactor, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEnabled, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
+		computeNextStateEnabled(computeNextStateEnabled),
 		UID(UID),
 		cols(cols),
 		rows(1),
@@ -25,9 +26,10 @@ namespace SRS22 {
 
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int rows, int cols, float decayFactor, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEnabled, int rows, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
+		computeNextStateEnabled(computeNextStateEnabled),
 		UID(UID),
 		cols(cols),
 		rows(rows),
@@ -41,9 +43,10 @@ namespace SRS22 {
 		dims[2] = cols;
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, int depth, int rows, int cols, float decayFactor, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEnabled, int depth, int rows, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
+		computeNextStateEnabled(computeNextStateEnabled),
 		UID(UID),
 		cols(cols),
 		rows(rows),
@@ -77,6 +80,7 @@ namespace SRS22 {
 	/// Does nothing.
 	/// </summary>
 	void ConceptMap::LatchNewState(boolean doParallel) {
+		// The cortex does the copy of nextState to state.
 		// Nothing to do here.
 	}
 

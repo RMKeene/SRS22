@@ -30,7 +30,7 @@ namespace SRS22 {
 		/// 	DrawInMap_Width,
 		/// 	"Whiteboard pen out to screen.")
 		/// </summary>
-		DrawInMap(Brain* br);
+		DrawInMap(Brain* br, bool computeNextStateEnabled = true);
 		~DrawInMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;
