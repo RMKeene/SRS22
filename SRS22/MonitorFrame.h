@@ -29,6 +29,8 @@ namespace SRS22 {
 		void OnResetLayoutButton(wxCommandEvent& event) override;
 		void OnGoodClicked(wxCommandEvent& event) override;
 		void OnBadClicked(wxCommandEvent& event) override;
+		void DoLoad(wxCommandEvent& event) override;
+		void DoStore(wxCommandEvent& event) override;
 		void OnAudioInDeviceChoiceChanged(wxCommandEvent& event) override;
 		void OnAudioVolumeIn(wxScrollEvent& event) override;
 		void OnAudioOutDeviceChoiceChanged(wxCommandEvent& event) override;
@@ -56,5 +58,7 @@ namespace SRS22 {
 		long long lastMapMonitorRefreshTime = 0;
 
 		bool hasSetupVideoInDroplist = false;
+
+		std::string brainFileName;
 	};
 }

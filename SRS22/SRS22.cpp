@@ -4,6 +4,7 @@
 #include "SRS22.h"
 #include "ini.h"
 #include "Settings.h"
+#include <ppl.h>
 
 namespace SRS22 {
 
@@ -19,6 +20,12 @@ namespace SRS22 {
 		srs22AppGlobal = this;
 		SRS22LogTaker::SetLogTaker(this);
 		Settings::globalSettings.Load();
+
+		// Set max CPUs to 2 less than the number of cores.
+		unsigned int numCores = std::thread::hardware_concurrency();
+		unsigned int maxThreads = (numCores > 2) ? (numCores - 2) : 1; // Ensure at least 1 thread
+		Concurrency::SchedulerPolicy policy(1, Concurrency::MaxConcurrency, maxThreads);
+		Concurrency::CurrentScheduler::Create(policy);
 	}
 
 	SRS22App::~SRS22App() {

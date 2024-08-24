@@ -8,6 +8,8 @@
 namespace SRS22 {
 	MonitorFrame::MonitorFrame(wxWindow* parent) :
 		MonitorFrameGen(parent) {
+
+		brainFileName = "brain.srs";
 		whiteboardFrame = new WhiteboardFrame(this);
 		whiteboardFrame->Show(true);
 		topTextFrame = new TopTextFrame(this);
@@ -193,6 +195,16 @@ namespace SRS22 {
 	void MonitorFrame::OnBadClicked(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 		b->BadJob();
+	}
+
+	void MonitorFrame::DoLoad(wxCommandEvent& event) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		b->Load(brainFileName);
+	}
+
+	void MonitorFrame::DoStore(wxCommandEvent& event) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		b->Store(brainFileName);
 	}
 
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {

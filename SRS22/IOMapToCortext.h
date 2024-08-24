@@ -26,12 +26,12 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="size">Size in Neurons.</param>
-		/// <returns>The start of the reserved block.</returns>
-		int addMapping(std::string name, int size) {
+		/// <returns>The start of the reserved block and the end + 1 (start of next reserve block).</returns>
+		std::pair<int, int> addMapping(std::string name, int size) {
 			int start = currentOffset;
 			currentOffset += size;
 			map[name] = std::make_pair(start, size);
-			return start;
+			return map[name];
 		}
 
 	private:

@@ -42,6 +42,7 @@ namespace SRS22 {
 		int neuronInputIdxs[TOTAL_NEURONS][NEURON_INPUTS];
 		/// <summary>
 		/// How confident we are that the input neuron is relevant to the output target's charge.
+		/// Equivalent to the "synapse weight" in a neural network.
 		/// </summary>
 		float neuronInputConfidence[TOTAL_NEURONS][NEURON_INPUTS];
 		/// <summary>

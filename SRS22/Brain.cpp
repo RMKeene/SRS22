@@ -1,4 +1,5 @@
 #include "SRS22pch.h"
+#include <fstream>
 #include "Brain.h"
 #include "Cortex.h"
 #include "ConceptMap.h"
@@ -138,11 +139,55 @@ namespace SRS22 {
 	}
 
 	pair<bool, string> Brain::Load(string fileName) {
-		return pair<bool, string>(false, "Not yet implemented");
+		std::ifstream file(fileName, std::ios::binary);
+		if (!file.is_open()) {
+			return { false, "File not found." };
+		}
+		int totalNeurons;
+		int neuronHistory;
+		float chargePrecision;
+		int neuronInputs;
+		file.read(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
+		file.read(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
+		file.read(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
+		file.read(reinterpret_cast<char*>(&neuronInputs), sizeof(int));
+		if (totalNeurons != TOTAL_NEURONS || neuronHistory != NEURON_HISTORY || chargePrecision != sizeof(float) || neuronInputs != NEURON_INPUTS) {
+			// TODO - Make it work for larger configuration.
+			// TODO - Make it work for smaller configuration.
+			return { false, "File does not match current Brain configuration." };
+		}
+		file.read(reinterpret_cast<char*>(cortex->neuronCharge), sizeof(cortex->neuronCharge));
+		file.read(reinterpret_cast<char*>(cortex->neuronInputIdxs), sizeof(cortex->neuronInputIdxs));
+		file.read(reinterpret_cast<char*>(cortex->neuronInputConfidence), sizeof(cortex->neuronInputConfidence));
+		file.read(reinterpret_cast<char*>(cortex->neuronInputCharge), sizeof(cortex->neuronInputCharge));
+
+		file.close();
+		return { true, "" };
 	}
 
 	bool Brain::Store(string fileName) {
-		return false;
+		std::ofstream file(fileName, std::ios::binary);
+		if (!file.is_open()) {
+			return false;
+		}
+		// Store the cortex neuronCharges array in binary
+		int totalNeurons = TOTAL_NEURONS;
+		int neuronHistory = NEURON_HISTORY;
+		int neuronInputs = NEURON_INPUTS;
+		float chargePrecision = sizeof(float);
+
+		file.write(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
+		file.write(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
+		file.write(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
+		file.write(reinterpret_cast<char*>(&neuronInputs), sizeof(int));
+
+		file.write(reinterpret_cast<char*>(cortex->neuronCharge), sizeof(cortex->neuronCharge));
+		file.write(reinterpret_cast<char*>(cortex->neuronInputIdxs), sizeof(cortex->neuronInputIdxs));
+		file.write(reinterpret_cast<char*>(cortex->neuronInputConfidence), sizeof(cortex->neuronInputConfidence));
+		file.write(reinterpret_cast<char*>(cortex->neuronInputCharge), sizeof(cortex->neuronInputCharge));
+
+		file.close();
+		return true;
 	}
 
 	void Brain::Init() {
@@ -228,11 +273,12 @@ namespace SRS22 {
 	void Brain::AddMap(shared_ptr<ConceptMap> m) {
 		if (conceptMaps.find(m->UID) != conceptMaps.end())
 			throw std::exception((std::string("Duplicate ConceptMap UID in Brain::AddMap: ") + m->MapName).c_str());
-		int cortexOffset = ioMapToContext.addMapping(m->MapName, m->totalSize);
-		m->cortexStartIndex = cortexOffset;
+		std::pair<int, int> cortexOffsets = ioMapToContext.addMapping(m->MapName, m->totalSize);
+		m->cortexStartIndex = cortexOffsets.first;
 		m->setupCVMatMirrors();
 		conceptMaps[m->UID] = m;
 		conceptMapsByName[m->MapName] = m;
+		printf("Added ConceptMap %s at %d to %d\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
 	}
 
 	void Brain::DoNStep(int n) {

@@ -164,6 +164,10 @@ namespace SRS22 {
 		/// <param name="max"></param>
 		bool FindMaxValue(const float minV, OUT int& col, OUT int& row, OUT int& depth, OUT float& v);
 
+		/// <summary>
+		/// Create cv::Mat M and nextM such that they point at the memory from the Cortex.neuronCharges array
+		/// and do not free the memory when destroyed. Thus they are "header only" cv::Mats.
+		/// </summary>
 		void setupCVMatMirrors();
 
 		/// <summary>
