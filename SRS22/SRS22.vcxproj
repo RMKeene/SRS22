@@ -525,8 +525,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Maps\Hearing\HearingMap.cpp" />
+    <None Include="..\FRSRS22.docx" />
+    <None Include="..\README.md" />
+    <None Include="..\SelfPacedCognitiveSystem.docx" />
+    <None Include="..\SelfPacedCognitiveSystemBlockDiagram.docx" />
+    <None Include="..\TheFeathersProblemInAGI.docx" />
     <None Include="packages.config" />
-    <None Include="README.md" />
     <None Include="res\SRS22.rc2" />
   </ItemGroup>
   <ItemGroup>

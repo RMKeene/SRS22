@@ -690,7 +690,11 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="packages.config" />
-    <None Include="README.md" />
+    <None Include="..\README.md" />
+    <None Include="..\FRSRS22.docx" />
+    <None Include="..\SelfPacedCognitiveSystem.docx" />
+    <None Include="..\SelfPacedCognitiveSystemBlockDiagram.docx" />
+    <None Include="..\TheFeathersProblemInAGI.docx" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="NatvisFile.natvis" />
