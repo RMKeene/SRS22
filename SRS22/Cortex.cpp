@@ -44,19 +44,6 @@ namespace SRS22 {
 		float excitation = sum / NEURON_MATCH_SOFTNESS;
 		sumToNext(i, excitation);
 		clampNeuronNext(i);
-
-		// So stimulate the target.
-		float f1 = get(i);
-		float f2 = get(neuronTarget[i]);
-		float f3 = targetNeuronDeltaFactor(i);
-		float f4 = NEURON_TARGET_STIMULATION_FACTOR;
-		float f5 = f1 * f3 * f4;
-		float f6 = f2 + f5;
-
-		float tndf = targetNeuronDeltaFactor(i);
-		float g = get(i);
-		float val = get(i) * targetNeuronDeltaFactor(i) * NEURON_TARGET_STIMULATION_FACTOR;
-		sumToNext(neuronTarget[i], get(i) * targetNeuronDeltaFactor(i) * NEURON_TARGET_STIMULATION_FACTOR);
 	}
 
 	/// <summary>

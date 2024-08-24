@@ -37,15 +37,7 @@ namespace SRS22 {
 		/// </summary>
 		float neuronCharge[NEURON_HISTORY][TOTAL_NEURONS];
 		/// <summary>
-		/// What target neuron this neuron is trying to predict.
-		/// </summary>
-		int neuronTarget[TOTAL_NEURONS];
-		/// <summary>
-		/// The charge value of the target neuron when we have a match.
-		/// </summary>
-		float neuronTargetCharge[TOTAL_NEURONS];
-		/// <summary>
-		/// The neurons this neuron is listening to in order to predict the future state of the target.
+		/// The neurons this neuron is listening to in order to predict the future state of its self.
 		/// </summary>
 		int neuronInputIdxs[TOTAL_NEURONS][NEURON_INPUTS];
 		/// <summary>
@@ -76,10 +68,8 @@ namespace SRS22 {
 			brain(brain),
 			growthRate(growthRate)
 		{
-			// Connect all neurons to random other targets, and random inputs.
+			// Connect all neuron inputs to random other neurons.
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
-				neuronTarget[i] = GetRandomLinearOffsetExcept(i);
-				neuronTargetCharge[i] = fastRandFloat() * 0.5f;
 				for (int h = 0; h < NEURON_HISTORY; h++) {
 					neuronCharge[h][i] = fastRandFloat() * 0.5f;
 					checkChargeRange(i, neuronCharge[h][i]);
@@ -161,7 +151,7 @@ namespace SRS22 {
 			neuronChargeValue(idx) = clamp<float>(neuronChargeValueNext(idx), 0.0f, 1.0f);
 		}
 
-		inline void put(int idx, float val) { 
+		inline void put(int idx, float val) {
 			checkNeuronCharge(idx);
 			checkNan(idx, val);
 			neuronChargeValue(idx) = val;
@@ -180,10 +170,10 @@ namespace SRS22 {
 			neuronChargeValueNext(idx) = clamp(val, 0.0f, 1.0f);
 			checkNanByIdxNext(idx);
 		}
-		inline float getNext(int idx) { 
+		inline float getNext(int idx) {
 			checkNeuronIdx(idx);
 			checkNanByIdxNext(idx);
-			return neuronCharge[neuronChargesNextIdx][idx]; 
+			return neuronCharge[neuronChargesNextIdx][idx];
 		}
 
 		/// <summary>
@@ -199,14 +189,14 @@ namespace SRS22 {
 			return neuronCharge[(neuronChargesCurrentIdx - agoTicks) % NEURON_HISTORY][idx];
 		}
 
-		inline void sumToNext(int idx, float val) { 
+		inline void sumToNext(int idx, float val) {
 			checkNeuronCharge(idx);
 			neuronCharge[neuronChargesNextIdx][idx] += val;
 			checkNeuronCharge(idx);
 		}
-		inline void multiplyNextToNext(int idx, float val) { 
+		inline void multiplyNextToNext(int idx, float val) {
 			checkNan(idx, val);
-			neuronCharge[neuronChargesNextIdx][idx] *= val; 
+			neuronCharge[neuronChargesNextIdx][idx] *= val;
 			checkNan(idx, neuronCharge[neuronChargesNextIdx][idx]);
 		}
 
@@ -226,14 +216,15 @@ namespace SRS22 {
 		/// completely different then 0.0.
 		/// 1 - abs(desired - actual)
 		inline float targetNeuronDeltaFactor(int cortexIdx) {
-			checkNeuronCharge(cortexIdx);
-			checkNeuronIdx(neuronTarget[cortexIdx]);
-			checkChargeRangeLiberal((neuronTarget[cortexIdx]), neuronChargeValue(neuronTarget[cortexIdx]));
-			checkNeuronCharge(neuronTarget[cortexIdx]);
-			checkChargeRangeLiberal(cortexIdx, neuronTargetCharge[cortexIdx]);
-			float f = 1.0f - fabs(neuronTargetCharge[cortexIdx] - neuronCharge[neuronChargesCurrentIdx][neuronTarget[cortexIdx]]);
-			checkNeuronCharge(cortexIdx);
-			return f;
+			//checkNeuronCharge(cortexIdx);
+			//checkNeuronIdx(neuronTarget[cortexIdx]);
+			//checkChargeRangeLiberal((neuronTarget[cortexIdx]), neuronChargeValue(neuronTarget[cortexIdx]));
+			//checkNeuronCharge(neuronTarget[cortexIdx]);
+			//checkChargeRangeLiberal(cortexIdx, neuronTargetCharge[cortexIdx]);
+			//float f = 1.0f - fabs(neuronTargetCharge[cortexIdx] - neuronCharge[neuronChargesCurrentIdx][neuronTarget[cortexIdx]]);
+			//checkNeuronCharge(cortexIdx);
+			//return f;
+			return 0.0f;
 		}
 
 		inline void tickIndicies() {
