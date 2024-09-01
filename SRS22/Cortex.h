@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 
 #include "FastRand.h"
 #include "Brain.h"
@@ -15,13 +16,29 @@
 namespace SRS22 {
 
 	/// <summary>
+	/// A link from a "other" neuron to this neuron with expected values for a 'match'.
+	/// When the other neuron's charge is close to the otherCharge, and this neuron's
+	/// charge is close to the selfCharge, then it is a match and stimulation happens according to the 
+	/// confidence. The overall goal is that the link is predicting this neuron's future state.
+	/// </summary>
+	struct NeuronLink {
+		int otherIdx;
+		float otherCharge;
+		float confidence;
+		float selfCharge;
+	};
+
+	struct Neuron {
+		float charge[NEURON_HISTORY];
+		NeuronLink link[NEURON_INPUTS];
+	};
+
+	/// <summary>
 	/// A large block of Neurons.
 	/// </summary>
 	class Cortex : public Tickable
 	{
 	public:
-		int neuronChargesCurrentIdx = 0;
-		int neuronChargesNextIdx = 1;
 
 		/// <summary>
 		/// On big chunk of Neurons in consecutive memory.
@@ -39,16 +56,10 @@ namespace SRS22 {
 		/// <summary>
 		/// The neurons this neuron is listening to in order to predict the future state of its self.
 		/// </summary>
-		int neuronInputIdxs[TOTAL_NEURONS][NEURON_INPUTS];
-		/// <summary>
-		/// How confident we are that the input neuron is relevant to the output target's charge.
-		/// Equivalent to the "synapse weight" in a neural network.
-		/// </summary>
-		float neuronInputConfidence[TOTAL_NEURONS][NEURON_INPUTS];
-		/// <summary>
-		/// The charge of the input neuron when we have a match. Thus the "expected charge".
-		/// </summary>
-		float neuronInputCharge[TOTAL_NEURONS][NEURON_INPUTS];
+		NeuronLink link[TOTAL_NEURONS][NEURON_INPUTS];
+
+		int neuronChargesCurrentIdx = 0;
+		int neuronChargesNextIdx = 1;
 
 		/// <summary>
 		/// growthRate * brain.overallGoodnessRateOfChange added every tick if brain.ShouldLearn. 
@@ -76,9 +87,10 @@ namespace SRS22 {
 					checkChargeRange(i, neuronCharge[h][i]);
 				}
 				for (int k = 0; k < NEURON_INPUTS; k++) {
-					neuronInputIdxs[i][k] = GetRandomLinearOffsetExcept(i);
-					neuronInputConfidence[i][k] = fastRandFloat() * 0.01f;
-					neuronInputCharge[i][k] = fastRandFloat();
+					NeuronLink& L = link[i][k];
+					L.otherIdx = GetRandomLinearOffsetExcept(i);
+					L.confidence = fastRandFloat() * 0.01f;
+					L.otherCharge = fastRandFloat();
 				}
 			}
 		}
@@ -195,37 +207,40 @@ namespace SRS22 {
 			neuronCharge[neuronChargesNextIdx][idx] += val;
 			checkNeuronCharge(idx);
 		}
-		inline void multiplyNextToNext(int idx, float val) {
+
+		inline void multiplyToNext(int idx, float val) {
 			checkNan(idx, val);
 			neuronCharge[neuronChargesNextIdx][idx] *= val;
 			checkNan(idx, neuronCharge[neuronChargesNextIdx][idx]);
 		}
 
 		/// <summary>
-		/// The "delta factor" is how far off the pattern  neuron charge is from the expected charge.  If it is the same then the factor is 1.0, and if
-		/// completely different then 0.0.
-		/// Confidence * (1 - abs(expected - actual))
-		inline float neuronDeltaFactor(int cortexIdx, int inputIdx, int agoTicks) {
+		/// Apply the stimulus that other should give to this.
+		///
+		inline float applyOtherStimulus(int cortexIdx, int inputIdx) {
+			// How steeply to reduce the delta of the other neuron's charge from the expected charge.
+			// 1.0 means just use the delta, 2.0 means a 2 x the delta so reduce much more quickly.
+			const float otherDeltaSteepness = 2.0f;
 			checkNeuronIdx(cortexIdx);
-			float f = neuronInputConfidence[cortexIdx][inputIdx] * (1.0f - fabs(neuronInputCharge[cortexIdx][inputIdx] - neuronCharge[neuronChargesCurrentIdx][neuronInputIdxs[cortexIdx][inputIdx]]));
+			NeuronLink& L = link[cortexIdx][inputIdx];
+
+			const float otherCharge = neuronCharge[neuronChargesCurrentIdx][L.otherIdx];
+			const float otherChargeTarget = L.otherCharge;
+			const float otherDeltaC = clamp(1.0f - otherDeltaSteepness * fabs(otherChargeTarget - otherCharge), 0.0f, 1.0f);
+			const float otherInfluence = L.confidence * otherDeltaC;
+			checkNan(cortexIdx, otherInfluence);
+			if(otherInfluence <= 0.0f) {
+				return 0.0f;
+			}
+			const float selfCharge = neuronCharge[neuronChargesCurrentIdx][cortexIdx];
+			const float selfChargeTarget = L.selfCharge;
+			const float selfDelta = selfChargeTarget - selfCharge;
+			const float selfDeltaC = 1.0f - fabs(selfDelta);
+			const float f = selfDelta * otherInfluence;
+			checkNan(cortexIdx, f);
+			sumToNext(cortexIdx, f);
 			checkNan(cortexIdx, f);
 			return f;
-		}
-
-		/// <summary>
-		/// The "delta factor" is how far off the target neuron charge is from the desired charge.  If it is the same then the factor is 1.0, and if
-		/// completely different then 0.0.
-		/// 1 - abs(desired - actual)
-		inline float targetNeuronDeltaFactor(int cortexIdx) {
-			//checkNeuronCharge(cortexIdx);
-			//checkNeuronIdx(neuronTarget[cortexIdx]);
-			//checkChargeRangeLiberal((neuronTarget[cortexIdx]), neuronChargeValue(neuronTarget[cortexIdx]));
-			//checkNeuronCharge(neuronTarget[cortexIdx]);
-			//checkChargeRangeLiberal(cortexIdx, neuronTargetCharge[cortexIdx]);
-			//float f = 1.0f - fabs(neuronTargetCharge[cortexIdx] - neuronCharge[neuronChargesCurrentIdx][neuronTarget[cortexIdx]]);
-			//checkNeuronCharge(cortexIdx);
-			//return f;
-			return 0.0f;
 		}
 
 		inline void tickIndicies() {
@@ -233,12 +248,11 @@ namespace SRS22 {
 			neuronChargesNextIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;
 		}
 
-
 		void PostCreate();
 
 		void ComputeNextState(boolean doParallel) override;
 
-		void ComputeNextStateSingleNeuron(const size_t& i);
+		void ComputeNextStateSingleNeuron(const size_t i);
 
 		void LatchNewState(boolean doParallel) override;
 		void DecayNextTowardZero(boolean doParallel);

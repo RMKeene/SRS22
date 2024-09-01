@@ -7,7 +7,7 @@ namespace SRS22 {
 
 	void Cortex::ComputeNextState(boolean doParallel) {
 #if DONANCHECKS
-			doNanScan();
+		doNanScan();
 #endif
 
 		if (doParallel) {
@@ -21,7 +21,7 @@ namespace SRS22 {
 			}
 		}
 #if DONANCHECKS
-			doNanScan();
+		doNanScan();
 #endif
 
 
@@ -29,21 +29,15 @@ namespace SRS22 {
 			growthSum += growthRate * brain.overallGoodnessRateOfChange;
 
 #if DONANCHECKS
-			doNanScan();
+		doNanScan();
 #endif
 	}
 
-	void Cortex::ComputeNextStateSingleNeuron(const size_t& i)
+	void Cortex::ComputeNextStateSingleNeuron(const size_t i)
 	{
-		// How much are you matching the inputs?
-		float sum = 0.0f;
 		for (int k = 0; k < NEURON_INPUTS; k++) {
-			sum += neuronDeltaFactor(i, k, NEURON_HISTORY_MINUS_ONE);
+			applyOtherStimulus(i, k);
 		}
-
-		float excitation = sum / NEURON_MATCH_SOFTNESS;
-		sumToNext(i, excitation);
-		clampNeuronNext(i);
 	}
 
 	/// <summary>
@@ -56,33 +50,33 @@ namespace SRS22 {
 	void Cortex::DecayNextTowardZero(boolean doParallel) {
 		if (doParallel) {
 			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
-				multiplyNextToNext(i, neuronChargeDecayFactor);
+				multiplyToNext(i, neuronChargeDecayFactor);
 				});
 		}
 		else {
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
-				multiplyNextToNext(i, neuronChargeDecayFactor);
+				multiplyToNext(i, neuronChargeDecayFactor);
 			}
 		}
 	}
 
 	void Cortex::LearningPhase(boolean doParallel) {
 		float learnFactor = brain.learningRate;
-		if (brain.ShouldLearn()) {
-			if (doParallel) {
-				Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
-					float C = get(i);
-					for (int k = 0; k < NEURON_INPUTS; k++) {
-						float delta = C - get(neuronInputIdxs[i][k]);
-						neuronInputCharge[i][k] += growthSum;
-					}
-					});
-			}
-			else {
-				for (int i = 0; i < TOTAL_NEURONS; i++) {
-					for (int k = 0; k < NEURON_INPUTS; k++) {
-						neuronInputCharge[i][k] += growthSum;
-					}
+		if (doParallel) {
+			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
+				float C = get(i);
+				for (int k = 0; k < NEURON_INPUTS; k++) {
+					float delta = C - get(link[i][k].otherIdx);
+					link[i][k].otherCharge += growthSum;
+				}
+				});
+		}
+		else {
+			for (int i = 0; i < TOTAL_NEURONS; i++) {
+				float C = get(i);
+				for (int k = 0; k < NEURON_INPUTS; k++) {
+					float delta = C - get(link[i][k].otherIdx);
+					link[i][k].otherCharge += growthSum;
 				}
 			}
 		}

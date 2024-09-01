@@ -139,8 +139,10 @@ namespace SRS22 {
 	}
 
 	pair<bool, string> Brain::Load(string fileName) {
+		SRS22LogTaker::LogInfo(std::format("Loading Brain from {}", fileName).c_str());
 		std::ifstream file(fileName, std::ios::binary);
 		if (!file.is_open()) {
+			SRS22LogTaker::LogError(std::format("File not found: {}", fileName).c_str());
 			return { false, "File not found." };
 		}
 		int totalNeurons;
@@ -157,17 +159,18 @@ namespace SRS22 {
 			return { false, "File does not match current Brain configuration." };
 		}
 		file.read(reinterpret_cast<char*>(cortex->neuronCharge), sizeof(cortex->neuronCharge));
-		file.read(reinterpret_cast<char*>(cortex->neuronInputIdxs), sizeof(cortex->neuronInputIdxs));
-		file.read(reinterpret_cast<char*>(cortex->neuronInputConfidence), sizeof(cortex->neuronInputConfidence));
-		file.read(reinterpret_cast<char*>(cortex->neuronInputCharge), sizeof(cortex->neuronInputCharge));
+		file.read(reinterpret_cast<char*>(cortex->link), sizeof(cortex->link));
 
 		file.close();
+		SRS22LogTaker::LogInfo(std::format("Brain loaded from {}", fileName).c_str());
 		return { true, "" };
 	}
 
 	bool Brain::Store(string fileName) {
+		SRS22LogTaker::LogInfo(std::format("Storing Brain to {}", fileName).c_str());
 		std::ofstream file(fileName, std::ios::binary);
 		if (!file.is_open()) {
+			SRS22LogTaker::LogError(std::format("Unable to open: {}", fileName).c_str());
 			return false;
 		}
 		// Store the cortex neuronCharges array in binary
@@ -182,11 +185,10 @@ namespace SRS22 {
 		file.write(reinterpret_cast<char*>(&neuronInputs), sizeof(int));
 
 		file.write(reinterpret_cast<char*>(cortex->neuronCharge), sizeof(cortex->neuronCharge));
-		file.write(reinterpret_cast<char*>(cortex->neuronInputIdxs), sizeof(cortex->neuronInputIdxs));
-		file.write(reinterpret_cast<char*>(cortex->neuronInputConfidence), sizeof(cortex->neuronInputConfidence));
-		file.write(reinterpret_cast<char*>(cortex->neuronInputCharge), sizeof(cortex->neuronInputCharge));
+		file.write(reinterpret_cast<char*>(cortex->link), sizeof(cortex->link));
 
 		file.close();
+		SRS22LogTaker::LogInfo(std::format("Brain stored to {}", fileName).c_str());
 		return true;
 	}
 
