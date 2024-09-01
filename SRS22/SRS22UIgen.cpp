@@ -167,6 +167,29 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	MonitorControl->Add( 0, 0, 0, wxEXPAND, 5 );
 	
+	wxStaticBoxSizer* sbSizer161;
+	sbSizer161 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Neuron Factors") ), wxVERTICAL );
+	
+	wxBoxSizer* bSizer18;
+	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_staticText19 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Energy"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText19->Wrap( -1 );
+	bSizer18->Add( m_staticText19, 0, wxALL, 5 );
+	
+	m_energySlider = new wxSlider( sbSizer161->GetStaticBox(), wxID_ANY, 50, 0, 500, wxDefaultPosition, wxSize( 200,-1 ), wxSL_HORIZONTAL );
+	bSizer18->Add( m_energySlider, 0, wxALL, 5 );
+	
+	m_energySliderValueText = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.10"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_energySliderValueText->Wrap( -1 );
+	bSizer18->Add( m_energySliderValueText, 0, wxALL, 5 );
+	
+	
+	sbSizer161->Add( bSizer18, 0, wxEXPAND, 5 );
+	
+	
+	MonitorControl->Add( sbSizer161, 0, wxEXPAND, 5 );
+	
 	
 	bSizer3->Add( MonitorControl, 0, wxEXPAND, 5 );
 	
@@ -411,6 +434,15 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	BadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	m_LoadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoLoad ), NULL, this );
 	m_StoreButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoStore ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
 	AudioInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
@@ -472,6 +504,15 @@ MonitorFrameGen::~MonitorFrameGen()
 	BadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	m_LoadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoLoad ), NULL, this );
 	m_StoreButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoStore ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_energySlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
 	AudioInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );

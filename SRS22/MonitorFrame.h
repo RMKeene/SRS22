@@ -31,6 +31,7 @@ namespace SRS22 {
 		void OnBadClicked(wxCommandEvent& event) override;
 		void DoLoad(wxCommandEvent& event) override;
 		void DoStore(wxCommandEvent& event) override;
+		void OnEnergySliderScroll(wxScrollEvent& event) override;
 		void OnAudioInDeviceChoiceChanged(wxCommandEvent& event) override;
 		void OnAudioVolumeIn(wxScrollEvent& event) override;
 		void OnAudioOutDeviceChoiceChanged(wxCommandEvent& event) override;

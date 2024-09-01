@@ -4,10 +4,12 @@
 #include "TimeHelpers.h"
 #include "OpenCVHelpers.h"
 #include "ConceptMap.h"
+#include "Cortex.h"
 
 namespace SRS22 {
 	MonitorFrame::MonitorFrame(wxWindow* parent) :
 		MonitorFrameGen(parent) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.brains[0];
 
 		brainFileName = "brain.srs";
 		whiteboardFrame = new WhiteboardFrame(this);
@@ -16,6 +18,7 @@ namespace SRS22 {
 		topTextFrame->Show(true);
 		topVideoFrame = new TopVideoFrame(this);
 		topVideoFrame->Show(true);
+		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->otherInfluenceSoftness));
 	}
 
 	MonitorFrame::~MonitorFrame() {
@@ -205,6 +208,12 @@ namespace SRS22 {
 	void MonitorFrame::DoStore(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 		b->Store(brainFileName);
+	}
+
+	void MonitorFrame::OnEnergySliderScroll(wxScrollEvent& event) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		b->cortex->otherInfluenceSoftness = m_energySlider->GetValue() / (float)m_energySlider->GetMax();
+		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->otherInfluenceSoftness));
 	}
 
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {

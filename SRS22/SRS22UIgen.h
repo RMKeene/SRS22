@@ -25,8 +25,8 @@
 #include <wx/stattext.h>
 #include <wx/statbox.h>
 #include <wx/checkbox.h>
-#include <wx/choice.h>
 #include <wx/slider.h>
+#include <wx/choice.h>
 #include <wx/statline.h>
 #include <wx/statbmp.h>
 #include <wx/richtext/richtextctrl.h>
@@ -64,6 +64,9 @@ class MonitorFrameGen : public wxFrame
 		wxCheckBox* m_CPUParallelCB;
 		wxButton* m_LoadButton;
 		wxButton* m_StoreButton;
+		wxStaticText* m_staticText19;
+		wxSlider* m_energySlider;
+		wxStaticText* m_energySliderValueText;
 		wxStaticText* m_staticText91;
 		wxChoice* AudioInChoiceDropbox;
 		wxStaticText* m_staticText181;
@@ -117,6 +120,7 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnBadClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DoLoad( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DoStore( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEnergySliderScroll( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnAudioInDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioVolumeIn( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }

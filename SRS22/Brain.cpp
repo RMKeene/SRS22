@@ -100,7 +100,6 @@ namespace SRS22 {
 			}
 		}
 
-		cortex->DecayNextTowardZero(doParallel);
 		cortex->LearningPhase(doParallel);
 
 		overallGoodnessRateOfChange = overallGoodnessRateOfChange * 0.95f + overallGoodness - overallGoodnessPrevious;

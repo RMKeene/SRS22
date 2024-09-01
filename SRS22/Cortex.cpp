@@ -47,19 +47,6 @@ namespace SRS22 {
 		tickIndicies();
 	}
 
-	void Cortex::DecayNextTowardZero(boolean doParallel) {
-		if (doParallel) {
-			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
-				multiplyToNext(i, neuronChargeDecayFactor);
-				});
-		}
-		else {
-			for (int i = 0; i < TOTAL_NEURONS; i++) {
-				multiplyToNext(i, neuronChargeDecayFactor);
-			}
-		}
-	}
-
 	void Cortex::LearningPhase(boolean doParallel) {
 		float learnFactor = brain.learningRate;
 		if (doParallel) {

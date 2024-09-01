@@ -20,7 +20,7 @@ namespace SRS22 {
 
 		auto waveIn = IOCommon::GetIO<AudioCaptureIO>();
 		for (int i = 0; i < SRS22FFTRESULTSIZE; i++) {
-			addNext(i, waveIn->inputHelper.frequencyAmplitudes[i]);
+			putNext(i, waveIn->inputHelper.frequencyAmplitudes[i]);
 		}
 	}
 

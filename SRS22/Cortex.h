@@ -28,11 +28,6 @@ namespace SRS22 {
 		float selfCharge;
 	};
 
-	struct Neuron {
-		float charge[NEURON_HISTORY];
-		NeuronLink link[NEURON_INPUTS];
-	};
-
 	/// <summary>
 	/// A large block of Neurons.
 	/// </summary>
@@ -72,7 +67,12 @@ namespace SRS22 {
 		/// </summary>
 		float growthSum = 0.0f;
 
-		float neuronChargeDecayFactor = 0.95f;
+		/// <summary>
+		/// When other stimulates this toward the expected match value, this is how much stimulus overall is allowed.
+		/// If there are 40 inputs to neurons it is possible the the overall sum of stimulus could be 40.0 and flood the system.
+		/// So to achieve a activity balance tick to tick we throttle the stimulus down some.
+		/// </summary>
+		float otherInfluenceSoftness = 0.5f;
 
 		Brain& brain;
 
@@ -91,6 +91,7 @@ namespace SRS22 {
 					L.otherIdx = GetRandomLinearOffsetExcept(i);
 					L.confidence = fastRandFloat() * 0.01f;
 					L.otherCharge = fastRandFloat();
+					L.selfCharge = fastRandFloat();
 				}
 			}
 		}
@@ -224,6 +225,7 @@ namespace SRS22 {
 			checkNeuronIdx(cortexIdx);
 			NeuronLink& L = link[cortexIdx][inputIdx];
 
+			checkNeuronIdx(L.otherIdx);
 			const float otherCharge = neuronCharge[neuronChargesCurrentIdx][L.otherIdx];
 			const float otherChargeTarget = L.otherCharge;
 			const float otherDeltaC = clamp(1.0f - otherDeltaSteepness * fabs(otherChargeTarget - otherCharge), 0.0f, 1.0f);
@@ -236,7 +238,7 @@ namespace SRS22 {
 			const float selfChargeTarget = L.selfCharge;
 			const float selfDelta = selfChargeTarget - selfCharge;
 			const float selfDeltaC = 1.0f - fabs(selfDelta);
-			const float f = selfDelta * otherInfluence;
+			const float f = selfDelta * otherInfluence * otherInfluenceSoftness;
 			checkNan(cortexIdx, f);
 			sumToNext(cortexIdx, f);
 			checkNan(cortexIdx, f);
@@ -255,7 +257,6 @@ namespace SRS22 {
 		void ComputeNextStateSingleNeuron(const size_t i);
 
 		void LatchNewState(boolean doParallel) override;
-		void DecayNextTowardZero(boolean doParallel);
 
 		void LearningPhase(boolean doParallel) override;
 

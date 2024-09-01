@@ -20,12 +20,6 @@ namespace SRS22 {
 	void CameraAttnSpotMap::ComputeNextState(boolean doParallel) {
 		ConceptMap::ComputeNextState(doParallel);
 
-		auto motionXY = std::dynamic_pointer_cast<CameraMotionXYMap>(myBrain->FindMapByName("CameraMotionXYMap").value());
-		float X = motionXY->M.at<float>(0, 0, 0);
-		float Y = motionXY->M.at<float>(0, 0, 1);
-		nextM.at<float>(0, 0, 0) += motionXY->M.at<float>(0, 0, 0);
-		nextM.at<float>(0, 0, 1) += motionXY->M.at<float>(0, 0, 1);
-
 		auto cameraVideo = IOCommon::GetIO<CameraInIO>();
 		float xx = M.at<float>(0, 0, 0) * cameraVideo->GetCameraWidth();
 		float yy = M.at<float>(0, 0, 1) * cameraVideo->GetCameraHeight();

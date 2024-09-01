@@ -23,9 +23,9 @@ namespace SRS22 {
 		if (screenIn->currentAbsDifferenceLowRes.empty() == false) {
 			for (int y = 0; y < nextM.size[1]; y++) {
 				for (int x = 0; x < nextM.size[2]; x++) {
-					nextM.at<float>(0, y, x) += (float)screenIn->currentAbsDifferenceLowRes.at<cv::Vec4b>(y, x)[0] / 255.0f;
-					nextM.at<float>(1, y, x) += (float)screenIn->currentAbsDifferenceLowRes.at<cv::Vec4b>(y, x)[1] / 255.0f;
-					nextM.at<float>(2, y, x) += (float)screenIn->currentAbsDifferenceLowRes.at<cv::Vec4b>(y, x)[2] / 255.0f;
+					nextM.at<float>(0, y, x) = (float)screenIn->currentAbsDifferenceLowRes.at<cv::Vec4b>(y, x)[0] / 255.0f;
+					nextM.at<float>(1, y, x) = (float)screenIn->currentAbsDifferenceLowRes.at<cv::Vec4b>(y, x)[1] / 255.0f;
+					nextM.at<float>(2, y, x) = (float)screenIn->currentAbsDifferenceLowRes.at<cv::Vec4b>(y, x)[2] / 255.0f;
 				}
 			}
 		}
