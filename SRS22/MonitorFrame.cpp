@@ -18,7 +18,7 @@ namespace SRS22 {
 		topTextFrame->Show(true);
 		topVideoFrame = new TopVideoFrame(this);
 		topVideoFrame->Show(true);
-		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->otherInfluenceSoftness));
+		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->connectionThrottle));
 	}
 
 	MonitorFrame::~MonitorFrame() {
@@ -212,8 +212,8 @@ namespace SRS22 {
 
 	void MonitorFrame::OnEnergySliderScroll(wxScrollEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-		b->cortex->otherInfluenceSoftness = m_energySlider->GetValue() / (float)m_energySlider->GetMax();
-		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->otherInfluenceSoftness));
+		b->cortex->connectionThrottle = m_energySlider->GetValue() / (float)m_energySlider->GetMax();
+		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->connectionThrottle));
 	}
 
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {
@@ -233,14 +233,15 @@ namespace SRS22 {
 
 	// On Windows the call sleep(1) will sleep from 1 to 15 ms. This Tick callback at the fastest gets called
 	// about 10x per sec even if the interval set in wxWindows is less than 100ms.
-	// TODO - Seperate the Brains onto their own threads.
+	// TODO - Separate the Brains onto their own threads.
 	// See https://randomascii.wordpress.com/2020/10/04/windows-timer-resolution-the-great-rule-change/
 	void MonitorFrame::OnMonitorFrameTickTimer(wxTimerEvent& event) {
 		ProcessLogQueueInWindowThread();
-		// Milliseconds since the epoc.
+		// Milliseconds since the epoch.
 		long long timeTicks = SRS22::GetTimeTicksMs();
 
 		BrainH brain0 = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		Cortex* cortex = brain0->cortex;
 
 		brain0->doParallel = m_CPUParallelCB->GetValue();
 
@@ -291,6 +292,11 @@ namespace SRS22 {
 		else {
 			lastInSizeText->SetLabelText(wxString::Format("Last In Size: %d, total %d M", WaveInputHelper::lastPacketSize, WaveInputHelper::totalBytesIn / (1024 * 1024)));
 		}
+
+		MonitorStatisticsLine1->SetLabelText(wxString::Format("Total Neurons: %d, Fired: %d, Zeros %d, Ones %d", 
+			cortex->stats.countOfNeuronsProcessed, cortex->stats.countOfNeuronsFired, cortex->stats.countOfZeros, cortex->stats.countOfOnes));
+		MonitorStatisticsLine2->SetLabelText(wxString::Format("ReRoutes: %d, Average C: %6.4f, Confidence: %6.4f",
+			cortex->stats.countOfReRoutes, cortex->stats.averageNeuronCharge, cortex->stats.averageConfidence));
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {

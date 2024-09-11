@@ -3,6 +3,10 @@
 namespace SRS22 {
 	unsigned long xorshf96(void);
 
+	/// <summary>
+	/// Fast random long.
+	/// </summary>
+	/// <returns></returns>
 	inline unsigned long fastRand() {
 		return xorshf96();
 	}
@@ -30,7 +34,6 @@ namespace SRS22 {
 	/// 
 	/// </summary>
 	/// <returns></returns>
-
 	inline double fastRandDoublePM() {
 		// 0x0FFFFFFFF / 2147483648.0 is range 0.0 to 2.0 exclusive.
 		return ((fastRand() & 0x0FFFFFFFF) / 2147483648.0) - 1.0;

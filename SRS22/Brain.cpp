@@ -84,6 +84,7 @@ namespace SRS22 {
 			}
 		}
 
+		cortex->ResetStats();
 		cortex->ComputeNextState(doParallel);
 
 		// Copies next state to current state.
@@ -101,6 +102,8 @@ namespace SRS22 {
 		}
 
 		cortex->LearningPhase(doParallel);
+
+		cortex->PostProcessStats();
 
 		overallGoodnessRateOfChange = overallGoodnessRateOfChange * 0.95f + overallGoodness - overallGoodnessPrevious;
 		overallGoodness *= 0.98f;

@@ -1,5 +1,3 @@
-// pch.cpp: source file corresponding to the pre-compiled header
-
+// Some of our included libraries are not tolerant of pch.h compilation.
+// So we do our own custom common include.
 #include "SRS22pch.h"
-
-// When you are using pre-compiled headers, this source file is necessary for compilation to succeed.

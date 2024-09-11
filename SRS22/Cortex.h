@@ -6,6 +6,7 @@
 #include "Tickable.h"
 #include "SRS22Constants.h"
 #include "SRSMath.h"
+#include "CortexStats.h"
 
 #define neuronChargeValue(idx) neuronCharge[neuronChargesCurrentIdx][(idx)]
 #define neuronChargeValueNext(idx) neuronCharge[neuronChargesNextIdx][(idx)]
@@ -56,6 +57,8 @@ namespace SRS22 {
 		int neuronChargesCurrentIdx = 0;
 		int neuronChargesNextIdx = 1;
 
+		CortexStats stats;
+
 		/// <summary>
 		/// growthRate * brain.overallGoodnessRateOfChange added every tick if brain.ShouldLearn. 
 		/// When growthSum hits 1.0 then growthSum is reset to 0.0 and a new Pattern is acquired.
@@ -70,9 +73,25 @@ namespace SRS22 {
 		/// <summary>
 		/// When other stimulates this toward the expected match value, this is how much stimulus overall is allowed.
 		/// If there are 40 inputs to neurons it is possible the the overall sum of stimulus could be 40.0 and flood the system.
-		/// So to achieve a activity balance tick to tick we throttle the stimulus down some.
+		/// So to achieve a activity balance tick to tick we throttle the stimulus down some ro up some if not enough activity.
 		/// </summary>
-		float otherInfluenceSoftness = 0.5f;
+		float connectionThrottle = 2.0f;
+
+		/// <summary>
+		/// If confidence is below this then the link is stale and has a probability of a reroute.
+		/// </summary>
+		float rerouteThreshold = 0.001f;
+		float rerouteProbability = 0.01f;
+		float lowLearnThreshold = 0.25f;
+		float lowLearnRate = 0.01f;
+		float hiLearnRate = 0.05f;
+		float confidenceAdjustmentRate = 0.01f;
+		float minimumConfidence = 0.0001f;
+		float maximumConfidence = 0.9999f;
+		/// <summary>
+		/// When a reroute happens this is what the confidence is set to.
+		/// </summary>
+		float rerouteConfidenceSet = 0.5f;
 
 		Brain& brain;
 
@@ -217,28 +236,60 @@ namespace SRS22 {
 
 		/// <summary>
 		/// Apply the stimulus that other should give to this.
+		/// 
+		/// Some math:  If a neuron connects to other neurons, and the connectivity is 40 incoming connections to one neuron,
+		/// then every tick if there is a linear falloff of match at a ratio of 1:1 for deltaC and otherDeltaC.
+		/// So an average stimulus strength if 50% for the otherNeuron, multiplied by the 50% for the self neuron.
+		/// Both are determined by deltaC and otherDeltaC. So the stimulus per tick is 40.0 * 0.5 * 0.5 = 10.0.
+		/// This is a lot of stimulus, and if all neurons are connected to all other neurons then the system will be flooded
+		/// by stimulus and all the C will max out and clip at 1.0.
+		/// 
+		/// So to prevent this we throttle the stimulus down by otherInfluenceSoftness. which in the above 
+		/// case would be 0.1 for a neutral and stable system.
+		/// 
+		/// But, we can have tighter selectivity and instead of a 1:1 fall off of stimulus by deltaC we can make it higher.
+		/// If we have a fall off of 10:1 then the stimulus is 40.0 * 0.5 * 0.1 = 2.0. This is a much more stable system.
+		/// It also has lots of neurons that are off, and a few that are on, so has more pattern sensitivity.
+		/// 
+		/// There are other factors like neural fatigue where over used neurons rest for a bit and that will also reduce overall activity.
+		/// 
 		///
-		inline float applyOtherStimulus(int cortexIdx, int inputIdx) {
-			// How steeply to reduce the delta of the other neuron's charge from the expected charge.
-			// 1.0 means just use the delta, 2.0 means a 2 x the delta so reduce much more quickly.
-			const float otherDeltaSteepness = 2.0f;
+		inline float applyOtherStimulus(int cortexIdx, int inputIdx, CortexThreadStats& threadStats) {
+			// How steeply to reduce connection influence as deltaC and otherDeltaC get larger and it is not a pattern match.
+			const float otherDeltaSteepness = 10.0f;
+			const float selfDeltaSteepness = 10.0f;
 			checkNeuronIdx(cortexIdx);
 			NeuronLink& L = link[cortexIdx][inputIdx];
 
 			checkNeuronIdx(L.otherIdx);
 			const float otherCharge = neuronCharge[neuronChargesCurrentIdx][L.otherIdx];
 			const float otherChargeTarget = L.otherCharge;
-			const float otherDeltaC = clamp(1.0f - otherDeltaSteepness * fabs(otherChargeTarget - otherCharge), 0.0f, 1.0f);
-			const float otherInfluence = L.confidence * otherDeltaC;
-			checkNan(cortexIdx, otherInfluence);
+			const float otherDelta = otherChargeTarget - otherCharge;
+			const float otherAbsDelta = fabs(otherDelta);
+			const float otherAbsDeltaC = clamp(1.0f - otherDeltaSteepness * otherAbsDelta, 0.0f, 1.0f);
+			checkChargeRange(cortexIdx, otherAbsDeltaC);
+			if (otherAbsDeltaC <= 0.0f) {
+				return 0.0f;
+			}			
+			const float otherInfluence = L.confidence * otherAbsDeltaC;
+			checkChargeRange(cortexIdx, otherInfluence);
 			if(otherInfluence <= 0.0f) {
 				return 0.0f;
 			}
-			const float selfCharge = neuronCharge[neuronChargesCurrentIdx][cortexIdx];
+
+			// What this connection expects selfC to be if otherC is at otherCharge.
+			const float selfCharge = get(cortexIdx);
 			const float selfChargeTarget = L.selfCharge;
 			const float selfDelta = selfChargeTarget - selfCharge;
-			const float selfDeltaC = 1.0f - fabs(selfDelta);
-			const float f = selfDelta * otherInfluence * otherInfluenceSoftness;
+			const float selfAbsDeltaC = fabs(selfDelta);
+			const float selfDeltaC = clamp(1.0f - selfDeltaSteepness * selfAbsDeltaC, 0.0f, 1.0f);
+			checkChargeRange(cortexIdx, selfDeltaC);
+			if (selfDeltaC <= 0.0f) {
+				return 0.0f;
+			}
+			threadStats.countOfNeuronsFired++;
+			// How much to move C toward the expected value.
+			const float f = selfDelta * otherAbsDeltaC * connectionThrottle;
 			checkNan(cortexIdx, f);
 			sumToNext(cortexIdx, f);
 			checkNan(cortexIdx, f);
@@ -252,13 +303,19 @@ namespace SRS22 {
 
 		void PostCreate();
 
+		void ResetStats();
+		
+		void PostProcessStats();
+
 		void ComputeNextState(boolean doParallel) override;
 
-		void ComputeNextStateSingleNeuron(const size_t i);
+		void ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats);
 
 		void LatchNewState(boolean doParallel) override;
 
 		void LearningPhase(boolean doParallel) override;
+
+		void DoLearningSingleNeuron(const size_t i, CortexThreadStats& threadStats);
 
 		inline int GetRandomLinearOffset() {
 			return fastRand() % TOTAL_NEURONS;
@@ -272,10 +329,5 @@ namespace SRS22 {
 			return i;
 		}
 
-		/// <summary>
-		/// True if you should try to add a new pattern in this Chunk. False if you shouldn't.
-		/// </summary>
-		/// <returns></returns>
-		bool ShouldAddNewPattern();
 	};
 }
