@@ -27,6 +27,8 @@ namespace SRS22 {
 		float otherCharge;
 		float confidence;
 		float selfCharge;
+		bool wasOtherMatch = false;
+		bool wasSelfMatch = false;
 	};
 
 	/// <summary>
@@ -254,47 +256,7 @@ namespace SRS22 {
 		/// There are other factors like neural fatigue where over used neurons rest for a bit and that will also reduce overall activity.
 		/// 
 		///
-		inline float applyOtherStimulus(int cortexIdx, int inputIdx, CortexThreadStats& threadStats) {
-			// How steeply to reduce connection influence as deltaC and otherDeltaC get larger and it is not a pattern match.
-			const float otherDeltaSteepness = 10.0f;
-			const float selfDeltaSteepness = 10.0f;
-			checkNeuronIdx(cortexIdx);
-			NeuronLink& L = link[cortexIdx][inputIdx];
-
-			checkNeuronIdx(L.otherIdx);
-			const float otherCharge = neuronCharge[neuronChargesCurrentIdx][L.otherIdx];
-			const float otherChargeTarget = L.otherCharge;
-			const float otherDelta = otherChargeTarget - otherCharge;
-			const float otherAbsDelta = fabs(otherDelta);
-			const float otherAbsDeltaC = clamp(1.0f - otherDeltaSteepness * otherAbsDelta, 0.0f, 1.0f);
-			checkChargeRange(cortexIdx, otherAbsDeltaC);
-			if (otherAbsDeltaC <= 0.0f) {
-				return 0.0f;
-			}			
-			const float otherInfluence = L.confidence * otherAbsDeltaC;
-			checkChargeRange(cortexIdx, otherInfluence);
-			if(otherInfluence <= 0.0f) {
-				return 0.0f;
-			}
-
-			// What this connection expects selfC to be if otherC is at otherCharge.
-			const float selfCharge = get(cortexIdx);
-			const float selfChargeTarget = L.selfCharge;
-			const float selfDelta = selfChargeTarget - selfCharge;
-			const float selfAbsDeltaC = fabs(selfDelta);
-			const float selfDeltaC = clamp(1.0f - selfDeltaSteepness * selfAbsDeltaC, 0.0f, 1.0f);
-			checkChargeRange(cortexIdx, selfDeltaC);
-			if (selfDeltaC <= 0.0f) {
-				return 0.0f;
-			}
-			threadStats.countOfNeuronsFired++;
-			// How much to move C toward the expected value.
-			const float f = selfDelta * otherAbsDeltaC * connectionThrottle;
-			checkNan(cortexIdx, f);
-			sumToNext(cortexIdx, f);
-			checkNan(cortexIdx, f);
-			return f;
-		}
+		float applyOtherStimulus(int cortexIdx, int inputIdx, CortexThreadStats& threadStats);
 
 		inline void tickIndicies() {
 			neuronChargesCurrentIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;

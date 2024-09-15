@@ -53,6 +53,52 @@ namespace SRS22 {
 		}
 	}
 
+	float Cortex::applyOtherStimulus(int cortexIdx, int inputIdx, CortexThreadStats& threadStats) {
+		// How steeply to reduce connection influence as deltaC and otherDeltaC get larger and it is not a pattern match.
+		const float otherDeltaSteepness = 10.0f;
+		const float selfDeltaSteepness = 10.0f;
+		checkNeuronIdx(cortexIdx);
+		NeuronLink& L = link[cortexIdx][inputIdx];
+
+		checkNeuronIdx(L.otherIdx);
+		const float otherCharge = neuronCharge[neuronChargesCurrentIdx][L.otherIdx];
+		const float otherChargeTarget = L.otherCharge;
+		const float otherDelta = otherChargeTarget - otherCharge;
+		const float otherAbsDelta = fabs(otherDelta);
+		const float otherAbsDeltaC = clamp(1.0f - otherDeltaSteepness * otherAbsDelta, 0.0f, 1.0f);
+		checkChargeRange(cortexIdx, otherAbsDeltaC);
+		if (otherAbsDeltaC <= 0.0f) {
+			return 0.0f;
+		}
+		const float otherInfluence = L.confidence * otherAbsDeltaC;
+		checkChargeRange(cortexIdx, otherInfluence);
+		if (otherInfluence <= 0.0f) {
+			L.wasOtherMatch = false;
+			return 0.0f;
+		}
+		L.wasOtherMatch = true;
+
+		// What this connection expects selfC to be if otherC is at otherCharge.
+		const float selfCharge = get(cortexIdx);
+		const float selfChargeTarget = L.selfCharge;
+		const float selfDelta = selfChargeTarget - selfCharge;
+		const float selfAbsDeltaC = fabs(selfDelta);
+		const float selfDeltaC = clamp(1.0f - selfDeltaSteepness * selfAbsDeltaC, 0.0f, 1.0f);
+		checkChargeRange(cortexIdx, selfDeltaC);
+		if (selfDeltaC <= 0.0f) {
+			L.wasSelfMatch = false;
+			return 0.0f;
+		}
+		L.wasSelfMatch = true;
+		threadStats.countOfNeuronsFired++;
+		// How much to move C toward the expected value.
+		const float f = selfDelta * otherAbsDeltaC * connectionThrottle;
+		checkNan(cortexIdx, f);
+		sumToNext(cortexIdx, f);
+		checkNan(cortexIdx, f);
+		return f;
+	}
+
 	/// <summary>
 	/// Increments the tick indicies.
 	/// </summary>
@@ -91,6 +137,8 @@ namespace SRS22 {
 				L.otherIdx = GetRandomLinearOffsetExcept(i);
 				L.otherCharge = fastRandFloat();
 				L.selfCharge = fastRandFloat();
+			} else if(L.wasOtherMatch && !L.wasSelfMatch) {
+				L.confidence *= 0.9999f;
 			} else {
 				float selfDelta = L.selfCharge - C;
 				float absSelfDelta = fabsf(selfDelta);
@@ -106,7 +154,7 @@ namespace SRS22 {
 
 				// The closer the confidence is to 1.0 the slower we adjust.
 				// The closer the C's are to the expected charge, the less we adjust.
-				float confidenceDelta = (selfDelta + otherDelta) * (1.0f - L.confidence);
+				float confidenceDelta = (absSelfDelta + absOtherDelta) * (1.0f - L.confidence);
 				L.confidence += confidenceDelta * confidenceAdjustmentRate;
 				if(L.confidence < minimumConfidence) {
 					L.confidence = minimumConfidence;

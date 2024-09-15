@@ -57,6 +57,7 @@ namespace SRS22 {
 		currentFrameLowRes = Mat(3, sizesLowRes, CV_32FC1);
 		previousFrameLowRes = Mat(3, sizesLowRes, CV_32FC1);
 
+		// 3, 15, 15
 		int sizesFovea[3] = { 3, CameraFoveaMap_Height, CameraFoveaMap_Height };
 		fovea = Mat(3, sizesFovea, CV_32FC1);
 		foveaBlurred = Mat(3, sizesFovea, CV_32FC1);
@@ -95,10 +96,11 @@ namespace SRS22 {
 
 		Rect r(foveaIO->GetRect());
 		currentFoveaRect = r;
-		GetSubRect(fovea, r);
+		Rect centeredSmallR = Rect(r.halfW() - CameraFoveaMap_Height / 2, r.halfH() - CameraFoveaMap_Height / 2, CameraFoveaMap_Height, CameraFoveaMap_Height);
+		GetSubRect(fovea, centeredSmallR);
 		fovea = fovea.clone();
 		std::string info = OpenCVHelpers::CVMatrixInfo(fovea);
-		// Size is 3, 15, 15
+
 		FoveaBundle foveaBundle(fovea);
 
 		float foveaCX = r.halfW();

@@ -88,20 +88,21 @@ namespace SRS22 {
 
 		/// <summary>
 		/// On every tick the fovea map fills this in. It then is used to efficiently derive various fovea
-		/// concept representations.
+		/// concept representations. This is a 64 x64 pixel area of the camera view which is 640 x 480.
 		/// </summary>
 		Rect currentFoveaRect;
 
 		/// <summary>
 		/// The current fovea pixel values in the Camera.
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width (15 x 15)
+		/// centered in current FoveaRect.
 		/// </summary>
 		cv::Mat fovea;
 		cv::Mat foveaPreviousFrame;
 		cv::Mat foveaBlurred;
 		/// <summary>
 		/// The Canny Edge Detection for the fovea. (or Sobel maybe)
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width  (15 x 15)
 		/// </summary>
 		cv::Mat foveaEdges;
 		/// <summary>
@@ -220,7 +221,7 @@ namespace SRS22 {
 		/// Does a cv::imshow on the current screen.
 		/// </summary>
 		void DebugCurrentScreen() {
-			cv::imshow(std::string("Debug Current Scrren"), vidHelper.currentImage3UC8);
+			cv::imshow(std::string("Debug Current Screen"), vidHelper.currentImage3UC8);
 		}
 
 		void imShowFoveaConvolutionKernels();

@@ -297,6 +297,8 @@ namespace SRS22 {
 			cortex->stats.countOfNeuronsProcessed, cortex->stats.countOfNeuronsFired, cortex->stats.countOfZeros, cortex->stats.countOfOnes));
 		MonitorStatisticsLine2->SetLabelText(wxString::Format("ReRoutes: %d, Average C: %6.4f, Confidence: %6.4f",
 			cortex->stats.countOfReRoutes, cortex->stats.averageNeuronCharge, cortex->stats.averageConfidence));
+		MonitorStatisticsLine3->SetLabelText("Stats:");
+		MonitorStatisticsLine4->SetLabelText("Stats:");
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
