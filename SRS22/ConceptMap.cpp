@@ -64,8 +64,8 @@ namespace SRS22 {
 	}
 
 	void ConceptMap::setupCVMatMirrors() {
-		M = cv::Mat(3, dims, CV_32FC1, &myBrain->cortex->neuronCharge[myBrain->cortex->neuronChargesCurrentIdx][cortexStartIndex]);
-		nextM = cv::Mat(3, dims, CV_32FC1, &myBrain->cortex->neuronCharge[myBrain->cortex->neuronChargesNextIdx][cortexStartIndex]);
+		M = cv::Mat(3, dims, CV_32F, myBrain->cortex->neurons.getCurrentPointer(cortexStartIndex));
+		nextM = cv::Mat(3, dims, CV_32F, myBrain->cortex->neurons.getNextPointer(cortexStartIndex));
 	}
 
 	void ConceptMap::PostCreate(Brain& b) {

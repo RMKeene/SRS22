@@ -112,8 +112,8 @@ namespace SRS22 {
 		/// </summary>
 		void Tick();
 
-		pair<bool, string> Load(string fileName);
-		bool Store(string fileName);
+		pair<bool, string> Load(string fileName) const;
+		bool Store(string fileName) const;
 
 		void PostCreateAllConceptMaps();
 		void PostCreateAllCortexChunks();
@@ -145,14 +145,17 @@ namespace SRS22 {
 
 
 	private:
-		// PreTick(), ComputeNextState(), LatchNewState(), PostTick()
+		// PreTick(), ComputeNextState(), LatchNewState(), PostTick() etc.
 		// This is where multiprocessor parallelism happens.
 		void SequenceCoreBrainTick();
+		void TickGoodnessLevels();
+		void TickConceptMaps();
+		void ReSetupMatricMirrors();
 		void PreTickHardwareAndIO();
 		void PostTickHardwareAndUI();
 
 		/// <summary>
-		/// Order of adding maps does not matter.  Never depend on iteration order.
+		/// Order of adding maps does not matter. Never depend on iteration order.
 		/// </summary>
 		/// <param name="m"></param>
 		void AddMap(shared_ptr<ConceptMap> m);

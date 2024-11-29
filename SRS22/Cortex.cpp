@@ -20,10 +20,12 @@ namespace SRS22 {
 #endif
 
 		if (doParallel) {
+			Concurrency::combinable<CortexThreadStats> threadStats;
 			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
-				CortexThreadStats threadStats;
-				ComputeNextStateSingleNeuron(i, threadStats);
-				stats.SumIn(threadStats);
+				ComputeNextStateSingleNeuron(i, threadStats.local());
+				});
+			threadStats.combine_each([&](CortexThreadStats threadStats) {
+				stats.SumInNoLock(threadStats);
 				});
 		}
 		else {
@@ -31,7 +33,7 @@ namespace SRS22 {
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
 				ComputeNextStateSingleNeuron(i, threadStats);
 			}
-			stats.SumIn(threadStats);
+			stats.SumInNoLock(threadStats);
 		}
 #if DONANCHECKS
 		doNanScan();
@@ -40,79 +42,46 @@ namespace SRS22 {
 
 	void Cortex::ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats)
 	{
-		threadStats.countOfNeuronsProcessed++;
-		const float C = get(i);
-		threadStats.sumOfC += C;
-		if (C >= 0.99999f)
-			threadStats.countOfOnes++;
-		else if (C <= 0.00001f)
-			threadStats.countOfZeros++;
+		const float C = neurons.getCurrent(i);
 
-		for (int k = 0; k < NEURON_INPUTS; k++) {
-			applyOtherStimulus(i, k, threadStats);
-		}
-	}
+		RechargeMetabolismIf(i);
+		UpdateProcessedStatCounts(threadStats, C);
 
-	float Cortex::applyOtherStimulus(int cortexIdx, int inputIdx, CortexThreadStats& threadStats) {
-		// How steeply to reduce connection influence as deltaC and otherDeltaC get larger and it is not a pattern match.
-		const float otherDeltaSteepness = 10.0f;
-		const float selfDeltaSteepness = 10.0f;
-		checkNeuronIdx(cortexIdx);
-		NeuronLink& L = link[cortexIdx][inputIdx];
-
-		checkNeuronIdx(L.otherIdx);
-		const float otherCharge = neuronCharge[neuronChargesCurrentIdx][L.otherIdx];
-		const float otherChargeTarget = L.otherCharge;
-		const float otherDelta = otherChargeTarget - otherCharge;
-		const float otherAbsDelta = fabs(otherDelta);
-		const float otherAbsDeltaC = clamp(1.0f - otherDeltaSteepness * otherAbsDelta, 0.0f, 1.0f);
-		checkChargeRange(cortexIdx, otherAbsDeltaC);
-		if (otherAbsDeltaC <= 0.0f) {
-			return 0.0f;
-		}
-		const float otherInfluence = L.confidence * otherAbsDeltaC;
-		checkChargeRange(cortexIdx, otherInfluence);
-		if (otherInfluence <= 0.0f) {
-			L.wasOtherMatch = false;
-			return 0.0f;
-		}
-		L.wasOtherMatch = true;
-
-		// What this connection expects selfC to be if otherC is at otherCharge.
-		const float selfCharge = get(cortexIdx);
-		const float selfChargeTarget = L.selfCharge;
-		const float selfDelta = selfChargeTarget - selfCharge;
-		const float selfAbsDeltaC = fabs(selfDelta);
-		const float selfDeltaC = clamp(1.0f - selfDeltaSteepness * selfAbsDeltaC, 0.0f, 1.0f);
-		checkChargeRange(cortexIdx, selfDeltaC);
-		if (selfDeltaC <= 0.0f) {
+		for (int k = 0; k < NEURON_OUTPUTS; k++) {
+			NeuronLink& L = neurons.link[i][k];
 			L.wasSelfMatch = false;
-			return 0.0f;
+			if (L.otherIdx == NEURON_LINK_UNCONNECTED)
+				continue;
+#ifdef _DEBUG
+			if (L.otherIdx < NEURON_LINK_UNCONNECTED || L.otherIdx >= TOTAL_NEURONS)
+				throw std::out_of_range(std::format("L.otherIdx out of range: {0}", L.otherIdx));
+#endif
+
+			const float selfDeltaC = SelfMatchStrength(L, C);
+			if (selfDeltaC > 0.0f) {
+
+				FireConnection(i, k, threadStats, selfDeltaC);
+			}
 		}
-		L.wasSelfMatch = true;
-		threadStats.countOfNeuronsFired++;
-		// How much to move C toward the expected value.
-		const float f = selfDelta * otherAbsDeltaC * connectionThrottle;
-		checkNan(cortexIdx, f);
-		sumToNext(cortexIdx, f);
-		checkNan(cortexIdx, f);
-		return f;
 	}
 
 	/// <summary>
-	/// Increments the tick indicies.
+	/// Increments the global tick indicies for Neuron.
 	/// </summary>
 	void Cortex::LatchNewState(boolean doParallel) {
-		tickIndicies();
+		// Tick the indicies for (static indicies) all neurons.
+		TickIndicies();
 	}
 
 	void Cortex::LearningPhase(boolean doParallel) {
 		float learnFactor = brain.learningRate;
 		if (doParallel) {
+			Concurrency::combinable<CortexThreadStats> threadStats;
 			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
-				CortexThreadStats threadStats;
-				DoLearningSingleNeuron(i, threadStats);
-				stats.SumIn(threadStats);
+				DoLearningSingleNeuron(i, threadStats.local());
+				});
+			threadStats.combine_each([&](CortexThreadStats threadStats) {
+				stats.SumInNoLock(threadStats);
 				});
 		}
 		else {
@@ -120,34 +89,37 @@ namespace SRS22 {
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
 				DoLearningSingleNeuron(i, threadStats);
 			}
-			stats.SumIn(threadStats);
+			stats.SumInNoLock(threadStats);
 		}
 	}
 
 	void Cortex::DoLearningSingleNeuron(const size_t i, CortexThreadStats& threadStats) {
-		const float C = get(i);
+		const float C = neurons.getCurrent(i);
 
-		for (int k = 0; k < NEURON_INPUTS; k++) {
-			NeuronLink& L = link[i][k];
+		for (int k = 0; k < NEURON_OUTPUTS; k++) {
+			NeuronLink& L = neurons.link[i][k];
 			threadStats.sumOfConfidence += L.confidence;
 			threadStats.countOfConfidence++;
-			if (L.confidence <= rerouteThreshold && fastRandFloat() < rerouteProbability) {
+			if (L.confidence <= settings.rerouteThreshold && fastRandFloat() < settings.rerouteProbability) {
 				threadStats.countOfReRoutes++;
-				L.confidence = rerouteConfidenceSet;
+				L.confidence = settings.rerouteConfidenceSet;
 				L.otherIdx = GetRandomLinearOffsetExcept(i);
-				L.otherCharge = fastRandFloat();
-				L.selfCharge = fastRandFloat();
-			} else if(L.wasOtherMatch && !L.wasSelfMatch) {
-				L.confidence *= 0.9999f;
-			} else {
+				L.otherCharge = get(L.otherIdx);
+				L.selfCharge = C;
+			}
+			else if (L.wasSelfMatch && !L.wasSelfMatch) {
+				//Lose confidence in this connection.
+				L.confidence *= settings.confidenceAdjustmentDownRate;
+			}
+			else {
 				float selfDelta = L.selfCharge - C;
 				float absSelfDelta = fabsf(selfDelta);
-				float learnDelta = selfDelta * lowLearnRate;
+				float learnDelta = selfDelta * settings.lowLearnRate;
 
 				float otherC = get(L.otherIdx);
 				float otherDelta = L.otherCharge - otherC;
 				float absOtherDelta = fabsf(otherDelta);
-				float learnOtherDelta = otherDelta * lowLearnRate;
+				float learnOtherDelta = otherDelta * settings.lowLearnRate;
 
 				putNext(i, C + learnDelta);
 				putNext(L.otherIdx, otherC + learnOtherDelta);
@@ -155,11 +127,12 @@ namespace SRS22 {
 				// The closer the confidence is to 1.0 the slower we adjust.
 				// The closer the C's are to the expected charge, the less we adjust.
 				float confidenceDelta = (absSelfDelta + absOtherDelta) * (1.0f - L.confidence);
-				L.confidence += confidenceDelta * confidenceAdjustmentRate;
-				if(L.confidence < minimumConfidence) {
-					L.confidence = minimumConfidence;
-				} else if(L.confidence > maximumConfidence) {
-					L.confidence = maximumConfidence;
+				L.confidence += confidenceDelta * settings.confidenceAdjustmentUpRate;
+				if (L.confidence < settings.minimumConfidence) {
+					L.confidence = settings.minimumConfidence;
+				}
+				else if (L.confidence > settings.maximumConfidence) {
+					L.confidence = settings.maximumConfidence;
 				}
 			}
 		}

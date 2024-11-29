@@ -7,29 +7,10 @@
 #include "SRS22Constants.h"
 #include "SRSMath.h"
 #include "CortexStats.h"
-
-#define neuronChargeValue(idx) neuronCharge[neuronChargesCurrentIdx][(idx)]
-#define neuronChargeValueNext(idx) neuronCharge[neuronChargesNextIdx][(idx)]
-
-// Turns on neuron index, range, and NaN validation.
-//#define VALIDATE_NEURONS
+#include "CortexSettings.h"
+#include "Neurons.h"
 
 namespace SRS22 {
-
-	/// <summary>
-	/// A link from a "other" neuron to this neuron with expected values for a 'match'.
-	/// When the other neuron's charge is close to the otherCharge, and this neuron's
-	/// charge is close to the selfCharge, then it is a match and stimulation happens according to the 
-	/// confidence. The overall goal is that the link is predicting this neuron's future state.
-	/// </summary>
-	struct NeuronLink {
-		int otherIdx;
-		float otherCharge;
-		float confidence;
-		float selfCharge;
-		bool wasOtherMatch = false;
-		bool wasSelfMatch = false;
-	};
 
 	/// <summary>
 	/// A large block of Neurons.
@@ -37,78 +18,26 @@ namespace SRS22 {
 	class Cortex : public Tickable
 	{
 	public:
+		const Brain& brain;
 
-		/// <summary>
-		/// On big chunk of Neurons in consecutive memory.
-		/// Amenable to CUDA implementation. There is no Neuron class object.
-		/// 
-		/// NEURON_HISTORY is the circular queue of charge history.
-		/// neuronCharges[N][neuronChargesCurrentIdx] is the current charge.
-		/// neuronCharges[N][neuronChargesCurrentId+1] is the next charge being calculated.
-		/// If NEURON_HISTORY is greater than 2 then neuronCharges[N][neuronChargesCurrentIdx - 1] is what the current charge was 1 tick ago, etc.
-		/// Thus neuronChargesCurrentIdx gets incremented modulo NEURON_HISTORY every tick, and neuronChargesNextIdx is always neuronChargesCurrentIdx + 1 modulo NURON_HISTORY.
-		/// 
-		/// Laid out in memory as such that all the charges for a a ConceptMap are contiguous for a given neuronChargesCurrentIdx.
-		/// </summary>
-		float neuronCharge[NEURON_HISTORY][TOTAL_NEURONS];
-		/// <summary>
-		/// The neurons this neuron is listening to in order to predict the future state of its self.
-		/// </summary>
-		NeuronLink link[TOTAL_NEURONS][NEURON_INPUTS];
+		Neurons neurons;
 
-		int neuronChargesCurrentIdx = 0;
-		int neuronChargesNextIdx = 1;
+		CortexSettings settings;
 
 		CortexStats stats;
 
-		/// <summary>
-		/// growthRate * brain.overallGoodnessRateOfChange added every tick if brain.ShouldLearn. 
-		/// When growthSum hits 1.0 then growthSum is reset to 0.0 and a new Pattern is acquired.
-		/// Moderated by global goodness factor.
-		/// </summary>
-		float growthRate;
-		/// <summary>
-		/// See growthRate.
-		/// </summary>
-		float growthSum = 0.0f;
-
-		/// <summary>
-		/// When other stimulates this toward the expected match value, this is how much stimulus overall is allowed.
-		/// If there are 40 inputs to neurons it is possible the the overall sum of stimulus could be 40.0 and flood the system.
-		/// So to achieve a activity balance tick to tick we throttle the stimulus down some ro up some if not enough activity.
-		/// </summary>
-		float connectionThrottle = 2.0f;
-
-		/// <summary>
-		/// If confidence is below this then the link is stale and has a probability of a reroute.
-		/// </summary>
-		float rerouteThreshold = 0.001f;
-		float rerouteProbability = 0.01f;
-		float lowLearnThreshold = 0.25f;
-		float lowLearnRate = 0.01f;
-		float hiLearnRate = 0.05f;
-		float confidenceAdjustmentRate = 0.01f;
-		float minimumConfidence = 0.0001f;
-		float maximumConfidence = 0.9999f;
-		/// <summary>
-		/// When a reroute happens this is what the confidence is set to.
-		/// </summary>
-		float rerouteConfidenceSet = 0.5f;
-
-		Brain& brain;
-
-		Cortex(Brain& brain, const float growthRate) :
-			brain(brain),
-			growthRate(growthRate)
+		Cortex(Brain& brain) :
+			brain(brain)
 		{
 			// Connect all neuron inputs to random other neurons.
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
+				neurons.energy[i] = fastRandFloat();
+				neurons.enabled[i] = fastRandFloat() > 0.5f;
 				for (int h = 0; h < NEURON_HISTORY; h++) {
-					neuronCharge[h][i] = fastRandFloat() * 0.5f;
-					checkChargeRange(i, neuronCharge[h][i]);
+					neurons.charge[h][i] = fastRandFloat() * 0.5f;
 				}
-				for (int k = 0; k < NEURON_INPUTS; k++) {
-					NeuronLink& L = link[i][k];
+				for (int k = 0; k < NEURON_OUTPUTS; k++) {
+					NeuronLink& L = neurons.link[i][k];
 					L.otherIdx = GetRandomLinearOffsetExcept(i);
 					L.confidence = fastRandFloat() * 0.01f;
 					L.otherCharge = fastRandFloat();
@@ -134,15 +63,22 @@ namespace SRS22 {
 #endif
 		}
 
+		inline void checkNan(const float val) {
+#ifdef VALIDATE_NEURONS
+			if (!isfinite((val)))
+				SRS22DebugBreak(val);
+#endif
+		}
+
 		inline void checkNanByIdx(const int idx) {
 #ifdef VALIDATE_NEURONS
-			checkNan(idx, neuronChargeValue(idx));
+			checkNan(idx, neurons[idx].getCurrentCharge());
 #endif
 		}
 
 		inline void checkNanByIdxNext(const int idx) {
 #ifdef VALIDATE_NEURONS
-			checkNan(idx, neuronChargeValueNext(idx));
+			checkNan(idx, neurons[idx].getNextCharge());
 #endif
 		}
 
@@ -169,109 +105,158 @@ namespace SRS22 {
 #endif
 		}
 
+		inline void checkZeroToOne(float v) {
+#ifdef VALIDATE_NEURONS
+			if (v < 0.0f || v > 1.0f) {
+				__debugbreak();
+			}
+#endif
+		}
+
+		inline float& operator[](int idx) {
+			checkNeuronIdx(idx);
+			return neurons.getCurrentRef(idx);
+		}
+
 		void doNanScan() {
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
 				for (int h = 0; h < NEURON_HISTORY; h++) {
-					if (isnan(neuronCharge[h][i])) {
+					if (isnan(neurons.charge[h][i])) {
 						__debugbreak();
 					}
-					if (neuronCharge[h][i] < -0.1f || neuronCharge[h][i] > 1.1f) {
+					if (neurons.charge[h][i] < -0.1f || neurons.charge[h][i] > 1.1f) {
 						__debugbreak();
 					}
 				}
 			}
 		}
 
-		inline void clampNeuronNext(int idx) {
-			neuronChargeValue(idx) = clamp<float>(neuronChargeValueNext(idx), 0.0f, 1.0f);
+		inline void clampNeuron(int idx, int historyIdx) {
+			neurons.charge[historyIdx][idx] = clamp<float>(neurons.charge[historyIdx][idx], 0.0f, 1.0f);
 		}
 
 		inline void put(int idx, float val) {
-			checkNeuronCharge(idx);
 			checkNan(idx, val);
-			neuronChargeValue(idx) = val;
+			neurons.getCurrentRef(idx) = val;
 			checkNeuronCharge(idx);
-
 		}
+
 		inline float get(int idx) {
 			checkNeuronIdx(idx);
-			checkNan(idx, neuronChargeValue(idx));
-			return neuronChargeValue(idx);
+			return neurons.getCurrent(idx);
 		}
 
 		inline void putNext(int idx, float val) {
 			checkNan(idx, val);
 			checkNeuronIdx(idx);
-			neuronChargeValueNext(idx) = clamp(val, 0.0f, 1.0f);
-			checkNanByIdxNext(idx);
+			neurons.setNext(idx, val);
 		}
+
 		inline float getNext(int idx) {
 			checkNeuronIdx(idx);
 			checkNanByIdxNext(idx);
-			return neuronCharge[neuronChargesNextIdx][idx];
+			return neurons.getNext(idx);
 		}
 
 		/// <summary>
-		/// agoTicks must be 1 >= agoTicks < NEURON_HISTORY, and it is asserted.
+		/// Simply Neuron::StaticTick();
 		/// </summary>
-		/// <param name="idx"></param>
-		/// <param name="agoTicks"></param>
-		/// <returns></returns>
-		inline float getAgo(int idx, int agoTicks) {
-			checkNeuronIdx(idx);
-			assert(agoTicks >= 1 && agoTicks < NEURON_HISTORY);
-			checkNan(idx, neuronCharge[(neuronChargesCurrentIdx - agoTicks) % NEURON_HISTORY][idx]);
-			return neuronCharge[(neuronChargesCurrentIdx - agoTicks) % NEURON_HISTORY][idx];
-		}
-
-		inline void sumToNext(int idx, float val) {
-			checkNeuronCharge(idx);
-			neuronCharge[neuronChargesNextIdx][idx] += val;
-			checkNeuronCharge(idx);
-		}
-
-		inline void multiplyToNext(int idx, float val) {
-			checkNan(idx, val);
-			neuronCharge[neuronChargesNextIdx][idx] *= val;
-			checkNan(idx, neuronCharge[neuronChargesNextIdx][idx]);
-		}
-
-		/// <summary>
-		/// Apply the stimulus that other should give to this.
-		/// 
-		/// Some math:  If a neuron connects to other neurons, and the connectivity is 40 incoming connections to one neuron,
-		/// then every tick if there is a linear falloff of match at a ratio of 1:1 for deltaC and otherDeltaC.
-		/// So an average stimulus strength if 50% for the otherNeuron, multiplied by the 50% for the self neuron.
-		/// Both are determined by deltaC and otherDeltaC. So the stimulus per tick is 40.0 * 0.5 * 0.5 = 10.0.
-		/// This is a lot of stimulus, and if all neurons are connected to all other neurons then the system will be flooded
-		/// by stimulus and all the C will max out and clip at 1.0.
-		/// 
-		/// So to prevent this we throttle the stimulus down by otherInfluenceSoftness. which in the above 
-		/// case would be 0.1 for a neutral and stable system.
-		/// 
-		/// But, we can have tighter selectivity and instead of a 1:1 fall off of stimulus by deltaC we can make it higher.
-		/// If we have a fall off of 10:1 then the stimulus is 40.0 * 0.5 * 0.1 = 2.0. This is a much more stable system.
-		/// It also has lots of neurons that are off, and a few that are on, so has more pattern sensitivity.
-		/// 
-		/// There are other factors like neural fatigue where over used neurons rest for a bit and that will also reduce overall activity.
-		/// 
-		///
-		float applyOtherStimulus(int cortexIdx, int inputIdx, CortexThreadStats& threadStats);
-
-		inline void tickIndicies() {
-			neuronChargesCurrentIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;
-			neuronChargesNextIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;
+		inline void TickIndicies() {
+			Neurons::StaticTick();
 		}
 
 		void PostCreate();
 
 		void ResetStats();
-		
+
 		void PostProcessStats();
 
 		void ComputeNextState(boolean doParallel) override;
 
 		void ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats);
+
+		/// <summary>
+		/// Set self match true, count in stats, do metabolism, and add connection vote.
+		/// </summary>
+		/// <param name="L"></param>
+		/// <param name="threadStats"></param>
+		/// <param name="N"></param>
+		/// <param name="selfDeltaC"></param>
+		inline void FireConnection(int neuronIdx, int linkIdx, SRS22::CortexThreadStats& threadStats, const float selfDeltaC)
+		{
+			neurons.wasSelfMatch[neuronIdx] = true;
+			threadStats.countOfNeuronsFired++;
+
+			DeductFiringMetabolism(neuronIdx);
+			AddConnectionVote(neurons.link[neuronIdx][linkIdx], selfDeltaC);
+		}
+
+		/// <summary>
+		/// Get the factor from 0 to 1 that represents how much the learned charge matches the current actual charge.
+		/// settings.selfDeltaSteepness is how quickly this falls to 0 as the difference between the two charges increases.
+		/// </summary>
+		/// <param name="L"></param>
+		/// <param name="C"></param>
+		/// <returns></returns>
+		inline const float& SelfMatchStrength(NeuronLink& L, const float C)
+		{
+			return clamp<float>(1.0f - settings.selfDeltaSteepness * fabs(L.selfCharge - C), 0.0f, 1.0f);
+		}
+
+		/// <summary>
+		/// Add this connections 
+		/// </summary>
+		/// <param name="otherNeuron"></param>
+		/// <param name="L"></param>
+		inline void AddConnectionVote(const NeuronLink& L, const float selfAbsDeltaC)
+		{
+			const float strength = L.confidence * selfAbsDeltaC;
+			neurons.neuronChargesAverageDeltaSum[L.otherIdx] += L.otherCharge * strength;
+			neurons.neuronChargesAverageCount[L.otherIdx] += strength;
+		}
+
+		/// <summary>
+		/// Deduct settings.energyDepletionOnFire from energy, 
+		/// then disables if energy is below settings.lowEnergyThreshold
+		/// </summary>
+		/// <param name="N"></param>
+		inline void DeductFiringMetabolism(int idx)
+		{
+			// Metabolic cost to fire.
+			neurons.energy[idx] -= settings.energyDepletionOnFire;
+			if (neurons.energy[idx] < settings.lowEnergyThreshold) {
+				// We set this false but that will not be read until the next tick.
+				neurons.enabled[idx] = false;
+			}
+		}
+
+		/// <summary>
+		/// Add in firing count, and zero and one count if C is close to 0 or 1.
+		/// </summary>
+		/// <param name="threadStats"></param>
+		/// <param name="C"></param>
+		inline void UpdateProcessedStatCounts(SRS22::CortexThreadStats& threadStats, const float C)
+		{
+			threadStats.countOfNeuronsProcessed++;
+			threadStats.sumOfC += C;
+			if (C >= 0.99999f)
+				threadStats.countOfOnes++;
+			else if (C <= 0.00001f)
+				threadStats.countOfZeros++;
+		}
+
+		/// <summary>
+		/// If currently disabled , add energy.
+		/// If that gets energy above settings.highEnergyThreshold, then set enable true.
+		/// </summary>
+		/// <param name="N"></param>
+		inline void RechargeMetabolismIf(int idx)
+		{
+			if (!neurons.enabled[idx]) {
+				neurons.energy[idx] += settings.energyRechargePerTick;
+				neurons.enabled[idx] = neurons.energy[idx] >= settings.highEnergyThreshold;
+			}
+		}
 
 		void LatchNewState(boolean doParallel) override;
 

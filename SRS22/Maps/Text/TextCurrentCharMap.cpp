@@ -25,6 +25,7 @@ namespace SRS22 {
 			uint y = (c >> 4) & 0x000F;
 			putNext(y, x, 1.0f);
 		}
+		RelaxTowardZero(0.99f);
 	}
 
 	void TextCurrentCharMap::LatchNewState(boolean doParallel) {

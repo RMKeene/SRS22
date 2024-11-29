@@ -1,0 +1,126 @@
+#pragma once
+
+#include "SRS22Constants.h"
+#include "NeuronLink.h"
+#include "FastRand.h"
+
+namespace SRS22 {
+
+	/// <summary>
+	/// All the neurons in a cortex. This is separation of concerns for the Cortex lets us
+	/// think better about neurons as objects. But... it is a bit of a leaky abstraction because we need the charge array and possibly
+	/// other data to be amenable to memory pointer sharing to OpenCV Mat and CUDA.
+	/// This also improves memory locality and lets us use things like memset for super fast clears.
+	/// </summary>
+	class Neurons {
+	private:
+		/// <summary>
+		/// This is a circulating index for the charge history.
+		/// neuronChargesCurrentIdx is the current tick we are on.
+		/// neuronChargesNextIdx is the next tick we are predicting. It is always ahead of the current tick by NEURON_HISTORY - 1
+		/// modulo NEURON_HISTORY. Thus always one behind neuronChargesCurrentIdx modulo NEURON_HISTORY.
+		/// Possibly we will use various time offsets as the model evolves.
+		/// </summary>
+		static int neuronChargesCurrentIdx;
+		static int neuronChargesNextIdx;
+	public:
+		static void StaticTick();
+		static int GetNeuronChargesCurrentIdx() { return neuronChargesCurrentIdx; }
+		static int GetNeuronChargesNextIdx() { return neuronChargesNextIdx; }
+
+		/// <summary>
+		/// The charge of this neuron. Represent time averaged pulses. (See "The Feathers Problem")
+		/// We want to keep a past history of the charge so we can learn relative to what was going to be the future charge.
+		/// neuronChargesCurrentIdx is the current circular index in the history.
+		/// </summary>
+		float charge[NEURON_HISTORY][TOTAL_NEURONS];
+
+		/// <summary>
+		/// The sum used to find the average net state of the neuron as a delta from the current charge.
+		/// Thus each source of change is voting on how much to change the current charge, and how far.
+		/// </summary>
+		float neuronChargesAverageDeltaSum[TOTAL_NEURONS];
+		/// <summary>
+		/// The weighted count of the delta sum.
+		/// </summary>
+		float neuronChargesAverageCount[TOTAL_NEURONS];
+		/// <summary>
+		/// How much energy this neuron has. 0.0 is no energy, 1.0 is full energy.
+		/// </summary>
+		float energy[TOTAL_NEURONS];
+		/// <summary>
+		/// Gets disable if out of energy until energy recharges to highEnergyThreshold.
+		/// </summary>
+		bool enabled[TOTAL_NEURONS];
+		/// <summary>
+		/// The other neurons who's charge this neuron is trying to predict.
+		/// </summary>
+		NeuronLink link[TOTAL_NEURONS][NEURON_OUTPUTS];
+		/// <summary>
+		/// Flag that this link was a match for the selfCharge this tick.
+		/// </summary>
+		bool wasSelfMatch[TOTAL_NEURONS];
+
+		void InitialSetup() {
+			for (size_t i = 0; i < TOTAL_NEURONS; i++) {
+				energy[i] = fastRandFloat();
+				enabled[i] = fastRandFloat() > 0.5f;
+				for (size_t h = 0; h < NEURON_HISTORY; h++) {
+					charge[h][i] = fastRandFloat() * 0.5f;
+				}
+				for (size_t k = 0; k < NEURON_OUTPUTS; k++) {
+					link[i][k].otherIdx = GetRandomLinearOffsetExcept(i);
+					link[i][k].confidence = fastRandFloat() * 0.01f;
+					link[i][k].otherCharge = fastRandFloat();
+					link[i][k].selfCharge = fastRandFloat();
+				}
+			}
+		}
+
+		inline float getCurrent(size_t i) const {
+			return charge[neuronChargesCurrentIdx][i];
+		}
+
+		inline float getNext(size_t i) const {
+			return charge[neuronChargesNextIdx][i];
+		}
+
+		inline void setCurrent(size_t i, float value) {
+			charge[neuronChargesCurrentIdx][i] = value;
+		}
+
+		inline void setNext(size_t i, float value) {
+			charge[neuronChargesNextIdx][i] = value;
+		}
+
+		inline float& getCurrentRef(size_t i) {
+			return charge[neuronChargesCurrentIdx][i];
+		}
+
+		inline float& getNextRef(size_t i) {
+			return charge[neuronChargesNextIdx][i];
+		}
+
+		inline float* getCurrentPointer(size_t i) {
+			return &charge[neuronChargesCurrentIdx][i];
+		}
+
+		inline float* getNextPointer(size_t i) {
+			return &charge[neuronChargesNextIdx][i];
+		}
+
+		/// <summary>
+		/// Dependency loop so code copied here.
+		/// </summary>
+		/// <param name="notThisIdx"></param>
+		/// <returns></returns>
+		inline int GetRandomLinearOffsetExcept(int notThisIdx) {
+			int i = fastRand() % TOTAL_NEURONS;
+			while (i == notThisIdx) {
+				i = fastRand() % TOTAL_NEURONS;
+			}
+			return i;
+		}
+
+	};
+}

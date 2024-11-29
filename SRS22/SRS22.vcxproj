@@ -306,6 +306,7 @@
     <ClInclude Include="canvas.h" />
     <ClInclude Include="convertmattowxbmp.h" />
     <ClInclude Include="Cortex.h" />
+    <ClInclude Include="CortexSettings.h" />
     <ClInclude Include="CortexStats.h" />
     <ClInclude Include="FastRand.h" />
     <ClInclude Include="fit_fft.h" />
@@ -352,6 +353,8 @@
     <ClInclude Include="Maps\Voice\PhonemeMap.h" />
     <ClInclude Include="MapUIDs.h" />
     <ClInclude Include="MonitorFrame.h" />
+    <ClInclude Include="Neurons.h" />
+    <ClInclude Include="NeuronLink.h" />
     <ClInclude Include="OpenCVHelpers.h" />
     <ClInclude Include="SRS22pch.h" />
     <ClInclude Include="Point.h" />
@@ -463,6 +466,7 @@
     <ClCompile Include="Maps\Text\TextOutMap.cpp" />
     <ClCompile Include="Maps\Voice\PhonemeMap.cpp" />
     <ClCompile Include="MonitorFrame.cpp" />
+    <ClCompile Include="Neurons.cpp" />
     <ClCompile Include="OpenCVHelpers.cpp" />
     <ClCompile Include="SRS22pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

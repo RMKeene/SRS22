@@ -38,7 +38,7 @@ namespace SRS22 {
 		tickCount = 0;
 		tickCountRecent = 0;
 		SingleStepCount = 0;
-		cortex = new Cortex(*this, 0.02f);
+		cortex = new Cortex(*this);
 	}
 
 	Brain::~Brain() {
@@ -68,48 +68,55 @@ namespace SRS22 {
 	void Brain::SequenceCoreBrainTick()
 	{
 		PreTickHardwareAndIO();
-
-		if (doParallel) {
-			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-				if (n.second->isComputeNextStateEnabled()) {
-					n.second->ComputeNextState(false);
-				}
-				});
-		}
-		else {
-			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
-				if (n.second->isComputeNextStateEnabled()) {
-					n.second->ComputeNextState(false);
-				}
-			}
-		}
-
+		TickConceptMaps();
 		cortex->ResetStats();
 		cortex->ComputeNextState(doParallel);
-
-		// Copies next state to current state.
 		cortex->LatchNewState(doParallel);
-		// And now that the indicies are updated, re-setup the M and nextM matrices.
-		if (doParallel) {
-			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-				n.second->setupCVMatMirrors();
-				});
-		}
-		else {
-			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
-				n.second->setupCVMatMirrors();
-			}
-		}
-
+		ReSetupMatricMirrors();
 		cortex->LearningPhase(doParallel);
-
 		cortex->PostProcessStats();
+		TickGoodnessLevels();
+		PostTickHardwareAndUI();
+	}
 
+	void Brain::TickGoodnessLevels()
+	{
+		// Endorphins feeling of good. Causes learning rate to rise. A cool idea but not yet used?
 		overallGoodnessRateOfChange = overallGoodnessRateOfChange * 0.95f + overallGoodness - overallGoodnessPrevious;
 		overallGoodness *= 0.98f;
 		overallGoodnessPrevious = overallGoodness;
+	}
 
-		PostTickHardwareAndUI();
+	void Brain::TickConceptMaps()
+	{
+		if (doParallel) {
+			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
+				if (n.second->isComputeNextStateEnabled()) {
+					n.second->ComputeNextState(false);
+				}
+				});
+		}
+		else {
+			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
+				if (n.second->isComputeNextStateEnabled()) {
+					n.second->ComputeNextState(false);
+				}
+			}
+		}
+	}
+
+	void Brain::ReSetupMatricMirrors()
+	{
+		if (doParallel) {
+			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
+				n.second->setupCVMatMirrors();
+				});
+		}
+		else {
+			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
+				n.second->setupCVMatMirrors();
+			}
+		}
 	}
 
 	void Brain::PreTickHardwareAndIO() {
@@ -140,35 +147,42 @@ namespace SRS22 {
 		whiteboardOut.PostTickHardwareAndUI();
 	}
 
-	pair<bool, string> Brain::Load(string fileName) {
+	pair<bool, string> Brain::Load(string fileName) const {
 		SRS22LogTaker::LogInfo(std::format("Loading Brain from {}", fileName).c_str());
 		std::ifstream file(fileName, std::ios::binary);
 		if (!file.is_open()) {
 			SRS22LogTaker::LogError(std::format("File not found: {}", fileName).c_str());
 			return { false, "File not found." };
 		}
-		int totalNeurons;
-		int neuronHistory;
-		float chargePrecision;
-		int neuronInputs;
+		int totalNeurons = 0;
+		int neuronHistory = NEURON_HISTORY;
+		// In the future this will be how accurate of charge we keep. Like std::float16_t, float, double, etc.
+		float chargePrecision = 1.0f;
+		int neuronOutputs;
 		file.read(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
 		file.read(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
 		file.read(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
-		file.read(reinterpret_cast<char*>(&neuronInputs), sizeof(int));
-		if (totalNeurons != TOTAL_NEURONS || neuronHistory != NEURON_HISTORY || chargePrecision != sizeof(float) || neuronInputs != NEURON_INPUTS) {
+		file.read(reinterpret_cast<char*>(&neuronOutputs), sizeof(int));
+		if (totalNeurons != TOTAL_NEURONS || neuronHistory != NEURON_HISTORY || chargePrecision != sizeof(float) || neuronOutputs != NEURON_OUTPUTS) {
 			// TODO - Make it work for larger configuration.
 			// TODO - Make it work for smaller configuration.
 			return { false, "File does not match current Brain configuration." };
 		}
-		file.read(reinterpret_cast<char*>(cortex->neuronCharge), sizeof(cortex->neuronCharge));
-		file.read(reinterpret_cast<char*>(cortex->link), sizeof(cortex->link));
+		Neurons&Ns = cortex->neurons;
+		file.read(reinterpret_cast<char*>(Ns.charge), sizeof(Ns.charge));
+		file.read(reinterpret_cast<char*>(Ns.neuronChargesAverageDeltaSum), sizeof(Ns.neuronChargesAverageDeltaSum));
+		file.read(reinterpret_cast<char*>(Ns.neuronChargesAverageCount), sizeof(Ns.neuronChargesAverageCount));
+		file.read(reinterpret_cast<char*>(Ns.energy), sizeof(Ns.energy));
+		file.read(reinterpret_cast<char*>(Ns.enabled), sizeof(Ns.enabled));
+		file.read(reinterpret_cast<char*>(Ns.link), sizeof(Ns.link));
+
 
 		file.close();
 		SRS22LogTaker::LogInfo(std::format("Brain loaded from {}", fileName).c_str());
 		return { true, "" };
 	}
 
-	bool Brain::Store(string fileName) {
+	bool Brain::Store(string fileName) const {
 		SRS22LogTaker::LogInfo(std::format("Storing Brain to {}", fileName).c_str());
 		std::ofstream file(fileName, std::ios::binary);
 		if (!file.is_open()) {
@@ -178,16 +192,21 @@ namespace SRS22 {
 		// Store the cortex neuronCharges array in binary
 		int totalNeurons = TOTAL_NEURONS;
 		int neuronHistory = NEURON_HISTORY;
-		int neuronInputs = NEURON_INPUTS;
+		int neuronOutputs = NEURON_OUTPUTS;
 		float chargePrecision = sizeof(float);
 
 		file.write(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
 		file.write(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
 		file.write(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
-		file.write(reinterpret_cast<char*>(&neuronInputs), sizeof(int));
+		file.write(reinterpret_cast<char*>(&neuronOutputs), sizeof(int));
 
-		file.write(reinterpret_cast<char*>(cortex->neuronCharge), sizeof(cortex->neuronCharge));
-		file.write(reinterpret_cast<char*>(cortex->link), sizeof(cortex->link));
+		Neurons& Ns = cortex->neurons;
+		file.write(reinterpret_cast<char*>(Ns.charge), sizeof(Ns.charge));
+		file.write(reinterpret_cast<char*>(Ns.neuronChargesAverageDeltaSum), sizeof(Ns.neuronChargesAverageDeltaSum));
+		file.write(reinterpret_cast<char*>(Ns.neuronChargesAverageCount), sizeof(Ns.neuronChargesAverageCount));
+		file.write(reinterpret_cast<char*>(Ns.energy), sizeof(Ns.energy));
+		file.write(reinterpret_cast<char*>(Ns.enabled), sizeof(Ns.enabled));
+		file.write(reinterpret_cast<char*>(Ns.link), sizeof(Ns.link));
 
 		file.close();
 		SRS22LogTaker::LogInfo(std::format("Brain stored to {}", fileName).c_str());

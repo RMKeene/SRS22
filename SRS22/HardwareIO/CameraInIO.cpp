@@ -56,6 +56,7 @@ namespace SRS22 {
 			(int)(w * VideoHelper::lowResScale) };
 		currentFrameLowRes = Mat(3, sizesLowRes, CV_32FC1);
 		previousFrameLowRes = Mat(3, sizesLowRes, CV_32FC1);
+		currentAbsDifferenceLowRes = Mat(3, sizesLowRes, CV_32FC1);
 
 		// 3, 15, 15
 		int sizesFovea[3] = { 3, CameraFoveaMap_Height, CameraFoveaMap_Height };
@@ -250,12 +251,13 @@ namespace SRS22 {
 		//std::string ss2 = OpenCVHelpers::CVMatrixInfo(previousFrame);
 		//std::string ss3 = OpenCVHelpers::CVMatrixInfo(currentFrameLowRes);
 		//std::string ss4 = OpenCVHelpers::CVMatrixInfo(previousFrameLowRes);
-		//std::string ss5 = OpenCVHelpers::CVMatrixInfo(currentAbsDifferenceLowRes);
+		std::string ss5 = OpenCVHelpers::CVMatrixInfo(currentAbsDifferenceLowRes);
 
 		if (currentFrameLowRes.empty() == false &&
 			previousFrameLowRes.empty() == false) {
 			absdiff(currentFrameLowRes, previousFrameLowRes, currentAbsDifferenceLowRes);
 		}
+		std::string ss5a = OpenCVHelpers::CVMatrixInfo(currentAbsDifferenceLowRes);
 		return true;
 	}
 

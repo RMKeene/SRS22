@@ -401,6 +401,15 @@
     <ClInclude Include="CortexStats.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Neurons.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="CortexSettings.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="NeuronLink.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -592,6 +601,9 @@
     </ClCompile>
     <ClCompile Include="Maps\Camera\CameraFoveaAbsDiffMap.cpp">
       <Filter>Source\Maps\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Neurons.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

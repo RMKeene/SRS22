@@ -18,7 +18,7 @@ namespace SRS22 {
 		topTextFrame->Show(true);
 		topVideoFrame = new TopVideoFrame(this);
 		topVideoFrame->Show(true);
-		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->connectionThrottle));
+		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->settings.connectionThrottle));
 	}
 
 	MonitorFrame::~MonitorFrame() {
@@ -130,14 +130,14 @@ namespace SRS22 {
 			chosenMapText1->SetLabelText(s);
 			chosenMapText2->SetLabelText(mv->MapName);
 			chosenMapText3->SetLabel(mv->MapDescription);
-			SelectedMapDetailLabel->SetLabel(OpenCVHelpers::MapUIText(mv->M));
+			//SelectedMapDetailLabel->SetLabel(OpenCVHelpers::MapUIText(mv->M));
 		}
 		else {
 			wxBitmap bitmap(64, 64, 24);
 			chosenMapBitmap->SetBitmap(bitmap);
 			chosenMapText1->SetLabelText("No Map");
 			chosenMapText2->SetLabelText("Selected");
-			SelectedMapDetailLabel->SetLabel("Map Info:");
+			//SelectedMapDetailLabel->SetLabel("Map Info:");
 		}
 		lastMapMonitorRefreshTime = timeTicks;
 	}
@@ -212,8 +212,8 @@ namespace SRS22 {
 
 	void MonitorFrame::OnEnergySliderScroll(wxScrollEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-		b->cortex->connectionThrottle = m_energySlider->GetValue() / (float)m_energySlider->GetMax();
-		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->connectionThrottle));
+		b->cortex->settings.connectionThrottle = m_energySlider->GetValue() / (float)m_energySlider->GetMax();
+		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->settings.connectionThrottle));
 	}
 
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {
@@ -293,8 +293,9 @@ namespace SRS22 {
 			lastInSizeText->SetLabelText(wxString::Format("Last In Size: %d, total %d M", WaveInputHelper::lastPacketSize, WaveInputHelper::totalBytesIn / (1024 * 1024)));
 		}
 
-		MonitorStatisticsLine1->SetLabelText(wxString::Format("Total Neurons: %d, Fired: %d, Zeros %d, Ones %d", 
-			cortex->stats.countOfNeuronsProcessed, cortex->stats.countOfNeuronsFired, cortex->stats.countOfZeros, cortex->stats.countOfOnes));
+		MonitorStatisticsLine1->SetLabelText(wxString::Format("Total Neurons: %d, Fired: %d, Zeros %d, Ones %d, Fatigued %d", 
+			cortex->stats.countOfNeuronsProcessed, cortex->stats.countOfNeuronsFired, cortex->stats.countOfZeros, 
+			cortex->stats.countOfOnes, cortex->stats.countFatigued));
 		MonitorStatisticsLine2->SetLabelText(wxString::Format("ReRoutes: %d, Average C: %6.4f, Confidence: %6.4f",
 			cortex->stats.countOfReRoutes, cortex->stats.averageNeuronCharge, cortex->stats.averageConfidence));
 		MonitorStatisticsLine3->SetLabelText("Stats:");

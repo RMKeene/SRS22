@@ -155,6 +155,14 @@ namespace SRS22 {
 		void clampNext(int depth, int row, int col, float min = -1.0f, float max = 1.0f);
 
 		/// <summary>
+		/// Relax M toward zero into nextM by factor. 1.0 is no relaxation, 0.0 is instant relaxation.
+		/// </summary>
+		/// <param name="factor"></param>
+		void RelaxTowardZero(float factor) {
+			nextM = M * factor;
+		}
+
+		/// <summary>
 		/// Find the maximum value in M and return the row, col, depth and value.
 		/// But not less than minV. If no value is greater than minV returns false.
 		/// If return is false, col, row, depth, v are indeterminant.

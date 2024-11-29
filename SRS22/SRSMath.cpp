@@ -16,6 +16,11 @@ namespace SRS22 {
 		__debugbreak();
 	}
 
+	void SRS22DebugBreak()
+	{
+		__debugbreak();
+	}
+
 	float SRSFastSqrt(float x)
 	{
 		const float xhalf = 0.5f * x;
