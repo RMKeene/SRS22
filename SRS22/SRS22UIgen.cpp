@@ -168,24 +168,161 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	MonitorControl->Add( 0, 0, 0, wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSizer161;
-	sbSizer161 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Neuron Factors") ), wxVERTICAL );
+	sbSizer161 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Neuron/Cortex Factors") ), wxVERTICAL );
 	
 	wxBoxSizer* bSizer18;
 	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_staticText19 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Energy"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_updateCotrexFactorsButton = new wxButton( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Update"), wxDefaultPosition, wxSize( 70,-1 ), 0 );
+	bSizer18->Add( m_updateCotrexFactorsButton, 0, wxALL, 5 );
+	
+	m_button17 = new wxButton( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Undo"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	bSizer18->Add( m_button17, 0, wxALL, 5 );
+	
+	m_button18 = new wxButton( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Defaults"), wxDefaultPosition, wxSize( 60,-1 ), 0 );
+	bSizer18->Add( m_button18, 0, wxALL, 5 );
+	
+	m_staticText19 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("En+ / tick"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText19->Wrap( -1 );
 	bSizer18->Add( m_staticText19, 0, wxALL, 5 );
 	
-	m_energySlider = new wxSlider( sbSizer161->GetStaticBox(), wxID_ANY, 50, 0, 500, wxDefaultPosition, wxSize( 200,-1 ), wxSL_HORIZONTAL );
-	bSizer18->Add( m_energySlider, 0, wxALL, 5 );
+	m_EnergyTextInput = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.02"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_EnergyTextInput->SetMaxLength( 6 ); 
+	bSizer18->Add( m_EnergyTextInput, 0, wxALL, 5 );
 	
-	m_energySliderValueText = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.10"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_energySliderValueText->Wrap( -1 );
-	bSizer18->Add( m_energySliderValueText, 0, wxALL, 5 );
+	m_staticText22 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("En Th: Low"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText22->Wrap( -1 );
+	bSizer18->Add( m_staticText22, 0, wxALL, 5 );
+	
+	m_LowEnergyThreshTextInput = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.1"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer18->Add( m_LowEnergyThreshTextInput, 0, wxALL, 5 );
+	
+	m_hiLabel = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Hi"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_hiLabel->Wrap( -1 );
+	bSizer18->Add( m_hiLabel, 0, wxALL, 5 );
+	
+	m_hiEnergyThresh = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.9"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer18->Add( m_hiEnergyThresh, 0, wxALL, 5 );
+	
+	m_staticText24 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Fire Dep."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText24->Wrap( -1 );
+	bSizer18->Add( m_staticText24, 0, wxALL, 5 );
+	
+	m_fireDepletion = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.05"), wxDefaultPosition, wxSize( 70,-1 ), 0 );
+	bSizer18->Add( m_fireDepletion, 0, wxALL, 5 );
+	
+	m_staticline2 = new wxStaticLine( sbSizer161->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
+	bSizer18->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
+	
+	m_staticText31 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Conf: Rate  +"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText31->Wrap( -1 );
+	bSizer18->Add( m_staticText31, 0, wxALL, 5 );
+	
+	m_confidenceUpRate = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("1.01"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	bSizer18->Add( m_confidenceUpRate, 0, wxALL, 5 );
+	
+	m_confidenceDownRateLabel = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("-"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_confidenceDownRateLabel->Wrap( -1 );
+	bSizer18->Add( m_confidenceDownRateLabel, 0, wxALL, 5 );
+	
+	m_confidenceDownRate = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.999"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	bSizer18->Add( m_confidenceDownRate, 0, wxALL, 5 );
+	
+	m_staticText33 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Clip: Min"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText33->Wrap( -1 );
+	bSizer18->Add( m_staticText33, 0, wxALL, 5 );
+	
+	m_minConfidence = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.0001"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	bSizer18->Add( m_minConfidence, 0, wxALL, 5 );
+	
+	m_staticText34 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Max"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText34->Wrap( -1 );
+	bSizer18->Add( m_staticText34, 0, wxALL, 5 );
+	
+	m_maxConfidence = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.999"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	bSizer18->Add( m_maxConfidence, 0, wxALL, 5 );
 	
 	
 	sbSizer161->Add( bSizer18, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer19;
+	bSizer19 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_staticText25 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Conn Throttle"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText25->Wrap( -1 );
+	bSizer19->Add( m_staticText25, 0, wxALL, 5 );
+	
+	m_ConnectionThrottle = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("1.0"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_ConnectionThrottle->SetMaxLength( 6 ); 
+	bSizer19->Add( m_ConnectionThrottle, 0, wxALL, 5 );
+	
+	m_staticText26 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Self dSteepness"), wxDefaultPosition, wxSize( -1,-1 ), 0 );
+	m_staticText26->Wrap( -1 );
+	bSizer19->Add( m_staticText26, 0, wxALL, 5 );
+	
+	m_selfDeltaSteepness = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("10"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer19->Add( m_selfDeltaSteepness, 0, wxALL, 5 );
+	
+	m_staticText21 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Gwth"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText21->Wrap( -1 );
+	bSizer19->Add( m_staticText21, 0, wxALL, 5 );
+	
+	m_GrowthRateTextInput = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.01"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_GrowthRateTextInput->SetMaxLength( 8 ); 
+	bSizer19->Add( m_GrowthRateTextInput, 0, wxALL, 5 );
+	
+	m_staticline4 = new wxStaticLine( sbSizer161->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
+	bSizer19->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
+	
+	m_staticText27 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Reroute: Th"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText27->Wrap( -1 );
+	bSizer19->Add( m_staticText27, 0, wxALL, 5 );
+	
+	m_RerouteThreshold = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.001"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	bSizer19->Add( m_RerouteThreshold, 0, wxALL, 5 );
+	
+	m_staticText35 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Prob"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText35->Wrap( -1 );
+	bSizer19->Add( m_staticText35, 0, wxALL, 5 );
+	
+	m_rerouteProbabilityTextInput = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.01"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer19->Add( m_rerouteProbabilityTextInput, 0, wxALL, 5 );
+	
+	m_staticText36 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Init Conf"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText36->Wrap( -1 );
+	bSizer19->Add( m_staticText36, 0, wxALL, 5 );
+	
+	m_rerouteInitialConfidence = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.5"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer19->Add( m_rerouteInitialConfidence, 0, wxALL, 5 );
+	
+	m_staticline3 = new wxStaticLine( sbSizer161->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
+	bSizer19->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
+	
+	m_staticText28 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Low Learn Th"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText28->Wrap( -1 );
+	m_staticText28->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ) );
+	
+	bSizer19->Add( m_staticText28, 0, wxALL, 5 );
+	
+	m_lowLearnThresh = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.25"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer19->Add( m_lowLearnThresh, 0, wxALL, 5 );
+	
+	m_staticText29 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Learn: Low"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText29->Wrap( -1 );
+	bSizer19->Add( m_staticText29, 0, wxALL, 5 );
+	
+	m_lowLearnRate = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.01"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer19->Add( m_lowLearnRate, 0, wxALL, 5 );
+	
+	m_staticText30 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Hi"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText30->Wrap( -1 );
+	bSizer19->Add( m_staticText30, 0, wxALL, 5 );
+	
+	m_hiLearnRate = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.05"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer19->Add( m_hiLearnRate, 0, wxALL, 5 );
+	
+	
+	sbSizer161->Add( bSizer19, 1, wxEXPAND, 5 );
 	
 	
 	MonitorControl->Add( sbSizer161, 0, wxEXPAND, 5 );
@@ -434,15 +571,9 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	BadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	m_LoadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoLoad ), NULL, this );
 	m_StoreButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoStore ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_updateCotrexFactorsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsChangeUpdateClicked ), NULL, this );
+	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRevertNeuronFactorsClicked ), NULL, this );
+	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsDefaultsClicked ), NULL, this );
 	AudioInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
@@ -504,15 +635,9 @@ MonitorFrameGen::~MonitorFrameGen()
 	BadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	m_LoadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoLoad ), NULL, this );
 	m_StoreButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoStore ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
-	m_energySlider->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( MonitorFrameGen::OnEnergySliderScroll ), NULL, this );
+	m_updateCotrexFactorsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsChangeUpdateClicked ), NULL, this );
+	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRevertNeuronFactorsClicked ), NULL, this );
+	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsDefaultsClicked ), NULL, this );
 	AudioInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );

@@ -31,7 +31,6 @@ namespace SRS22 {
 		void OnBadClicked(wxCommandEvent& event) override;
 		void DoLoad(wxCommandEvent& event) override;
 		void DoStore(wxCommandEvent& event) override;
-		void OnEnergySliderScroll(wxScrollEvent& event) override;
 		void OnAudioInDeviceChoiceChanged(wxCommandEvent& event) override;
 		void OnAudioVolumeIn(wxScrollEvent& event) override;
 		void OnAudioOutDeviceChoiceChanged(wxCommandEvent& event) override;
@@ -45,12 +44,23 @@ namespace SRS22 {
 		void OnTestAClicked(wxCommandEvent& event) override;
 		void OnTestBClicked(wxCommandEvent& event) override;
 		void OnScrollMapMonitorMsSlider(wxScrollEvent& event) override;
+		void OnNeuronFactorsChangeUpdateClicked(wxCommandEvent& event) override;
+		void OnRevertNeuronFactorsClicked(wxCommandEvent& event) override;
+		void OnNeuronFactorsDefaultsClicked(wxCommandEvent& event) override;
 
 		void OnPaintFrame(wxPaintEvent& event) override;
 
 		void RefreshMapMonitor(long long timeTicks);
 
 		void ProcessLogQueueInWindowThread();
+
+		void CortexSettingsToUI();
+
+		/***
+		* Convert the text value from textCtrl to a float into value. False if fails and value remains unchanged.
+		* Also on fail to parse sets background pink, on success sets background white.
+		*/
+		bool ToFloat(wxTextCtrl* textCtrl, float * value);
 
 		TopTextFrame* topTextFrame;
 		WhiteboardFrame* whiteboardFrame;

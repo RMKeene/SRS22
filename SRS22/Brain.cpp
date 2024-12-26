@@ -159,23 +159,32 @@ namespace SRS22 {
 		// In the future this will be how accurate of charge we keep. Like std::float16_t, float, double, etc.
 		float chargePrecision = 1.0f;
 		int neuronOutputs;
-		file.read(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
-		file.read(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
-		file.read(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
-		file.read(reinterpret_cast<char*>(&neuronOutputs), sizeof(int));
-		if (totalNeurons != TOTAL_NEURONS || neuronHistory != NEURON_HISTORY || chargePrecision != sizeof(float) || neuronOutputs != NEURON_OUTPUTS) {
-			// TODO - Make it work for larger configuration.
-			// TODO - Make it work for smaller configuration.
-			return { false, "File does not match current Brain configuration." };
-		}
-		Neurons&Ns = cortex->neurons;
-		file.read(reinterpret_cast<char*>(Ns.charge), sizeof(Ns.charge));
-		file.read(reinterpret_cast<char*>(Ns.neuronChargesAverageDeltaSum), sizeof(Ns.neuronChargesAverageDeltaSum));
-		file.read(reinterpret_cast<char*>(Ns.neuronChargesAverageCount), sizeof(Ns.neuronChargesAverageCount));
-		file.read(reinterpret_cast<char*>(Ns.energy), sizeof(Ns.energy));
-		file.read(reinterpret_cast<char*>(Ns.enabled), sizeof(Ns.enabled));
-		file.read(reinterpret_cast<char*>(Ns.link), sizeof(Ns.link));
+		try {
+			file.read(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
+			file.read(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
+			file.read(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
+			file.read(reinterpret_cast<char*>(&neuronOutputs), sizeof(int));
+			if (totalNeurons != TOTAL_NEURONS || neuronHistory != NEURON_HISTORY || chargePrecision != sizeof(float) || neuronOutputs != NEURON_OUTPUTS) {
+				// TODO - Make it work for larger configuration.
+				// TODO - Make it work for smaller configuration.
+				return { false, "File does not match current Brain configuration." };
+			}
+			Neurons& Ns = cortex->neurons;
+			file.read(reinterpret_cast<char*>(Ns.charge), sizeof(Ns.charge));
+			file.read(reinterpret_cast<char*>(Ns.neuronChargesAverageDeltaSum), sizeof(Ns.neuronChargesAverageDeltaSum));
+			file.read(reinterpret_cast<char*>(Ns.neuronChargesAverageCount), sizeof(Ns.neuronChargesAverageCount));
+			file.read(reinterpret_cast<char*>(Ns.energy), sizeof(Ns.energy));
+			file.read(reinterpret_cast<char*>(Ns.enabled), sizeof(Ns.enabled));
+			file.read(reinterpret_cast<char*>(Ns.link), sizeof(Ns.link));
 
+			file.read(reinterpret_cast<char*>(&cortex->settings), sizeof(CortexSettings));
+
+		}
+		catch (std::exception e) {
+			SRS22LogTaker::LogError(std::format("Error loading Brain from {}: {}", fileName, e.what()).c_str());
+			file.close();
+			return { false, e.what() };
+		}
 
 		file.close();
 		SRS22LogTaker::LogInfo(std::format("Brain loaded from {}", fileName).c_str());
@@ -189,24 +198,33 @@ namespace SRS22 {
 			SRS22LogTaker::LogError(std::format("Unable to open: {}", fileName).c_str());
 			return false;
 		}
-		// Store the cortex neuronCharges array in binary
-		int totalNeurons = TOTAL_NEURONS;
-		int neuronHistory = NEURON_HISTORY;
-		int neuronOutputs = NEURON_OUTPUTS;
-		float chargePrecision = sizeof(float);
+		try {
+			// Store the cortex neuronCharges array in binary
+			int totalNeurons = TOTAL_NEURONS;
+			int neuronHistory = NEURON_HISTORY;
+			int neuronOutputs = NEURON_OUTPUTS;
+			float chargePrecision = sizeof(float);
 
-		file.write(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
-		file.write(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
-		file.write(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
-		file.write(reinterpret_cast<char*>(&neuronOutputs), sizeof(int));
+			file.write(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
+			file.write(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
+			file.write(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
+			file.write(reinterpret_cast<char*>(&neuronOutputs), sizeof(int));
 
-		Neurons& Ns = cortex->neurons;
-		file.write(reinterpret_cast<char*>(Ns.charge), sizeof(Ns.charge));
-		file.write(reinterpret_cast<char*>(Ns.neuronChargesAverageDeltaSum), sizeof(Ns.neuronChargesAverageDeltaSum));
-		file.write(reinterpret_cast<char*>(Ns.neuronChargesAverageCount), sizeof(Ns.neuronChargesAverageCount));
-		file.write(reinterpret_cast<char*>(Ns.energy), sizeof(Ns.energy));
-		file.write(reinterpret_cast<char*>(Ns.enabled), sizeof(Ns.enabled));
-		file.write(reinterpret_cast<char*>(Ns.link), sizeof(Ns.link));
+			Neurons& Ns = cortex->neurons;
+			file.write(reinterpret_cast<char*>(Ns.charge), sizeof(Ns.charge));
+			file.write(reinterpret_cast<char*>(Ns.neuronChargesAverageDeltaSum), sizeof(Ns.neuronChargesAverageDeltaSum));
+			file.write(reinterpret_cast<char*>(Ns.neuronChargesAverageCount), sizeof(Ns.neuronChargesAverageCount));
+			file.write(reinterpret_cast<char*>(Ns.energy), sizeof(Ns.energy));
+			file.write(reinterpret_cast<char*>(Ns.enabled), sizeof(Ns.enabled));
+			file.write(reinterpret_cast<char*>(Ns.link), sizeof(Ns.link));
+
+			file.write(reinterpret_cast<char*>(&cortex->settings), sizeof(CortexSettings));
+		}
+		catch (std::exception e) {
+			SRS22LogTaker::LogError(std::format("Error storing Brain to {}: {}", fileName, e.what()).c_str());
+			file.close();
+			return false;
+		}
 
 		file.close();
 		SRS22LogTaker::LogInfo(std::format("Brain stored to {}", fileName).c_str());

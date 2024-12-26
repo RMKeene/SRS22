@@ -25,14 +25,14 @@
 #include <wx/stattext.h>
 #include <wx/statbox.h>
 #include <wx/checkbox.h>
-#include <wx/slider.h>
-#include <wx/choice.h>
+#include <wx/textctrl.h>
 #include <wx/statline.h>
+#include <wx/choice.h>
+#include <wx/slider.h>
 #include <wx/statbmp.h>
 #include <wx/richtext/richtextctrl.h>
 #include <wx/timer.h>
 #include <wx/frame.h>
-#include <wx/textctrl.h>
 #include <wx/bmpbuttn.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -64,9 +64,46 @@ class MonitorFrameGen : public wxFrame
 		wxCheckBox* m_CPUParallelCB;
 		wxButton* m_LoadButton;
 		wxButton* m_StoreButton;
+		wxButton* m_updateCotrexFactorsButton;
+		wxButton* m_button17;
+		wxButton* m_button18;
 		wxStaticText* m_staticText19;
-		wxSlider* m_energySlider;
-		wxStaticText* m_energySliderValueText;
+		wxTextCtrl* m_EnergyTextInput;
+		wxStaticText* m_staticText22;
+		wxTextCtrl* m_LowEnergyThreshTextInput;
+		wxStaticText* m_hiLabel;
+		wxTextCtrl* m_hiEnergyThresh;
+		wxStaticText* m_staticText24;
+		wxTextCtrl* m_fireDepletion;
+		wxStaticLine* m_staticline2;
+		wxStaticText* m_staticText31;
+		wxTextCtrl* m_confidenceUpRate;
+		wxStaticText* m_confidenceDownRateLabel;
+		wxTextCtrl* m_confidenceDownRate;
+		wxStaticText* m_staticText33;
+		wxTextCtrl* m_minConfidence;
+		wxStaticText* m_staticText34;
+		wxTextCtrl* m_maxConfidence;
+		wxStaticText* m_staticText25;
+		wxTextCtrl* m_ConnectionThrottle;
+		wxStaticText* m_staticText26;
+		wxTextCtrl* m_selfDeltaSteepness;
+		wxStaticText* m_staticText21;
+		wxTextCtrl* m_GrowthRateTextInput;
+		wxStaticLine* m_staticline4;
+		wxStaticText* m_staticText27;
+		wxTextCtrl* m_RerouteThreshold;
+		wxStaticText* m_staticText35;
+		wxTextCtrl* m_rerouteProbabilityTextInput;
+		wxStaticText* m_staticText36;
+		wxTextCtrl* m_rerouteInitialConfidence;
+		wxStaticLine* m_staticline3;
+		wxStaticText* m_staticText28;
+		wxTextCtrl* m_lowLearnThresh;
+		wxStaticText* m_staticText29;
+		wxTextCtrl* m_lowLearnRate;
+		wxStaticText* m_staticText30;
+		wxTextCtrl* m_hiLearnRate;
 		wxStaticText* m_staticText91;
 		wxChoice* AudioInChoiceDropbox;
 		wxStaticText* m_staticText181;
@@ -120,7 +157,9 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnBadClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DoLoad( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DoStore( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEnergySliderScroll( wxScrollEvent& event ) { event.Skip(); }
+		virtual void OnNeuronFactorsChangeUpdateClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRevertNeuronFactorsClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnNeuronFactorsDefaultsClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioInDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioVolumeIn( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }

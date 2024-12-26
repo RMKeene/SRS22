@@ -18,7 +18,6 @@ namespace SRS22 {
 		topTextFrame->Show(true);
 		topVideoFrame = new TopVideoFrame(this);
 		topVideoFrame->Show(true);
-		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->settings.connectionThrottle));
 	}
 
 	MonitorFrame::~MonitorFrame() {
@@ -28,7 +27,7 @@ namespace SRS22 {
 		BrainH b = GlobalWorld::GlobalWorldInstance.brains[0];
 		ViewMapChoice->Clear();
 		ViewMapChoice->AppendString(wxString("None"));
-		for (auto m : b->conceptMapsByName) {
+		for (auto& m : b->conceptMapsByName) {
 			ViewMapChoice->AppendString(wxString(m.first));
 		}
 	}
@@ -63,7 +62,7 @@ namespace SRS22 {
 			if (m.has_value() == false) // No such map.
 				return;
 			std::shared_ptr<ConceptMap> mv = m.value();
-			auto charges = mv->M;
+			auto& charges = mv->M;
 			int w = charges.cols;
 			int h = charges.rows;
 			if (charges.dims == 3) {
@@ -202,18 +201,84 @@ namespace SRS22 {
 
 	void MonitorFrame::DoLoad(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-		b->Load(brainFileName);
+		pair<bool, string> r = b->Load(brainFileName);
+		if(r.first == false)
+			wxMessageBox(r.second, "Error", wxICON_ERROR);
+		else {
+			wxMessageBox("Brain loaded.", "Success", wxICON_INFORMATION);
+			CortexSettingsToUI();
+		}
 	}
 
 	void MonitorFrame::DoStore(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-		b->Store(brainFileName);
+		if(b->Store(brainFileName)) 
+			wxMessageBox("Brain stored.", "Success", wxICON_INFORMATION);
+		else
+			wxMessageBox("Error storing brain.", "Error", wxICON_ERROR);
 	}
 
-	void MonitorFrame::OnEnergySliderScroll(wxScrollEvent& event) {
+	void MonitorFrame::OnNeuronFactorsChangeUpdateClicked(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-		b->cortex->settings.connectionThrottle = m_energySlider->GetValue() / (float)m_energySlider->GetMax();
-		m_energySliderValueText->SetLabelText(wxString::Format("%6.4f", b->cortex->settings.connectionThrottle));
+		ToFloat(m_ConnectionThrottle, &b->cortex->settings.connectionThrottle);
+		ToFloat(m_GrowthRateTextInput, &b->cortex->settings.growthRate);
+		ToFloat(m_EnergyTextInput, &b->cortex->settings.energyRechargePerTick);
+		ToFloat(m_fireDepletion, &b->cortex->settings.energyDepletionOnFire);
+		ToFloat(m_LowEnergyThreshTextInput, &b->cortex->settings.lowEnergyThreshold);
+		ToFloat(m_hiEnergyThresh, &b->cortex->settings.highEnergyThreshold);
+		ToFloat(m_selfDeltaSteepness, &b->cortex->settings.selfDeltaSteepness);
+		ToFloat(m_RerouteThreshold, &b->cortex->settings.rerouteThreshold);
+		ToFloat(m_rerouteProbabilityTextInput, &b->cortex->settings.rerouteProbability);
+		ToFloat(m_lowLearnThresh, &b->cortex->settings.lowLearnThreshold);
+		ToFloat(m_lowLearnRate, &b->cortex->settings.lowLearnRate);
+		ToFloat(m_hiLearnRate, &b->cortex->settings.hiLearnRate);
+		ToFloat(m_confidenceUpRate, &b->cortex->settings.confidenceAdjustmentUpRate);
+		ToFloat(m_confidenceDownRate, &b->cortex->settings.confidenceAdjustmentDownRate);
+		ToFloat(m_minConfidence, &b->cortex->settings.minimumConfidence);
+		ToFloat(m_maxConfidence, &b->cortex->settings.maximumConfidence);
+		ToFloat(m_rerouteInitialConfidence, &b->cortex->settings.rerouteConfidenceSet);
+
+	}
+
+	bool MonitorFrame::ToFloat(wxTextCtrl* textCtrl, float *value) {
+		wxString s = textCtrl->GetValue();
+		double f = 0.0f;
+		if (!s.ToDouble(&f)) {
+			textCtrl->SetBackgroundColour(wxColor(255, 50, 50));
+			return false;
+		}
+		textCtrl->SetBackgroundColour(wxColor(255, 255, 255));
+		*value = (float)f;
+		return true;
+	}
+
+	void MonitorFrame::OnNeuronFactorsDefaultsClicked(wxCommandEvent& event) {
+		GlobalWorld::GlobalWorldInstance.GetBrain(0)->cortex->settings = CortexSettings();
+	}
+
+	void MonitorFrame::OnRevertNeuronFactorsClicked(wxCommandEvent& event) {
+		CortexSettingsToUI();
+	}
+
+	void MonitorFrame::CortexSettingsToUI() {
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		m_ConnectionThrottle->SetValue(wxString::Format("%6.4g", b->cortex->settings.connectionThrottle));
+		m_GrowthRateTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.growthRate));
+		m_EnergyTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.energyRechargePerTick));
+		m_fireDepletion->SetValue(wxString::Format("%6.4g", b->cortex->settings.energyDepletionOnFire));
+		m_LowEnergyThreshTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.lowEnergyThreshold));
+		m_hiEnergyThresh->SetValue(wxString::Format("%6.4g", b->cortex->settings.highEnergyThreshold));
+		m_selfDeltaSteepness->SetValue(wxString::Format("%6.4g", b->cortex->settings.selfDeltaSteepness));
+		m_RerouteThreshold->SetValue(wxString::Format("%6.4g", b->cortex->settings.rerouteThreshold));
+		m_rerouteProbabilityTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.rerouteProbability));
+		m_lowLearnThresh->SetValue(wxString::Format("%6.4g", b->cortex->settings.lowLearnThreshold));
+		m_lowLearnRate->SetValue(wxString::Format("%6.4g", b->cortex->settings.lowLearnRate));
+		m_hiLearnRate->SetValue(wxString::Format("%6.4g", b->cortex->settings.hiLearnRate));
+		m_confidenceUpRate->SetValue(wxString::Format("%6.4g", b->cortex->settings.confidenceAdjustmentUpRate));
+		m_confidenceDownRate->SetValue(wxString::Format("%6.4g", b->cortex->settings.confidenceAdjustmentDownRate));
+		m_minConfidence->SetValue(wxString::Format("%6.4g", b->cortex->settings.minimumConfidence));
+		m_maxConfidence->SetValue(wxString::Format("%6.4g", b->cortex->settings.maximumConfidence));
+		m_rerouteInitialConfidence->SetValue(wxString::Format("%6.4g", b->cortex->settings.rerouteConfidenceSet));
 	}
 
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {
