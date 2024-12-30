@@ -53,9 +53,9 @@ namespace SRS22 {
 		/// </summary>
 		bool enabled[TOTAL_NEURONS];
 		/// <summary>
-		/// The other neurons who's charge this neuron is trying to predict.
+		/// The other neurons used to predict this neurons future state.
 		/// </summary>
-		NeuronLink link[TOTAL_NEURONS][NEURON_OUTPUTS];
+		NeuronLink link[TOTAL_NEURONS][NEURON_UPSTREAM_LINKS];
 		/// <summary>
 		/// Flag that this link was a match for the selfCharge this tick.
 		/// </summary>
@@ -68,7 +68,7 @@ namespace SRS22 {
 				for (size_t h = 0; h < NEURON_HISTORY; h++) {
 					charge[h][i] = fastRandFloat() * 0.5f;
 				}
-				for (size_t k = 0; k < NEURON_OUTPUTS; k++) {
+				for (size_t k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 					link[i][k].otherIdx = GetRandomLinearOffsetExcept(i);
 					link[i][k].confidence = fastRandFloat() * 0.01f;
 					link[i][k].otherCharge = fastRandFloat();
@@ -110,17 +110,41 @@ namespace SRS22 {
 		}
 
 		/// <summary>
-		/// Dependency loop so code copied here.
+		/// neuronIdx if is not in the links[linksCount] array return true.
+		/// links may be null, then returns true.
+		/// </summary>
+		/// <param name="neuronIdx"></param>
+		/// <param name="links"></param>
+		/// <param name="linksCount"></param>
+		/// <returns></returns>
+		inline bool NotIn(int neuronIdx, NeuronLink* links) {
+			if (links == nullptr)
+				return true;
+			for (int i = 0; i < NEURON_UPSTREAM_LINKS; i++) {
+				if (links[i].otherIdx == neuronIdx)
+					return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Gets a random index in TOTAL_NEURONS but never returns notThisIdx, nor any values in links[NEURON_UPSTREAM_LINKS].
+		/// If links is null it gets ignored.
 		/// </summary>
 		/// <param name="notThisIdx"></param>
+		/// <param name="links"></param>
 		/// <returns></returns>
 		inline int GetRandomLinearOffsetExcept(int notThisIdx) {
-			int i = fastRand() % TOTAL_NEURONS;
-			while (i == notThisIdx) {
+			int i = fastRange0Plus() % TOTAL_NEURONS;
+			while (true) {
 				i = fastRand() % TOTAL_NEURONS;
+				if (i != notThisIdx && NotIn(i, link[i]))
+					break;
+
 			}
 			return i;
 		}
+
 
 	};
 }

@@ -47,7 +47,7 @@ namespace SRS22 {
 		RechargeMetabolismIf(i);
 		UpdateProcessedStatCounts(threadStats, C);
 
-		for (int k = 0; k < NEURON_OUTPUTS; k++) {
+		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
 			L.wasSelfMatch = false;
 			if (L.otherIdx == NEURON_LINK_UNCONNECTED)
@@ -57,9 +57,12 @@ namespace SRS22 {
 				throw std::out_of_range(std::format("L.otherIdx out of range: {0}", L.otherIdx));
 #endif
 
+			// Check whether the upstream neurons match the link's otherCharge closely enough.
 			const float selfDeltaC = SelfMatchStrength(L, C);
 			if (selfDeltaC > 0.0f) {
-
+				// By 'fire' we mean vote for this neurons state to change to L.selfCharge.
+				// Vote weight is the confidence of the link times the closeness of the match. (See selfDeltaSteepness)
+				// The weighted average of all the votes is the new next state, but softened by the connectionThrottle.
 				FireConnection(i, k, threadStats, selfDeltaC);
 			}
 		}
@@ -96,7 +99,7 @@ namespace SRS22 {
 	void Cortex::DoLearningSingleNeuron(const size_t i, CortexThreadStats& threadStats) {
 		const float C = neurons.getCurrent(i);
 
-		for (int k = 0; k < NEURON_OUTPUTS; k++) {
+		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
 			threadStats.sumOfConfidence += L.confidence;
 			threadStats.countOfConfidence++;
@@ -107,7 +110,7 @@ namespace SRS22 {
 				L.otherCharge = get(L.otherIdx);
 				L.selfCharge = C;
 			}
-			else if (L.wasSelfMatch && !L.wasSelfMatch) {
+			else if (!L.wasSelfMatch) {
 				//Lose confidence in this connection.
 				L.confidence *= settings.confidenceAdjustmentDownRate;
 			}

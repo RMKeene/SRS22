@@ -36,7 +36,10 @@ namespace SRS22 {
 				for (int h = 0; h < NEURON_HISTORY; h++) {
 					neurons.charge[h][i] = fastRandFloat() * 0.5f;
 				}
-				for (int k = 0; k < NEURON_OUTPUTS; k++) {
+				for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
+					neurons.link[i]->otherIdx = NEURON_LINK_UNCONNECTED;
+				}
+				for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 					NeuronLink& L = neurons.link[i][k];
 					L.otherIdx = GetRandomLinearOffsetExcept(i);
 					L.confidence = fastRandFloat() * 0.01f;
@@ -176,7 +179,7 @@ namespace SRS22 {
 		void ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats);
 
 		/// <summary>
-		/// Set self match true, count in stats, do metabolism, and add connection vote.
+		/// Set self match true, count in stats, deduct metabolism, and add link's vote.
 		/// </summary>
 		/// <param name="L"></param>
 		/// <param name="threadStats"></param>
@@ -188,7 +191,7 @@ namespace SRS22 {
 			threadStats.countOfNeuronsFired++;
 
 			DeductFiringMetabolism(neuronIdx);
-			AddConnectionVote(neurons.link[neuronIdx][linkIdx], selfDeltaC);
+			AddLinkVote(neurons.link[neuronIdx][linkIdx], selfDeltaC);
 		}
 
 		/// <summary>
@@ -208,7 +211,7 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="otherNeuron"></param>
 		/// <param name="L"></param>
-		inline void AddConnectionVote(const NeuronLink& L, const float selfAbsDeltaC)
+		inline void AddLinkVote(const NeuronLink& L, const float selfAbsDeltaC)
 		{
 			const float strength = L.confidence * selfAbsDeltaC;
 			neurons.neuronChargesAverageDeltaSum[L.otherIdx] += L.otherCharge * strength;
@@ -265,13 +268,41 @@ namespace SRS22 {
 		void DoLearningSingleNeuron(const size_t i, CortexThreadStats& threadStats);
 
 		inline int GetRandomLinearOffset() {
-			return fastRand() % TOTAL_NEURONS;
+			return fastRange0Plus() % TOTAL_NEURONS;
 		}
 
+		/// <summary>
+		/// neuronIdx if is not in the links[linksCount] array return true.
+		/// links may be null, then returns true.
+		/// </summary>
+		/// <param name="neuronIdx"></param>
+		/// <param name="links"></param>
+		/// <param name="linksCount"></param>
+		/// <returns></returns>
+		inline bool NotIn(int neuronIdx, NeuronLink* links) {
+			if (links == nullptr)
+				return true;
+			for (int i = 0; i < NEURON_UPSTREAM_LINKS; i++) {
+				if (links[i].otherIdx == neuronIdx)
+					return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Gets a random index in TOTAL_NEURONS but never returns notThisIdx, nor any values in links[NEURON_UPSTREAM_LINKS].
+		/// If links is null it gets ignored.
+		/// </summary>
+		/// <param name="notThisIdx"></param>
+		/// <param name="links"></param>
+		/// <returns></returns>
 		inline int GetRandomLinearOffsetExcept(int notThisIdx) {
-			int i = fastRand() % TOTAL_NEURONS;
-			while (i == notThisIdx) {
+			int i = fastRange0Plus() % TOTAL_NEURONS;
+			while (true) {
 				i = fastRand() % TOTAL_NEURONS;
+				if (i != notThisIdx && NotIn(i, neurons.link[i]))
+					break;
+
 			}
 			return i;
 		}

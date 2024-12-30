@@ -17,9 +17,13 @@ struct CortexSettings {
 	/// How much energy is subtracted if the neuron fires. This is subtracted each time a link fires, so is often 
 	/// subtracted multiple times per tick.
 	/// </summary>
-	float energyDepletionOnFire = 0.05f / (float)NEURON_OUTPUTS;
+	float energyDepletionOnFire = 0.05f / (float)NEURON_UPSTREAM_LINKS;
 
+	/// <summary>
+	/// How strongly links matches move the neuron's charge toward L.selfCharge across all weighted votes for nest state.
+	/// </summary>
 	float connectionThrottle = 1.0f;
+
 	/// <summary>
 	/// How quickly "being a match" falls off as actual charge moves away from the NeuronLink selfCharge.
 	/// So if this is 10.0 then a 0.1 difference in charge will reduce the match strength to 0.0.

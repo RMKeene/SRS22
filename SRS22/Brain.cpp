@@ -164,7 +164,7 @@ namespace SRS22 {
 			file.read(reinterpret_cast<char*>(&neuronHistory), sizeof(int));
 			file.read(reinterpret_cast<char*>(&chargePrecision), sizeof(float));
 			file.read(reinterpret_cast<char*>(&neuronOutputs), sizeof(int));
-			if (totalNeurons != TOTAL_NEURONS || neuronHistory != NEURON_HISTORY || chargePrecision != sizeof(float) || neuronOutputs != NEURON_OUTPUTS) {
+			if (totalNeurons != TOTAL_NEURONS || neuronHistory != NEURON_HISTORY || chargePrecision != sizeof(float) || neuronOutputs != NEURON_UPSTREAM_LINKS) {
 				// TODO - Make it work for larger configuration.
 				// TODO - Make it work for smaller configuration.
 				return { false, "File does not match current Brain configuration." };
@@ -202,7 +202,7 @@ namespace SRS22 {
 			// Store the cortex neuronCharges array in binary
 			int totalNeurons = TOTAL_NEURONS;
 			int neuronHistory = NEURON_HISTORY;
-			int neuronOutputs = NEURON_OUTPUTS;
+			int neuronOutputs = NEURON_UPSTREAM_LINKS;
 			float chargePrecision = sizeof(float);
 
 			file.write(reinterpret_cast<char*>(&totalNeurons), sizeof(int));
