@@ -8,10 +8,10 @@
 #include <opencv2/core/hal/interface.h>
 
 namespace SRS22 {
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEnabled, int cols, float decayFactor, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool isInput, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
-		computeNextStateEnabled(computeNextStateEnabled),
+		_isInput(isInput),
 		UID(UID),
 		cols(cols),
 		rows(1),
@@ -26,10 +26,10 @@ namespace SRS22 {
 
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEnabled, int rows, int cols, float decayFactor, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool isInput, int rows, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
-		computeNextStateEnabled(computeNextStateEnabled),
+		_isInput(isInput),
 		UID(UID),
 		cols(cols),
 		rows(rows),
@@ -43,10 +43,10 @@ namespace SRS22 {
 		dims[2] = cols;
 	}
 
-	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEnabled, int depth, int rows, int cols, float decayFactor, std::string MapDescription) :
+	ConceptMap::ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool isInput, int depth, int rows, int cols, float decayFactor, std::string MapDescription) :
 		myBrain(br),
 		MapName(MapName),
-		computeNextStateEnabled(computeNextStateEnabled),
+		_isInput(isInput),
 		UID(UID),
 		cols(cols),
 		rows(rows),
@@ -69,7 +69,17 @@ namespace SRS22 {
 	}
 
 	void ConceptMap::PostCreate(Brain& b) {
+		Cortex& c = *b.cortex;
+		// all neurons were already set to ranfom ENABLED or DISABLED.
+		if (_isInput) {
+			for (int i = cortexStartIndex; i < cortexStartIndex + totalSize; i++) {
+				c.neurons.enabled[i] = NeuronState::IS_INPUT;
+			}
+		}
+	}
 
+	void ConceptMap::CopyToNext() {
+		memcpy_s(myBrain->cortex->neurons.getNextPointer(cortexStartIndex), totalSize * sizeof(float), myBrain->cortex->neurons.getCurrentPointer(cortexStartIndex), totalSize * sizeof(float));
 	}
 
 	void ConceptMap::ComputeNextState(boolean doParallel) {

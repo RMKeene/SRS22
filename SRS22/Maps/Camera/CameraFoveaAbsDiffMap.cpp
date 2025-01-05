@@ -6,8 +6,8 @@
 #include "CameraFoveaMap.h"
 
 namespace SRS22 {
-	CameraFoveaAbsDiffMap::CameraFoveaAbsDiffMap(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::FOVEAABSDIFF_MAP, "CameraFoveaAbsDiffMap", computeNextStateEnabled,
+	CameraFoveaAbsDiffMap::CameraFoveaAbsDiffMap(Brain* br) :
+		ConceptMap(br, MapUidE::FOVEAABSDIFF_MAP, "CameraFoveaAbsDiffMap", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Height, 0.0f,
 			"The attention spot of the fovea, diff since last frame.") {
 	}

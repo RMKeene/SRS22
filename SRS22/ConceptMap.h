@@ -62,7 +62,7 @@ namespace SRS22 {
 		/// </summary>
 		float decayFactor = 1.0f;
 
-		bool computeNextStateEnabled = true;
+		bool _isInput = true;
 
 	public:
 
@@ -78,24 +78,26 @@ namespace SRS22 {
 		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap".
 		/// In the case of cortex maps it may not be the class name.
 		/// </summary>
-		/// <param name="MapName"></param>
+		/// <param name="br">The brain that owns this map. Future feature: Allow  a world with multiple brains.</param>
 		/// <param name="UID">Must be globally unique. See MapUIDs.h</param>
+		/// <param name="MapName"></param>
+		/// <param name="computeNextStateEnabled">Default is true. If the map is in I/O input map then this is false. See NeuronState.PERMANENT_DISABLED</param>
 		/// <param name="cols"></param>
 		/// <param name="decayFactor">0.0 means instant decay to zero before every tick. 1.0 is infinite sustain.
 		/// Done with multiplicative decay. In LatchNewState does <code>nextM = M * decayFactor; nextM = 0.0f;</code></param>
 		/// <param name="MapDescription"></param>
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEabled, int cols, float decayFactor, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEabled, int rows, int cols, float decayFactor, std::string MapDescription);
-		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool computeNextStateEabled, int depth, int rows, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool isInput, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool isInput, int rows, int cols, float decayFactor, std::string MapDescription);
+		ConceptMap(Brain* br, MapUidE UID, std::string MapName, bool isInput, int depth, int rows, int cols, float decayFactor, std::string MapDescription);
 
 		~ConceptMap();
 
-		bool isComputeNextStateEnabled() { return computeNextStateEnabled; }
+		bool isInput() { return _isInput; }
+
 		/// <summary>
-		/// Turns on or off ComputeNextState and LatchNewState processing.
+		/// Copy current charge to next charge.
 		/// </summary>
-		/// <param name="e"></param>
-		void setComputeNextStateEnabled(bool e) { computeNextStateEnabled = e; }
+		void CopyToNext();
 
 		void put(int idx, float val);
 		float get(int idx);

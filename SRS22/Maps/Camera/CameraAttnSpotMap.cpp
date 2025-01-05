@@ -7,10 +7,10 @@
 #include "../../Brain.h"
 
 namespace SRS22 {
-	CameraAttnSpotMap::CameraAttnSpotMap(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAATTNSPOT_MAP, "CameraAttnSpotMap", computeNextStateEnabled,
+	CameraAttnSpotMap::CameraAttnSpotMap(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAATTNSPOT_MAP, "CameraAttnSpotMap", false,
 			CameraAttnSpotMap_Width, 0.0f,
-			"Raw pixel map of center of camera fovea in color.") {
+			"Output where the camera attantion spot is located.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
 	}
 

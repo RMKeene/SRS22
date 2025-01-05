@@ -21,7 +21,7 @@ namespace SRS22 {
 		/// 	PhonemeMap_Width,
 		/// 	"The \"Voice\" out the audio system.")
 		/// </summary>
-		PhonemeMap(Brain* br, bool computeNextStateEnabled = true);
+		PhonemeMap(Brain* br);
 		~PhonemeMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

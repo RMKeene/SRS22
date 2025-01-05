@@ -32,7 +32,7 @@ namespace SRS22 {
 			// Connect all neuron inputs to random other neurons.
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
 				neurons.energy[i] = fastRandFloat();
-				neurons.enabled[i] = fastRandFloat() > 0.5f;
+				neurons.enabled[i] = NeuronState::ENABLED;;
 				for (int h = 0; h < NEURON_HISTORY; h++) {
 					neurons.charge[h][i] = fastRandFloat() * 0.5f;
 				}
@@ -229,7 +229,7 @@ namespace SRS22 {
 			neurons.energy[idx] -= settings.energyDepletionOnFire;
 			if (neurons.energy[idx] < settings.lowEnergyThreshold) {
 				// We set this false but that will not be read until the next tick.
-				neurons.enabled[idx] = false;
+				neurons.enabled[idx] = NeuronState::DISABLED;
 			}
 		}
 
@@ -255,9 +255,10 @@ namespace SRS22 {
 		/// <param name="N"></param>
 		inline void RechargeMetabolismIf(int idx)
 		{
-			if (!neurons.enabled[idx]) {
+			if (neurons.enabled[idx] == NeuronState::DISABLED) {
 				neurons.energy[idx] += settings.energyRechargePerTick;
-				neurons.enabled[idx] = neurons.energy[idx] >= settings.highEnergyThreshold;
+				if(neurons.energy[idx] >= settings.highEnergyThreshold)
+					neurons.enabled[idx] = NeuronState::ENABLED;
 			}
 		}
 

@@ -19,7 +19,7 @@ namespace SRS22 {
 		/// 	ScreenAttnSpotMap_Width,
 		/// 	"Raw pixel map of center of screen fovea in color.")
 		/// </summary>
-		ScreenAttnSpotMap(Brain* br, bool computeNextStateEnabled = true);
+		ScreenAttnSpotMap(Brain* br);
 		~ScreenAttnSpotMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

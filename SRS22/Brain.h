@@ -150,7 +150,7 @@ namespace SRS22 {
 		void SequenceCoreBrainTick();
 		void TickGoodnessLevels();
 		void TickConceptMaps();
-		void ReSetupMatricMirrors();
+		void ReSetupMatrixMirrors();
 		void PreTickHardwareAndIO();
 		void PostTickHardwareAndUI();
 

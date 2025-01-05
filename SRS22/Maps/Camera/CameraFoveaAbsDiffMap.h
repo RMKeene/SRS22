@@ -17,7 +17,7 @@ namespace SRS22 {
 		/// 	3, CameraInIO::AbsDiffHeight, CameraInIO::AbsDiffWidth,
 		///		"The attention spot of the fovea, diff since last frame.")
 		/// </summary>
-		CameraFoveaAbsDiffMap(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAbsDiffMap(Brain* br);
 		~CameraFoveaAbsDiffMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

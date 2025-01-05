@@ -4,8 +4,8 @@
 #include "../../HardwareIO/WhiteboardInIO.h"
 
 namespace SRS22 {
-	DrawInMap::DrawInMap(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::DRAWIN_MAP, "DrawInMap", computeNextStateEnabled,
+	DrawInMap::DrawInMap(Brain* br) :
+		ConceptMap(br, MapUidE::DRAWIN_MAP, "DrawInMap", true,
 			DrawInMap_Width, 0.5f,
 			"Whiteboard pen in from screen. The SRS \"feels\" when you draw.") {
 	}

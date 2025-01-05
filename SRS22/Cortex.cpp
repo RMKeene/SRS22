@@ -42,6 +42,8 @@ namespace SRS22 {
 
 	void Cortex::ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats)
 	{
+		if (neurons.enabled[i] == NeuronState::IS_INPUT)
+			return;
 		const float C = neurons.getCurrent(i);
 
 		RechargeMetabolismIf(i);
@@ -97,6 +99,9 @@ namespace SRS22 {
 	}
 
 	void Cortex::DoLearningSingleNeuron(const size_t i, CortexThreadStats& threadStats) {
+		if (neurons.enabled[i] == NeuronState::IS_INPUT)
+			return;
+
 		const float C = neurons.getCurrent(i);
 
 		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {

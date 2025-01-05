@@ -7,6 +7,18 @@
 namespace SRS22 {
 
 	/// <summary>
+	/// Default is ENABLED.
+	/// If a neuron gets fatigued, this goes to DISABLED. (Synaptic Fatigue)
+	/// If the neuron is being set by hardware input then this is IS_INPUT and the neuron skips updating state and charge decay and learning etc.
+	/// It is a simple state of input from a input ConceptMap.
+	/// </summary>
+	enum class NeuronState : uint8_t {
+		ENABLED = 0,
+		DISABLED = 1,
+		IS_INPUT = 2
+	};
+
+	/// <summary>
 	/// All the neurons in a cortex. This is separation of concerns for the Cortex lets us
 	/// think better about neurons as objects. But... it is a bit of a leaky abstraction because we need the charge array and possibly
 	/// other data to be amenable to memory pointer sharing to OpenCV Mat and CUDA.
@@ -17,7 +29,7 @@ namespace SRS22 {
 		/// <summary>
 		/// This is a circulating index for the charge history.
 		/// neuronChargesCurrentIdx is the current tick we are on.
-		/// neuronChargesNextIdx is the next tick we are predicting. It is always ahead of the current tick by NEURON_HISTORY - 1
+		/// neuronChargesNextIdx is the next tick we are predicting. It is always ahead of the current tick by 1
 		/// modulo NEURON_HISTORY. Thus always one behind neuronChargesCurrentIdx modulo NEURON_HISTORY.
 		/// Possibly we will use various time offsets as the model evolves.
 		/// </summary>
@@ -51,7 +63,7 @@ namespace SRS22 {
 		/// <summary>
 		/// Gets disable if out of energy until energy recharges to highEnergyThreshold.
 		/// </summary>
-		bool enabled[TOTAL_NEURONS];
+		NeuronState enabled[TOTAL_NEURONS];
 		/// <summary>
 		/// The other neurons used to predict this neurons future state.
 		/// </summary>
@@ -64,7 +76,10 @@ namespace SRS22 {
 		void InitialSetup() {
 			for (size_t i = 0; i < TOTAL_NEURONS; i++) {
 				energy[i] = fastRandFloat();
-				enabled[i] = fastRandFloat() > 0.5f;
+				if(fastRandFloat() * 0.5f)
+					enabled[i] = NeuronState::ENABLED;
+				else
+					enabled[i] = NeuronState::DISABLED;
 				for (size_t h = 0; h < NEURON_HISTORY; h++) {
 					charge[h][i] = fastRandFloat() * 0.5f;
 				}

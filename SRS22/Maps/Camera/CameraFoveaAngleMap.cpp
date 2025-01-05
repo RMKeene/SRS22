@@ -5,8 +5,8 @@
 #include "../../Brain.h"
 
 namespace SRS22 {
-	CameraFoveaAngleMap000::CameraFoveaAngleMap000(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE000_MAP, "CameraFoveaAngleMap000", computeNextStateEnabled,
+	CameraFoveaAngleMap000::CameraFoveaAngleMap000(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE000_MAP, "CameraFoveaAngleMap000", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera fovea center edge angles. 0 deg.") {
 	}
@@ -25,8 +25,8 @@ namespace SRS22 {
 		ConceptMap::LatchNewState(doParallel);
 	}
 
-	CameraFoveaAngleMap225::CameraFoveaAngleMap225(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE225_MAP, "CameraFoveaAngleMap225", computeNextStateEnabled,
+	CameraFoveaAngleMap225::CameraFoveaAngleMap225(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE225_MAP, "CameraFoveaAngleMap225", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera fovea center edge angles. 22.5 deg.") {
 	}
@@ -45,8 +45,8 @@ namespace SRS22 {
 		ConceptMap::LatchNewState(doParallel);
 	}
 
-	CameraFoveaAngleMap450::CameraFoveaAngleMap450(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE450_MAP, "CameraFoveaAngleMap450", computeNextStateEnabled,
+	CameraFoveaAngleMap450::CameraFoveaAngleMap450(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE450_MAP, "CameraFoveaAngleMap450", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera fovea center edge angles. 45 deg.") {
 	}
@@ -65,8 +65,8 @@ namespace SRS22 {
 		ConceptMap::LatchNewState(doParallel);
 	}
 
-	CameraFoveaAngleMap675::CameraFoveaAngleMap675(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE675_MAP, "CameraFoveaAngleMap675", computeNextStateEnabled,
+	CameraFoveaAngleMap675::CameraFoveaAngleMap675(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE675_MAP, "CameraFoveaAngleMap675", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera fovea center edge angles. 67.5 deg.") {
 	}
@@ -85,8 +85,8 @@ namespace SRS22 {
 		ConceptMap::LatchNewState(doParallel);
 	}
 
-	CameraFoveaAngleMap900::CameraFoveaAngleMap900(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE900_MAP, "CameraFoveaAngleMap900", computeNextStateEnabled,
+	CameraFoveaAngleMap900::CameraFoveaAngleMap900(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE900_MAP, "CameraFoveaAngleMap900", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera fovea center edge angles. 90 deg.") {
 	}
@@ -105,8 +105,8 @@ namespace SRS22 {
 		ConceptMap::LatchNewState(doParallel);
 	}
 
-	CameraFoveaAngleMap1125::CameraFoveaAngleMap1125(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE1125_MAP, "CameraFoveaAngleMap1125", computeNextStateEnabled,
+	CameraFoveaAngleMap1125::CameraFoveaAngleMap1125(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE1125_MAP, "CameraFoveaAngleMap1125", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera fovea center edge angles. 112.5 deg.") {
 	}
@@ -125,8 +125,8 @@ namespace SRS22 {
 		ConceptMap::LatchNewState(doParallel);
 	}
 
-	CameraFoveaAngleMap1350::CameraFoveaAngleMap1350(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE1350_MAP, "CameraFoveaAngleMap1350", computeNextStateEnabled,
+	CameraFoveaAngleMap1350::CameraFoveaAngleMap1350(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE1350_MAP, "CameraFoveaAngleMap1350", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera fovea center edge angles. 135 deg.") {
 	}
@@ -145,8 +145,8 @@ namespace SRS22 {
 		ConceptMap::LatchNewState(doParallel);
 	}
 
-	CameraFoveaAngleMap1575::CameraFoveaAngleMap1575(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE1575_MAP, "CameraFoveaAngleMap1575", computeNextStateEnabled,
+	CameraFoveaAngleMap1575::CameraFoveaAngleMap1575(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEAANGLE1575_MAP, "CameraFoveaAngleMap1575", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Camera fovea center edge angles. 157.5 deg.") {
 	}

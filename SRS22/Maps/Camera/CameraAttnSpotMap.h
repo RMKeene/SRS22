@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	/// <summary>
-	/// Map of 2 values, X and Y of where the CameraAttnSpotIO is directed.
+	/// Map of 2 values, X and Y of where the CameraFovea is located. Updates the CameraInIO fovea each tick. 
 	/// </summary>
 	class CameraAttnSpotMap : public ConceptMap
 	{
@@ -20,7 +20,7 @@ namespace SRS22 {
 		/// 	CameraAttnSpotMap_Width,
 		/// 	"Raw pixel map of center of camera fovea in color.")
 		/// </summary>
-		CameraAttnSpotMap(Brain* br, bool computeNextStateEnabled = true);
+		CameraAttnSpotMap(Brain* br);
 		~CameraAttnSpotMap();
 
 		virtual void ComputeNextState(boolean doParallel) override;

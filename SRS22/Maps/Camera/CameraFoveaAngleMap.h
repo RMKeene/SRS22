@@ -14,7 +14,7 @@ namespace SRS22 {
 	class CameraFoveaAngleMap000 : public ConceptMap
 	{
 	public:
-		CameraFoveaAngleMap000(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAngleMap000(Brain* br);
 		~CameraFoveaAngleMap000();
 
 		virtual void ComputeNextState(boolean doParallel) override;
@@ -27,7 +27,7 @@ namespace SRS22 {
 	class CameraFoveaAngleMap225 : public ConceptMap
 	{
 	public:
-		CameraFoveaAngleMap225(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAngleMap225(Brain* br);
 		~CameraFoveaAngleMap225();
 
 		virtual void ComputeNextState(boolean doParallel) override;
@@ -40,7 +40,7 @@ namespace SRS22 {
 	class CameraFoveaAngleMap450 : public ConceptMap
 	{
 	public:
-		CameraFoveaAngleMap450(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAngleMap450(Brain* br);
 		~CameraFoveaAngleMap450();
 
 		virtual void ComputeNextState(boolean doParallel) override;
@@ -53,7 +53,7 @@ namespace SRS22 {
 	class CameraFoveaAngleMap675 : public ConceptMap
 	{
 	public:
-		CameraFoveaAngleMap675(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAngleMap675(Brain* br);
 		~CameraFoveaAngleMap675();
 
 		virtual void ComputeNextState(boolean doParallel) override;
@@ -66,7 +66,7 @@ namespace SRS22 {
 	class CameraFoveaAngleMap900 : public ConceptMap
 	{
 	public:
-		CameraFoveaAngleMap900(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAngleMap900(Brain* br);
 		~CameraFoveaAngleMap900();
 
 		virtual void ComputeNextState(boolean doParallel) override;
@@ -79,7 +79,7 @@ namespace SRS22 {
 	class CameraFoveaAngleMap1125 : public ConceptMap
 	{
 	public:
-		CameraFoveaAngleMap1125(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAngleMap1125(Brain* br);
 		~CameraFoveaAngleMap1125();
 
 		virtual void ComputeNextState(boolean doParallel) override;
@@ -92,7 +92,7 @@ namespace SRS22 {
 	class CameraFoveaAngleMap1350 : public ConceptMap
 	{
 	public:
-		CameraFoveaAngleMap1350(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAngleMap1350(Brain* br);
 		~CameraFoveaAngleMap1350();
 
 		virtual void ComputeNextState(boolean doParallel) override;
@@ -105,7 +105,7 @@ namespace SRS22 {
 	class CameraFoveaAngleMap1575 : public ConceptMap
 	{
 	public:
-		CameraFoveaAngleMap1575(Brain* br, bool computeNextStateEnabled = true);
+		CameraFoveaAngleMap1575(Brain* br);
 		~CameraFoveaAngleMap1575();
 
 		virtual void ComputeNextState(boolean doParallel) override;

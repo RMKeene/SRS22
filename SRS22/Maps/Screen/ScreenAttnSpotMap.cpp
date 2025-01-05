@@ -6,10 +6,10 @@
 #include "../../Brain.h"
 
 namespace SRS22 {
-	ScreenAttnSpotMap::ScreenAttnSpotMap(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotMap", computeNextStateEnabled,
+	ScreenAttnSpotMap::ScreenAttnSpotMap(Brain* br) :
+		ConceptMap(br, MapUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotMap", false,
 			ScreenAttnSpotMap_Width, 0.0f,
-			"Raw pixel map of center of screen fovea in color.") {
+			"Output where the screen attention spot is located.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
 	}
 

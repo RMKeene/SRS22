@@ -70,10 +70,12 @@ namespace SRS22 {
 		PreTickHardwareAndIO();
 		TickConceptMaps();
 		cortex->ResetStats();
+
 		cortex->ComputeNextState(doParallel);
-		cortex->LatchNewState(doParallel);
-		ReSetupMatricMirrors();
 		cortex->LearningPhase(doParallel);
+		cortex->LatchNewState(doParallel);
+		ReSetupMatrixMirrors();
+
 		cortex->PostProcessStats();
 		TickGoodnessLevels();
 		PostTickHardwareAndUI();
@@ -91,21 +93,17 @@ namespace SRS22 {
 	{
 		if (doParallel) {
 			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
-				if (n.second->isComputeNextStateEnabled()) {
-					n.second->ComputeNextState(false);
-				}
+				n.second->ComputeNextState(false);
 				});
 		}
 		else {
 			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
-				if (n.second->isComputeNextStateEnabled()) {
-					n.second->ComputeNextState(false);
-				}
+				n.second->ComputeNextState(false);
 			}
 		}
 	}
 
-	void Brain::ReSetupMatricMirrors()
+	void Brain::ReSetupMatrixMirrors()
 	{
 		if (doParallel) {
 			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {

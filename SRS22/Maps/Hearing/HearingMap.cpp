@@ -5,8 +5,8 @@
 #include "../../ConceptMap.h"
 
 namespace SRS22 {
-	HearingMap::HearingMap(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::HEARING_MAP, "HearingMap", computeNextStateEnabled,
+	HearingMap::HearingMap(Brain* br) :
+		ConceptMap(br, MapUidE::HEARING_MAP, "HearingMap", true,
 			HearingMap_Width, 0.98f,
 			"The \"Hearing\" input from the audio system.") {
 		displayMode = SRSUnitDisplayModes::GRAY;

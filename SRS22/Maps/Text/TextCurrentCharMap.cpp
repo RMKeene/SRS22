@@ -4,8 +4,8 @@
 #include "../../Brain.h"
 
 namespace SRS22 {
-	TextCurrentCharMap::TextCurrentCharMap(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap", computeNextStateEnabled,
+	TextCurrentCharMap::TextCurrentCharMap(Brain* br) :
+		ConceptMap(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap", true,
 			TextCurrentCharMap_Width,
 			TextCurrentCharMap_Height, 0.98f,
 			"Last entered character ASCII Code.") {
@@ -18,6 +18,8 @@ namespace SRS22 {
 	void TextCurrentCharMap::ComputeNextState(boolean doParallel) {
 		ConceptMap::ComputeNextState(doParallel);
 
+		RelaxTowardZero(0.9f);
+
 		auto textInUI = IOCommon::GetIO<TextInIO>();
 		TextIOType c;
 		if (textInUI->GetCharacterIn(c)) {
@@ -25,7 +27,6 @@ namespace SRS22 {
 			uint y = (c >> 4) & 0x000F;
 			putNext(y, x, 1.0f);
 		}
-		RelaxTowardZero(0.99f);
 	}
 
 	void TextCurrentCharMap::LatchNewState(boolean doParallel) {

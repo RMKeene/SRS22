@@ -5,8 +5,8 @@
 #include "../../HardwareIO/CameraAttnSpotIO.h"
 
 namespace SRS22 {
-	CameraFoveaMap::CameraFoveaMap(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::CAMERAFOVEA_MAP, "CameraFoveaMap", computeNextStateEnabled,
+	CameraFoveaMap::CameraFoveaMap(Brain* br) :
+		ConceptMap(br, MapUidE::CAMERAFOVEA_MAP, "CameraFoveaMap", true,
 			3, CameraFoveaMap_Height, CameraFoveaMap_Width, 0.0f,
 			"Raw pixel map of center of camera fovea in color.") {
 	}

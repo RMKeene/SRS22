@@ -6,8 +6,8 @@
 #include "../TimeHelpers.h"
 
 namespace SRS22 {
-	RandomMap::RandomMap(Brain* br, bool computeNextStateEnabled) :
-		ConceptMap(br, MapUidE::RANDOM_MAP, "RandomMap", computeNextStateEnabled,
+	RandomMap::RandomMap(Brain* br) :
+		ConceptMap(br, MapUidE::RANDOM_MAP, "RandomMap", true,
 			RandomMap_Width, RandomMap_Height, 1.0f,
 			"A map that is always randomized every tick. A source of noise if needed.") {
 	}
