@@ -20,7 +20,7 @@
 #include "Maps/Draw/DrawInMap.h"
 #include "Maps/Voice/PhonemeMap.h"
 #include "Maps/Hearing/HearingMap.h"
-#include "Maps/Camera/CameraFoveaAngleMap.h"
+#include "Maps/Camera/CameraFoveaAngleMaps.h"
 #include "Maps/Camera/CameraFoveaEdgesMap.h"
 #include "Maps/Camera/CameraFoveaAbsDiffMap.h"
 

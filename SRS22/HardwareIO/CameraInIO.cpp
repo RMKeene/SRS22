@@ -97,7 +97,7 @@ namespace SRS22 {
 
 		Rect r(foveaIO->GetRect());
 		currentFoveaRect = r;
-		Rect centeredSmallR = Rect(r.halfW() - CameraFoveaMap_Height / 2, r.halfH() - CameraFoveaMap_Height / 2, CameraFoveaMap_Height, CameraFoveaMap_Height);
+		Rect centeredSmallR = Rect(r.CenterX() - CameraFoveaMap_Height / 2, r.CenterY() - CameraFoveaMap_Height / 2, CameraFoveaMap_Height, CameraFoveaMap_Height);
 		GetSubRect(fovea, centeredSmallR);
 		fovea = fovea.clone();
 		std::string info = OpenCVHelpers::CVMatrixInfo(fovea);

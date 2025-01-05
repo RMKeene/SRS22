@@ -20,7 +20,9 @@ namespace SRS22 {
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		if (cameraIn->foveaAbsDifference.empty() == false) {
-			nextM = cameraIn->foveaAbsDifference;
+			string ss5 = OpenCVHelpers::CVMatrixInfo(cameraIn->foveaAbsDifference);
+			string ss6 = OpenCVHelpers::CVMatrixInfo(nextM);
+			cameraIn->foveaAbsDifference.copyTo(nextM);
 			OpenCVHelpers::ClampMatrix(nextM, 0.0f, 1.0f);
 		}
 	}
