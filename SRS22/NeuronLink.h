@@ -14,20 +14,24 @@ constexpr auto NEURON_LINK_UNCONNECTED = -1;
 /// </summary>
 struct NeuronLink {
 	/// <summary>
-	/// When we have this charge we expect the other neuron to be otherCharge in value.
+	/// When we have a match with otherCharge and upstream neuron's charge, we expect the other neuron to be otherCharge in value.
 	/// </summary>
 	float selfCharge = 0.0f;
 	/// <summary>
-	/// The index of the target neuron. Or if < 0 then no connection.
+	/// The index of the upstream neuron. Or if NEURON_LINK_UNCONNECTED (-1) then no connection.
 	/// </summary>
 	int otherIdx = NEURON_LINK_UNCONNECTED;
 	/// <summary>
-	/// The expected charge of the target neuron if there is a match.
+	/// The charge of the upstream neuron to be considered a match. See linkMatchSharpness.
 	/// </summary>
 	float otherCharge = 0.0f;
 	/// <summary>
-	/// How much we believe otherCharge and selfCharge to be correct and a valid patter of interest.
+	/// How much we believe otherCharge and selfCharge to be correct and a valid pattern of interest.
+	/// High confidence is a well learned connection. Low confidence is a new connection or a connection that is not predicting the future well.
 	/// </summary>
 	float confidence = 0.0f;
-	bool wasSelfMatch = false;
+	/// <summary>
+	/// Did this link have a match this tick?
+	/// </summary>
+	bool wasMatch = false;
 };

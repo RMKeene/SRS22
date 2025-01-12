@@ -20,16 +20,17 @@ struct CortexSettings {
 	float energyDepletionOnFire = 0.05f / (float)NEURON_UPSTREAM_LINKS;
 
 	/// <summary>
-	/// How strongly links matches move the neuron's charge toward L.selfCharge across all weighted votes for nest state.
+	/// How strongly links matches move the neuron's charge toward L.selfCharge across all weighted votes for next state.
+	/// Softened to avoid too much overall energy in the system. 1.0 coffee overdose, 0.0 brain dead.
 	/// </summary>
-	float connectionThrottle = 1.0f;
+	float connectionThrottle = 0.5f;
 
 	/// <summary>
 	/// How quickly "being a match" falls off as actual charge moves away from the NeuronLink selfCharge.
 	/// So if this is 10.0 then a 0.1 difference in charge will reduce the match strength to 0.0.
 	/// When match strength is 0.0 then the connection is in effect hidden. (See Neural Hiding)
 	/// </summary>
-	float selfDeltaSteepness = 10.0f;
+	float linkMatchSharpness = 10.0f;
 
 	/// <summary>
 	/// If confidence falls below this then a reroute might happen.

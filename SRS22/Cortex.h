@@ -79,6 +79,13 @@ namespace SRS22 {
 #endif
 		}
 
+		inline void checkPastOffset(const int offset) {
+#ifdef VALIDATE_NEURONS
+			if (offset < 0 || offset > NEURON_HISTORY_MAX_PAST)
+				SRS22DebugBreak(offset);
+#endif
+		}
+
 		inline void checkNanByIdxNext(const int idx) {
 #ifdef VALIDATE_NEURONS
 			checkNan(idx, neurons[idx].getNextCharge());
@@ -161,6 +168,13 @@ namespace SRS22 {
 			return neurons.getNext(idx);
 		}
 
+		inline float getPast(int idx, int ticksAgo) {
+			checkNeuronIdx(idx);
+			checkNanByIdx(idx);
+			checkPastOffset(ticksAgo);
+			return neurons.getPast(idx, ticksAgo);
+		}		
+
 		/// <summary>
 		/// Simply Neuron::StaticTick();
 		/// </summary>
@@ -185,13 +199,15 @@ namespace SRS22 {
 		/// <param name="threadStats"></param>
 		/// <param name="N"></param>
 		/// <param name="selfDeltaC"></param>
-		inline void FireConnection(int neuronIdx, int linkIdx, SRS22::CortexThreadStats& threadStats, const float selfDeltaC)
+		inline void FireConnection(int neuronIdx, int linkIdx, SRS22::CortexThreadStats& threadStats, const float otherMatchStrength)
 		{
-			neurons.wasSelfMatch[neuronIdx] = true;
+			NeuronLink& L = neurons.link[neuronIdx][linkIdx];
+			L.wasMatch = true;
+			neurons.wasMatch[neuronIdx] = true;
 			threadStats.countOfNeuronsFired++;
 
 			DeductFiringMetabolism(neuronIdx);
-			AddLinkVote(neurons.link[neuronIdx][linkIdx], selfDeltaC);
+			AddLinkVote(L, otherMatchStrength);
 		}
 
 		/// <summary>
@@ -201,9 +217,10 @@ namespace SRS22 {
 		/// <param name="L"></param>
 		/// <param name="C"></param>
 		/// <returns></returns>
-		inline const float& SelfMatchStrength(NeuronLink& L, const float C)
+		inline const float& LinkOtherMatchStrength(NeuronLink& L)
 		{
-			return clamp<float>(1.0f - settings.selfDeltaSteepness * fabs(L.selfCharge - C), 0.0f, 1.0f);
+			const float& otherC = neurons.getCurrent(L.otherIdx);
+			return clamp<float>(1.0f - settings.linkMatchSharpness * fabs(L.otherCharge - otherC), 0.0f, 1.0f);
 		}
 
 		/// <summary>
@@ -211,9 +228,10 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="otherNeuron"></param>
 		/// <param name="L"></param>
-		inline void AddLinkVote(const NeuronLink& L, const float selfAbsDeltaC)
+		inline void AddLinkVote(const NeuronLink& L, const float otherMatchStrength)
 		{
-			const float strength = L.confidence * selfAbsDeltaC;
+			const float strength = L.confidence * otherMatchStrength;
+			// Weighted average sum in.
 			neurons.neuronChargesAverageDeltaSum[L.otherIdx] += L.otherCharge * strength;
 			neurons.neuronChargesAverageCount[L.otherIdx] += strength;
 		}
@@ -257,7 +275,7 @@ namespace SRS22 {
 		{
 			if (neurons.enabled[idx] == NeuronState::DISABLED) {
 				neurons.energy[idx] += settings.energyRechargePerTick;
-				if(neurons.energy[idx] >= settings.highEnergyThreshold)
+				if (neurons.energy[idx] >= settings.highEnergyThreshold)
 					neurons.enabled[idx] = NeuronState::ENABLED;
 			}
 		}
@@ -291,7 +309,8 @@ namespace SRS22 {
 		}
 
 		/// <summary>
-		/// Gets a random index in TOTAL_NEURONS but never returns notThisIdx, nor any values in links[NEURON_UPSTREAM_LINKS].
+		/// Gets a random index in TOTAL_NEURONS but never returns notThisIdx, nor any values in neurons.link[notThisIdx][NEURON_UPSTREAM_LINKS].
+		/// Thus, do not connect to self or duplicate upstream links.
 		/// If links is null it gets ignored.
 		/// </summary>
 		/// <param name="notThisIdx"></param>

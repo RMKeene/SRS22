@@ -87,7 +87,7 @@ class MonitorFrameGen : public wxFrame
 		wxStaticText* m_staticText25;
 		wxTextCtrl* m_ConnectionThrottle;
 		wxStaticText* m_staticText26;
-		wxTextCtrl* m_selfDeltaSteepness;
+		wxTextCtrl* m_linkMatchSharpness;
 		wxStaticText* m_staticText21;
 		wxTextCtrl* m_GrowthRateTextInput;
 		wxStaticLine* m_staticline4;

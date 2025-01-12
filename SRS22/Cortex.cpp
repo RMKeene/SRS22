@@ -51,7 +51,8 @@ namespace SRS22 {
 
 		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
-			L.wasSelfMatch = false;
+			L.wasMatch = false;
+			// Input neurons are not predicted, they are hard set to a value by hardware IO.  Their NeuronLinks are not used.
 			if (L.otherIdx == NEURON_LINK_UNCONNECTED)
 				continue;
 #ifdef _DEBUG
@@ -59,13 +60,13 @@ namespace SRS22 {
 				throw std::out_of_range(std::format("L.otherIdx out of range: {0}", L.otherIdx));
 #endif
 
-			// Check whether the upstream neurons match the link's otherCharge closely enough.
-			const float selfDeltaC = SelfMatchStrength(L, C);
-			if (selfDeltaC > 0.0f) {
+			// Check whether the upstream neurons match the link's otherCharge closely enough.  (See linkMatchSharpness)
+			const float otherDeltaC = LinkOtherMatchStrength(L);
+			if (otherDeltaC > 0.0f) {
 				// By 'fire' we mean vote for this neurons state to change to L.selfCharge.
-				// Vote weight is the confidence of the link times the closeness of the match. (See selfDeltaSteepness)
+				// Vote weight is the confidence of the link times the closeness of the match.
 				// The weighted average of all the votes is the new next state, but softened by the connectionThrottle.
-				FireConnection(i, k, threadStats, selfDeltaC);
+				FireConnection(i, k, threadStats, otherDeltaC);
 			}
 		}
 	}
@@ -99,49 +100,42 @@ namespace SRS22 {
 	}
 
 	void Cortex::DoLearningSingleNeuron(const size_t i, CortexThreadStats& threadStats) {
+		// Input neurons are not predicted, they are hard set to a value by hardware IO.  
+		// Their NeuronLinks are not used. So there is no learning to do.
 		if (neurons.enabled[i] == NeuronState::IS_INPUT)
 			return;
 
 		const float C = neurons.getCurrent(i);
 
+		// Neuroplasticity: Learn to predict the future state of this neuron.
 		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
 			threadStats.sumOfConfidence += L.confidence;
 			threadStats.countOfConfidence++;
-			if (L.confidence <= settings.rerouteThreshold && fastRandFloat() < settings.rerouteProbability) {
+
+			if (L.confidence <= settings.rerouteThreshold && fastRandFloat() < settings.rerouteProbability) { // Useless connection, reroute.
 				threadStats.countOfReRoutes++;
 				L.confidence = settings.rerouteConfidenceSet;
 				L.otherIdx = GetRandomLinearOffsetExcept(i);
 				L.otherCharge = get(L.otherIdx);
 				L.selfCharge = C;
 			}
-			else if (!L.wasSelfMatch) {
+			else if (!L.wasMatch) { // Forget very slightly
 				//Lose confidence in this connection.
 				L.confidence *= settings.confidenceAdjustmentDownRate;
 			}
-			else {
-				float selfDelta = L.selfCharge - C;
-				float absSelfDelta = fabsf(selfDelta);
-				float learnDelta = selfDelta * settings.lowLearnRate;
+			else { // Learn - This link had a match this tick.
 
-				float otherC = get(L.otherIdx);
-				float otherDelta = L.otherCharge - otherC;
-				float absOtherDelta = fabsf(otherDelta);
-				float learnOtherDelta = otherDelta * settings.lowLearnRate;
+				// We are skewed in time by one or more ticks singe we are trying to predict future states 
+				// and get ahead of reality as a survivfal trait. React in advanhce of threats or desired outcomes.
 
-				putNext(i, C + learnDelta);
-				putNext(L.otherIdx, otherC + learnOtherDelta);
+				// We adjust L.selfCharge toward this neurons current charge.
+				L.selfCharge += (L.selfCharge - C) * settings.lowLearnRate;
 
-				// The closer the confidence is to 1.0 the slower we adjust.
-				// The closer the C's are to the expected charge, the less we adjust.
-				float confidenceDelta = (absSelfDelta + absOtherDelta) * (1.0f - L.confidence);
-				L.confidence += confidenceDelta * settings.confidenceAdjustmentUpRate;
-				if (L.confidence < settings.minimumConfidence) {
-					L.confidence = settings.minimumConfidence;
-				}
-				else if (L.confidence > settings.maximumConfidence) {
-					L.confidence = settings.maximumConfidence;
-				}
+				// We adjust L.otherCharge toward the upstream neuron's past charge.
+				L.otherCharge += (L.otherCharge - getPast(L.otherIdx, NEURON_HISTORY_DEFAULT_PAST_OFFSET)) * settings.lowLearnRate;
+
+				L.confidence += (1.0f - L.confidence) * settings.confidenceAdjustmentUpRate;
 			}
 		}
 	}

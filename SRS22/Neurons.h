@@ -23,6 +23,9 @@ namespace SRS22 {
 	/// think better about neurons as objects. But... it is a bit of a leaky abstraction because we need the charge array and possibly
 	/// other data to be amenable to memory pointer sharing to OpenCV Mat and CUDA.
 	/// This also improves memory locality and lets us use things like memset for super fast clears.
+	/// 
+	/// Our neuron model is not pulse and charge sum based.  It is simply a value between 0 and 1.0. Each neuron has a list of 
+	/// NeuronLink to other upstream neurons. The idea is that the Links learn what cortex state results in a future state of the single Neuron.
 	/// </summary>
 	class Neurons {
 	private:
@@ -71,12 +74,12 @@ namespace SRS22 {
 		/// <summary>
 		/// Flag that this link was a match for the selfCharge this tick.
 		/// </summary>
-		bool wasSelfMatch[TOTAL_NEURONS];
+		bool wasMatch[TOTAL_NEURONS];
 
 		void InitialSetup() {
 			for (size_t i = 0; i < TOTAL_NEURONS; i++) {
 				energy[i] = fastRandFloat();
-				if(fastRandFloat() * 0.5f)
+				if (fastRandFloat() * 0.5f)
 					enabled[i] = NeuronState::ENABLED;
 				else
 					enabled[i] = NeuronState::DISABLED;
@@ -124,14 +127,28 @@ namespace SRS22 {
 			return &charge[neuronChargesNextIdx][i];
 		}
 
+		inline float getPast(size_t i, int ticksAgo) {
+			// Lookout, subtracting and getting a negative and then modulo will not work.
+			// So we add NEURON_HISTORY to make it positive.
+			return charge[(neuronChargesCurrentIdx - ticksAgo + NEURON_HISTORY) % NEURON_HISTORY][i];
+		}
+
+		inline float& getPastRef(size_t i, int ticksAgo) {
+			return charge[(neuronChargesCurrentIdx - ticksAgo + NEURON_HISTORY) % NEURON_HISTORY][i];
+		}
+
+		inline float* getPastPointer(size_t i, int ticksAgo) {
+			return &charge[(neuronChargesCurrentIdx - ticksAgo + NEURON_HISTORY) % NEURON_HISTORY][i];
+		}
+
 		/// <summary>
-		/// neuronIdx if is not in the links[linksCount] array return true.
-		/// links may be null, then returns true.
-		/// </summary>
-		/// <param name="neuronIdx"></param>
-		/// <param name="links"></param>
-		/// <param name="linksCount"></param>
-		/// <returns></returns>
+/// neuronIdx if is not in the links[linksCount] array return true.
+/// links may be null, then returns true.
+/// </summary>
+/// <param name="neuronIdx"></param>
+/// <param name="links"></param>
+/// <param name="linksCount"></param>
+/// <returns></returns>
 		inline bool NotIn(int neuronIdx, NeuronLink* links) {
 			if (links == nullptr)
 				return true;

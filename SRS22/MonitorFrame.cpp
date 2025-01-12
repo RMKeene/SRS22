@@ -226,7 +226,7 @@ namespace SRS22 {
 		ToFloat(m_fireDepletion, &b->cortex->settings.energyDepletionOnFire);
 		ToFloat(m_LowEnergyThreshTextInput, &b->cortex->settings.lowEnergyThreshold);
 		ToFloat(m_hiEnergyThresh, &b->cortex->settings.highEnergyThreshold);
-		ToFloat(m_selfDeltaSteepness, &b->cortex->settings.selfDeltaSteepness);
+		ToFloat(m_linkMatchSharpness, &b->cortex->settings.linkMatchSharpness);
 		ToFloat(m_RerouteThreshold, &b->cortex->settings.rerouteThreshold);
 		ToFloat(m_rerouteProbabilityTextInput, &b->cortex->settings.rerouteProbability);
 		ToFloat(m_lowLearnThresh, &b->cortex->settings.lowLearnThreshold);
@@ -268,7 +268,7 @@ namespace SRS22 {
 		m_fireDepletion->SetValue(wxString::Format("%6.4g", b->cortex->settings.energyDepletionOnFire));
 		m_LowEnergyThreshTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.lowEnergyThreshold));
 		m_hiEnergyThresh->SetValue(wxString::Format("%6.4g", b->cortex->settings.highEnergyThreshold));
-		m_selfDeltaSteepness->SetValue(wxString::Format("%6.4g", b->cortex->settings.selfDeltaSteepness));
+		m_linkMatchSharpness->SetValue(wxString::Format("%6.4g", b->cortex->settings.linkMatchSharpness));
 		m_RerouteThreshold->SetValue(wxString::Format("%6.4g", b->cortex->settings.rerouteThreshold));
 		m_rerouteProbabilityTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.rerouteProbability));
 		m_lowLearnThresh->SetValue(wxString::Format("%6.4g", b->cortex->settings.lowLearnThreshold));

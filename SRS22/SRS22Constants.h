@@ -29,6 +29,8 @@ constexpr auto TOTAL_NEURONS = 600000;
 /// A circular queue by index so as to never have to do block copies of previous history.
 /// 
 /// This is how large the history is. Must be at a minimum 2, being current charge and next charge.
+/// Must be at least 1 (current tick) + 1 (next tick) + NEURON_HISTORY_MAX_PAST
 /// </summary>
 constexpr auto NEURON_HISTORY = 3;
-constexpr auto NEURON_HISTORY_MINUS_ONE = NEURON_HISTORY - 1;
+constexpr auto NEURON_HISTORY_MAX_PAST = 1;
+constexpr auto NEURON_HISTORY_DEFAULT_PAST_OFFSET = 1;

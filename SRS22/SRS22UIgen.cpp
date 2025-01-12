@@ -256,12 +256,12 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	m_ConnectionThrottle->SetMaxLength( 6 ); 
 	bSizer19->Add( m_ConnectionThrottle, 0, wxALL, 5 );
 	
-	m_staticText26 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Self dSteepness"), wxDefaultPosition, wxSize( -1,-1 ), 0 );
+	m_staticText26 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Link Match Sharpness"), wxDefaultPosition, wxSize( -1,-1 ), 0 );
 	m_staticText26->Wrap( -1 );
 	bSizer19->Add( m_staticText26, 0, wxALL, 5 );
 	
-	m_selfDeltaSteepness = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("10"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer19->Add( m_selfDeltaSteepness, 0, wxALL, 5 );
+	m_linkMatchSharpness = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("10"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer19->Add( m_linkMatchSharpness, 0, wxALL, 5 );
 	
 	m_staticText21 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Gwth"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText21->Wrap( -1 );

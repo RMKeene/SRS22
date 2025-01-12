@@ -6,7 +6,8 @@ namespace SRS22 {
 	int Neurons::neuronChargesNextIdx = 1;
 
 	void Neurons::StaticTick() {
+		// Order here is important.
 		neuronChargesCurrentIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;
-		neuronChargesNextIdx = (neuronChargesNextIdx + 1) % NEURON_HISTORY;
+		neuronChargesNextIdx = (neuronChargesCurrentIdx + 1) % NEURON_HISTORY;
 	}
 }
