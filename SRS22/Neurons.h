@@ -88,7 +88,7 @@ namespace SRS22 {
 				}
 				for (size_t k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 					link[i][k].otherIdx = GetRandomLinearOffsetExcept(i);
-					link[i][k].confidence = fastRandFloat() * 0.01f;
+					link[i][k].confidence = fastRandFloat() * 0.002f;
 					link[i][k].otherCharge = fastRandFloat();
 					link[i][k].selfCharge = fastRandFloat();
 				}

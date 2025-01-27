@@ -11,6 +11,7 @@ namespace SRS22 {
 		int countOfOnes = 0;
 		int countOfZeros = 0;
 		int countFatigued = 0;
+		int countStimulus = 0;
 
 		void reset() {
 			countOfNeuronsProcessed = 0;
@@ -21,6 +22,7 @@ namespace SRS22 {
 			countOfOnes = 0;
 			countOfZeros = 0;
 			countFatigued = 0;
+			countStimulus = 0;
 		}
 
 		void SumIn(CortexThreadStats& threadStats) {
@@ -32,6 +34,7 @@ namespace SRS22 {
 			countOfOnes += threadStats.countOfOnes;
 			countOfZeros += threadStats.countOfZeros;
 			countFatigued += threadStats.countFatigued;
+			countStimulus += threadStats.countStimulus;
 		}
 	};
 
@@ -47,6 +50,7 @@ namespace SRS22 {
 		int countOfOnes = 0;
 		int countOfZeros = 0;
 		int countFatigued = 0;
+		int countStimulus = 0;
 		float averageNeuronCharge = 0.0f;
 		float averageConfidence = 0.0f;
 
@@ -61,6 +65,7 @@ namespace SRS22 {
 			countOfOnes = 0;
 			countOfZeros = 0;
 			countFatigued = 0;
+			countStimulus = 0;
 			averageNeuronCharge = 0.0f;
 			averageConfidence = 0.0f;
 		}
@@ -90,6 +95,7 @@ namespace SRS22 {
 			countOfOnes += threadStats.countOfOnes;
 			countOfZeros += threadStats.countOfZeros;
 			countFatigued += threadStats.countFatigued;
+			countStimulus += threadStats.countStimulus;
 			averageNeuronCharge += threadStats.sumOfC;
 			averageConfidence += threadStats.sumOfConfidence;
 		}

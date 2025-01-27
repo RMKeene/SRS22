@@ -17,4 +17,10 @@ namespace SRS22 {
 		return z;
 	}
 
+	void setSeed(unsigned long seed) {
+		x = 123456789 + seed;
+		y = 362436069;
+		z = 521288629;
+	}
+
 }

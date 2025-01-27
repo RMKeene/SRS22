@@ -190,7 +190,9 @@ namespace SRS22 {
 
 		void ComputeNextState(boolean doParallel) override;
 
+		void PreComputeNextStateSingleNeurons();
 		void ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats);
+		void PostComputeNextStateSingleNeurons();
 
 		/// <summary>
 		/// Set self match true, count in stats, deduct metabolism, and add link's vote.
@@ -220,9 +222,16 @@ namespace SRS22 {
 		inline const float& LinkOtherMatchStrength(NeuronLink& L)
 		{
 			const float& otherC = neurons.getCurrent(L.otherIdx);
-			return clamp<float>(1.0f - settings.linkMatchSharpness * fabs(L.otherCharge - otherC), 0.0f, 1.0f);
+			float dC = fabs(L.selfCharge - otherC);
+			if(dC < 1.0f / settings.linkMatchSharpness)
+				return clamp<float>(1.0f - settings.linkMatchSharpness * dC, 0.0f, 1.0f);
+			return 0.0f;
 		}
 
+		inline void ResetVote(int neuronIdx) {
+			neurons.neuronChargesAverageDeltaSum[neuronIdx] = 0.0f;
+			neurons.neuronChargesAverageCount[neuronIdx] = 0.0f;
+		}
 		/// <summary>
 		/// Add this connections 
 		/// </summary>
@@ -234,6 +243,18 @@ namespace SRS22 {
 			// Weighted average sum in.
 			neurons.neuronChargesAverageDeltaSum[L.otherIdx] += L.otherCharge * strength;
 			neurons.neuronChargesAverageCount[L.otherIdx] += strength;
+		}
+
+		inline bool ConsumeVote(int neuronIdx)
+		{
+			// If there are no votes, then the neuron will not change.
+			if (neurons.neuronChargesAverageCount[neuronIdx] > 0.0001f) {
+				// The average of the votes is the new charge.
+				neurons.setNext(neuronIdx, neurons.neuronChargesAverageDeltaSum[neuronIdx] / neurons.neuronChargesAverageCount[neuronIdx]);
+				stats.countStimulus++;
+				return true;
+			}
+			return false;
 		}
 
 		/// <summary>

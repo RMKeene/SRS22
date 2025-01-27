@@ -17,7 +17,7 @@ struct CortexSettings {
 	/// How much energy is subtracted if the neuron fires. This is subtracted each time a link fires, so is often 
 	/// subtracted multiple times per tick.
 	/// </summary>
-	float energyDepletionOnFire = 0.05f / (float)NEURON_UPSTREAM_LINKS;
+	float energyDepletionOnFire = 0.9f / (float)NEURON_UPSTREAM_LINKS;
 
 	/// <summary>
 	/// How strongly links matches move the neuron's charge toward L.selfCharge across all weighted votes for next state.

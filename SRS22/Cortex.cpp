@@ -18,7 +18,7 @@ namespace SRS22 {
 #if DONANCHECKS
 		doNanScan();
 #endif
-
+		PreComputeNextStateSingleNeurons();
 		if (doParallel) {
 			Concurrency::combinable<CortexThreadStats> threadStats;
 			Concurrency::parallel_for(0, TOTAL_NEURONS, [&](size_t i) {
@@ -35,9 +35,22 @@ namespace SRS22 {
 			}
 			stats.SumInNoLock(threadStats);
 		}
+		PostComputeNextStateSingleNeurons();
 #if DONANCHECKS
 		doNanScan();
 #endif
+	}
+
+	void Cortex::PreComputeNextStateSingleNeurons() {
+		for (int i = 0; i < TOTAL_NEURONS; i++) {
+			ResetVote(i);
+		}
+	}
+
+	void Cortex::PostComputeNextStateSingleNeurons() {
+		for (int i = 0; i < TOTAL_NEURONS; i++) {
+			ConsumeVote(i);
+		}
 	}
 
 	void Cortex::ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats)
@@ -52,6 +65,7 @@ namespace SRS22 {
 		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
 			L.wasMatch = false;
+
 			// Input neurons are not predicted, they are hard set to a value by hardware IO.  Their NeuronLinks are not used.
 			if (L.otherIdx == NEURON_LINK_UNCONNECTED)
 				continue;

@@ -5,6 +5,7 @@
 #include "ini.h"
 #include "Settings.h"
 #include <ppl.h>
+#include "FastRand.h"
 
 namespace SRS22 {
 
@@ -34,6 +35,10 @@ namespace SRS22 {
 	// `Main program' equivalent: the program execution "starts" here
 	bool SRS22App::OnInit()
 	{
+		auto now = std::chrono::system_clock::now();
+		auto duration = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+		setSeed((unsigned long)duration.count());
+
 		if (!wxApp::OnInit())
 			return false;
 

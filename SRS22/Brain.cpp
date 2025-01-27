@@ -32,6 +32,7 @@ namespace SRS22 {
 	boolean Brain::doParallel = true;
 
 	Brain::Brain() {
+		remove("cortex_log.txt");
 		overallGoodness = 0;
 		overallGoodnessPrevious = 0;
 		overallGoodnessRateOfChange = 0;
@@ -310,6 +311,8 @@ namespace SRS22 {
 	}
 
 	void Brain::AddMap(shared_ptr<ConceptMap> m) {
+		// open append file:
+		std::ofstream f("cortex_log.txt", std::ios::app);
 		if (conceptMaps.find(m->UID) != conceptMaps.end())
 			throw std::exception((std::string("Duplicate ConceptMap UID in Brain::AddMap: ") + m->MapName).c_str());
 		std::pair<int, int> cortexOffsets = ioMapToContext.addMapping(m->MapName, m->totalSize);
@@ -317,7 +320,13 @@ namespace SRS22 {
 		m->setupCVMatMirrors();
 		conceptMaps[m->UID] = m;
 		conceptMapsByName[m->MapName] = m;
-		printf("Added ConceptMap %s at %d to %d\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
+		std::string ss;
+		if(m->isInput())
+			ss = std::format("Added ConceptMap {} at {} to {} INPUT\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
+		else
+			ss = std::format("Added ConceptMap {} at {} to {} OUTPUT\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
+		f.write(ss.c_str(), ss.size());
+		f.close();
 	}
 
 	void Brain::DoNStep(int n) {

@@ -2,6 +2,7 @@
 
 namespace SRS22 {
 	unsigned long xorshf96(void);
+	void setSeed(unsigned long seed);
 
 	/// <summary>
 	/// Fast random long.

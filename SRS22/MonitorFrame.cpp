@@ -358,9 +358,9 @@ namespace SRS22 {
 			lastInSizeText->SetLabelText(wxString::Format("Last In Size: %d, total %d M", WaveInputHelper::lastPacketSize, WaveInputHelper::totalBytesIn / (1024 * 1024)));
 		}
 
-		MonitorStatisticsLine1->SetLabelText(wxString::Format("Total Neurons: %d, Connections %d, Fired: %d, Zeros %d, Ones %d, Fatigued %d", 
+		MonitorStatisticsLine1->SetLabelText(wxString::Format("Total Neurons: %d, Connections %d, Fired: %d, Zeros %d, Ones %d, Fatigued %d, Stimulus %d", 
 			cortex->stats.countOfNeuronsProcessed, TOTAL_NEURONS * NEURON_UPSTREAM_LINKS, cortex->stats.countOfNeuronsFired, cortex->stats.countOfZeros, 
-			cortex->stats.countOfOnes, cortex->stats.countFatigued));
+			cortex->stats.countOfOnes, cortex->stats.countFatigued, cortex->stats.countStimulus));
 		MonitorStatisticsLine2->SetLabelText(wxString::Format("ReRoutes: %d, Average C: %6.4f, Confidence: %6.4f",
 			cortex->stats.countOfReRoutes, cortex->stats.averageNeuronCharge, cortex->stats.averageConfidence));
 		MonitorStatisticsLine3->SetLabelText("Stats:");

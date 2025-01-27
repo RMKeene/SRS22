@@ -21,7 +21,7 @@ constexpr auto NEURON_UPSTREAM_LINKS = 8;
 /// <summary>
 /// How many Neurons are in the Cortex. Must be larger than the total ConceptMap space at a bare minimum.
 /// </summary>
-constexpr auto TOTAL_NEURONS = 600000;
+constexpr auto TOTAL_NEURONS = 1600000;
 
 /// <summary>
 /// In order to be able to predict future states, we need to learn based on previous states.
