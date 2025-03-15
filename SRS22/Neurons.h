@@ -5,19 +5,6 @@
 #include "FastRand.h"
 
 namespace SRS22 {
-
-	/// <summary>
-	/// Default is ENABLED.
-	/// If a neuron gets fatigued, this goes to DISABLED. (Synaptic Fatigue)
-	/// If the neuron is being set by hardware input then this is IS_INPUT and the neuron skips updating state and charge decay and learning etc.
-	/// It is a simple state of input from a input ConceptMap.
-	/// </summary>
-	enum class NeuronState : uint8_t {
-		ENABLED = 0,
-		DISABLED = 1,
-		IS_INPUT = 2
-	};
-
 	/// <summary>
 	/// All the neurons in a cortex. This is separation of concerns for the Cortex lets us
 	/// think better about neurons as objects. But... it is a bit of a leaky abstraction because we need the charge array and possibly
@@ -51,46 +38,34 @@ namespace SRS22 {
 		float charge[NEURON_HISTORY][TOTAL_NEURONS];
 
 		/// <summary>
-		/// The sum used to find the average net state of the neuron as a delta from the current charge.
-		/// Thus each source of change is voting on how much to change the current charge, and how far.
-		/// </summary>
-		float neuronChargesAverageDeltaSum[TOTAL_NEURONS];
-		/// <summary>
 		/// The weighted count of the delta sum.
 		/// </summary>
 		float neuronChargesAverageCount[TOTAL_NEURONS];
+
 		/// <summary>
-		/// How much energy this neuron has. 0.0 is no energy, 1.0 is full energy.
+		/// The limit on charge fue to fatigue
 		/// </summary>
-		float energy[TOTAL_NEURONS];
+		float fatigueCeiling[TOTAL_NEURONS];
+
 		/// <summary>
-		/// Gets disable if out of energy until energy recharges to highEnergyThreshold.
+		/// Either Enabled or Input (receives no charge from Links)
 		/// </summary>
-		NeuronState enabled[TOTAL_NEURONS];
+		NeuronState state[TOTAL_NEURONS];
+
 		/// <summary>
 		/// The other neurons used to predict this neurons future state.
 		/// </summary>
 		NeuronLink link[TOTAL_NEURONS][NEURON_UPSTREAM_LINKS];
-		/// <summary>
-		/// Flag that this link was a match for the selfCharge this tick.
-		/// </summary>
-		bool wasMatch[TOTAL_NEURONS];
 
 		void InitialSetup() {
 			for (size_t i = 0; i < TOTAL_NEURONS; i++) {
-				energy[i] = fastRandFloat();
-				if (fastRandFloat() * 0.5f)
-					enabled[i] = NeuronState::ENABLED;
-				else
-					enabled[i] = NeuronState::DISABLED;
+				fatigueCeiling[i] = 1.0f;
 				for (size_t h = 0; h < NEURON_HISTORY; h++) {
 					charge[h][i] = fastRandFloat() * 0.5f;
 				}
 				for (size_t k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 					link[i][k].otherIdx = GetRandomLinearOffsetExcept(i);
 					link[i][k].confidence = fastRandFloat() * 0.002f;
-					link[i][k].otherCharge = fastRandFloat();
-					link[i][k].selfCharge = fastRandFloat();
 				}
 			}
 		}

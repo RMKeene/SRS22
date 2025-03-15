@@ -31,8 +31,8 @@ namespace SRS22 {
 		{
 			// Connect all neuron inputs to random other neurons.
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
-				neurons.energy[i] = fastRandFloat();
-				neurons.enabled[i] = NeuronState::ENABLED;;
+				neurons.fatigueCeiling[i] = fastRandFloat();
+				neurons.state[i] = NeuronState::ENABLED;
 				for (int h = 0; h < NEURON_HISTORY; h++) {
 					neurons.charge[h][i] = fastRandFloat() * 0.5f;
 				}
@@ -43,8 +43,7 @@ namespace SRS22 {
 					NeuronLink& L = neurons.link[i][k];
 					L.otherIdx = GetRandomLinearOffsetExcept(i);
 					L.confidence = fastRandFloat() * 0.01f;
-					L.otherCharge = fastRandFloat();
-					L.selfCharge = fastRandFloat();
+					L.weight = fastRandFloat();
 				}
 			}
 		}
@@ -75,7 +74,7 @@ namespace SRS22 {
 
 		inline void checkNanByIdx(const int idx) {
 #ifdef VALIDATE_NEURONS
-			checkNan(idx, neurons[idx].getCurrentCharge());
+			checkNan(idx, neurons.getCurrent(idx));
 #endif
 		}
 
@@ -88,7 +87,7 @@ namespace SRS22 {
 
 		inline void checkNanByIdxNext(const int idx) {
 #ifdef VALIDATE_NEURONS
-			checkNan(idx, neurons[idx].getNextCharge());
+			checkNan(idx, neurons.getNext(idx));
 #endif
 		}
 
@@ -111,7 +110,7 @@ namespace SRS22 {
 		inline void checkNeuronCharge(const int idx) {
 #ifdef VALIDATE_NEURONS
 			checkNeuronIdx(idx);
-			checkChargeRangeLiberal(idx, neuronChargeValue(idx));
+			checkChargeRangeLiberal(idx, neurons.getCurrent(idx));
 #endif
 		}
 
@@ -190,72 +189,37 @@ namespace SRS22 {
 
 		void ComputeNextState(boolean doParallel) override;
 
-		void PreComputeNextStateSingleNeurons();
+		inline void PreComputeNextStateSingleNeurons() {}
 		void ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats);
-		void PostComputeNextStateSingleNeurons();
+		inline void PostComputeNextStateSingleNeurons() {}
 
 		/// <summary>
-		/// Set self match true, count in stats, deduct metabolism, and add link's vote.
+		/// 
 		/// </summary>
 		/// <param name="L"></param>
 		/// <param name="threadStats"></param>
 		/// <param name="N"></param>
 		/// <param name="selfDeltaC"></param>
-		inline void FireConnection(int neuronIdx, int linkIdx, SRS22::CortexThreadStats& threadStats, const float otherMatchStrength)
+		inline void ProcessLinkStimulus(int neuronIdx, int linkIdx, SRS22::CortexThreadStats& threadStats)
 		{
 			NeuronLink& L = neurons.link[neuronIdx][linkIdx];
-			L.wasMatch = true;
-			neurons.wasMatch[neuronIdx] = true;
 			threadStats.countOfNeuronsFired++;
 
+			float stimulus = std::min(L.weight * get(L.otherIdx), neurons.fatigueCeiling[neuronIdx]);
 			DeductFiringMetabolism(neuronIdx);
-			AddLinkVote(L, otherMatchStrength);
+			AddLinkStimulus(L, stimulus);
 		}
 
-		/// <summary>
-		/// Get the factor from 0 to 1 that represents how much the learned charge matches the current actual charge.
-		/// settings.selfDeltaSteepness is how quickly this falls to 0 as the difference between the two charges increases.
-		/// </summary>
-		/// <param name="L"></param>
-		/// <param name="C"></param>
-		/// <returns></returns>
-		inline const float& LinkOtherMatchStrength(NeuronLink& L)
-		{
-			const float& otherC = neurons.getCurrent(L.otherIdx);
-			float dC = fabs(L.selfCharge - otherC);
-			if(dC < 1.0f / settings.linkMatchSharpness)
-				return clamp<float>(1.0f - settings.linkMatchSharpness * dC, 0.0f, 1.0f);
-			return 0.0f;
-		}
-
-		inline void ResetVote(int neuronIdx) {
-			neurons.neuronChargesAverageDeltaSum[neuronIdx] = 0.0f;
-			neurons.neuronChargesAverageCount[neuronIdx] = 0.0f;
-		}
 		/// <summary>
 		/// Add this connections 
 		/// </summary>
 		/// <param name="otherNeuron"></param>
 		/// <param name="L"></param>
-		inline void AddLinkVote(const NeuronLink& L, const float otherMatchStrength)
+		inline void AddLinkStimulus(const NeuronLink& L, const float otherMatchStrength)
 		{
-			const float strength = L.confidence * otherMatchStrength;
-			// Weighted average sum in.
-			neurons.neuronChargesAverageDeltaSum[L.otherIdx] += L.otherCharge * strength;
-			neurons.neuronChargesAverageCount[L.otherIdx] += strength;
+
 		}
 
-		inline bool ConsumeVote(int neuronIdx)
-		{
-			// If there are no votes, then the neuron will not change.
-			if (neurons.neuronChargesAverageCount[neuronIdx] > 0.0001f) {
-				// The average of the votes is the new charge.
-				neurons.setNext(neuronIdx, neurons.neuronChargesAverageDeltaSum[neuronIdx] / neurons.neuronChargesAverageCount[neuronIdx]);
-				stats.countStimulus++;
-				return true;
-			}
-			return false;
-		}
 
 		/// <summary>
 		/// Deduct settings.energyDepletionOnFire from energy, 
@@ -265,11 +229,7 @@ namespace SRS22 {
 		inline void DeductFiringMetabolism(int idx)
 		{
 			// Metabolic cost to fire.
-			neurons.energy[idx] -= settings.energyDepletionOnFire;
-			if (neurons.energy[idx] < settings.lowEnergyThreshold) {
-				// We set this false but that will not be read until the next tick.
-				neurons.enabled[idx] = NeuronState::DISABLED;
-			}
+
 		}
 
 		/// <summary>
@@ -294,11 +254,7 @@ namespace SRS22 {
 		/// <param name="N"></param>
 		inline void RechargeMetabolismIf(int idx)
 		{
-			if (neurons.enabled[idx] == NeuronState::DISABLED) {
-				neurons.energy[idx] += settings.energyRechargePerTick;
-				if (neurons.energy[idx] >= settings.highEnergyThreshold)
-					neurons.enabled[idx] = NeuronState::ENABLED;
-			}
+
 		}
 
 		void LatchNewState(boolean doParallel) override;

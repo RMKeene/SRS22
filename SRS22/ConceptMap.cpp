@@ -73,7 +73,7 @@ namespace SRS22 {
 		// all neurons were already set to ranfom ENABLED or DISABLED.
 		if (_isInput) {
 			for (int i = cortexStartIndex; i < cortexStartIndex + totalSize; i++) {
-				c.neurons.enabled[i] = NeuronState::IS_INPUT;
+				c.neurons.state[i] = NeuronState::IS_INPUT;
 			}
 		}
 	}
