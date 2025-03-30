@@ -170,7 +170,7 @@ namespace SRS22 {
 			}
 			Neurons& Ns = cortex->neurons;
 			file.read(reinterpret_cast<char*>(Ns.charge), sizeof(Ns.charge));
-			file.read(reinterpret_cast<char*>(Ns.fatigueCeiling), sizeof(Ns.fatigueCeiling));
+			file.read(reinterpret_cast<char*>(Ns.energyCeiling), sizeof(Ns.energyCeiling));
 			file.read(reinterpret_cast<char*>(Ns.neuronChargesAverageCount), sizeof(Ns.neuronChargesAverageCount));
 			file.read(reinterpret_cast<char*>(Ns.link), sizeof(Ns.link));
 
@@ -209,7 +209,7 @@ namespace SRS22 {
 
 			Neurons& Ns = cortex->neurons;
 			file.write(reinterpret_cast<char*>(Ns.charge), sizeof(Ns.charge));
-			file.write(reinterpret_cast<char*>(Ns.fatigueCeiling), sizeof(Ns.fatigueCeiling));
+			file.write(reinterpret_cast<char*>(Ns.energyCeiling), sizeof(Ns.energyCeiling));
 			file.write(reinterpret_cast<char*>(Ns.neuronChargesAverageCount), sizeof(Ns.neuronChargesAverageCount));
 			file.write(reinterpret_cast<char*>(Ns.link), sizeof(Ns.link));
 

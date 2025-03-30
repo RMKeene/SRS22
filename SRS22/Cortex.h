@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 #include "FastRand.h"
 #include "Brain.h"
@@ -26,12 +25,11 @@ namespace SRS22 {
 
 		CortexStats stats;
 
-		Cortex(Brain& brain) :
-			brain(brain)
+		Cortex(Brain& brain) : brain(brain)
 		{
 			// Connect all neuron inputs to random other neurons.
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
-				neurons.fatigueCeiling[i] = fastRandFloat();
+				neurons.energyCeiling[i] = fastRandFloat();
 				neurons.state[i] = NeuronState::ENABLED;
 				for (int h = 0; h < NEURON_HISTORY; h++) {
 					neurons.charge[h][i] = fastRandFloat() * 0.5f;
@@ -141,7 +139,7 @@ namespace SRS22 {
 		}
 
 		inline void clampNeuron(int idx, int historyIdx) {
-			neurons.charge[historyIdx][idx] = clamp<float>(neurons.charge[historyIdx][idx], 0.0f, 1.0f);
+			neurons.charge[historyIdx][idx] = std::clamp(neurons.charge[historyIdx][idx], 0.0f, 1.0f);
 		}
 
 		inline void put(int idx, float val) {
@@ -194,45 +192,6 @@ namespace SRS22 {
 		inline void PostComputeNextStateSingleNeurons() {}
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="L"></param>
-		/// <param name="threadStats"></param>
-		/// <param name="N"></param>
-		/// <param name="selfDeltaC"></param>
-		inline void ProcessLinkStimulus(int neuronIdx, int linkIdx, SRS22::CortexThreadStats& threadStats)
-		{
-			NeuronLink& L = neurons.link[neuronIdx][linkIdx];
-			threadStats.countOfNeuronsFired++;
-
-			float stimulus = std::min(L.weight * get(L.otherIdx), neurons.fatigueCeiling[neuronIdx]);
-			DeductFiringMetabolism(neuronIdx);
-			AddLinkStimulus(L, stimulus);
-		}
-
-		/// <summary>
-		/// Add this connections 
-		/// </summary>
-		/// <param name="otherNeuron"></param>
-		/// <param name="L"></param>
-		inline void AddLinkStimulus(const NeuronLink& L, const float otherMatchStrength)
-		{
-
-		}
-
-
-		/// <summary>
-		/// Deduct settings.energyDepletionOnFire from energy, 
-		/// then disables if energy is below settings.lowEnergyThreshold
-		/// </summary>
-		/// <param name="N"></param>
-		inline void DeductFiringMetabolism(int idx)
-		{
-			// Metabolic cost to fire.
-
-		}
-
-		/// <summary>
 		/// Add in firing count, and zero and one count if C is close to 0 or 1.
 		/// </summary>
 		/// <param name="threadStats"></param>
@@ -245,16 +204,6 @@ namespace SRS22 {
 				threadStats.countOfOnes++;
 			else if (C <= 0.00001f)
 				threadStats.countOfZeros++;
-		}
-
-		/// <summary>
-		/// If currently disabled , add energy.
-		/// If that gets energy above settings.highEnergyThreshold, then set enable true.
-		/// </summary>
-		/// <param name="N"></param>
-		inline void RechargeMetabolismIf(int idx)
-		{
-
 		}
 
 		void LatchNewState(boolean doParallel) override;

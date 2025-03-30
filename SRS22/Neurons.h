@@ -43,9 +43,10 @@ namespace SRS22 {
 		float neuronChargesAverageCount[TOTAL_NEURONS];
 
 		/// <summary>
-		/// The limit on charge fue to fatigue
+		/// The limit on charge due to fatigue. Can be greater than 1.0 so there is reserve metabolism, but still
+		/// gets clamped to 1.0. See settings.maxEnergy
 		/// </summary>
-		float fatigueCeiling[TOTAL_NEURONS];
+		float energyCeiling[TOTAL_NEURONS];
 
 		/// <summary>
 		/// Either Enabled or Input (receives no charge from Links)
@@ -59,7 +60,7 @@ namespace SRS22 {
 
 		void InitialSetup() {
 			for (size_t i = 0; i < TOTAL_NEURONS; i++) {
-				fatigueCeiling[i] = 1.0f;
+				energyCeiling[i] = 1.0f;
 				for (size_t h = 0; h < NEURON_HISTORY; h++) {
 					charge[h][i] = fastRandFloat() * 0.5f;
 				}
