@@ -46,6 +46,14 @@ namespace SRS22 {
 		float lowLearnThreshold = 0.25f;
 		float lowLearnRate = 0.01f;
 		float hiLearnRate = 0.05f;
+		/// <summary>
+		/// How influential the goodness factor of the brain is on learning rate.
+		/// </summary>
+		float learningRateGoodnessFactor = 0.1f;		
+		/// <summary>
+		/// How influential the confidence of the brain is on learning rate.
+		/// </summary>
+		float learningRateConfidenceFactor = 0.1f;
 
 		float confidenceAdjustmentUpRate = 1.01f;
 		float confidenceAdjustmentDownRate = 0.999f;

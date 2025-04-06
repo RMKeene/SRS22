@@ -123,13 +123,24 @@ namespace SRS22 {
 			// Recover energy
 			+ settings.energyRechargePerTick, 0.0f, settings.maxEnergy);
 
+
 		// Neuroplasticity: Learn to predict the future state of this neuron.
+		// 
+		// Enhanced learning due to endorphins, "goodness" Range is +-1 
+		// So 1.0 goodness here is no enhancement or inhibition of learning rate.
+		const float goodness = 1.0f + brain.overallGoodness * settings.learningRateGoodnessFactor;
+
 		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
 			threadStats.sumOfConfidence += L.confidence;
+			__builtin_clz(L.age);
 			threadStats.countOfConfidence++;
-			here
-			// TODO - Hebian learning
+
+			const float learningRateDueToNewnessOfL = L.age * settings.learningRateConfidenceFactor;
+			
+			const float otherC = neurons.getCurrent(L.otherIdx);
+			const float myChargeDelta = 0.5f - C;
+			L.weight += myChargeDelta * otherC * settings.hiLearnRate;
 		}
 	}
 

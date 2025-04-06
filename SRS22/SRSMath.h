@@ -10,4 +10,9 @@ namespace SRS22 {
 	// Convert ulawbyte to 16 bit signed amplitude.
 	int ulaw2linear(unsigned char ulawbyte);
 
-}
+	int logBase2_U8(unsigned char x);
+	int logBase2_U16(unsigned short x);
+	int logBase2_U32(unsigned long x);
+	int logBase2_U64(unsigned long long x);
+
+} 

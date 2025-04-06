@@ -25,9 +25,13 @@ namespace SRS22 {
 		int otherIdx = NEURON_LINK_UNCONNECTED;
 		/// <summary>
 		/// How much we believe weight to be correct and a valid pattern of interest.
-		/// High confidence is a well learned connection. Low confidence is a new connection or a connection that is not predicting the future well.
+		/// High confidence (1.0) is a well learned connection. Low confidence (0.001) is a new connection or a connection that is not predicting the future well.
 		/// </summary>
 		float confidence = 0.0f;
-
+		/// <summary>
+		/// How many ticks the link has existed since last reroute.
+		/// </summary>
+		unsigned long long age = 0;
+		
 	};
 }

@@ -46,4 +46,47 @@ namespace SRS22 {
 
 		return(sample);
 	}
+
+	int logBase2_U8(unsigned char x) {
+		int result = 0;
+		if (x >= 16) { x >>= 4; result += 4; }
+		if (x >= 4) { x >>= 2; result += 2; }
+		if (x >= 2) { result += 1; }
+		return result;
+	}
+
+	/// <summary>
+	/// Finds the integer log. If x is 0 returns 0.
+	/// </summary>
+	/// <param name="x"></param>
+	/// <returns></returns>
+	int logBase2_U16(unsigned short x) {
+		int result = 0;
+		if (x >= 256) { x >>= 8; result += 8; }
+		if (x >= 16) { x >>= 4; result += 4; }
+		if (x >= 4) { x >>= 2; result += 2; }
+		if (x >= 2) { result += 1; }
+		return result;
+	}
+
+	int logBase2_U32(unsigned int x) {
+		int result = 0;
+		if (x >= 65536) { x >>= 16; result += 16; }
+		if (x >= 256) { x >>= 8; result += 8; }
+		if (x >= 16) { x >>= 4; result += 4; }
+		if (x >= 4) { x >>= 2; result += 2; }
+		if (x >= 2) { result += 1; }
+		return result;
+	} goofy here
+
+	int logBase2_U64(unsigned long x) {
+		int result = 0;
+		if (x >= 4294967296) { x >>= 32; result += 32; }
+		if (x >= 65536) { x >>= 16; result += 16; }
+		if (x >= 256) { x >>= 8; result += 8; }
+		if (x >= 16) { x >>= 4; result += 4; }
+		if (x >= 4) { x >>= 2; result += 2; }
+		if (x >= 2) { result += 1; }
+		return result;
+	}
 }
