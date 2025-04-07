@@ -70,10 +70,11 @@ namespace SRS22 {
 
 			// Add link stimulus. Gets clamped later,
 			neurons.getNextRef(i) += C + stimulus;
+			L.activity = L.activity * settings.linkActivityDecayRate * stimulus;
 		}
 
 		// Now clamp the result.
-		neurons.setNext(i, std::clamp(neurons.getNext(i), 0.0f, 1.0f));
+		neurons.setNext(i, std::clamp(neurons.getNext(i) * settings.chargeDepletionRate, 0.0f, 1.0f));
 		checkNanByIdx(i);
 	}
 
@@ -123,24 +124,30 @@ namespace SRS22 {
 			// Recover energy
 			+ settings.energyRechargePerTick, 0.0f, settings.maxEnergy);
 
-
 		// Neuroplasticity: Learn to predict the future state of this neuron.
-		// 
 		// Enhanced learning due to endorphins, "goodness" Range is +-1 
-		// So 1.0 goodness here is no enhancement or inhibition of learning rate.
-		const float goodness = 1.0f + brain.overallGoodness * settings.learningRateGoodnessFactor;
+		// So 1.0 goodness here is no enhancement nor inhibition of learning rate.
+		const float learningRateDueToGoodness = 1.0f + brain.overallGoodness * settings.learningRateGoodnessFactor;
 
 		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
 			threadStats.sumOfConfidence += L.confidence;
-			__builtin_clz(L.age);
 			threadStats.countOfConfidence++;
+			const unsigned long long ageFactor = logBase2_U64(L.age);
+			const float ageFactorF = 1.0f / (float)ageFactor;
 
-			const float learningRateDueToNewnessOfL = L.age * settings.learningRateConfidenceFactor;
+			// Newer links learn much faster
+			const float learningRateDueToNewnessOfL = ageFactorF * settings.learningRateAgeFactor;
+			// Active link learn a little faster.
+			const float learningRateDueToActivityOfL = L.activity * settings.linkActivityLearningFactor;
 			
 			const float otherC = neurons.getCurrent(L.otherIdx);
 			const float myChargeDelta = 0.5f - C;
-			L.weight += myChargeDelta * otherC * settings.hiLearnRate;
+			L.weight += myChargeDelta * otherC * 
+				settings.overallLearnRate *
+				learningRateDueToNewnessOfL *
+				learningRateDueToActivityOfL * 
+				learningRateDueToGoodness;
 		}
 	}
 

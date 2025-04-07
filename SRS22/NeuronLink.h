@@ -32,6 +32,13 @@ namespace SRS22 {
 		/// How many ticks the link has existed since last reroute.
 		/// </summary>
 		unsigned long long age = 0;
+		/// <summary>
+		/// How much the link has been used over quite a few recent ticks.
+		/// We add the otherIdx's charge every tick to this value.
+		/// Then it decays by settings.LinkActivityDecayRate every tick.
+		/// </summary>
+		float activity = 0.0f; 
+
 		
 	};
 }

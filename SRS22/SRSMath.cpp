@@ -69,7 +69,7 @@ namespace SRS22 {
 		return result;
 	}
 
-	int logBase2_U32(unsigned int x) {
+	int logBase2_U32(unsigned long x) {
 		int result = 0;
 		if (x >= 65536) { x >>= 16; result += 16; }
 		if (x >= 256) { x >>= 8; result += 8; }
@@ -77,9 +77,9 @@ namespace SRS22 {
 		if (x >= 4) { x >>= 2; result += 2; }
 		if (x >= 2) { result += 1; }
 		return result;
-	} goofy here
+	}
 
-	int logBase2_U64(unsigned long x) {
+	int logBase2_U64(unsigned long long x) {
 		int result = 0;
 		if (x >= 4294967296) { x >>= 32; result += 32; }
 		if (x >= 65536) { x >>= 16; result += 16; }

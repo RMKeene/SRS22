@@ -1,5 +1,13 @@
 namespace SRS22 {
 	struct CortexSettings {
+		/// <summary>
+		/// How much a neuron's Charge decays toward 0.0f each tick.
+		/// </summary>
+		float chargeDepletionRate = getDecayMultiplier(5.0f);
+
+		/// <summary>
+		/// How much the cortex usable neurons expands per tick.
+		/// </summary>
 		float growthRate = 0.01f;
 		/// <summary>
 		/// How much energy a neuron gains each tick.
@@ -29,13 +37,6 @@ namespace SRS22 {
 		float connectionThrottle = 0.5f;
 
 		/// <summary>
-		/// How quickly "being a match" falls off as actual charge moves away from the NeuronLink selfCharge.
-		/// So if this is 10.0 then a 0.1 difference in charge will reduce the match strength to 0.0.
-		/// When match strength is 0.0 then the connection is in effect hidden. (See Neural Hiding)
-		/// </summary>
-		float linkMatchSharpness = 10.0f;
-
-		/// <summary>
 		/// If confidence falls below this then a reroute might happen.
 		/// </summary>
 		float rerouteThreshold = 0.001f;
@@ -43,20 +44,22 @@ namespace SRS22 {
 		/// Probability of a reroute on any given tick if confidence is below rerouteThreshold.
 		/// </summary>
 		float rerouteProbability = 0.01f;
-		float lowLearnThreshold = 0.25f;
-		float lowLearnRate = 0.01f;
-		float hiLearnRate = 0.05f;
+		float overallLearnRate = 0.05f;
+
+		float linkActivityDecayRate = getDecayMultiplier(2.0f);
+		float linkActivityLearningFactor = 1.1f;
+
 		/// <summary>
 		/// How influential the goodness factor of the brain is on learning rate.
 		/// </summary>
 		float learningRateGoodnessFactor = 0.1f;		
 		/// <summary>
-		/// How influential the confidence of the brain is on learning rate.
+		/// Learning rate goes down by the base 2 log of age of the link multiplied by this factor.
 		/// </summary>
-		float learningRateConfidenceFactor = 0.1f;
+		float learningRateAgeFactor = 1.0f;
 
 		float confidenceAdjustmentUpRate = 1.01f;
-		float confidenceAdjustmentDownRate = 0.999f;
+		float confidenceAdjustmentDownRate = getDecayMultiplier(200.0f);
 		float minimumConfidence = 0.0001f;
 		float maximumConfidence = 0.9999f;
 		/// <summary>
