@@ -56,7 +56,7 @@ namespace SRS22 {
 	}
 
 	/// <summary>
-	/// Finds the integer log. If x is 0 returns 0.
+	/// Finds the integer log. If x is 0 or 1, returns 0.
 	/// </summary>
 	/// <param name="x"></param>
 	/// <returns></returns>

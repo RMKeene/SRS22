@@ -48,6 +48,10 @@ namespace SRS22 {
 
 		float linkActivityDecayRate = getDecayMultiplier(2.0f);
 		float linkActivityLearningFactor = 1.1f;
+		/// <summary>
+		/// How much of input stimulus absolute value is added to L.activity.
+		/// </summary>
+		float linkStimulusToActivityFactor = 0.1f;
 
 		/// <summary>
 		/// How influential the goodness factor of the brain is on learning rate.
@@ -57,6 +61,23 @@ namespace SRS22 {
 		/// Learning rate goes down by the base 2 log of age of the link multiplied by this factor.
 		/// </summary>
 		float learningRateAgeFactor = 1.0f;
+		/// <summary>
+		/// General how fast we forget.  Must be <= 1
+		/// </summary>
+		float learningRateForgetFactor = 0.999999f;
+		/// <summary>
+		/// How much pre-age neuron links get when new relative to actual age. This is a power of two exponent.
+		/// So an pree-offset of 256 ticks is 8.
+		/// </summary>
+		double learningRateForgetLogOffset = 8.0;
+		/// <summary>
+		/// 0 is current charge of self. 1 is charge of self 1 tick ago. 2 is charge of self 2 ticks ago.
+		/// Must NOT exceed NEURON_HISTORY - 1.
+		/// </summary>
+		int learningRateTicksOffset = 2;
+
+		float confidenceForgetFactor = 0.999999f;
+		int confidenceForgetLogOffset = 8;
 
 		float confidenceAdjustmentUpRate = 1.01f;
 		float confidenceAdjustmentDownRate = getDecayMultiplier(200.0f);

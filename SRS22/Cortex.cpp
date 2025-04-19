@@ -70,7 +70,9 @@ namespace SRS22 {
 
 			// Add link stimulus. Gets clamped later,
 			neurons.getNextRef(i) += C + stimulus;
-			L.activity = L.activity * settings.linkActivityDecayRate * stimulus;
+			// Add into activity for short term general activity leve.
+			L.activity = std::clamp(L.activity * settings.linkActivityDecayRate + 
+				stimulus * settings.linkStimulusToActivityFactor, 0.0f, 1.0f);
 		}
 
 		// Now clamp the result.
@@ -116,6 +118,7 @@ namespace SRS22 {
 			return;
 
 		const float C = neurons.getCurrent(i);
+		const float CDelta = C - 0.5f;
 
 		// Deplete some metabolism
 		neurons.energyCeiling[i] = std::clamp(neurons.energyCeiling[i] 
@@ -133,21 +136,32 @@ namespace SRS22 {
 			NeuronLink& L = neurons.link[i][k];
 			threadStats.sumOfConfidence += L.confidence;
 			threadStats.countOfConfidence++;
-			const unsigned long long ageFactor = logBase2_U64(L.age);
-			const float ageFactorF = 1.0f / (float)ageFactor;
+
+			L.age++;
+			const int ageLog = logBase2_U64(L.age) + 1;
+			const float ageLogInverse = 1.0f / (float)ageLog;
 
 			// Newer links learn much faster
-			const float learningRateDueToNewnessOfL = ageFactorF * settings.learningRateAgeFactor;
+			const float learningRateDueToNewnessOfL = 1.0f + ageLogInverse * settings.learningRateAgeFactor;
 			// Active link learn a little faster.
-			const float learningRateDueToActivityOfL = L.activity * settings.linkActivityLearningFactor;
+			const float learningRateDueToActivityOfL = 1.0f * L.activity * settings.linkActivityLearningFactor;
+			// How fast to forget. 1 is no forgetting, 0.5 is ultra rapid forgetting. Values lik 0.99999 are good.
+			const float forgetFactor = settings.learningRateForgetFactor * (1.0f - (1.0 / ((double)ageLog + settings.learningRateForgetLogOffset)));
 			
-			const float otherC = neurons.getCurrent(L.otherIdx);
-			const float myChargeDelta = 0.5f - C;
-			L.weight += myChargeDelta * otherC * 
+			// We are trying to train to predict the future. So use other's charge N ticks ago.
+			const float otherCPast = neurons.getPast(L.otherIdx, NEURON_HISTORY - settings.learningRateTicksOffset);
+			const float otherPastInfluence = CDelta * otherCPast;
+			L.weight = std::clamp(L.weight + -otherPastInfluence *
 				settings.overallLearnRate *
 				learningRateDueToNewnessOfL *
 				learningRateDueToActivityOfL * 
-				learningRateDueToGoodness;
+				learningRateDueToGoodness, -1.0f, 1.0f) * forgetFactor;
+
+			// Confidence is how well weight and otherCPast was a correct influence.
+			L.confidence = L.confidence + 
+				otherPastInfluence * 
+				L.weight * 
+				settings.confidenceForgetFactor *(1.0f - (1.0 / ((double)ageLog + settings.confidenceForgetLogOffset)));
 		}
 	}
 
