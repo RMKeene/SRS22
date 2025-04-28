@@ -11,24 +11,24 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/string.h>
-#include <wx/bitmap.h>
-#include <wx/image.h>
-#include <wx/icon.h>
-#include <wx/menu.h>
+#include <wx/tglbtn.h>
 #include <wx/gdicmn.h>
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/tglbtn.h>
 #include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/statbox.h>
 #include <wx/checkbox.h>
 #include <wx/textctrl.h>
-#include <wx/statline.h>
+#include <wx/spinctrl.h>
 #include <wx/choice.h>
 #include <wx/slider.h>
+#include <wx/statline.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
 #include <wx/statbmp.h>
 #include <wx/richtext/richtextctrl.h>
 #include <wx/timer.h>
@@ -46,8 +46,6 @@ class MonitorFrameGen : public wxFrame
 	private:
 	
 	protected:
-		wxMenuBar* MonitorFrameMenuBar;
-		wxMenu* m_menu5;
 		wxToggleButton* RunButton;
 		wxButton* MonitorStepButton;
 		wxButton* ContinueButton;
@@ -56,7 +54,7 @@ class MonitorFrameGen : public wxFrame
 		wxButton* saveLayoutButton;
 		wxButton* reloadLayoutButton;
 		wxButton* resetLayoutButton;
-		wxButton* TerstAButton;
+		wxButton* TestAButton;
 		wxButton* TestBButton;
 		wxButton* GoodButton;
 		wxButton* BadButton;
@@ -64,46 +62,9 @@ class MonitorFrameGen : public wxFrame
 		wxCheckBox* m_CPUParallelCB;
 		wxButton* m_LoadButton;
 		wxButton* m_StoreButton;
-		wxButton* m_updateCotrexFactorsButton;
-		wxButton* m_button17;
-		wxButton* m_button18;
 		wxStaticText* m_staticText19;
-		wxTextCtrl* m_EnergyTextInput;
-		wxStaticText* m_staticText22;
-		wxTextCtrl* m_LowEnergyThreshTextInput;
-		wxStaticText* m_hiLabel;
-		wxTextCtrl* m_hiEnergyThresh;
-		wxStaticText* m_staticText24;
-		wxTextCtrl* m_fireDepletion;
-		wxStaticLine* m_staticline2;
-		wxStaticText* m_staticText31;
-		wxTextCtrl* m_confidenceUpRate;
-		wxStaticText* m_confidenceDownRateLabel;
-		wxTextCtrl* m_confidenceDownRate;
-		wxStaticText* m_staticText33;
-		wxTextCtrl* m_minConfidence;
-		wxStaticText* m_staticText34;
-		wxTextCtrl* m_maxConfidence;
-		wxStaticText* m_staticText25;
-		wxTextCtrl* m_ConnectionThrottle;
-		wxStaticText* m_staticText26;
-		wxTextCtrl* m_linkMatchSharpness;
-		wxStaticText* m_staticText21;
-		wxTextCtrl* m_GrowthRateTextInput;
-		wxStaticLine* m_staticline4;
-		wxStaticText* m_staticText27;
-		wxTextCtrl* m_RerouteThreshold;
-		wxStaticText* m_staticText35;
-		wxTextCtrl* m_rerouteProbabilityTextInput;
-		wxStaticText* m_staticText36;
-		wxTextCtrl* m_rerouteInitialConfidence;
-		wxStaticLine* m_staticline3;
-		wxStaticText* m_staticText28;
-		wxTextCtrl* m_lowLearnThresh;
-		wxStaticText* m_staticText29;
-		wxTextCtrl* m_lowLearnRate;
-		wxStaticText* m_staticText30;
-		wxTextCtrl* m_hiLearnRate;
+		wxTextCtrl* SAMPLE_TEXT_BOX;
+		wxSpinCtrl* m_spinCtrl1;
 		wxStaticText* m_staticText91;
 		wxChoice* AudioInChoiceDropbox;
 		wxStaticText* m_staticText181;
@@ -130,10 +91,6 @@ class MonitorFrameGen : public wxFrame
 		wxStaticText* chosenMapText3;
 		wxStaticBitmap* chosenMapBitmap;
 		wxStaticText* SelectedMapDetailLabel;
-		wxStaticText* MonitorStatisticsLine1;
-		wxStaticText* MonitorStatisticsLine2;
-		wxStaticText* MonitorStatisticsLine3;
-		wxStaticText* MonitorStatisticsLine4;
 		wxTimer MonitorFrameTick;
 		
 		// Virtual event handlers, overide them in your derived class
@@ -160,6 +117,8 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnNeuronFactorsChangeUpdateClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRevertNeuronFactorsClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNeuronFactorsDefaultsClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void ON_SAMPLE_TEXT( wxCommandEvent& event ) { event.Skip(); }
+		virtual void ON_SAMPLE_ON_ENTER( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioInDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioVolumeIn( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
@@ -175,9 +134,18 @@ class MonitorFrameGen : public wxFrame
 		
 	
 	public:
+		wxBoxSizer* m_SettingsH0;
+		wxButton* m_updateCortexFactorsButton;
+		wxBoxSizer* m_SettingsH1;
+		wxButton* m_UndoButton17;
+		wxBoxSizer* m_SettingsH2;
+		wxButton* m_DefaultsButton;
+		wxStaticText* MonitorStatisticsLine1;
+		wxStaticText* MonitorStatisticsLine2;
+		wxStaticText* MonitorStatisticsLine3;
 		wxRichTextCtrl* LogRichText;
 		
-		MonitorFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Monitor - Debug"), const wxPoint& pos = wxPoint( -1,-1 ), const wxSize& size = wxSize( 2400,1000 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MonitorFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SRS22 - Monitor - Debug"), const wxPoint& pos = wxPoint( -1,-1 ), const wxSize& size = wxSize( 2400,1020 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~MonitorFrameGen();
 	

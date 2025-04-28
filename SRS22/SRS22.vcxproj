@@ -356,6 +356,7 @@
     <ClInclude Include="Neurons.h" />
     <ClInclude Include="NeuronLink.h" />
     <ClInclude Include="OpenCVHelpers.h" />
+    <ClInclude Include="source\UISettings.h" />
     <ClInclude Include="SRS22pch.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Reaper.h" />
