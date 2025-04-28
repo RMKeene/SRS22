@@ -18,6 +18,8 @@ namespace SRS22 {
 		topTextFrame->Show(true);
 		topVideoFrame = new TopVideoFrame(this);
 		topVideoFrame->Show(true);
+
+		CreateUISettingsEntry();
 	}
 
 	MonitorFrame::~MonitorFrame() {
@@ -237,7 +239,6 @@ namespace SRS22 {
 		ToFloat(m_minConfidence, &b->cortex->settings.minimumConfidence);
 		ToFloat(m_maxConfidence, &b->cortex->settings.maximumConfidence);
 		ToFloat(m_rerouteInitialConfidence, &b->cortex->settings.rerouteConfidenceSet);
-
 	}
 
 	bool MonitorFrame::ToFloat(wxTextCtrl* textCtrl, float *value) {

@@ -54,6 +54,7 @@ namespace SRS22 {
 
 		void ProcessLogQueueInWindowThread();
 
+		void CreateUISettingsElements();
 		void CortexSettingsToUI();
 
 		/***
