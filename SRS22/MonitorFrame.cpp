@@ -19,7 +19,7 @@ namespace SRS22 {
 		topVideoFrame = new TopVideoFrame(this);
 		topVideoFrame->Show(true);
 
-		CreateUISettingsEntry();
+		CreateUISettingsElements();
 	}
 
 	MonitorFrame::~MonitorFrame() {
@@ -259,6 +259,10 @@ namespace SRS22 {
 
 	void MonitorFrame::OnRevertNeuronFactorsClicked(wxCommandEvent& event) {
 		CortexSettingsToUI();
+	}
+
+	void MonitorFrame::CreateUISettingsElements() {
+		
 	}
 
 	void MonitorFrame::CortexSettingsToUI() {

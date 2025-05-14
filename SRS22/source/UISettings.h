@@ -11,7 +11,7 @@
 
 namespace SRS22 {
 
-	class LabeledTextCtrl : public wxBoxSizer {
+	class LabeledTextCtrl : public wxBoxSizer {  
 	public:
 		int padding = 5;
 		const wxString& m_label;
