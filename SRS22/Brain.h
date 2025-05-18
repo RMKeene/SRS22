@@ -57,8 +57,8 @@ namespace SRS22 {
 		/// <summary>
 		/// How good the system feels. + is good, - is bad, range about -1 to 1
 		/// </summary>
-		float overallGoodness = 0.0f;  
-		float overallGoodnessPrevious = 0.0f; 
+		float overallGoodness = 0.0f;
+		float overallGoodnessPrevious = 0.0f;
 		/// <summary>
 		/// Tempered derivative of overallGoodness.
 		/// </summary>

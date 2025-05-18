@@ -66,17 +66,17 @@ namespace SRS22 {
 			const float stimulus =
 				get(L.otherIdx) * L.weight *
 				NEURON_UPSTREAM_LINKS_INVERSE *
-				settings.connectionThrottle();
+				settings.connectionThrottle;
 
 			// Add link stimulus. Gets clamped later,
 			neurons.getNextRef(i) += C + stimulus;
 			// Add into activity for short term general activity leve.
-			L.activity = std::clamp(L.activity * settings.linkActivityDecayRate() +
-				stimulus * settings.linkStimulusToActivityFactor(), 0.0f, 1.0f);
+			L.activity = std::clamp(L.activity * settings.linkActivityDecayRate + 
+				stimulus * settings.linkStimulusToActivityFactor, 0.0f, 1.0f);
 		}
 
 		// Now clamp the result.
-		neurons.setNext(i, std::clamp(neurons.getNext(i) * settings.chargeDepletionRate(), 0.0f, 1.0f));
+		neurons.setNext(i, std::clamp(neurons.getNext(i) * settings.chargeDepletionRate, 0.0f, 1.0f));
 		checkNanByIdx(i);
 	}
 
@@ -123,14 +123,14 @@ namespace SRS22 {
 		// Deplete some metabolism
 		neurons.energyCeiling[i] = std::clamp(neurons.energyCeiling[i] 
 			// Deplete energy
-			- C * settings.energyDepletionOnFire()
+			- C * settings.energyDepletionOnFire
 			// Recover energy
-			+ settings.energyRechargeRate(), 0.0f, settings.maxEnergy());
+			+ settings.energyRechargePerTick, 0.0f, settings.maxEnergy);
 
 		// Neuroplasticity: Learn to predict the future state of this neuron.
 		// Enhanced learning due to endorphins, "goodness" Range is +-1 
 		// So 1.0 goodness here is no enhancement nor inhibition of learning rate.
-		const float learningRateDueToGoodness = 1.0f + brain.overallGoodness * settings.learningRateGoodnessFactor();
+		const float learningRateDueToGoodness = 1.0f + brain.overallGoodness * settings.learningRateGoodnessFactor;
 
 		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
@@ -142,17 +142,17 @@ namespace SRS22 {
 			const float ageLogInverse = 1.0f / (float)ageLog;
 
 			// Newer links learn much faster
-			const float learningRateDueToNewnessOfL = 1.0f + ageLogInverse * settings.learningRateAgeFactor();
+			const float learningRateDueToNewnessOfL = 1.0f + ageLogInverse * settings.learningRateAgeFactor;
 			// Active link learn a little faster.
-			const float learningRateDueToActivityOfL = 1.0f * L.activity * settings.GetSetting("linkActivityLearningFactor")->F();
+			const float learningRateDueToActivityOfL = 1.0f * L.activity * settings.linkActivityLearningFactor;
 			// How fast to forget. 1 is no forgetting, 0.5 is ultra rapid forgetting. Values lik 0.99999 are good.
-			const float forgetFactor = settings.learningRateForgetFactor() * (1.0f - (1.0 / ((double)ageLog + settings.learningRateForgetLogOffset())));
+			const float forgetFactor = settings.learningRateForgetFactor * (1.0f - (1.0 / ((double)ageLog + settings.learningRateForgetLogOffset)));
 			
 			// We are trying to train to predict the future. So use other's charge N ticks ago.
-			const float otherCPast = neurons.getPast(L.otherIdx, NEURON_HISTORY - settings.learningRateTicksOffset());
+			const float otherCPast = neurons.getPast(L.otherIdx, NEURON_HISTORY - settings.learningRateTicksOffset);
 			const float otherPastInfluence = CDelta * otherCPast;
 			L.weight = std::clamp(L.weight + -otherPastInfluence *
-				settings.overallLearnRate() *
+				settings.overallLearnRate *
 				learningRateDueToNewnessOfL *
 				learningRateDueToActivityOfL * 
 				learningRateDueToGoodness, -1.0f, 1.0f) * forgetFactor;
@@ -161,7 +161,7 @@ namespace SRS22 {
 			L.confidence = L.confidence + 
 				otherPastInfluence * 
 				L.weight * 
-				settings.confidenceForgetFactor() *(1.0f - (1.0 / ((double)ageLog + settings.confidenceForgetLogOffset())));
+				settings.confidenceForgetFactor *(1.0f - (1.0 / ((double)ageLog + settings.confidenceForgetLogOffset)));
 		}
 	}
 

@@ -3,7 +3,6 @@
 #include "TopTextFrame.h"
 #include "WhiteboardFrame.h"
 #include "TopVideoFrame.h"
-#include "source/UISettings.h"
 
 namespace SRS22 {
 	class MonitorFrame :
@@ -55,7 +54,6 @@ namespace SRS22 {
 
 		void ProcessLogQueueInWindowThread();
 
-		void CreateUISettingsElements();
 		void CortexSettingsToUI();
 
 		/***
@@ -73,10 +71,5 @@ namespace SRS22 {
 		bool hasSetupVideoInDroplist = false;
 
 		std::string brainFileName;
-
-		/// <summary>
-		/// Key is the SRSetting's Name.  The value is the setting's UI element that we created on startup.
-		/// </summary>
-		std::map<std::string, LabeledTextCtrl *> settingsUiElements;
 	};
 }

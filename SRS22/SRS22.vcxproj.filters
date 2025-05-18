@@ -410,9 +410,6 @@
     <ClInclude Include="NeuronLink.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="source\UISettings.h">
-      <Filter>Source</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">

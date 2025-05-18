@@ -18,8 +18,6 @@ namespace SRS22 {
 		topTextFrame->Show(true);
 		topVideoFrame = new TopVideoFrame(this);
 		topVideoFrame->Show(true);
-
-		CreateUISettingsElements();
 	}
 
 	MonitorFrame::~MonitorFrame() {
@@ -222,6 +220,23 @@ namespace SRS22 {
 
 	void MonitorFrame::OnNeuronFactorsChangeUpdateClicked(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		ToFloat(m_ConnectionThrottle, &b->cortex->settings.connectionThrottle);
+		ToFloat(m_GrowthRateTextInput, &b->cortex->settings.growthRate);
+		ToFloat(m_EnergyTextInput, &b->cortex->settings.energyRechargePerTick);
+		ToFloat(m_fireDepletion, &b->cortex->settings.energyDepletionOnFire);
+		ToFloat(m_LowEnergyThreshTextInput, &b->cortex->settings.lowEnergyThreshold);
+		ToFloat(m_hiEnergyThresh, &b->cortex->settings.highEnergyThreshold);
+		ToFloat(m_linkMatchSharpness, &b->cortex->settings.linkMatchSharpness);
+		ToFloat(m_RerouteThreshold, &b->cortex->settings.rerouteThreshold);
+		ToFloat(m_rerouteProbabilityTextInput, &b->cortex->settings.rerouteProbability);
+		ToFloat(m_lowLearnThresh, &b->cortex->settings.lowLearnThreshold);
+		ToFloat(m_lowLearnRate, &b->cortex->settings.lowLearnRate);
+		ToFloat(m_hiLearnRate, &b->cortex->settings.hiLearnRate);
+		ToFloat(m_confidenceUpRate, &b->cortex->settings.confidenceAdjustmentUpRate);
+		ToFloat(m_confidenceDownRate, &b->cortex->settings.confidenceAdjustmentDownRate);
+		ToFloat(m_minConfidence, &b->cortex->settings.minimumConfidence);
+		ToFloat(m_maxConfidence, &b->cortex->settings.maximumConfidence);
+		ToFloat(m_rerouteInitialConfidence, &b->cortex->settings.rerouteConfidenceSet);
 
 	}
 
@@ -238,20 +253,32 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnNeuronFactorsDefaultsClicked(wxCommandEvent& event) {
-		GlobalWorld::GlobalWorldInstance.GetBrain(0)->cortex->settings.ResetSettings();
+		GlobalWorld::GlobalWorldInstance.GetBrain(0)->cortex->settings = CortexSettings();
 	}
 
 	void MonitorFrame::OnRevertNeuronFactorsClicked(wxCommandEvent& event) {
 		CortexSettingsToUI();
 	}
 
-	void MonitorFrame::CreateUISettingsElements() {
-		
-	}
-
 	void MonitorFrame::CortexSettingsToUI() {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-
+		m_ConnectionThrottle->SetValue(wxString::Format("%6.4g", b->cortex->settings.connectionThrottle));
+		m_GrowthRateTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.growthRate));
+		m_EnergyTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.energyRechargePerTick));
+		m_fireDepletion->SetValue(wxString::Format("%6.4g", b->cortex->settings.energyDepletionOnFire));
+		m_LowEnergyThreshTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.lowEnergyThreshold));
+		m_hiEnergyThresh->SetValue(wxString::Format("%6.4g", b->cortex->settings.highEnergyThreshold));
+		m_linkMatchSharpness->SetValue(wxString::Format("%6.4g", b->cortex->settings.linkMatchSharpness));
+		m_RerouteThreshold->SetValue(wxString::Format("%6.4g", b->cortex->settings.rerouteThreshold));
+		m_rerouteProbabilityTextInput->SetValue(wxString::Format("%6.4g", b->cortex->settings.rerouteProbability));
+		m_lowLearnThresh->SetValue(wxString::Format("%6.4g", b->cortex->settings.lowLearnThreshold));
+		m_lowLearnRate->SetValue(wxString::Format("%6.4g", b->cortex->settings.lowLearnRate));
+		m_hiLearnRate->SetValue(wxString::Format("%6.4g", b->cortex->settings.hiLearnRate));
+		m_confidenceUpRate->SetValue(wxString::Format("%6.4g", b->cortex->settings.confidenceAdjustmentUpRate));
+		m_confidenceDownRate->SetValue(wxString::Format("%6.4g", b->cortex->settings.confidenceAdjustmentDownRate));
+		m_minConfidence->SetValue(wxString::Format("%6.4g", b->cortex->settings.minimumConfidence));
+		m_maxConfidence->SetValue(wxString::Format("%6.4g", b->cortex->settings.maximumConfidence));
+		m_rerouteInitialConfidence->SetValue(wxString::Format("%6.4g", b->cortex->settings.rerouteConfidenceSet));
 	}
 
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {
@@ -337,9 +364,11 @@ namespace SRS22 {
 		MonitorStatisticsLine2->SetLabelText(wxString::Format("ReRoutes: %d, Average C: %6.4f, Confidence: %6.4f",
 			cortex->stats.countOfReRoutes, cortex->stats.averageNeuronCharge, cortex->stats.averageConfidence));
 		MonitorStatisticsLine3->SetLabelText("Stats:");
+		MonitorStatisticsLine4->SetLabelText("Stats:");
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {
+
 	}
 
 	void MonitorFrame::OnTestBClicked(wxCommandEvent& event) {
