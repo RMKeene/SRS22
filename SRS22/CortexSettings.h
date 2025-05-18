@@ -54,6 +54,7 @@ namespace SRS22 {
 					break;
 				}
 			}
+
 			float F() const {
 				switch (Type) {
 				case SettingType::F:
@@ -256,6 +257,7 @@ namespace SRS22 {
 					break;
 				default:
 					throw std::runtime_error("Unknown setting type");
+				}
 			}
 		}
 
@@ -303,7 +305,6 @@ namespace SRS22 {
 			std::ofstream ofs(filename);
 			ofs << j.dump(4);
 		}
-
 
 		void LoadSettingsFromJson(const std::string& filename, bool createAll = false) {
 			std::ifstream ifs(filename);
@@ -373,7 +374,7 @@ namespace SRS22 {
 				if (s.contains("SettingRow")) settingPtr->SettingRow = s["SettingRow"];
 			}
 		}
-	}
-};
-}// Removes a setting by tag from the settings map. Returns true if removed, false if not found.
+	};
+}
+
 
