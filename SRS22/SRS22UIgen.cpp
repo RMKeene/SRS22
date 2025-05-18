@@ -22,28 +22,6 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 {
 	this->SetSizeHints( wxSize( 500,500 ), wxDefaultSize );
 	
-	MonitorFrameMenuBar = new wxMenuBar( 0 );
-	m_menu5 = new wxMenu();
-	wxMenuItem* MonitorMenuNewItem;
-	MonitorMenuNewItem = new wxMenuItem( m_menu5, wxID_ANY, wxString( wxT("New") ) , wxEmptyString, wxITEM_NORMAL );
-	m_menu5->Append( MonitorMenuNewItem );
-	
-	wxMenuItem* MonitorOpenMenuItem;
-	MonitorOpenMenuItem = new wxMenuItem( m_menu5, wxID_ANY, wxString( wxT("Open") ) , wxEmptyString, wxITEM_NORMAL );
-	m_menu5->Append( MonitorOpenMenuItem );
-	
-	wxMenuItem* MonitorMenuSaveItem;
-	MonitorMenuSaveItem = new wxMenuItem( m_menu5, wxID_ANY, wxString( wxT("Save") ) , wxEmptyString, wxITEM_NORMAL );
-	m_menu5->Append( MonitorMenuSaveItem );
-	
-	wxMenuItem* MonitorMenuSaveAsItem;
-	MonitorMenuSaveAsItem = new wxMenuItem( m_menu5, wxID_ANY, wxString( wxT("Save As...") ) , wxEmptyString, wxITEM_NORMAL );
-	m_menu5->Append( MonitorMenuSaveAsItem );
-	
-	MonitorFrameMenuBar->Append( m_menu5, wxT("File") ); 
-	
-	this->SetMenuBar( MonitorFrameMenuBar );
-	
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
 	
@@ -105,8 +83,8 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	wxStaticBoxSizer* sbSizer11;
 	sbSizer11 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Test") ), wxHORIZONTAL );
 	
-	TerstAButton = new wxButton( sbSizer11->GetStaticBox(), wxID_ANY, wxT("Test A"), wxDefaultPosition, wxDefaultSize, 0 );
-	sbSizer11->Add( TerstAButton, 0, wxALL, 5 );
+	TestAButton = new wxButton( sbSizer11->GetStaticBox(), wxID_ANY, wxT("Test A"), wxDefaultPosition, wxDefaultSize, 0 );
+	sbSizer11->Add( TestAButton, 0, wxALL, 5 );
 	
 	TestBButton = new wxButton( sbSizer11->GetStaticBox(), wxID_ANY, wxT("Test B"), wxDefaultPosition, wxDefaultSize, 0 );
 	sbSizer11->Add( TestBButton, 0, wxALL, 5 );
@@ -167,168 +145,48 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	MonitorControl->Add( 0, 0, 0, wxEXPAND, 5 );
 	
-	wxStaticBoxSizer* sbSizer161;
-	sbSizer161 = new wxStaticBoxSizer( new wxStaticBox( MonitorControl->GetStaticBox(), wxID_ANY, wxT("Neuron/Cortex Factors") ), wxVERTICAL );
-	
-	wxBoxSizer* bSizer18;
-	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
-	
-	m_updateCotrexFactorsButton = new wxButton( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Update"), wxDefaultPosition, wxSize( 70,-1 ), 0 );
-	bSizer18->Add( m_updateCotrexFactorsButton, 0, wxALL, 5 );
-	
-	m_button17 = new wxButton( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Undo"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
-	bSizer18->Add( m_button17, 0, wxALL, 5 );
-	
-	m_button18 = new wxButton( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Defaults"), wxDefaultPosition, wxSize( 60,-1 ), 0 );
-	bSizer18->Add( m_button18, 0, wxALL, 5 );
-	
-	m_staticText19 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("En+ / tick"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText19->Wrap( -1 );
-	bSizer18->Add( m_staticText19, 0, wxALL, 5 );
-	
-	m_EnergyTextInput = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.02"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	m_EnergyTextInput->SetMaxLength( 6 ); 
-	bSizer18->Add( m_EnergyTextInput, 0, wxALL, 5 );
-	
-	m_staticText22 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("En Th: Low"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText22->Wrap( -1 );
-	bSizer18->Add( m_staticText22, 0, wxALL, 5 );
-	
-	m_LowEnergyThreshTextInput = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.1"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer18->Add( m_LowEnergyThreshTextInput, 0, wxALL, 5 );
-	
-	m_hiLabel = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Hi"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_hiLabel->Wrap( -1 );
-	bSizer18->Add( m_hiLabel, 0, wxALL, 5 );
-	
-	m_hiEnergyThresh = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.9"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer18->Add( m_hiEnergyThresh, 0, wxALL, 5 );
-	
-	m_staticText24 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Fire Dep."), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText24->Wrap( -1 );
-	bSizer18->Add( m_staticText24, 0, wxALL, 5 );
-	
-	m_fireDepletion = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.05"), wxDefaultPosition, wxSize( 70,-1 ), 0 );
-	bSizer18->Add( m_fireDepletion, 0, wxALL, 5 );
-	
-	m_staticline2 = new wxStaticLine( sbSizer161->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
-	bSizer18->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
-	
-	m_staticText31 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Conf: Rate  +"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText31->Wrap( -1 );
-	bSizer18->Add( m_staticText31, 0, wxALL, 5 );
-	
-	m_confidenceUpRate = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("1.01"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
-	bSizer18->Add( m_confidenceUpRate, 0, wxALL, 5 );
-	
-	m_confidenceDownRateLabel = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("-"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_confidenceDownRateLabel->Wrap( -1 );
-	bSizer18->Add( m_confidenceDownRateLabel, 0, wxALL, 5 );
-	
-	m_confidenceDownRate = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.999"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
-	bSizer18->Add( m_confidenceDownRate, 0, wxALL, 5 );
-	
-	m_staticText33 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Clip: Min"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText33->Wrap( -1 );
-	bSizer18->Add( m_staticText33, 0, wxALL, 5 );
-	
-	m_minConfidence = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.0001"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
-	bSizer18->Add( m_minConfidence, 0, wxALL, 5 );
-	
-	m_staticText34 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Max"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText34->Wrap( -1 );
-	bSizer18->Add( m_staticText34, 0, wxALL, 5 );
-	
-	m_maxConfidence = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.999"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
-	bSizer18->Add( m_maxConfidence, 0, wxALL, 5 );
-	
-	
-	sbSizer161->Add( bSizer18, 0, wxEXPAND, 5 );
-	
-	wxBoxSizer* bSizer19;
-	bSizer19 = new wxBoxSizer( wxHORIZONTAL );
-	
-	m_staticText25 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Conn Throttle"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText25->Wrap( -1 );
-	bSizer19->Add( m_staticText25, 0, wxALL, 5 );
-	
-	m_ConnectionThrottle = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("1.0"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	m_ConnectionThrottle->SetMaxLength( 6 ); 
-	bSizer19->Add( m_ConnectionThrottle, 0, wxALL, 5 );
-	
-	m_staticText26 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Link Match Sharpness"), wxDefaultPosition, wxSize( -1,-1 ), 0 );
-	m_staticText26->Wrap( -1 );
-	bSizer19->Add( m_staticText26, 0, wxALL, 5 );
-	
-	m_linkMatchSharpness = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("10"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer19->Add( m_linkMatchSharpness, 0, wxALL, 5 );
-	
-	m_staticText21 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Gwth"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText21->Wrap( -1 );
-	bSizer19->Add( m_staticText21, 0, wxALL, 5 );
-	
-	m_GrowthRateTextInput = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.01"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	m_GrowthRateTextInput->SetMaxLength( 8 ); 
-	bSizer19->Add( m_GrowthRateTextInput, 0, wxALL, 5 );
-	
-	m_staticline4 = new wxStaticLine( sbSizer161->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
-	bSizer19->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
-	
-	m_staticText27 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Reroute: Th"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText27->Wrap( -1 );
-	bSizer19->Add( m_staticText27, 0, wxALL, 5 );
-	
-	m_RerouteThreshold = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.001"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
-	bSizer19->Add( m_RerouteThreshold, 0, wxALL, 5 );
-	
-	m_staticText35 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Prob"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText35->Wrap( -1 );
-	bSizer19->Add( m_staticText35, 0, wxALL, 5 );
-	
-	m_rerouteProbabilityTextInput = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.01"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer19->Add( m_rerouteProbabilityTextInput, 0, wxALL, 5 );
-	
-	m_staticText36 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Init Conf"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText36->Wrap( -1 );
-	bSizer19->Add( m_staticText36, 0, wxALL, 5 );
-	
-	m_rerouteInitialConfidence = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.5"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer19->Add( m_rerouteInitialConfidence, 0, wxALL, 5 );
-	
-	m_staticline3 = new wxStaticLine( sbSizer161->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
-	bSizer19->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
-	
-	m_staticText28 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Low Learn Th"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText28->Wrap( -1 );
-	m_staticText28->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ) );
-	
-	bSizer19->Add( m_staticText28, 0, wxALL, 5 );
-	
-	m_lowLearnThresh = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.25"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer19->Add( m_lowLearnThresh, 0, wxALL, 5 );
-	
-	m_staticText29 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Learn: Low"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText29->Wrap( -1 );
-	bSizer19->Add( m_staticText29, 0, wxALL, 5 );
-	
-	m_lowLearnRate = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.01"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer19->Add( m_lowLearnRate, 0, wxALL, 5 );
-	
-	m_staticText30 = new wxStaticText( sbSizer161->GetStaticBox(), wxID_ANY, wxT("Hi"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText30->Wrap( -1 );
-	bSizer19->Add( m_staticText30, 0, wxALL, 5 );
-	
-	m_hiLearnRate = new wxTextCtrl( sbSizer161->GetStaticBox(), wxID_ANY, wxT("0.05"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer19->Add( m_hiLearnRate, 0, wxALL, 5 );
-	
-	
-	sbSizer161->Add( bSizer19, 1, wxEXPAND, 5 );
-	
-	
-	MonitorControl->Add( sbSizer161, 0, wxEXPAND, 5 );
-	
 	
 	bSizer3->Add( MonitorControl, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* m_SettingsVertPane;
+	m_SettingsVertPane = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("Settings") ), wxVERTICAL );
+	
+	m_SettingsH0 = new wxBoxSizer( wxVERTICAL );
+	
+	m_updateCortexFactorsButton = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Update"), wxDefaultPosition, wxSize( 70,-1 ), 0 );
+	m_SettingsH0->Add( m_updateCortexFactorsButton, 0, wxALL, 5 );
+	
+	
+	m_SettingsVertPane->Add( m_SettingsH0, 1, wxEXPAND, 5 );
+	
+	m_SettingsH1 = new wxBoxSizer( wxVERTICAL );
+	
+	m_UndoButton17 = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Undo"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	m_SettingsH1->Add( m_UndoButton17, 0, wxALL, 5 );
+	
+	
+	m_SettingsVertPane->Add( m_SettingsH1, 1, wxEXPAND, 5 );
+	
+	m_SettingsH2 = new wxBoxSizer( wxVERTICAL );
+	
+	m_DefaultsButton = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Defaults"), wxDefaultPosition, wxSize( 60,-1 ), 0 );
+	m_SettingsH2->Add( m_DefaultsButton, 0, wxALL, 5 );
+	
+	m_staticText19 = new wxStaticText( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText19->Wrap( -1 );
+	m_SettingsH2->Add( m_staticText19, 0, wxALL, 5 );
+	
+	SAMPLE_TEXT_BOX = new wxTextCtrl( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_SettingsH2->Add( SAMPLE_TEXT_BOX, 0, wxALL, 5 );
+	
+	m_spinCtrl1 = new wxSpinCtrl( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 10, 0 );
+	m_SettingsH2->Add( m_spinCtrl1, 0, wxALL, 5 );
+	
+	
+	m_SettingsVertPane->Add( m_SettingsH2, 1, wxEXPAND, 5 );
+	
+	
+	bSizer3->Add( m_SettingsVertPane, 0, wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSizer13;
 	sbSizer13 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("IO Devices") ), wxVERTICAL );
@@ -461,9 +319,6 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	mapMonitorRefreshDelay = new wxSlider( sbSizer12->GetStaticBox(), wxID_ANY, 200, 1, 1000, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
 	bSizer10->Add( mapMonitorRefreshDelay, 0, wxALL, 5 );
 	
-	
-	bSizer14->Add( bSizer10, 0, wxEXPAND, 5 );
-	
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
 	
@@ -483,7 +338,10 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	bSizer11->Add( chosenMapBitmap, 0, wxALL, 2 );
 	
 	
-	bSizer14->Add( bSizer11, 0, wxEXPAND, 1 );
+	bSizer10->Add( bSizer11, 0, wxEXPAND, 1 );
+	
+	
+	bSizer14->Add( bSizer10, 0, wxEXPAND, 5 );
 	
 	
 	bSizer13->Add( bSizer14, 0, wxEXPAND, 5 );
@@ -521,10 +379,6 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	MonitorStatisticsLine3 = new wxStaticText( MonitorStatistics->GetStaticBox(), wxID_ANY, wxT("Step: 0000000"), wxDefaultPosition, wxDefaultSize, 0 );
 	MonitorStatisticsLine3->Wrap( -1 );
 	MonitorStatistics->Add( MonitorStatisticsLine3, 0, wxALL, 5 );
-	
-	MonitorStatisticsLine4 = new wxStaticText( MonitorStatistics->GetStaticBox(), wxID_ANY, wxT("Step: 0000000"), wxDefaultPosition, wxDefaultSize, 0 );
-	MonitorStatisticsLine4->Wrap( -1 );
-	MonitorStatistics->Add( MonitorStatisticsLine4, 0, wxALL, 5 );
 	
 	
 	bSizer3->Add( MonitorStatistics, 0, wxEXPAND, 5 );
@@ -565,15 +419,17 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	saveLayoutButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnSaveLayoutButton ), NULL, this );
 	reloadLayoutButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnReloadLayoutButton ), NULL, this );
 	resetLayoutButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnResetLayoutButton ), NULL, this );
-	TerstAButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestAClicked ), NULL, this );
+	TestAButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestAClicked ), NULL, this );
 	TestBButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestBClicked ), NULL, this );
 	GoodButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnGoodClicked ), NULL, this );
 	BadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	m_LoadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoLoad ), NULL, this );
 	m_StoreButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoStore ), NULL, this );
-	m_updateCotrexFactorsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsChangeUpdateClicked ), NULL, this );
-	m_button17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRevertNeuronFactorsClicked ), NULL, this );
-	m_button18->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsDefaultsClicked ), NULL, this );
+	m_updateCortexFactorsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsChangeUpdateClicked ), NULL, this );
+	m_UndoButton17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRevertNeuronFactorsClicked ), NULL, this );
+	m_DefaultsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsDefaultsClicked ), NULL, this );
+	SAMPLE_TEXT_BOX->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MonitorFrameGen::ON_SAMPLE_TEXT ), NULL, this );
+	SAMPLE_TEXT_BOX->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( MonitorFrameGen::ON_SAMPLE_ON_ENTER ), NULL, this );
 	AudioInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
@@ -629,15 +485,17 @@ MonitorFrameGen::~MonitorFrameGen()
 	saveLayoutButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnSaveLayoutButton ), NULL, this );
 	reloadLayoutButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnReloadLayoutButton ), NULL, this );
 	resetLayoutButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnResetLayoutButton ), NULL, this );
-	TerstAButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestAClicked ), NULL, this );
+	TestAButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestAClicked ), NULL, this );
 	TestBButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnTestBClicked ), NULL, this );
 	GoodButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnGoodClicked ), NULL, this );
 	BadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	m_LoadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoLoad ), NULL, this );
 	m_StoreButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoStore ), NULL, this );
-	m_updateCotrexFactorsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsChangeUpdateClicked ), NULL, this );
-	m_button17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRevertNeuronFactorsClicked ), NULL, this );
-	m_button18->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsDefaultsClicked ), NULL, this );
+	m_updateCortexFactorsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsChangeUpdateClicked ), NULL, this );
+	m_UndoButton17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRevertNeuronFactorsClicked ), NULL, this );
+	m_DefaultsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsDefaultsClicked ), NULL, this );
+	SAMPLE_TEXT_BOX->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MonitorFrameGen::ON_SAMPLE_TEXT ), NULL, this );
+	SAMPLE_TEXT_BOX->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( MonitorFrameGen::ON_SAMPLE_ON_ENTER ), NULL, this );
 	AudioInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
