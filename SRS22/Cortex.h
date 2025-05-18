@@ -17,7 +17,7 @@ namespace SRS22 {
 	class Cortex : public Tickable
 	{
 	public:
-		const Brain& brain;
+		const Brain& brain; 
 
 		Neurons neurons;
 
