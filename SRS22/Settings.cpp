@@ -1,6 +1,10 @@
 #include "Settings.h"
 #include <boost/algorithm/string.hpp>
 
+/// <summary>
+/// We use INI files to store settings related to the SRS22 windows. Settings for algorithms
+/// are in the CortexSettings.h file
+/// </summary>
 namespace SRS22 {
 	Settings Settings::globalSettings;
 
