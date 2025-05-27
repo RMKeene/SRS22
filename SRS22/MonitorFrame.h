@@ -4,6 +4,7 @@
 #include "WhiteboardFrame.h"
 #include "TopVideoFrame.h"
 #include "source/UISettings.h"
+#include "CortexSettings.h" 
 
 namespace SRS22 {
 	class MonitorFrame :
@@ -56,7 +57,11 @@ namespace SRS22 {
 		void ProcessLogQueueInWindowThread();
 
 		void CreateUISettingsElements();
+		void CreateSettingUiElement(CortexSettings::SRSSetting& setting);
+		wxBoxSizer* GetSettingParent(CortexSettings::SRSSetting& setting);
 		void CortexSettingsToUI();
+		void CortexSettingFromUI( wxBoxSizer * sizer, CortexSettings::SRSSetting& setting);
+		void OnSettingTextEnter(wxCommandEvent& event);
 
 		/***
 		* Convert the text value from textCtrl to a float into value. False if fails and value remains unchanged.

@@ -89,4 +89,47 @@ namespace SRS22 {
 		if (x >= 2) { result += 1; }
 		return result;
 	}
+
+	float getDecayMultiplier(float timeInSeconds, float targetLevel, float initialValue)
+	{
+		const float maxValidTime = 7726194.0f; // Max time before float rounds multiplier to 1.0
+		const float minValue = std::numeric_limits<float>::min(); // Avoid log(0)
+
+		// Validate input
+		if (timeInSeconds <= 0.0f || timeInSeconds > maxValidTime ||
+			initialValue <= 0.0f ||
+			targetLevel < minValue ||
+			targetLevel >= initialValue)
+		{
+			throw std::invalid_argument("Invalid input for decay multiplier calculation.");
+		}
+
+		float ticks = timeInSeconds * 10.0f; // Convert to ticks (10 per second)
+		return std::exp(std::log(targetLevel / initialValue) / ticks);
+	}
+
+	/**
+	 * Calculates the per-tick multiplier to decay a value from 1.0 to a target level
+	 * over a given time in seconds, using double-precision. Assumes 10 ticks per second.
+	 *
+	 * If the time is too large for meaningful precision (or the target level is invalid),
+	 * the function returns 1.0 to indicate no significant decay.
+	 *
+	 * @param timeInSeconds   Duration over which decay should occur.
+	 * @param targetLevel     Final value after decay from 1.0 (must be between 0 and 1). 0.1 default. Not 0 !
+	 * @return                Multiplier to apply each tick (10 ticks per second).
+	 */
+	double getDecayMultiplier(double timeInSeconds, double targetLevel)
+	{
+		const double maxValidTime = 315576000.0; // 10 years
+
+		// Validate input
+		if (timeInSeconds <= 0.0 || targetLevel <= 0.0 || targetLevel >= 1.0 || timeInSeconds > maxValidTime)
+		{
+			return 1.0; // No decay or invalid input
+		}
+
+		double ticks = timeInSeconds * 10.0; // Convert to ticks (10 per second)
+		return std::exp(std::log(targetLevel) / ticks);
+	}
 }

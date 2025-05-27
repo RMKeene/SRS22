@@ -144,7 +144,7 @@ namespace SRS22 {
 			// Newer links learn much faster
 			const float learningRateDueToNewnessOfL = 1.0f + ageLogInverse * settings.learningRateAgeFactor();
 			// Active link learn a little faster.
-			const float learningRateDueToActivityOfL = 1.0f * L.activity * settings.GetSetting("linkActivityLearningFactor")->F();
+			const float learningRateDueToActivityOfL = 1.0f * L.activity * settings.linkActivityLearningFactor();
 			// How fast to forget. 1 is no forgetting, 0.5 is ultra rapid forgetting. Values lik 0.99999 are good.
 			const float forgetFactor = settings.learningRateForgetFactor() * (1.0f - (1.0 / ((double)ageLog + settings.learningRateForgetLogOffset())));
 			

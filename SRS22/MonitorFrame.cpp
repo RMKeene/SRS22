@@ -238,7 +238,7 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnNeuronFactorsDefaultsClicked(wxCommandEvent& event) {
-		GlobalWorld::GlobalWorldInstance.GetBrain(0)->cortex->settings.ResetSettings();
+		GlobalWorld::GlobalWorldInstance.GetBrain(0)->cortex->settings.SetValuesToDefaults();
 	}
 
 	void MonitorFrame::OnRevertNeuronFactorsClicked(wxCommandEvent& event) {
@@ -246,12 +246,94 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::CreateUISettingsElements() {
-		
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		for (auto& setting : b->cortex->settings.settings) {
+			CreateSettingUiElement(*setting.second);
+		}
+	}
+
+	wxBoxSizer* MonitorFrame::GetSettingParent(CortexSettings::SRSSetting& setting) {
+		switch (setting.SettingRow)
+		{
+		case 0:
+			return m_SettingsH0;
+		case 1:
+			return m_SettingsH1;
+		case 2:
+			return m_SettingsH2;
+		default:
+			throw std::runtime_error("Invalid SettingRow for " + setting.Name +
+				" row " + std::to_string(setting.SettingRow));
+		}
+	}
+
+	void MonitorFrame::CreateSettingUiElement(CortexSettings::SRSSetting& setting) {
+		wxBoxSizer * settingParent = GetSettingParent(setting);
+		wxWindow* settingParentWindow = settingParent->GetContainingWindow();
+		wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+		sizer->SetClientData((void*)&setting);
+		setting.clientData = (void*)sizer;
+		wxStaticText* label = new wxStaticText(this, wxID_ANY, setting.Name);
+		wxTextCtrl* textCtrl = nullptr;
+		if (setting.Type == CortexSettings::SettingType::F) {
+			textCtrl = new wxTextCtrl(settingParentWindow, wxID_ANY, wxString::Format("%f", setting.Value.f));
+		}
+		else if (setting.Type == CortexSettings::SettingType::D) {
+			textCtrl = new wxTextCtrl(settingParentWindow, wxID_ANY, wxString::Format("%f", setting.Value.d));
+		}
+		else if (setting.Type == CortexSettings::SettingType::I) {
+			textCtrl = new wxTextCtrl(settingParentWindow, wxID_ANY, wxString::Format("%d", setting.Value.i));
+		}
+		sizer->Add(label, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
+		sizer->Add(textCtrl, 0, wxALL | wxEXPAND, 5);
+		settingParent->Add(sizer, 0, wxALL | wxEXPAND, 5);
+
+		textCtrl->Connect(wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(MonitorFrame::OnSettingTextEnter), sizer, this);
 	}
 
 	void MonitorFrame::CortexSettingsToUI() {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		for (auto& setting : b->cortex->settings.settings) {
+			wxBoxSizer* sizer = (wxBoxSizer*)setting.second->clientData;
+			wxTextCtrl* textCtrl = (wxTextCtrl*)sizer->GetItem(1)->GetWindow(); 
+			if (setting.second->Type == CortexSettings::SettingType::F) {
+				textCtrl->SetValue(wxString::Format("%f", setting.second->Value.f));
+			}
+			else if (setting.second->Type == CortexSettings::SettingType::D) {
+				textCtrl->SetValue(wxString::Format("%f", setting.second->Value.d));
+			}
+			else if (setting.second->Type == CortexSettings::SettingType::I) {
+				textCtrl->SetValue(wxString::Format("%d", setting.second->Value.i));
+			}
+		}
+	}
 
+	void MonitorFrame::CortexSettingFromUI(wxBoxSizer* sizer, CortexSettings::SRSSetting& setting) {
+		wxTextCtrl* textCtrl = (wxTextCtrl*)sizer->GetItem(1)->GetWindow();
+		if (setting.Type == CortexSettings::SettingType::F) {
+			float f = 0.0f;
+			if (ToFloat(textCtrl, &f)) {
+				setting.Value.f = f;
+			}
+		}
+		else if (setting.Type == CortexSettings::SettingType::D) {
+			double d = 0.0;
+			if (textCtrl->GetValue().ToDouble(&d)) {
+				setting.Value.d = d;
+			}
+		}
+		else if (setting.Type == CortexSettings::SettingType::I) {
+			long i = 0;
+			if (textCtrl->GetValue().ToLong(&i)) {
+				setting.Value.i = (int)i;
+			}
+		}
+	}
+
+	void MonitorFrame::OnSettingTextEnter(wxCommandEvent& event) {
+		wxBoxSizer* sizer = (wxBoxSizer*)event.GetEventUserData();
+		CortexSettings::SRSSetting& setting = *(CortexSettings::SRSSetting*)sizer->GetClientData();
+		CortexSettingFromUI(sizer, setting);
 	}
 
 	void MonitorFrame::OnAudioInDeviceChoiceChanged(wxCommandEvent& event) {

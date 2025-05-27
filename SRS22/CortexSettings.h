@@ -2,6 +2,7 @@
 #include "SRS22pch.h"
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include "SRSMath.h"
 
 namespace SRS22 {
 
@@ -9,7 +10,7 @@ namespace SRS22 {
 	public:
 		enum class SettingType { F, D, I };
 
-		class SRSetting {
+		class SRSSetting {
 		public:
 
 
@@ -28,29 +29,29 @@ namespace SRS22 {
 			SettingType Type;
 
 			int SettingRow = 0;
-			string Tag;
-			string Name;
-			string Description;
+			std::string Tag;
+			std::string Name;
+			std::string Description;
 			/// <summary>
-			/// Used by the UI to hook in the UI element to the setting.
+			/// Used by the UI to hook in the UI element to the setting->
 			/// </summary>
 			void* clientData = nullptr;
 
-			SRSetting(const float f, const int settingRow, const string& tag, const string& name, const string& description)
+			SRSSetting(float f, int settingRow, std::string tag, std::string name, std::string description)
 				: Tag(tag), Type(SettingType::F), Name(name), Description(description), SettingRow(settingRow),
-				Value({ f }), OriginalValue({ f }), DefaultValue({ f }), PreviousValue({ f })
+				Value({ .f = f }), OriginalValue({ .f = f }), DefaultValue({ .f = f }), PreviousValue({ .f = f })
 			{
 			}
 
-			SRSetting(const double d, const int settingRow, const string& tag, const string& name, const string& description)
+			SRSSetting(double d, int settingRow, std::string tag, std::string name, std::string description)
 				: Tag(tag), Type(SettingType::D), Name(name), Description(description), SettingRow(settingRow),
-				Value({ d }), OriginalValue({ d }), DefaultValue({ d }), PreviousValue({ d })
+				Value({ .d = d }), OriginalValue({ .d = d }), DefaultValue({ .d = d }), PreviousValue({ .d = d })
 			{
 			}
 
-			SRSetting(const int i, const int settingRow, const string& tag, const string& name, const string& description)
+			SRSSetting( int i, int settingRow, std::string tag, std::string name, std::string description)
 				: Tag(tag), Type(SettingType::I), Name(name), Description(description), SettingRow(settingRow),
-				Value({ i }), OriginalValue({ i }), DefaultValue({ i }), PreviousValue({ i }) {
+				Value({ .i = i }), OriginalValue({ .i = i }), DefaultValue({ .i = i }), PreviousValue({ .i = i }) {
 			}
 
 			void SetValue(float value) {
@@ -146,14 +147,14 @@ namespace SRS22 {
 			}
 		};
 
-		class SRSettingF : public SRSetting {
+		class SRSettingF : public SRSSetting {
 		public:
-			SRSettingF(float f, const int settingRow, const string& tag, const string& name, const string& description)
-				: SRSetting(f, settingRow, tag, name, description) {
+			SRSettingF(float f, int settingRow, std::string tag, std::string name, std::string description)
+				: SRSSetting(f, settingRow, tag, name, description) {
 			}
 
-			float operator() () const {
-				return F();
+			inline float operator() () const {
+				return Value.f;
 			}
 
 			void operator= (float f) {
@@ -161,14 +162,14 @@ namespace SRS22 {
 			}
 		};
 
-		class SRSettingD : public SRSetting {
+		class SRSettingD : public SRSSetting {
 		public:
-			SRSettingD(double d, const int settingRow, const string& tag, const string& name, const string& description)
-				: SRSetting(d, settingRow, tag, name, description) {
+			SRSettingD(double d, int settingRow, std::string tag, std::string name, std::string description)
+				: SRSSetting(d, settingRow, tag, name, description) {
 			}
 
-			double operator() () const {
-				return D();
+			inline double operator() () const {
+				return Value.d;
 			}
 
 			void operator= (double d) {
@@ -176,14 +177,14 @@ namespace SRS22 {
 			}
 		};
 
-		class SRSettingI : public SRSetting {
+		class SRSettingI : public SRSSetting {
 		public:
-			SRSettingI(int i, const int settingRow, const string& tag, const string& name, const string& description)
-				: SRSetting(i, settingRow, tag, name, description) {
+			SRSettingI(int i, int settingRow, std::string tag, std::string name, std::string description)
+				: SRSSetting(i, settingRow, tag, name, description) {
 			}
 
-			int operator() () const {
-				return I();
+			inline int operator() () const {
+				return Value.i;
 			}
 
 			void operator= (int i) {
@@ -194,8 +195,8 @@ namespace SRS22 {
 		/// <summary>
 		/// How much a neuron's Charge decays toward 0.0f each tick.
 		/// </summary>
-		SRSettingF chargeDepletionRate = SRSettingF(getDecayMultiplier(5.0f), 1, "chargeDepletionRate",
-			"Charge Depletion Rate", "How much a neuron's Charge decays toward 0.0f each tick.");
+        SRSettingF chargeDepletionRate = SRSettingF(getDecayMultiplier(5.0f), 1, std::string("chargeDepletionRate"),
+										std::string("Charge Depletion Rate"), std::string("How much a neuron's Charge decays toward 0.0f each tick."));
 
 		/// <summary>
 		/// How much the cortex usable neurons expands per tick.
@@ -348,121 +349,93 @@ namespace SRS22 {
 			"Reroute Confidence Set", "Initial confidence after a reroute.");
 
 		// Map of default settings, key is Tag, value is SRSetting
-		std::map<string, SRSetting> settings = {
-			{"chargeDepletionRate", chargeDepletionRate},
-			{"confidenceAdjustmentDownRate", confidenceAdjustmentDownRate},
-			{"confidenceAdjustmentUpRate", confidenceAdjustmentUpRate},
-			{"confidenceForgetFactor", confidenceForgetFactor},
-			{"confidenceForgetLogOffset", confidenceForgetLogOffset},
-			{"connectionThrottle", connectionThrottle},
-			{"energyDepletionOnFire", energyDepletionOnFire},
-			{"energyRechargeRate", energyRechargeRate},
-			{"growthRate", growthRate},
-			{"highEnergyThreshold", highEnergyThreshold},
-			{"learningRateAgeFactor", learningRateAgeFactor},
-			{"learningRateForgetFactor", learningRateForgetFactor},
-			{"learningRateForgetLogOffset", learningRateForgetLogOffset},
-			{"learningRateGoodnessFactor", learningRateGoodnessFactor},
-			{"learningRateTicksOffset", learningRateTicksOffset},
-			{"linkActivityDecayRate", linkActivityDecayRate},
-			{"linkActivityLearningFactor", linkActivityLearningFactor},
-			{"linkStimulusToActivityFactor", linkStimulusToActivityFactor},
-			{"lowEnergyThreshold", lowEnergyThreshold},
-			{"maxEnergy", maxEnergy},
-			{"maximumConfidence", maximumConfidence},
-			{"minimumConfidence", minimumConfidence},
-			{"overallLearnRate", overallLearnRate},
-			{"rerouteConfidenceSet", rerouteConfidenceSet},
-			{ "rerouteProbability", rerouteProbability },
-			{"rerouteThreshold", rerouteThreshold},
-		};
+		std::map<std::string, SRSSetting*> settings;
 
 		// Clears the settings map then
 		// clones the settingsDefaults into the settings map.
 		void SetValuesToDefaults() {
-			settings.clear();
 			for (auto& [tag, setting] : settings) {
-				setting.Value = setting.DefaultValue;
+				setting->Value = setting->DefaultValue;
 			}
 		}
 
 		void SetValuesToOriginals() {
 			for (auto& [tag, setting] : settings) {
-				setting.Value = setting.OriginalValue;
+				setting->Value = setting->OriginalValue;
 			}
 		}
 
 		void SetValuesToPrevious() {
 			for (auto& [tag, setting] : settings) {
-				setting.Value = setting.PreviousValue;
+				setting->Value = setting->PreviousValue;
 			}
 		}
 
 		void SetOriginalsToValues() {
 			for (auto& [tag, setting] : settings) {
-				setting.OriginalValue = setting.Value;
+				setting->OriginalValue = setting->Value;
 			}
 		}
 
 		void SetOriginalsToDefaults() {
 			for (auto& [tag, setting] : settings) {
-				setting.OriginalValue = setting.DefaultValue;
+				setting->OriginalValue = setting->DefaultValue;
 			}
 		}
 
 		void SetOriginalsToPrevious() {
 			for (auto& [tag, setting] : settings) {
-				setting.OriginalValue = setting.PreviousValue;
+				setting->OriginalValue = setting->PreviousValue;
 			}
 		}
 
 		void SetPreviousToValues() {
 			for (auto& [tag, setting] : settings) {
-				setting.PreviousValue = setting.Value;
+				setting->PreviousValue = setting->Value;
 			}
 		}
 
 		void SetPreviousToOriginals() {
 			for (auto& [tag, setting] : settings) {
-				setting.PreviousValue = setting.OriginalValue;
+				setting->PreviousValue = setting->OriginalValue;
 			}
 		}
 
 		void SetPreviousToDefaults() {
 			for (auto& [tag, setting] : settings) {
-				setting.PreviousValue = setting.DefaultValue;
+				setting->PreviousValue = setting->DefaultValue;
 			}
 		}
 
-		void WriteSettingsToJson(const string& filename) const {
+		void WriteSettingsToJson(const std::string& filename) const {
 			nlohmann::json j;
 			for (const auto& [tag, setting] : settings) {
 				nlohmann::json s;
-				s["Tag"] = setting.Tag;
-				s["Name"] = setting.Name;
-				s["Description"] = setting.Description;
-				s["SettingRow"] = setting.SettingRow;
-				switch (setting.Type) {
+				s["Tag"] = setting->Tag;
+				s["Name"] = setting->Name;
+				s["Description"] = setting->Description;
+				s["SettingRow"] = setting->SettingRow;
+				switch (setting->Type) {
 				case SettingType::F:
 					s["Type"] = "F";
-					s["Value"] = setting.F();
-					s["DefaultValue"] = setting.DefaultValue.f;
-					s["OriginalValue"] = setting.OriginalValue.f;
-					s["PreviousValue"] = setting.PreviousValue.f;
+					s["Value"] = setting->F();
+					s["DefaultValue"] = setting->DefaultValue.f;
+					s["OriginalValue"] = setting->OriginalValue.f;
+					s["PreviousValue"] = setting->PreviousValue.f;
 					break;
 				case SettingType::D:
 					s["Type"] = "D";
-					s["Value"] = setting.D();
-					s["DefaultValue"] = setting.DefaultValue.d;
-					s["OriginalValue"] = setting.OriginalValue.d;
-					s["PreviousValue"] = setting.PreviousValue.d;
+					s["Value"] = setting->D();
+					s["DefaultValue"] = setting->DefaultValue.d;
+					s["OriginalValue"] = setting->OriginalValue.d;
+					s["PreviousValue"] = setting->PreviousValue.d;
 					break;
 				case SettingType::I:
 					s["Type"] = "I";
-					s["Value"] = setting.I();
-					s["DefaultValue"] = setting.DefaultValue.i;
-					s["OriginalValue"] = setting.OriginalValue.i;
-					s["PreviousValue"] = setting.PreviousValue.i;
+					s["Value"] = setting->I();
+					s["DefaultValue"] = setting->DefaultValue.i;
+					s["OriginalValue"] = setting->OriginalValue.i;
+					s["PreviousValue"] = setting->PreviousValue.i;
 					break;
 				}
 				j.push_back(s);
@@ -471,36 +444,64 @@ namespace SRS22 {
 			ofs << j.dump(4);
 		}
 
-		void ReadSettingsFromJson(const string& filename) {
+		void ReadSettingsFromJson(const std::string& filename) {
 			std::ifstream ifs(filename);
 			nlohmann::json j;
 			ifs >> j;
 			for (const auto& s : j) {
-				string tag = s["Tag"];
+				std::string tag = s["Tag"];
 				if (settings.find(tag) != settings.end()) {
-					SRSetting& setting = settings[tag];
-					switch (setting.Type) {
+					SRSSetting* setting = settings[tag];
+					switch (setting->Type) {
 					case SettingType::F:
-						setting.Value.f = s["Value"].get<float>();
-						setting.OriginalValue.f = s["Original"].get<float>();
-						setting.PreviousValue.f = s["Previous"].get<float>();
+						setting->Value.f = s["Value"].get<float>();
+						setting->OriginalValue.f = s["Original"].get<float>();
+						setting->PreviousValue.f = s["Previous"].get<float>();
 						// Do not set default value.
 						break;
 					case SettingType::D:
-						setting.Value.d = s["Value"].get<double>();
-						setting.OriginalValue.d = s["Original"].get<double>();
-						setting.PreviousValue.d = s["Previous"].get<double>();
+						setting->Value.d = s["Value"].get<double>();
+						setting->OriginalValue.d = s["Original"].get<double>();
+						setting->PreviousValue.d = s["Previous"].get<double>();
 						break;
 					case SettingType::I:
-						setting.Value.i = s["Value"].get<int>();
-						setting.OriginalValue.i = s["Original"].get<int>();
-						setting.PreviousValue.i = s["Previous"].get<int>();
+						setting->Value.i = s["Value"].get<int>();
+						setting->OriginalValue.i = s["Original"].get<int>();
+						setting->PreviousValue.i = s["Previous"].get<int>();
 						break;
 					}
 				}
 			}
 		}
-	
-	
+
+		CortexSettings() {
+			// Setup the settings map
+			settings.emplace("chargeDepletionRate", &chargeDepletionRate);
+			settings.emplace("confidenceAdjustmentDownRate", &confidenceAdjustmentDownRate);
+			settings.emplace("confidenceAdjustmentUpRate", &confidenceAdjustmentUpRate);
+			settings.emplace("confidenceForgetFactor", &confidenceForgetFactor);
+			settings.emplace("confidenceForgetLogOffset", &confidenceForgetLogOffset);
+			settings.emplace("connectionThrottle", &connectionThrottle);
+			settings.emplace("energyDepletionOnFire", &energyDepletionOnFire);
+			settings.emplace("energyRechargeRate", &energyRechargeRate);
+			settings.emplace("growthRate", &growthRate);
+			settings.emplace("highEnergyThreshold", &highEnergyThreshold);
+			settings.emplace("learningRateAgeFactor", &learningRateAgeFactor);
+			settings.emplace("learningRateForgetFactor", &learningRateForgetFactor);
+			settings.emplace("learningRateForgetLogOffset", &learningRateForgetLogOffset);
+			settings.emplace("learningRateGoodnessFactor", &learningRateGoodnessFactor);
+			settings.emplace("learningRateTicksOffset", &learningRateTicksOffset);
+			settings.emplace("linkActivityDecayRate", &linkActivityDecayRate);
+			settings.emplace("linkActivityLearningFactor", &linkActivityLearningFactor);
+			settings.emplace("linkStimulusToActivityFactor", &linkStimulusToActivityFactor);
+			settings.emplace("lowEnergyThreshold", &lowEnergyThreshold);
+			settings.emplace("maxEnergy", &maxEnergy);
+			settings.emplace("maximumConfidence", &maximumConfidence);
+			settings.emplace("minimumConfidence", &minimumConfidence);
+			settings.emplace("overallLearnRate", &overallLearnRate);
+			settings.emplace("rerouteConfidenceSet", &rerouteConfidenceSet);
+			settings.emplace("rerouteProbability", &rerouteProbability);
+			settings.emplace("rerouteThreshold", &rerouteThreshold);
+		}
 	};
 }
