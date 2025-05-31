@@ -21,8 +21,6 @@
 #include <wx/stattext.h>
 #include <wx/statbox.h>
 #include <wx/checkbox.h>
-#include <wx/textctrl.h>
-#include <wx/spinctrl.h>
 #include <wx/choice.h>
 #include <wx/slider.h>
 #include <wx/statline.h>
@@ -33,6 +31,7 @@
 #include <wx/richtext/richtextctrl.h>
 #include <wx/timer.h>
 #include <wx/frame.h>
+#include <wx/textctrl.h>
 #include <wx/bmpbuttn.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -62,9 +61,6 @@ class MonitorFrameGen : public wxFrame
 		wxCheckBox* m_CPUParallelCB;
 		wxButton* m_LoadButton;
 		wxButton* m_StoreButton;
-		wxStaticText* m_staticText19;
-		wxTextCtrl* SAMPLE_TEXT_BOX;
-		wxSpinCtrl* m_spinCtrl1;
 		wxStaticText* m_staticText91;
 		wxChoice* AudioInChoiceDropbox;
 		wxStaticText* m_staticText181;
@@ -117,8 +113,6 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnNeuronFactorsChangeUpdateClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRevertNeuronFactorsClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNeuronFactorsDefaultsClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void ON_SAMPLE_TEXT( wxCommandEvent& event ) { event.Skip(); }
-		virtual void ON_SAMPLE_ON_ENTER( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioInDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioVolumeIn( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
@@ -134,6 +128,7 @@ class MonitorFrameGen : public wxFrame
 		
 	
 	public:
+		wxStaticBoxSizer* m_SettingsVertPane;
 		wxBoxSizer* m_SettingsH0;
 		wxButton* m_updateCortexFactorsButton;
 		wxBoxSizer* m_SettingsH1;

@@ -273,21 +273,25 @@ namespace SRS22 {
 		wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		sizer->SetClientData((void*)&setting);
 		setting.clientData = (void*)sizer;
-		wxStaticText* label = new wxStaticText(this, wxID_ANY, setting.Name);
+		wxStaticText* label = new wxStaticText(m_SettingsVertPane->GetStaticBox(), wxID_ANY, setting.Name);
 		wxTextCtrl* textCtrl = nullptr;
 		if (setting.Type == CortexSettings::SettingType::F) {
-			textCtrl = new wxTextCtrl(settingParentWindow, wxID_ANY, wxString::Format("%f", setting.Value.f));
+			textCtrl = new wxTextCtrl(m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxString::Format("%f", setting.Value.f),
+				wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 		}
 		else if (setting.Type == CortexSettings::SettingType::D) {
-			textCtrl = new wxTextCtrl(settingParentWindow, wxID_ANY, wxString::Format("%f", setting.Value.d));
+			textCtrl = new wxTextCtrl(m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxString::Format("%f", setting.Value.d),
+				wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 		}
 		else if (setting.Type == CortexSettings::SettingType::I) {
-			textCtrl = new wxTextCtrl(settingParentWindow, wxID_ANY, wxString::Format("%d", setting.Value.i));
+			textCtrl = new wxTextCtrl(m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxString::Format("%d", setting.Value.i),
+				wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 		}
-		sizer->Add(label, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
+		sizer->Add(label, 0, wxALL , 5);
 		sizer->Add(textCtrl, 0, wxALL | wxEXPAND, 5);
 		settingParent->Add(sizer, 0, wxALL | wxEXPAND, 5);
 
+		textCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MonitorFrame::OnSettingTextUpdated), sizer, this);
 		textCtrl->Connect(wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler(MonitorFrame::OnSettingTextEnter), sizer, this);
 	}
 
@@ -331,6 +335,12 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::OnSettingTextEnter(wxCommandEvent& event) {
+		wxBoxSizer* sizer = (wxBoxSizer*)event.GetEventUserData();
+		CortexSettings::SRSSetting& setting = *(CortexSettings::SRSSetting*)sizer->GetClientData();
+		CortexSettingFromUI(sizer, setting);
+	}
+
+	void MonitorFrame::OnSettingTextUpdated(wxCommandEvent& event) {
 		wxBoxSizer* sizer = (wxBoxSizer*)event.GetEventUserData();
 		CortexSettings::SRSSetting& setting = *(CortexSettings::SRSSetting*)sizer->GetClientData();
 		CortexSettingFromUI(sizer, setting);

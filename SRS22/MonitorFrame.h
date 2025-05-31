@@ -61,7 +61,8 @@ namespace SRS22 {
 		wxBoxSizer* GetSettingParent(CortexSettings::SRSSetting& setting);
 		void CortexSettingsToUI();
 		void CortexSettingFromUI( wxBoxSizer * sizer, CortexSettings::SRSSetting& setting);
-		void OnSettingTextEnter(wxCommandEvent& event);
+		void OnSettingTextEnter(wxCommandEvent& event);		
+		void OnSettingTextUpdated(wxCommandEvent& event);
 
 		/***
 		* Convert the text value from textCtrl to a float into value. False if fails and value remains unchanged.
