@@ -273,7 +273,7 @@ namespace SRS22 {
 		wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		sizer->SetClientData((void*)&setting);
 		setting.clientData = (void*)sizer;
-		wxStaticText* label = new wxStaticText(m_SettingsVertPane->GetStaticBox(), wxID_ANY, setting.Name);
+		wxStaticText* label = new wxStaticText(m_SettingsVertPane->GetStaticBox(), wxID_ANY, setting.UILabel);
 		wxTextCtrl* textCtrl = nullptr;
 		if (setting.Type == CortexSettings::SettingType::F) {
 			textCtrl = new wxTextCtrl(m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxString::Format("%f", setting.Value.f),
@@ -287,6 +287,9 @@ namespace SRS22 {
 			textCtrl = new wxTextCtrl(m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxString::Format("%d", setting.Value.i),
 				wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 		}
+
+		textCtrl->SetToolTip(setting.Name + " : " + setting.Description);
+
 		sizer->Add(label, 0, wxALL , 5);
 		sizer->Add(textCtrl, 0, wxALL | wxEXPAND, 5);
 		settingParent->Add(sizer, 0, wxALL | wxEXPAND, 5);
@@ -334,12 +337,20 @@ namespace SRS22 {
 		}
 	}
 
+	/// <summary>
+	/// When they hit Enter in a text box in settings.
+	/// </summary>
+	/// <param name="event"></param>
 	void MonitorFrame::OnSettingTextEnter(wxCommandEvent& event) {
 		wxBoxSizer* sizer = (wxBoxSizer*)event.GetEventUserData();
 		CortexSettings::SRSSetting& setting = *(CortexSettings::SRSSetting*)sizer->GetClientData();
 		CortexSettingFromUI(sizer, setting);
 	}
 
+	/// <summary>
+	/// When they press a key in a text box in settings.
+	/// </summary>
+	/// <param name="event"></param>
 	void MonitorFrame::OnSettingTextUpdated(wxCommandEvent& event) {
 		wxBoxSizer* sizer = (wxBoxSizer*)event.GetEventUserData();
 		CortexSettings::SRSSetting& setting = *(CortexSettings::SRSSetting*)sizer->GetClientData();
