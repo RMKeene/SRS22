@@ -204,7 +204,7 @@ namespace SRS22 {
 	void MonitorFrame::DoLoad(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 		pair<bool, string> r = b->Load(brainFileName);
-		if(r.first == false)
+		if (r.first == false)
 			wxMessageBox(r.second, "Error", wxICON_ERROR);
 		else {
 			wxMessageBox("Brain loaded.", "Success", wxICON_INFORMATION);
@@ -214,7 +214,7 @@ namespace SRS22 {
 
 	void MonitorFrame::DoStore(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-		if(b->Store(brainFileName)) 
+		if (b->Store(brainFileName))
 			wxMessageBox("Brain stored.", "Success", wxICON_INFORMATION);
 		else
 			wxMessageBox("Error storing brain.", "Error", wxICON_ERROR);
@@ -225,7 +225,7 @@ namespace SRS22 {
 
 	}
 
-	bool MonitorFrame::ToFloat(wxTextCtrl* textCtrl, float *value) {
+	bool MonitorFrame::ToFloat(wxTextCtrl* textCtrl, float* value) {
 		wxString s = textCtrl->GetValue();
 		double f = 0.0f;
 		if (!s.ToDouble(&f)) {
@@ -268,7 +268,7 @@ namespace SRS22 {
 	}
 
 	void MonitorFrame::CreateSettingUiElement(CortexSettings::SRSSetting& setting) {
-		wxBoxSizer * settingParent = GetSettingParent(setting);
+		wxBoxSizer* settingParent = GetSettingParent(setting);
 		wxWindow* settingParentWindow = settingParent->GetContainingWindow();
 		wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		sizer->SetClientData((void*)&setting);
@@ -290,7 +290,7 @@ namespace SRS22 {
 
 		textCtrl->SetToolTip(setting.Name + " : " + setting.Description);
 
-		sizer->Add(label, 0, wxALL , 5);
+		sizer->Add(label, 0, wxALL, 5);
 		sizer->Add(textCtrl, 0, wxALL | wxEXPAND, 5);
 		settingParent->Add(sizer, 0, wxALL | wxEXPAND, 5);
 
@@ -302,7 +302,7 @@ namespace SRS22 {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 		for (auto& setting : b->cortex->settings.settings) {
 			wxBoxSizer* sizer = (wxBoxSizer*)setting.second->clientData;
-			wxTextCtrl* textCtrl = (wxTextCtrl*)sizer->GetItem(1)->GetWindow(); 
+			wxTextCtrl* textCtrl = (wxTextCtrl*)sizer->GetItem(1)->GetWindow();
 			if (setting.second->Type == CortexSettings::SettingType::F) {
 				textCtrl->SetValue(wxString::Format("%f", setting.second->Value.f));
 			}
@@ -317,24 +317,36 @@ namespace SRS22 {
 
 	void MonitorFrame::CortexSettingFromUI(wxBoxSizer* sizer, CortexSettings::SRSSetting& setting) {
 		wxTextCtrl* textCtrl = (wxTextCtrl*)sizer->GetItem(1)->GetWindow();
+		bool parseOk = false;
 		if (setting.Type == CortexSettings::SettingType::F) {
 			float f = 0.0f;
-			if (ToFloat(textCtrl, &f)) {
+			parseOk = ToFloat(textCtrl, &f);
+			if (parseOk) {
 				setting.Value.f = f;
 			}
 		}
 		else if (setting.Type == CortexSettings::SettingType::D) {
 			double d = 0.0;
-			if (textCtrl->GetValue().ToDouble(&d)) {
+			parseOk = textCtrl->GetValue().ToDouble(&d);
+			if (parseOk) {
 				setting.Value.d = d;
 			}
 		}
 		else if (setting.Type == CortexSettings::SettingType::I) {
 			long i = 0;
-			if (textCtrl->GetValue().ToLong(&i)) {
+			parseOk = textCtrl->GetValue().ToLong(&i);
+			if (parseOk) {
 				setting.Value.i = (int)i;
 			}
 		}
+		// Set background color based on parse result
+		if (!parseOk) {
+			textCtrl->SetBackgroundColour(wxColor(255, 50, 50));
+		}
+		else {
+			textCtrl->SetBackgroundColour(wxColor(255, 255, 255));
+		}
+		textCtrl->Refresh();
 	}
 
 	/// <summary>
@@ -434,8 +446,8 @@ namespace SRS22 {
 			lastInSizeText->SetLabelText(wxString::Format("Last In Size: %d, total %d M", WaveInputHelper::lastPacketSize, WaveInputHelper::totalBytesIn / (1024 * 1024)));
 		}
 
-		MonitorStatisticsLine1->SetLabelText(wxString::Format("Total Neurons: %d, Connections %d, Fired: %d, Zeros %d, Ones %d, Fatigued %d, Stimulus %d", 
-			cortex->stats.countOfNeuronsProcessed, TOTAL_NEURONS * NEURON_UPSTREAM_LINKS, cortex->stats.countOfNeuronsFired, cortex->stats.countOfZeros, 
+		MonitorStatisticsLine1->SetLabelText(wxString::Format("Total Neurons: %d, Connections %d, Fired: %d, Zeros %d, Ones %d, Fatigued %d, Stimulus %d",
+			cortex->stats.countOfNeuronsProcessed, TOTAL_NEURONS * NEURON_UPSTREAM_LINKS, cortex->stats.countOfNeuronsFired, cortex->stats.countOfZeros,
 			cortex->stats.countOfOnes, cortex->stats.countFatigued, cortex->stats.countStimulus));
 		MonitorStatisticsLine2->SetLabelText(wxString::Format("ReRoutes: %d, Average C: %6.4f, Confidence: %6.4f",
 			cortex->stats.countOfReRoutes, cortex->stats.averageNeuronCharge, cortex->stats.averageConfidence));
