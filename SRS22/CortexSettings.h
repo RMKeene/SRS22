@@ -201,7 +201,7 @@ namespace SRS22 {
 		/// How much a neuron's Charge decays toward 0.0f each tick.
 		/// </summary>
 		SRSettingF chargeDepletionRate = SRSettingF(getDecayMultiplier(5.0f), 0, std::string("chargeDepletionRate"),
-			"Charge Depletion Rate", 
+			"Charge Depletion Rate",
 			"CgDepRt",
 			"How much a neuron's Charge decays toward 0.0f each tick.");
 
@@ -209,7 +209,7 @@ namespace SRS22 {
 		/// How much the cortex usable neurons expands per tick.
 		/// </summary>
 		SRSettingF growthRate = SRSettingF(0.01f, 0, "growthRate",
-			"Growth Rate", 
+			"Growth Rate",
 			"GrwRt",
 			"How much the cortex usable neurons expands per tick.");
 
@@ -217,7 +217,7 @@ namespace SRS22 {
 		/// How much energy a neuron gains each tick.
 		/// </summary>
 		SRSettingF energyRechargeRate = SRSettingF(0.02f, 0, "energyRechargeRate",
-			"Energy Recharge Rate", 
+			"Energy Recharge Rate",
 			"EnrRchRt",
 			"How much energy a neuron gains each tick.");
 
@@ -225,7 +225,7 @@ namespace SRS22 {
 		/// If energy falls below this the neuron is changed to disabled. It is too tired.
 		/// </summary>
 		SRSettingF lowEnergyThreshold = SRSettingF(0.1f, 0, "lowEnergyThreshold",
-			"Low Energy Threshold", 
+			"Low Energy Threshold",
 			"LowEngThr",
 			"If energy falls below this the neuron is changed to disabled. It is too tired.");
 
@@ -233,7 +233,7 @@ namespace SRS22 {
 		/// If energy is above this then the neuron is changed to enabled.
 		/// </summary>
 		SRSettingF highEnergyThreshold = SRSettingF(0.9f, 0, "highEnergyThreshold",
-			"High Energy Threshold", 
+			"High Energy Threshold",
 			"HighEngThr",
 			"If energy is above this then the neuron is changed to enabled.");
 
@@ -241,7 +241,7 @@ namespace SRS22 {
 		/// How much energy is subtracted if the neuron fires. For every Link this gets multiplied by the calculated stimulus.
 		/// </summary>
 		SRSettingF energyDepletionOnFire = SRSettingF(0.9f * NEURON_UPSTREAM_LINKS_INVERSE, 0, "energyDepletionOnFire",
-			"Energy Depletion On Fire", 
+			"Energy Depletion On Fire",
 			"EnrDplOnFire",
 			"How much energy is subtracted if the neuron fires. For every Link this gets multiplied by the calculated stimulus.");
 
@@ -249,7 +249,7 @@ namespace SRS22 {
 		/// The highest reserve energy a neuron may have. This is the maximum value for energyCeiling.
 		/// </summary>
 		SRSettingF maxEnergy = SRSettingF(2.0f, 0, "maxEnergy",
-			"Max Energy", 
+			"Max Energy",
 			"MaxEngy",
 			"The highest reserve energy a neuron may have. This is the maximum value for energyCeiling.");
 
@@ -257,7 +257,7 @@ namespace SRS22 {
 		/// How strongly links stimulus effect the neuron (gets multiplied by NEURON_UPSTREAM_LINKS_INVERSE.)
 		/// </summary>
 		SRSettingF connectionThrottle = SRSettingF(0.5f, 0, "connectionThrottle",
-			"Connection Throttle", 
+			"Connection Throttle",
 			"ConnThrtl",
 			"How strongly links stimulus effect the neuron (gets multiplied by NEURON_UPSTREAM_LINKS_INVERSE.)");
 
@@ -265,7 +265,7 @@ namespace SRS22 {
 		/// If confidence falls below this then a reroute might happen.
 		/// </summary>
 		SRSettingF rerouteThreshold = SRSettingF(0.001f, 0, "rerouteThreshold",
-			"Reroute Threshold", 
+			"Reroute Threshold",
 			"RertThr",
 			"If confidence falls below this then a reroute might happen.");
 
@@ -273,7 +273,7 @@ namespace SRS22 {
 		/// Probability of a reroute on any given tick if confidence is below rerouteThreshold.
 		/// </summary>
 		SRSettingF rerouteProbability = SRSettingF(0.01f, 1, "rerouteProbability",
-			"Reroute Probability", 
+			"Reroute Probability",
 			"RertProb",
 			"Probability of a reroute on any given tick if confidence is below rerouteThreshold.");
 
@@ -281,7 +281,7 @@ namespace SRS22 {
 		/// General factor of learning rates speed.
 		/// </summary>
 		SRSettingF overallLearnRate = SRSettingF(0.05f, 1, "overallLearnRate",
-			"Overall Learning Rate", 
+			"Overall Learning Rate",
 			"OvallLrnRt",
 			"General factor of learning rates speed.");
 
@@ -289,7 +289,7 @@ namespace SRS22 {
 		/// How much of the link activity is decayed each tick.
 		/// </summary>
 		SRSettingF linkActivityDecayRate = SRSettingF(getDecayMultiplier(2.0f), 1, "linkActivityDecayRate",
-			"Link Activity Decay Rate", 
+			"Link Activity Decay Rate",
 			"LnkActvDcyRt",
 			"How much of the link activity is decayed each tick.");
 
@@ -297,7 +297,7 @@ namespace SRS22 {
 		/// How much of the link activity is added to the link activity.
 		/// </summary>
 		SRSettingF linkActivityLearningFactor = SRSettingF(1.1f, 1, "linkActivityLearningFactor",
-			"Link Activity Learning Factor", 
+			"Link Activity Learning Factor",
 			"LnkActvLrnRt",
 			"How much of the link activity is added to the link activity.");
 
@@ -313,7 +313,7 @@ namespace SRS22 {
 		/// How influential the goodness factor of the brain is on learning rate.
 		/// </summary>
 		SRSettingF learningRateGoodnessFactor = SRSettingF(0.1f, 1, "learningRateGoodnessFactor",
-			"Learning Rate Goodness Factor", 
+			"Learning Rate Goodness Factor",
 			"LrnRtGdFctr",
 			"How influential the goodness factor of the brain is on learning rate.");
 
@@ -321,7 +321,7 @@ namespace SRS22 {
 		/// Learning rate goes down by the base 2 log of age of the link multiplied by this factor.
 		/// </summary>
 		SRSettingF learningRateAgeFactor = SRSettingF(1.0f, 1, "learningRateAgeFactor",
-			"Learning Rate Age Factor", 
+			"Learning Rate Age Factor",
 			"LrnRtAgeFctr",
 			"Learning rate goes down by the base 2 log of age of the link multiplied by this factor.");
 
@@ -329,7 +329,7 @@ namespace SRS22 {
 		/// General how fast we forget.  Must be <= 1
 		/// </summary>
 		SRSettingF learningRateForgetFactor = SRSettingF(0.999999f, 1, "learningRateForgetFactor",
-			"Learning Rate Forget Factor", 
+			"Learning Rate Forget Factor",
 			"LrnRtFrgtFctr",
 			"General how fast we forget.  Must be <= 1");
 
@@ -337,7 +337,7 @@ namespace SRS22 {
 		/// How much pre-age neuron links get when new relative to actual age. This is a power of two exponent.
 		/// </summary>
 		SRSettingI learningRateForgetLogOffset = SRSettingI(8, 1, "learningRateForgetLogOffset",
-			"Learning Rate Forget Log Offset", 
+			"Learning Rate Forget Log Offset",
 			"LrnRtFrgtLogOffst",
 			"How much pre-age neuron links get when new relative to actual age. This is a power of two exponent.");
 
@@ -345,7 +345,7 @@ namespace SRS22 {
 		/// 0 is current charge of self. 1 is charge of self 1 tick ago. 2 is charge of self 2 ticks ago. Must NOT exceed NEURON_HISTORY - 1.
 		/// </summary>
 		SRSettingI learningRateTicksOffset = SRSettingI(2, 2, "learningRateTicksOffset",
-			"Learning Rate Ticks Offset", 
+			"Learning Rate Ticks Offset",
 			"LrnRtTcksOffst",
 			"0 is current charge of self. 1 is charge of self 1 tick ago. 2 is charge of self 2 ticks ago. Must NOT exceed NEURON_HISTORY - 1.");
 
@@ -353,7 +353,7 @@ namespace SRS22 {
 		/// How fast confidence decays over time.
 		/// </summary>
 		SRSettingF confidenceForgetFactor = SRSettingF(0.999999f, 2, "confidenceForgetFactor",
-			"Confidence Forget Factor", 
+			"Confidence Forget Factor",
 			"ConfFrgtFctr",
 			"How fast confidence decays over time.");
 
@@ -361,7 +361,7 @@ namespace SRS22 {
 		/// How much pre-age neuron link confidence gets when new relative to actual age. This is a power of two exponent.
 		/// </summary>
 		SRSettingI confidenceForgetLogOffset = SRSettingI(8, 2, "confidenceForgetLogOffset",
-			"Confidence Forget Log Offset", 
+			"Confidence Forget Log Offset",
 			"ConfFrgtLogOffst",
 			"How much pre-age neuron link confidence gets when new relative to actual age. This is a power of two exponent.");
 
@@ -369,7 +369,7 @@ namespace SRS22 {
 		/// How rapidly confidence increases on a correct stimulus match.
 		/// </summary>
 		SRSettingF confidenceAdjustmentUpRate = SRSettingF(1.01f, 2, "confidenceAdjustmentUpRate",
-			"Confidence Adjustment Up Rate", 
+			"Confidence Adjustment Up Rate",
 			"ConfAdjUpRt",
 			"How rapidly confidence increases on a correct stimulus match.");
 
@@ -377,7 +377,7 @@ namespace SRS22 {
 		/// If a link match is not correct this is how much confidence decays.
 		/// </summary>
 		SRSettingF confidenceAdjustmentDownRate = SRSettingF(getDecayMultiplier(200.0f), 2, "confidenceAdjustmentDownRate",
-			"Confidence Adjustment Down Rate", 
+			"Confidence Adjustment Down Rate",
 			"ConfAdjDnRt",
 			"If a link match is not correct this is how much confidence decays.");
 
@@ -385,7 +385,7 @@ namespace SRS22 {
 		/// Confidence can not fall below this level.
 		/// </summary>
 		SRSettingF minimumConfidence = SRSettingF(0.0001f, 2, "minimumConfidence",
-			"Minimum Confidence", 
+			"Minimum Confidence",
 			"MinConf",
 			"Confidence can not fall below this level.");
 
@@ -393,7 +393,7 @@ namespace SRS22 {
 		/// Confidence can not exceed this level.
 		/// </summary>
 		SRSettingF maximumConfidence = SRSettingF(0.9999f, 2, "maximumConfidence",
-			"Maximum Confidence", 
+			"Maximum Confidence",
 			"MaxConf",
 			"Confidence can not exceed this level.");
 
@@ -401,7 +401,7 @@ namespace SRS22 {
 		/// Initial confidence after a reroute.
 		/// </summary>
 		SRSettingF rerouteConfidenceSet = SRSettingF(0.5f, 2, "rerouteConfidenceSet",
-			"Reroute Confidence Set", 
+			"Reroute Confidence Set",
 			"RertConfSet",
 			"Initial confidence after a reroute.");
 
@@ -464,11 +464,12 @@ namespace SRS22 {
 			}
 		}
 
-		void WriteSettingsToJson(const std::string& filename) const {
+		bool WriteSettingsToJson(const std::string& filename) const {
 			nlohmann::json j;
 			for (const auto& [tag, setting] : settings) {
 				nlohmann::json s;
 				s["Tag"] = setting->Tag;
+				s["UILabel"] = setting->UILabel;
 				s["Name"] = setting->Name;
 				s["Description"] = setting->Description;
 				s["SettingRow"] = setting->SettingRow;
@@ -499,9 +500,10 @@ namespace SRS22 {
 			}
 			std::ofstream ofs(filename);
 			ofs << j.dump(4);
+			return true;
 		}
 
-		void ReadSettingsFromJson(const std::string& filename) {
+		bool ReadSettingsFromJson(const std::string& filename) {
 			std::ifstream ifs(filename);
 			nlohmann::json j;
 			ifs >> j;
@@ -509,26 +511,30 @@ namespace SRS22 {
 				std::string tag = s["Tag"];
 				if (settings.find(tag) != settings.end()) {
 					SRSSetting* setting = settings[tag];
+					setting->Description = s["Description"].get<std::string>();
+					setting->UILabel = s["UILabel"].get<std::string>();
+					setting->SettingRow = s["SettingRow"].get<int>();
 					switch (setting->Type) {
 					case SettingType::F:
 						setting->Value.f = s["Value"].get<float>();
-						setting->OriginalValue.f = s["Original"].get<float>();
-						setting->PreviousValue.f = s["Previous"].get<float>();
+						setting->OriginalValue.f = s["OriginalValue"].get<float>();
+						setting->PreviousValue.f = s["PreviousValue"].get<float>();
 						// Do not set default value.
 						break;
 					case SettingType::D:
 						setting->Value.d = s["Value"].get<double>();
-						setting->OriginalValue.d = s["Original"].get<double>();
-						setting->PreviousValue.d = s["Previous"].get<double>();
+						setting->OriginalValue.d = s["OriginalValue"].get<double>();
+						setting->PreviousValue.d = s["PreviousValue"].get<double>();
 						break;
 					case SettingType::I:
 						setting->Value.i = s["Value"].get<int>();
-						setting->OriginalValue.i = s["Original"].get<int>();
-						setting->PreviousValue.i = s["Previous"].get<int>();
+						setting->OriginalValue.i = s["OriginalValue"].get<int>();
+						setting->PreviousValue.i = s["PreviousValue"].get<int>();
 						break;
 					}
 				}
 			}
+			return true;
 		}
 
 		CortexSettings() {

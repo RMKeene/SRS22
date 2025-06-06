@@ -61,6 +61,8 @@ class MonitorFrameGen : public wxFrame
 		wxCheckBox* m_CPUParallelCB;
 		wxButton* m_LoadButton;
 		wxButton* m_StoreButton;
+		wxButton* m_LoadCortexSettingsButton;
+		wxButton* m_SaveCortexSettingsButton;
 		wxStaticText* m_staticText91;
 		wxChoice* AudioInChoiceDropbox;
 		wxStaticText* m_staticText181;
@@ -110,9 +112,11 @@ class MonitorFrameGen : public wxFrame
 		virtual void OnBadClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DoLoad( wxCommandEvent& event ) { event.Skip(); }
 		virtual void DoStore( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnNeuronFactorsChangeUpdateClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnRevertNeuronFactorsClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnNeuronFactorsDefaultsClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnUpdateCortexFactorsClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLoadCortexSettingsClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnUndoNeuronFactorsClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSaveCortexSaveButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDefaultsCortexSettingsClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioInDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAudioVolumeIn( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnAudioOutDeviceChoiceChanged( wxCommandEvent& event ) { event.Skip(); }

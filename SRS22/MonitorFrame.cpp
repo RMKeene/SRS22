@@ -220,9 +220,44 @@ namespace SRS22 {
 			wxMessageBox("Error storing brain.", "Error", wxICON_ERROR);
 	}
 
-	void MonitorFrame::OnNeuronFactorsChangeUpdateClicked(wxCommandEvent& event) {
+	void MonitorFrame::OnUpdateCortexFactorsClicked(wxCommandEvent& event) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		for (auto& setting : b->cortex->settings.settings) {
+			wxBoxSizer* sizer = (wxBoxSizer*)setting.second->clientData;
+			CortexSettingFromUI(sizer, *setting.second);
+		}
+	}
+	void MonitorFrame::OnLoadCortexSettingsClicked(wxCommandEvent& event) {
+		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
+		std::string cortexSettingsFileName = MonitorFrame::PopupFileChooserForRead("Load Cortex Settings", "", "*.json", "cortex_settings.json");
+		if (b->cortex->settings.ReadSettingsFromJson(cortexSettingsFileName) == false) {
+			wxMessageBox(cortexSettingsFileName, "Read Error", wxICON_ERROR);
+		}
+		else {
+			wxMessageBox("Cortex settings loaded.", "Success", wxICON_INFORMATION);
+			CortexSettingsToUI();
+		}
+
+	}
+	void MonitorFrame::OnUndoNeuronFactorsClicked(wxCommandEvent& event) {
+		CortexSettingsToUI();
+	}
+
+	void MonitorFrame::OnSaveCortexSaveButton(wxCommandEvent& event) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.GetBrain(0);
 
+		std::string cortexSettingsFileName = MonitorFrame::PopupFileChooserForWrite("Save Cortex Settings", "", "*.json", "cortex_settings.json");
+
+		if (b->cortex->settings.WriteSettingsToJson(cortexSettingsFileName)) {
+			wxMessageBox("Cortex settings saved.", "Success", wxICON_INFORMATION);
+		}
+		else {
+			wxMessageBox(cortexSettingsFileName, "Write Error", wxICON_ERROR);
+		}
+	}
+	void MonitorFrame::OnDefaultsCortexSettingsClicked(wxCommandEvent& event) {
+		GlobalWorld::GlobalWorldInstance.GetBrain(0)->cortex->settings.SetValuesToDefaults();
+		CortexSettingsToUI();
 	}
 
 	bool MonitorFrame::ToFloat(wxTextCtrl* textCtrl, float* value) {
@@ -235,14 +270,6 @@ namespace SRS22 {
 		textCtrl->SetBackgroundColour(wxColor(255, 255, 255));
 		*value = (float)f;
 		return true;
-	}
-
-	void MonitorFrame::OnNeuronFactorsDefaultsClicked(wxCommandEvent& event) {
-		GlobalWorld::GlobalWorldInstance.GetBrain(0)->cortex->settings.SetValuesToDefaults();
-	}
-
-	void MonitorFrame::OnRevertNeuronFactorsClicked(wxCommandEvent& event) {
-		CortexSettingsToUI();
 	}
 
 	void MonitorFrame::CreateUISettingsElements() {
@@ -534,5 +561,79 @@ namespace SRS22 {
 		LogRichText->WriteText(logEntry.msg);
 		LogRichText->Newline();
 		LogRichText->EndTextColour();
+	}
+
+	// Helper to persist last file dialog state
+	struct FileDialogState {
+		std::string lastDirectory;
+		std::string lastFileName;
+
+		void Load(const std::string& stateFile) {
+			std::ifstream in(stateFile);
+			if (!in) return;
+			try {
+				nlohmann::json j;
+				in >> j;
+				lastDirectory = j.value("lastDirectory", "");
+				lastFileName = j.value("lastFileName", "");
+			}
+			catch (...) {}
+		}
+
+		void Save(const std::string& stateFile) const {
+			try {
+				nlohmann::json j;
+				j["lastDirectory"] = lastDirectory;
+				j["lastFileName"] = lastFileName;
+				std::ofstream out(stateFile);
+				out << j.dump(2);
+			}
+			catch (...) {}
+		}
+	};
+
+	static const std::string kFileDialogStateFile = "file_dialog_state.json";
+
+
+	std::string SRS22::MonitorFrame::PopupFileChooserForRead(const std::string& title, const std::string& directory, const std::string& pattern, const std::string& defaultFileName) {
+		FileDialogState state;
+		state.Load(kFileDialogStateFile);
+		wxFileDialog openFileDialog(
+			nullptr,
+			wxString::FromUTF8(title),
+			!state.lastDirectory.empty() ? wxString::FromUTF8(state.lastDirectory) : wxString::FromUTF8(directory),
+			!state.lastFileName.empty() ? wxString::FromUTF8(state.lastFileName) : wxString::FromUTF8(defaultFileName),
+			wxString::FromUTF8(pattern),
+			wxFD_OPEN | wxFD_FILE_MUST_EXIST
+		);
+		if (openFileDialog.ShowModal() == wxID_CANCEL) {
+			return "";
+		}
+		std::string path = openFileDialog.GetPath().ToStdString();
+		state.lastDirectory = openFileDialog.GetDirectory().ToStdString();
+		state.lastFileName = openFileDialog.GetFilename().ToStdString();
+		state.Save(kFileDialogStateFile);
+		return path;
+	}
+
+	std::string SRS22::MonitorFrame::PopupFileChooserForWrite(const std::string& title, const std::string& directory, const std::string& pattern, const std::string& defaultFileName) {
+		FileDialogState state;
+		state.Load(kFileDialogStateFile);
+		wxFileDialog saveFileDialog(
+			nullptr,
+			wxString::FromUTF8(title),
+			!state.lastDirectory.empty() ? wxString::FromUTF8(state.lastDirectory) : wxString::FromUTF8(directory),
+			!state.lastFileName.empty() ? wxString::FromUTF8(state.lastFileName) : wxString::FromUTF8(defaultFileName),
+			wxString::FromUTF8(pattern),
+			wxFD_SAVE | wxFD_OVERWRITE_PROMPT
+		);
+		if (saveFileDialog.ShowModal() == wxID_CANCEL) {
+			return "";
+		}
+		std::string path = saveFileDialog.GetPath().ToStdString();
+		state.lastDirectory = saveFileDialog.GetDirectory().ToStdString();
+		state.lastFileName = saveFileDialog.GetFilename().ToStdString();
+		state.Save(kFileDialogStateFile);
+		return path;
 	}
 }

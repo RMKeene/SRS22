@@ -155,6 +155,9 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	m_updateCortexFactorsButton = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Update"), wxDefaultPosition, wxSize( 70,-1 ), 0 );
 	m_SettingsH0->Add( m_updateCortexFactorsButton, 0, wxALL, 5 );
 	
+	m_LoadCortexSettingsButton = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Load..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_SettingsH0->Add( m_LoadCortexSettingsButton, 0, wxALL, 5 );
+	
 	
 	m_SettingsVertPane->Add( m_SettingsH0, 1, wxEXPAND, 5 );
 	
@@ -162,6 +165,9 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	m_UndoButton17 = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Undo"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
 	m_SettingsH1->Add( m_UndoButton17, 0, wxALL, 5 );
+	
+	m_SaveCortexSettingsButton = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Save..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_SettingsH1->Add( m_SaveCortexSettingsButton, 0, wxALL, 5 );
 	
 	
 	m_SettingsVertPane->Add( m_SettingsH1, 1, wxEXPAND, 5 );
@@ -414,9 +420,11 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	BadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	m_LoadButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoLoad ), NULL, this );
 	m_StoreButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoStore ), NULL, this );
-	m_updateCortexFactorsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsChangeUpdateClicked ), NULL, this );
-	m_UndoButton17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRevertNeuronFactorsClicked ), NULL, this );
-	m_DefaultsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsDefaultsClicked ), NULL, this );
+	m_updateCortexFactorsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnUpdateCortexFactorsClicked ), NULL, this );
+	m_LoadCortexSettingsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnLoadCortexSettingsClicked ), NULL, this );
+	m_UndoButton17->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnUndoNeuronFactorsClicked ), NULL, this );
+	m_SaveCortexSettingsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnSaveCortexSaveButton ), NULL, this );
+	m_DefaultsButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnDefaultsCortexSettingsClicked ), NULL, this );
 	AudioInChoiceDropbox->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
@@ -478,9 +486,11 @@ MonitorFrameGen::~MonitorFrameGen()
 	BadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnBadClicked ), NULL, this );
 	m_LoadButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoLoad ), NULL, this );
 	m_StoreButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::DoStore ), NULL, this );
-	m_updateCortexFactorsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsChangeUpdateClicked ), NULL, this );
-	m_UndoButton17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnRevertNeuronFactorsClicked ), NULL, this );
-	m_DefaultsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnNeuronFactorsDefaultsClicked ), NULL, this );
+	m_updateCortexFactorsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnUpdateCortexFactorsClicked ), NULL, this );
+	m_LoadCortexSettingsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnLoadCortexSettingsClicked ), NULL, this );
+	m_UndoButton17->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnUndoNeuronFactorsClicked ), NULL, this );
+	m_SaveCortexSettingsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnSaveCortexSaveButton ), NULL, this );
+	m_DefaultsButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MonitorFrameGen::OnDefaultsCortexSettingsClicked ), NULL, this );
 	AudioInChoiceDropbox->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MonitorFrameGen::OnAudioInDeviceChoiceChanged ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
 	AudioInVolume->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MonitorFrameGen::OnAudioVolumeIn ), NULL, this );
