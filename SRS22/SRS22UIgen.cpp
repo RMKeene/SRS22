@@ -164,6 +164,8 @@ MonitorFrameGen::MonitorFrameGen( wxWindow* parent, wxWindowID id, const wxStrin
 	m_SettingsH1 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_UndoButton17 = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Undo"), wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	m_UndoButton17->Enable( false );
+	
 	m_SettingsH1->Add( m_UndoButton17, 0, wxALL, 5 );
 	
 	m_SaveCortexSettingsButton = new wxButton( m_SettingsVertPane->GetStaticBox(), wxID_ANY, wxT("Save..."), wxDefaultPosition, wxDefaultSize, 0 );
