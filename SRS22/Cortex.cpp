@@ -43,6 +43,11 @@ namespace SRS22 {
 
 	void Cortex::ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats)
 	{
+		if (neurons.state[i] == NeuronState::IS_INPUT) {
+			// Input neurons are not predicted, they are hard set to a value by hardware IO.  
+			// Their NeuronLinks are not used. So no learning to do.
+			return;
+		}
 		float C = neurons.getCurrent(i);
 
 		UpdateProcessedStatCounts(threadStats, C);
@@ -70,7 +75,7 @@ namespace SRS22 {
 
 			// Add link stimulus. Gets clamped later,
 			neurons.getNextRef(i) += C + stimulus;
-			// Add into activity for short term general activity leve.
+			// Add into activity for short term general activity level.
 			L.activity = std::clamp(L.activity * settings.linkActivityDecayRate() +
 				stimulus * settings.linkStimulusToActivityFactor(), 0.0f, 1.0f);
 		}

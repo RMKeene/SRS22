@@ -200,7 +200,7 @@ namespace SRS22 {
 		/// <summary>
 		/// How much a neuron's Charge decays toward 0.0f each tick.
 		/// </summary>
-		SRSettingF chargeDepletionRate = SRSettingF(getDecayMultiplier(5.0f), 0, std::string("chargeDepletionRate"),
+		SRSettingF chargeDepletionRate = SRSettingF(0.12f, 0, std::string("chargeDepletionRate"),
 			"Charge Depletion Rate",
 			"CgDepRt",
 			"How much a neuron's Charge decays toward 0.0f each tick.");
