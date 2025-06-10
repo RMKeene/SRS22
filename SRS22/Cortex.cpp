@@ -52,6 +52,7 @@ namespace SRS22 {
 
 		UpdateProcessedStatCounts(threadStats, C);
 
+		float stimulusSum = 0.0f;
 		for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 			NeuronLink& L = neurons.link[i][k];
 
@@ -74,14 +75,14 @@ namespace SRS22 {
 				settings.connectionThrottle();
 
 			// Add link stimulus. Gets clamped later,
-			neurons.getNextRef(i) += C + stimulus;
+			stimulusSum += stimulus;
 			// Add into activity for short term general activity level.
 			L.activity = std::clamp(L.activity * settings.linkActivityDecayRate() +
 				stimulus * settings.linkStimulusToActivityFactor(), 0.0f, 1.0f);
 		}
 
 		// Now clamp the result.
-		neurons.setNext(i, std::clamp(neurons.getNext(i) * settings.chargeDepletionRate(), 0.0f, 1.0f));
+		neurons.setNext(i, std::clamp(stimulusSum * settings.chargeDepletionRate(), 0.0f, 1.0f));
 		checkNanByIdx(i);
 	}
 

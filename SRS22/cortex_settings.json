@@ -1,15 +1,15 @@
 [
     {
-        "DefaultValue": 0.9549925923347473,
+        "DefaultValue": 0.11999999731779099,
         "Description": "How much a neuron's Charge decays toward 0.0f each tick.",
         "Name": "Charge Depletion Rate",
-        "OriginalValue": 0.9549925923347473,
-        "PreviousValue": 0.9549925923347473,
+        "OriginalValue": 0.11999999731779099,
+        "PreviousValue": 0.11999999731779099,
         "SettingRow": 0,
         "Tag": "chargeDepletionRate",
         "Type": "F",
         "UILabel": "CgDepRt",
-        "Value": 0.9549925923347473
+        "Value": 0.9900000095367432
     },
     {
         "DefaultValue": 0.9988493919372559,
@@ -21,7 +21,7 @@
         "Tag": "confidenceAdjustmentDownRate",
         "Type": "F",
         "UILabel": "ConfAdjDnRt",
-        "Value": 0.9988493919372559
+        "Value": 0.9988489747047424
     },
     {
         "DefaultValue": 1.0099999904632568,
@@ -189,7 +189,7 @@
         "Tag": "linkActivityDecayRate",
         "Type": "F",
         "UILabel": "LnkActvDcyRt",
-        "Value": 0.8912509083747864
+        "Value": 0.8912510275840759
     },
     {
         "DefaultValue": 1.100000023841858,
