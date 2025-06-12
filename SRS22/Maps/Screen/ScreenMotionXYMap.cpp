@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	ScreenMotionXYMap::ScreenMotionXYMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENMOTION_MAP, "ScreenMotionXYMap", true,
+		ConceptArray(br, MapUidE::SCREENMOTION_MAP, "ScreenMotionXYMap", true,
 			ScreenMotionXYMap_Width, 0.0f,
 			"The XY location of the maximum frame to frame difference.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
@@ -17,7 +17,7 @@ namespace SRS22 {
 	}
 
 	void ScreenMotionXYMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		if (screenIn->currentAbsDifferenceLowRes.empty() == false) {
@@ -47,6 +47,6 @@ namespace SRS22 {
 	}
 
 	void ScreenMotionXYMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

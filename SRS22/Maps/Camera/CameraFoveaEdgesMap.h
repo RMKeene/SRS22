@@ -1,9 +1,9 @@
 #pragma once
-#include "../../ConceptMap.h"
+#include "../../ConceptArray.h"
 #include "CameraFoveaMap.h"
 
 namespace SRS22 {
-	class CameraFoveaEdgesMap : public ConceptMap
+	class CameraFoveaEdgesMap : public ConceptArray
 	{
 	public:
 		CameraFoveaEdgesMap(Brain* br);

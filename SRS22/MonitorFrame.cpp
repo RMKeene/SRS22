@@ -3,7 +3,7 @@
 #include "convertmattowxbmp.h"
 #include "TimeHelpers.h"
 #include "OpenCVHelpers.h"
-#include "ConceptMap.h"
+#include "ConceptArray.h"
 #include "Cortex.h"
 
 namespace SRS22 {
@@ -63,7 +63,7 @@ namespace SRS22 {
 			auto m = GlobalWorld::GlobalWorldInstance.GetBrain(0)->FindMapByName(ViewMapChoice->GetStringSelection());
 			if (m.has_value() == false) // No such map.
 				return;
-			std::shared_ptr<ConceptMap> mv = m.value();
+			std::shared_ptr<ConceptArray> mv = m.value();
 			auto& charges = mv->M;
 			int w = charges.cols;
 			int h = charges.rows;

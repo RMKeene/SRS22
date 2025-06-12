@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Brain.h"
 #include "Cortex.h"
-#include "ConceptMap.h"
+#include "ConceptArray.h"
 #include "GlobalWorld.h"
 #include <ppl.h>
 #include "Maps/Screen/ScreenFoveaMap.h"
@@ -93,12 +93,12 @@ namespace SRS22 {
 	void Brain::TickConceptMaps()
 	{
 		if (doParallel) {
-			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
+			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptArray>> n) {
 				n.second->ComputeNextState(false);
 				});
 		}
 		else {
-			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
+			for (std::pair<MapUidE, std::shared_ptr<ConceptArray>> n : conceptMaps) {
 				n.second->ComputeNextState(false);
 			}
 		}
@@ -107,12 +107,12 @@ namespace SRS22 {
 	void Brain::ReSetupMatrixMirrors()
 	{
 		if (doParallel) {
-			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptMap>> n) {
+			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptArray>> n) {
 				n.second->setupCVMatMirrors();
 				});
 		}
 		else {
-			for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> n : conceptMaps) {
+			for (std::pair<MapUidE, std::shared_ptr<ConceptArray>> n : conceptMaps) {
 				n.second->setupCVMatMirrors();
 			}
 		}
@@ -306,11 +306,11 @@ namespace SRS22 {
 		whiteboardOut.UnitTest();
 	}
 
-	void Brain::AddMap(shared_ptr<ConceptMap> m) {
+	void Brain::AddMap(shared_ptr<ConceptArray> m) {
 		// open append file:
 		std::ofstream f("cortex_log.txt", std::ios::app);
 		if (conceptMaps.find(m->UID) != conceptMaps.end())
-			throw std::exception((std::string("Duplicate ConceptMap UID in Brain::AddMap: ") + m->MapName).c_str());
+			throw std::exception((std::string("Duplicate ConceptArray UID in Brain::AddMap: ") + m->MapName).c_str());
 		std::pair<int, int> cortexOffsets = ioMapToContext.addMapping(m->MapName, m->totalSize);
 		m->cortexStartIndex = cortexOffsets.first;
 		m->setupCVMatMirrors();
@@ -318,9 +318,9 @@ namespace SRS22 {
 		conceptMapsByName[m->MapName] = m;
 		std::string ss;
 		if(m->isInput())
-			ss = std::format("Added ConceptMap {} at {} to {} INPUT\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
+			ss = std::format("Added ConceptArray {} at {} to {} INPUT\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
 		else
-			ss = std::format("Added ConceptMap {} at {} to {} OUTPUT\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
+			ss = std::format("Added ConceptArray {} at {} to {} OUTPUT\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
 		f.write(ss.c_str(), ss.size());
 		f.close();
 	}
@@ -342,7 +342,7 @@ namespace SRS22 {
 	}
 
 	void Brain::PostCreateAllConceptMaps() {
-		for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> u : conceptMaps)
+		for (std::pair<MapUidE, std::shared_ptr<ConceptArray>> u : conceptMaps)
 			u.second->PostCreate(*this);
 	}
 
@@ -350,7 +350,7 @@ namespace SRS22 {
 		cortex->PostCreate();
 	}
 
-	optional<shared_ptr<ConceptMap>> Brain::FindMap(MapUidE n) {
+	optional<shared_ptr<ConceptArray>> Brain::FindMap(MapUidE n) {
 		auto m = conceptMaps.find(n);
 		if (m != conceptMaps.end()) {
 			return m->second;
@@ -358,7 +358,7 @@ namespace SRS22 {
 		return std::nullopt;
 	}
 
-	optional<shared_ptr<ConceptMap>> Brain::FindMapByName(string n) {
+	optional<shared_ptr<ConceptArray>> Brain::FindMapByName(string n) {
 		auto m = conceptMapsByName.find(n);
 		if (m != conceptMapsByName.end()) {
 			return m->second;
@@ -368,7 +368,7 @@ namespace SRS22 {
 
 	string Brain::FindMapByCortexIdx(int idx) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.brains[0];
-		for (std::pair<MapUidE, std::shared_ptr<ConceptMap>> u : b->conceptMaps) {
+		for (std::pair<MapUidE, std::shared_ptr<ConceptArray>> u : b->conceptMaps) {
 			if (idx >= u.second->cortexStartIndex && idx < u.second->cortexStartIndex + u.second->totalSize) {
 				return u.second->MapName;
 			}

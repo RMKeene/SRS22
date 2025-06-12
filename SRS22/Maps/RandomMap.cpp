@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	RandomMap::RandomMap(Brain* br) :
-		ConceptMap(br, MapUidE::RANDOM_MAP, "RandomMap", true,
+		ConceptArray(br, MapUidE::RANDOM_MAP, "RandomMap", true,
 			RandomMap_Width, RandomMap_Height, 1.0f,
 			"A map that is always randomized every tick. A source of noise if needed.") {
 	}
@@ -16,13 +16,13 @@ namespace SRS22 {
 	}
 
 	void RandomMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		cv::setRNGSeed(cv::getTickCount());
 		cv::randu(nextM, 0.0f, 1.0f);
 	}
 
 	void RandomMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../ConceptMap.h"
+#include "../../ConceptArray.h"
 
 /// Just an X,Y value in the map.
 #define ScreenMotionXYMap_Width 2
@@ -9,12 +9,12 @@ namespace SRS22 {
 	/// A lower resolution version of the screen view processed for frame to frame motion differences.
 	/// 1 x 64 x 48
 	/// </summary>
-	class ScreenMotionXYMap : public ConceptMap
+	class ScreenMotionXYMap : public ConceptArray
 	{
 	public:
 		/// <summary>
 		/// Implemented as
-		/// ConceptMap("ScreenMotionXYMap",
+		/// ConceptArray("ScreenMotionXYMap",
 		/// ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 		/// 	cv::Vec3f(0.0, 0.0, 0.0),
 		/// 	ScreenMotionXYMap_Width,

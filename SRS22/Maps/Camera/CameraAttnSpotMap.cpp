@@ -8,7 +8,7 @@
 
 namespace SRS22 {
 	CameraAttnSpotMap::CameraAttnSpotMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERAATTNSPOT_MAP, "CameraAttnSpotMap", false,
+		ConceptArray(br, MapUidE::CAMERAATTNSPOT_MAP, "CameraAttnSpotMap", false,
 			CameraAttnSpotMap_Width, 0.0f,
 			"Output where the camera attantion spot is located.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
@@ -18,7 +18,7 @@ namespace SRS22 {
 	}
 
 	void CameraAttnSpotMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto cameraVideo = IOCommon::GetIO<CameraInIO>();
 		float xx = M.at<float>(0, 0, 0) * cameraVideo->GetCameraWidth();
@@ -29,6 +29,6 @@ namespace SRS22 {
 	}
 
 	void CameraAttnSpotMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

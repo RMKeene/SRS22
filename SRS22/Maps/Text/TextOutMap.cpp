@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	TextOutMap::TextOutMap(Brain* br) :
-		ConceptMap(br, MapUidE::TEXTOUT_MAP, "TextOutMap", false,
+		ConceptArray(br, MapUidE::TEXTOUT_MAP, "TextOutMap", false,
 			TextOutMap_Width,
 			TextOutMap_Height, 0.98f,
 			"The \"Keyboard\" out the text window.") {
@@ -16,7 +16,7 @@ namespace SRS22 {
 	}
 
 	void TextOutMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto textOutUI = IOCommon::GetIO<TextOutIO>();
 
@@ -32,6 +32,6 @@ namespace SRS22 {
 	}
 
 	void TextOutMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

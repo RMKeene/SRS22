@@ -1,5 +1,5 @@
 #pragma once
-#include "../../ConceptMap.h"
+#include "../../ConceptArray.h"
 #include "../../HardwareIO/PhonemesE.h"
 
 #define PhonemeMap_Width ((int)PhonemeE::MAXENUM)
@@ -10,12 +10,12 @@ namespace SRS22 {
 	/// There is a threshold for minimal charge to fire off a character.
 	/// Coded as X is lower 4 bits, Y is upper 4 bits ASCII.
 	/// </summary>
-	class PhonemeMap : public ConceptMap
+	class PhonemeMap : public ConceptArray
 	{
 	public:
 		/// <summary>
 		/// implemented as
-		/// ConceptMap("PhonemeMap",
+		/// ConceptArray("PhonemeMap",
 		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
 		/// 	cv::Vec3f(0.0, 0.0, 0.0),
 		/// 	PhonemeMap_Width,

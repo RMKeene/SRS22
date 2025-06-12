@@ -2,7 +2,7 @@
 #include "SRS22pch.h"
 
 #include <string>
-#include "ConceptMap.h"
+#include "ConceptArray.h"
 #include "HardwareIO/ScreenInputIO.h"
 #include "HardwareIO/AudioCaptureIO.h"
 #include "HardwareIO/AudioOutIO.h"
@@ -22,6 +22,7 @@ namespace SRS22 {
 	using namespace std;
 
 	class Cortex;
+	class ConceptArray;
 
 	class Brain
 	{
@@ -37,8 +38,8 @@ namespace SRS22 {
 		/// <summary>
 		/// Never depend on iteration order of maps. They are multi-thread processed and in a hash table.
 		/// </summary>
-		map<MapUidE, std::shared_ptr<ConceptMap>> conceptMaps;
-		map<std::string, std::shared_ptr<ConceptMap>> conceptMapsByName;
+		map<MapUidE, std::shared_ptr<ConceptArray>> conceptMaps;
+		map<std::string, std::shared_ptr<ConceptArray>> conceptMapsByName;
 
 		long long tickCount = 0;
 		long long tickCountRecent = 0;
@@ -118,8 +119,8 @@ namespace SRS22 {
 		void PostCreateAllConceptMaps();
 		void PostCreateAllCortexChunks();
 
-		optional<shared_ptr<ConceptMap>> FindMap(MapUidE n);
-		optional<shared_ptr<ConceptMap>> FindMapByName(string n);
+		optional<shared_ptr<ConceptArray>> FindMap(MapUidE n);
+		optional<shared_ptr<ConceptArray>> FindMapByName(string n);
 
 		/// <summary>
 		/// The world for this brain is improving. Thus it should learn this state.
@@ -136,7 +137,7 @@ namespace SRS22 {
 		void BadJob() { overallGoodness -= 0.5f; }
 
 		/// <summary>
-		/// Find a ConceptMap by the index in the Cortex.
+		/// Find a ConceptArray by the index in the Cortex.
 		/// Assumes you mean Brain[0].cortex.
 		/// </summary>
 		/// <param name="idx"></param>
@@ -158,7 +159,7 @@ namespace SRS22 {
 		/// Order of adding maps does not matter. Never depend on iteration order.
 		/// </summary>
 		/// <param name="m"></param>
-		void AddMap(shared_ptr<ConceptMap> m);
+		void AddMap(std::shared_ptr<ConceptArray> m);
 	};
 
 	typedef std::shared_ptr<Brain> BrainH;

@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	CameraMotionXYMap::CameraMotionXYMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERAMOTIONXY_MAP, "CameraMotionXYMap", true,
+		ConceptArray(br, MapUidE::CAMERAMOTIONXY_MAP, "CameraMotionXYMap", true,
 			CameraMotionXYMap_Width, 0.0f,
 			"The XY location of the maximum frame to frame difference.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
@@ -17,7 +17,7 @@ namespace SRS22 {
 	}
 
 	void CameraMotionXYMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		if (cameraIn->currentAbsDifferenceLowRes.empty() == false) {
@@ -46,6 +46,6 @@ namespace SRS22 {
 	}
 
 	void CameraMotionXYMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

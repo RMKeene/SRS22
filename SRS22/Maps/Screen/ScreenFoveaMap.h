@@ -1,5 +1,5 @@
 #pragma once
-#include "../../ConceptMap.h"
+#include "../../ConceptArray.h"
 
 #define ScreenFoveaMap_Width 15
 #define ScreenFoveaMap_Height 15
@@ -8,12 +8,12 @@ namespace SRS22 {
 	/// <summary>
 	/// Raw pixel map of center of screen fovea in color. 8x8 in the center of the ScreenAttnSpot.
 	/// </summary>
-	class ScreenFoveaMap : public ConceptMap
+	class ScreenFoveaMap : public ConceptArray
 	{
 	public:
 		/// <summary>
 		/// implemented as
-		/// ConceptMap("ScreenFoveaMap", ctrip, location, 3, ScreenFoveaMap_Height, ScreenFoveaMap_Width,
+		/// ConceptArray("ScreenFoveaMap", ctrip, location, 3, ScreenFoveaMap_Height, ScreenFoveaMap_Width,
 		///     "Raw pixel map of center of screen fovea in color.") {
 		/// </summary>
 		ScreenFoveaMap(Brain* br);

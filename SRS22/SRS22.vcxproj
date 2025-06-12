@@ -403,7 +403,7 @@
     <ClInclude Include="SRS22UIgen.h" />
     <ClInclude Include="SRSMath.h" />
     <ClInclude Include="SRSUnitDisplay.h" />
-    <ClInclude Include="ConceptMap.h" />
+    <ClInclude Include="ConceptArray.h" />
     <ClInclude Include="SRSUnitDisplayModes.h" />
     <ClInclude Include="StringConversionHelpers.h" />
     <ClInclude Include="targetver.h" />
@@ -486,7 +486,7 @@
     <ClCompile Include="SRS22UIgen.cpp" />
     <ClCompile Include="SRSMath.cpp" />
     <ClCompile Include="SRSUnitDisplay.cpp" />
-    <ClCompile Include="ConceptMap.cpp" />
+    <ClCompile Include="ConceptArray.cpp" />
     <ClCompile Include="StringConversionHelpers.cpp" />
     <ClCompile Include="Tickable.cpp" />
     <ClCompile Include="TimeHelpers.cpp" />

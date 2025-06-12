@@ -1,6 +1,6 @@
 #pragma once
 #pragma once
-#include "../../ConceptMap.h"
+#include "../../ConceptArray.h"
 
 /// Just an X,Y value in the map.
 #define CameraAttnSpotMap_Width 2
@@ -9,7 +9,7 @@ namespace SRS22 {
 	/// <summary>
 	/// Map of 2 values, X and Y of where the CameraFovea is located. Updates the CameraInIO fovea each tick. 
 	/// </summary>
-	class CameraAttnSpotMap : public ConceptMap
+	class CameraAttnSpotMap : public ConceptArray
 	{
 	public:
 		/// <summary>

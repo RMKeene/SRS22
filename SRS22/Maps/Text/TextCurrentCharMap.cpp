@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	TextCurrentCharMap::TextCurrentCharMap(Brain* br) :
-		ConceptMap(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap", true,
+		ConceptArray(br, MapUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharMap", true,
 			TextCurrentCharMap_Width,
 			TextCurrentCharMap_Height, 0.98f,
 			"Last entered character ASCII Code.") {
@@ -16,7 +16,7 @@ namespace SRS22 {
 	}
 
 	void TextCurrentCharMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		RelaxTowardZero(0.9f);
 
@@ -30,6 +30,6 @@ namespace SRS22 {
 	}
 
 	void TextCurrentCharMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

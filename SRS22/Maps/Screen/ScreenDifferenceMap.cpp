@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	ScreenDifferenceMap::ScreenDifferenceMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENDIFFERENCE_MAP, "ScreenDifferenceMap", true,
+		ConceptArray(br, MapUidE::SCREENDIFFERENCE_MAP, "ScreenDifferenceMap", true,
 			3, ScreenInputIO::AbsDiffHeight, ScreenInputIO::AbsDiffWidth, 0.0f,
 			"A low resolution version of the screen view processed for frame to frame motion differences.") {
 	}
@@ -16,7 +16,7 @@ namespace SRS22 {
 	}
 
 	void ScreenDifferenceMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		// currentAbsDifferenceLowRes is 8UC4 format so we convert.
@@ -32,6 +32,6 @@ namespace SRS22 {
 	}
 
 	void ScreenDifferenceMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

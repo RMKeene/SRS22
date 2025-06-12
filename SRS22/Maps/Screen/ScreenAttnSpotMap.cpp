@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	ScreenAttnSpotMap::ScreenAttnSpotMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotMap", false,
+		ConceptArray(br, MapUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotMap", false,
 			ScreenAttnSpotMap_Width, 0.0f,
 			"Output where the screen attention spot is located.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
@@ -17,7 +17,7 @@ namespace SRS22 {
 	}
 
 	void ScreenAttnSpotMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto screenVideo = IOCommon::GetIO<ScreenInputIO>();
 		float xx = get(0) * screenVideo->GetScreenWidth();
@@ -28,6 +28,6 @@ namespace SRS22 {
 	}
 
 	void ScreenAttnSpotMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

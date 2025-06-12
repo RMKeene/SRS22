@@ -1,11 +1,11 @@
 #pragma once
 
-#include "ConceptMap.h"
+#include "ConceptArray.h"
 #include "ClassPredefines.h"
 
 namespace SRS22 {
 	/// <summary>
-	/// This knows how to display a ConceptMap for debug and monitoring.
+	/// This knows how to display a ConceptArray for debug and monitoring.
 	/// </summary>
 	class SRSUnitDisplay
 	{
@@ -17,6 +17,6 @@ namespace SRS22 {
 		/// <param name="dc"></param>
 		/// <param name="rect"></param>
 		/// <param name="u"></param>
-		static void DrawInDC(Gdiplus::Graphics& g, Gdiplus::Rect& rect, std::shared_ptr<ConceptMap> u, bool showLabel = true, bool preClearToBlack = true);
+		static void DrawInDC(Gdiplus::Graphics& g, Gdiplus::Rect& rect, std::shared_ptr<ConceptArray> u, bool showLabel = true, bool preClearToBlack = true);
 	};
 }

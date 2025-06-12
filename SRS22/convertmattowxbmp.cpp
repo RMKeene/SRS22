@@ -197,7 +197,7 @@ bool Convert2ValueMatBitmapTowxBitmap_CV_32FC1(
 		y = matBitmap.at<float>(0, 1);
 	}
 	else {
-		throw std::logic_error("attempt to draw X,Y coords from 2 neuron Concept Map that is not 2 neruons.");
+		throw std::logic_error("attempt to draw X,Y coords from 2 neuron  Concept Array that is not 2 neruons.");
 	}
 
 	wxMemoryDC DC;

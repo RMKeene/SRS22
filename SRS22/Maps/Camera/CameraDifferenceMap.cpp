@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	CameraDifferenceMap::CameraDifferenceMap(Brain* br) :
-		ConceptMap(br, MapUidE::CAMERADIFFERENCE_MAP, "CameraDifferenceMap", true,
+		ConceptArray(br, MapUidE::CAMERADIFFERENCE_MAP, "CameraDifferenceMap", true,
 			3, CameraInIO::AbsDiffHeight, CameraInIO::AbsDiffWidth, 0.0f,
 			"A low resolution version of the camera view processed for frame to frame motion differences.") {
 	}
@@ -16,7 +16,7 @@ namespace SRS22 {
 	}
 
 	void CameraDifferenceMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto cameraIn = IOCommon::GetIO<CameraInIO>();
 		if (cameraIn->currentAbsDifferenceLowRes.empty() == false) {
@@ -28,6 +28,6 @@ namespace SRS22 {
 	}
 
 	void CameraDifferenceMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

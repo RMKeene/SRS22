@@ -5,14 +5,14 @@
 namespace SRS22 {
 
 	/// <summary>
-	/// We want the Cortex to have one huge linear array of neurons.  Each ConceptMap then deals with some block in the Cortex.
+	/// We want the Cortex to have one huge linear array of neurons.  Each ConceptArray then deals with some block in the Cortex.
 	/// So we want to start at index zero in the Cortex neurons array and declare block that do not overlap.
-	/// This class declares the start and end of each ConceptMap explicitly, can be saved to disk, and keeps things from moving around between saves.
+	/// This class declares the start and end of each ConceptArray explicitly, can be saved to disk, and keeps things from moving around between saves.
 	/// </summary>
 	class IOMapToContext {
 	public:
 		/// <summary>
-		/// The string is the ConceptMap name, the pair is the start and size in the Cortex neurons array.
+		/// The string is the ConceptArray name, the pair is the start and size in the Cortex neurons array.
 		/// The indicies are in Neurons, not bytes.
 		/// </summary>
 		std::unordered_map<std::string, std::pair<int, int>> map;

@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	ScreenFoveaMap::ScreenFoveaMap(Brain* br) :
-		ConceptMap(br, MapUidE::SCREENFOVEA_MAP, "ScreenFoveaMap", true,
+		ConceptArray(br, MapUidE::SCREENFOVEA_MAP, "ScreenFoveaMap", true,
 			3, ScreenFoveaMap_Height, ScreenFoveaMap_Width, 0.0f,
 			"Raw pixel map of center of screen fovea in color.") {
 	}
@@ -15,7 +15,7 @@ namespace SRS22 {
 	}
 
 	void ScreenFoveaMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto screenIn = IOCommon::GetIO<ScreenInputIO>();
 		auto fovea = IOCommon::GetIO<ScreenAttnSpotIO>();
@@ -24,6 +24,6 @@ namespace SRS22 {
 	}
 
 	void ScreenFoveaMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

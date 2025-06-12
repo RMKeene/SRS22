@@ -230,7 +230,7 @@
     <ClInclude Include="Reaper.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="ConceptMap.h">
+    <ClInclude Include="ConceptArray.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="tinyfloat.h">
@@ -457,7 +457,7 @@
     <ClCompile Include="Reaper.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="ConceptMap.cpp">
+    <ClCompile Include="ConceptArray.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="tinyfloat.cpp">

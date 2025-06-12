@@ -1,5 +1,5 @@
 #pragma once
-#include "../../ConceptMap.h"
+#include "../../ConceptArray.h"
 
 #define CameraFoveaMap_Width 15
 #define CameraFoveaMap_Height 15
@@ -16,7 +16,7 @@ namespace SRS22 {
 	/// <summary>
 	/// Raw pixel map of center of camera fovea in color. 8x8 in the center of the ScreenAttnSpot. Angle 0 deg.
 	/// </summary>
-	class CameraFoveaAngleMap000 : public ConceptMap
+	class CameraFoveaAngleMap000 : public ConceptArray
 	{
 	public:
 		CameraFoveaAngleMap000(Brain* br);
@@ -29,7 +29,7 @@ namespace SRS22 {
 	/// <summary>
 	/// Raw pixel map of center of camera fovea in color. 8x8 in the center of the ScreenAttnSpot. Angle 22.5 deg.
 	/// </summary>
-	class CameraFoveaAngleMap225 : public ConceptMap
+	class CameraFoveaAngleMap225 : public ConceptArray
 	{
 	public:
 		CameraFoveaAngleMap225(Brain* br);
@@ -42,7 +42,7 @@ namespace SRS22 {
 	/// <summary>
 	///	Raw pixel map of center of camera fovea in color. 8x8 in the center of the ScreenAttnSpot. Angle 45 deg.
 	/// </summary>
-	class CameraFoveaAngleMap450 : public ConceptMap
+	class CameraFoveaAngleMap450 : public ConceptArray
 	{
 	public:
 		CameraFoveaAngleMap450(Brain* br);
@@ -55,7 +55,7 @@ namespace SRS22 {
 	/// <summary>
 	/// Raw pixel map of center of camera fovea in color. 8x8 in the center of the ScreenAttnSpot. Angle 67.5 deg.
 	/// </summary>
-	class CameraFoveaAngleMap675 : public ConceptMap
+	class CameraFoveaAngleMap675 : public ConceptArray
 	{
 	public:
 		CameraFoveaAngleMap675(Brain* br);
@@ -68,7 +68,7 @@ namespace SRS22 {
 	/// <summary>
 	/// Raw pixel map of center of camera fovea in color. 8x8 in the center of the ScreenAttnSpot. Angle 90 deg.
 	/// </summary>
-	class CameraFoveaAngleMap900 : public ConceptMap
+	class CameraFoveaAngleMap900 : public ConceptArray
 	{
 	public:
 		CameraFoveaAngleMap900(Brain* br);
@@ -81,7 +81,7 @@ namespace SRS22 {
 	/// <summary>
 	/// Raw pixel map of center of camera fovea in color. 8x8 in the center of the ScreenAttnSpot. Angle 112.5 deg.
 	/// </summary>
-	class CameraFoveaAngleMap1125 : public ConceptMap
+	class CameraFoveaAngleMap1125 : public ConceptArray
 	{
 	public:
 		CameraFoveaAngleMap1125(Brain* br);
@@ -94,7 +94,7 @@ namespace SRS22 {
 	/// <summary>
 	///	Raw pixel map of center of camera fovea in color. 8x8 in the center of the ScreenAttnSpot. Angle 135 deg.
 	/// </summary>
-	class CameraFoveaAngleMap1350 : public ConceptMap
+	class CameraFoveaAngleMap1350 : public ConceptArray
 	{
 	public:
 		CameraFoveaAngleMap1350(Brain* br);
@@ -107,7 +107,7 @@ namespace SRS22 {
 	/// <summary>
 	/// Raw pixel map of center of camera fovea in color. 8x8 in the center of the ScreenAttnSpot. Angle 157.5 deg.
 	/// </summary>
-	class CameraFoveaAngleMap1575 : public ConceptMap
+	class CameraFoveaAngleMap1575 : public ConceptArray
 	{
 	public:
 		CameraFoveaAngleMap1575(Brain* br);

@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	DrawInMap::DrawInMap(Brain* br) :
-		ConceptMap(br, MapUidE::DRAWIN_MAP, "DrawInMap", true,
+		ConceptArray(br, MapUidE::DRAWIN_MAP, "DrawInMap", true,
 			DrawInMap_Width, 0.5f,
 			"Whiteboard pen in from screen. The SRS \"feels\" when you draw.") {
 	}
@@ -14,7 +14,7 @@ namespace SRS22 {
 	}
 
 	void DrawInMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto whiteboard = IOCommon::GetIO<WhiteboardInIO>();
 		WhiteboardPt pt;
@@ -34,6 +34,6 @@ namespace SRS22 {
 	}
 
 	void DrawInMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

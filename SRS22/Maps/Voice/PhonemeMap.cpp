@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	PhonemeMap::PhonemeMap(Brain* br) :
-		ConceptMap(br, MapUidE::PHONEME_MAP, "PhonemeMap", false,
+		ConceptArray(br, MapUidE::PHONEME_MAP, "PhonemeMap", false,
 			PhonemeMap_Width, 0.98f,
 			"The \"Voice\" out the audio system.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
@@ -16,7 +16,7 @@ namespace SRS22 {
 	}
 
 	void PhonemeMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		auto phonemesOut = IOCommon::GetIO<PhonemesIO>();
 
@@ -33,6 +33,6 @@ namespace SRS22 {
 	}
 
 	void PhonemeMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }

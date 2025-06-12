@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	DrawOutMap::DrawOutMap(Brain* br) :
-		ConceptMap(br, MapUidE::DRAWOUT_MAP, "DrawOutMap", false,
+		ConceptArray(br, MapUidE::DRAWOUT_MAP, "DrawOutMap", false,
 			DrawOutMap_Width, 0.0f,
 			"Whiteboard pen out to screen.") {
 	}
@@ -14,7 +14,7 @@ namespace SRS22 {
 	}
 
 	void DrawOutMap::ComputeNextState(boolean doParallel) {
-		ConceptMap::ComputeNextState(doParallel);
+		ConceptArray::ComputeNextState(doParallel);
 
 		if (get(DrawOUtMap_Blend) < DrawOutMap_MinBlend)
 			return;
@@ -39,6 +39,6 @@ namespace SRS22 {
 	}
 
 	void DrawOutMap::LatchNewState(boolean doParallel) {
-		ConceptMap::LatchNewState(doParallel);
+		ConceptArray::LatchNewState(doParallel);
 	}
 }
