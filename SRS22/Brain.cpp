@@ -5,24 +5,24 @@
 #include "ConceptArray.h"
 #include "GlobalWorld.h"
 #include <ppl.h>
-#include "Maps/Screen/ScreenFoveaMap.h"
-#include "Maps/Screen/ScreenAttnSpotMap.h"
-#include "Maps/Screen/ScreenDifferenceMap.h"
-#include "Maps/Screen/ScreenMotionXYMap.h"
-#include "Maps/RandomMap.h"
-#include "Maps/Camera/CameraFoveaMap.h"
-#include "Maps/Camera/CameraAttnSpotMap.h"
-#include "Maps/Camera/CameraDifferenceMap.h"
-#include "Maps/Camera/CameraMotionXYMap.h"
-#include "Maps/Text/TextCurrentCharMap.h"
-#include "Maps/Text/TextOutMap.h"
-#include "Maps/Draw/DrawOutMap.h"
-#include "Maps/Draw/DrawInMap.h"
-#include "Maps/Voice/PhonemeMap.h"
-#include "Maps/Hearing/HearingMap.h"
-#include "Maps/Camera/CameraFoveaAngleMaps.h"
-#include "Maps/Camera/CameraFoveaEdgesMap.h"
-#include "Maps/Camera/CameraFoveaAbsDiffMap.h"
+#include "Maps/Screen/ScreenFoveaArray.h"
+#include "Maps/Screen/ScreenAttnSpotArray.h"
+#include "Maps/Screen/ScreenDifferenceArray.h"
+#include "Maps/Screen/ScreenMotionXYArray.h"
+#include "Maps/RandomArray.h"
+#include "Maps/Camera/CameraFoveaArray.h"
+#include "Maps/Camera/CameraAttnSpotArray.h"
+#include "Maps/Camera/CameraDifferenceArray.h"
+#include "Maps/Camera/CameraMotionXYArray.h"
+#include "Maps/Text/TextCurrentCharArray.h"
+#include "Maps/Text/TextOutArray.h"
+#include "Maps/Draw/DrawOutArray.h"
+#include "Maps/Draw/DrawInArray.h"
+#include "Maps/Voice/PhonemeArray.h"
+#include "Maps/Hearing/HearingArray.h"
+#include "Maps/Camera/CameraFoveaAngleArray.h"
+#include "Maps/Camera/CameraFoveaEdgesArray.h"
+#include "Maps/Camera/CameraFoveaAbsDiffArray.h"
 
 using namespace concurrency;
 
@@ -69,7 +69,7 @@ namespace SRS22 {
 	void Brain::SequenceCoreBrainTick()
 	{
 		PreTickHardwareAndIO();
-		TickConceptMaps();
+		TickConceptArrays();
 		cortex->ResetStats();
 
 		cortex->ComputeNextState(doParallel);
@@ -90,15 +90,15 @@ namespace SRS22 {
 		overallGoodnessPrevious = overallGoodness;
 	}
 
-	void Brain::TickConceptMaps()
+	void Brain::TickConceptArrays()
 	{
 		if (doParallel) {
-			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptArray>> n) {
+			parallel_for_each(begin(conceptArrays), end(conceptArrays), [&](std::pair<ArrayUidE, std::shared_ptr<ConceptArray>> n) {
 				n.second->ComputeNextState(false);
 				});
 		}
 		else {
-			for (std::pair<MapUidE, std::shared_ptr<ConceptArray>> n : conceptMaps) {
+			for (std::pair<ArrayUidE, std::shared_ptr<ConceptArray>> n : conceptArrays) {
 				n.second->ComputeNextState(false);
 			}
 		}
@@ -107,12 +107,12 @@ namespace SRS22 {
 	void Brain::ReSetupMatrixMirrors()
 	{
 		if (doParallel) {
-			parallel_for_each(begin(conceptMaps), end(conceptMaps), [&](std::pair<MapUidE, std::shared_ptr<ConceptArray>> n) {
+			parallel_for_each(begin(conceptArrays), end(conceptArrays), [&](std::pair<ArrayUidE, std::shared_ptr<ConceptArray>> n) {
 				n.second->setupCVMatMirrors();
 				});
 		}
 		else {
-			for (std::pair<MapUidE, std::shared_ptr<ConceptArray>> n : conceptMaps) {
+			for (std::pair<ArrayUidE, std::shared_ptr<ConceptArray>> n : conceptArrays) {
 				n.second->setupCVMatMirrors();
 			}
 		}
@@ -244,42 +244,43 @@ namespace SRS22 {
 		cameraFovea.Init(Point(cameraInput.GetCameraWidth() / 2, cameraInput.GetCameraHeight() / 2),
 			64, 64, cameraInput.GetCameraRect());
 
-		// All Map instances. Keep in alphabetical order please. These calls also set the layout in linear space in the Cortex.
+		// All ConceptArray instances. Keep in alphabetical order please. 
+		// These calls also set the layout in linear space in the Cortex.
 		// So any additions in the middle will break disk saves.
-		AddMap(make_shared<CameraAttnSpotMap>(this));
-		AddMap(make_shared<CameraDifferenceMap>(this));
-		AddMap(make_shared<CameraFoveaAngleMap000>(this));
-		AddMap(make_shared<CameraFoveaAngleMap225>(this));
-		AddMap(make_shared<CameraFoveaAngleMap450>(this));
-		AddMap(make_shared<CameraFoveaAngleMap675>(this));
-		AddMap(make_shared<CameraFoveaAngleMap900>(this));
-		AddMap(make_shared<CameraFoveaAngleMap1125>(this));
-		AddMap(make_shared<CameraFoveaAngleMap1350>(this));
-		AddMap(make_shared<CameraFoveaAngleMap1575>(this));
-		AddMap(make_shared<CameraFoveaAbsDiffMap>(this));
-		AddMap(make_shared<CameraFoveaEdgesMap>(this));
-		AddMap(make_shared<CameraFoveaMap>(this));
-		AddMap(make_shared<CameraMotionXYMap>(this));
+		AddArray(make_shared<CameraAttnSpotArray>(this));
+		AddArray(make_shared<CameraDifferenceArray>(this));
+		AddArray(make_shared<CameraFoveaAngleArray000>(this));
+		AddArray(make_shared<CameraFoveaAngleArray225>(this));
+		AddArray(make_shared<CameraFoveaAngleArray450>(this));
+		AddArray(make_shared<CameraFoveaAngleArray675>(this));
+		AddArray(make_shared<CameraFoveaAngleArray900>(this));
+		AddArray(make_shared<CameraFoveaAngleArray1125>(this));
+		AddArray(make_shared<CameraFoveaAngleArray1350>(this));
+		AddArray(make_shared<CameraFoveaAngleArray1575>(this));
+		AddArray(make_shared<CameraFoveaAbsDiffArray>(this));
+		AddArray(make_shared<CameraFoveaEdgesArray>(this));
+		AddArray(make_shared<CameraFoveaArray>(this));
+		AddArray(make_shared<CameraMotionXYArray>(this));
 
-		AddMap(make_shared<DrawInMap>(this));
-		AddMap(make_shared<DrawOutMap>(this));
+		AddArray(make_shared<DrawInArray>(this));
+		AddArray(make_shared<DrawOutArray>(this));
 
-		AddMap(make_shared<HearingMap>(this));
+		AddArray(make_shared<HearingArray>(this));
 
-		AddMap(make_shared<PhonemeMap>(this));
+		AddArray(make_shared<PhonemeArray>(this));
 
-		AddMap(make_shared<RandomMap>(this));
+		AddArray(make_shared<RandomArray>(this));
 
-		AddMap(make_shared<ScreenAttnSpotMap>(this));
-		AddMap(make_shared<ScreenDifferenceMap>(this));
-		AddMap(make_shared<ScreenFoveaMap>(this));
-		AddMap(make_shared<ScreenMotionXYMap>(this));
+		AddArray(make_shared<ScreenAttnSpotArray>(this));
+		AddArray(make_shared<ScreenDifferenceArray>(this));
+		AddArray(make_shared<ScreenFoveaArray>(this));
+		AddArray(make_shared<ScreenMotionXYArray>(this));
 
-		AddMap(make_shared<TextCurrentCharMap>(this));
-		AddMap(make_shared<TextOutMap>(this));
+		AddArray(make_shared<TextCurrentCharArray>(this));
+		AddArray(make_shared<TextOutArray>(this));
 
 		// Compile the SRS system relationships.
-		PostCreateAllConceptMaps();
+		PostCreateAllConceptArrays();
 	}
 
 	void Brain::Shutdown() {
@@ -306,21 +307,21 @@ namespace SRS22 {
 		whiteboardOut.UnitTest();
 	}
 
-	void Brain::AddMap(shared_ptr<ConceptArray> m) {
+	void Brain::AddArray(shared_ptr<ConceptArray> m) {
 		// open append file:
 		std::ofstream f("cortex_log.txt", std::ios::app);
-		if (conceptMaps.find(m->UID) != conceptMaps.end())
-			throw std::exception((std::string("Duplicate ConceptArray UID in Brain::AddMap: ") + m->MapName).c_str());
-		std::pair<int, int> cortexOffsets = ioMapToContext.addMapping(m->MapName, m->totalSize);
+		if (conceptArrays.find(m->UID) != conceptArrays.end())
+			throw std::exception((std::string("Duplicate ConceptArray UID in Brain::AddArray: ") + m->ArrayName).c_str());
+		std::pair<int, int> cortexOffsets = ioMapToContext.addMapping(m->ArrayName, m->totalSize);
 		m->cortexStartIndex = cortexOffsets.first;
 		m->setupCVMatMirrors();
-		conceptMaps[m->UID] = m;
-		conceptMapsByName[m->MapName] = m;
+		conceptArrays[m->UID] = m;
+		conceptArraysByName[m->ArrayName] = m;
 		std::string ss;
 		if(m->isInput())
-			ss = std::format("Added ConceptArray {} at {} to {} INPUT\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
+			ss = std::format("Added ConceptArray {} at {} to {} INPUT\n", m->ArrayName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
 		else
-			ss = std::format("Added ConceptArray {} at {} to {} OUTPUT\n", m->MapName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
+			ss = std::format("Added ConceptArray {} at {} to {} OUTPUT\n", m->ArrayName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
 		f.write(ss.c_str(), ss.size());
 		f.close();
 	}
@@ -341,8 +342,8 @@ namespace SRS22 {
 		SingleStepCount = -1;
 	}
 
-	void Brain::PostCreateAllConceptMaps() {
-		for (std::pair<MapUidE, std::shared_ptr<ConceptArray>> u : conceptMaps)
+	void Brain::PostCreateAllConceptArrays() {
+		for (std::pair<ArrayUidE, std::shared_ptr<ConceptArray>> u : conceptArrays)
 			u.second->PostCreate(*this);
 	}
 
@@ -350,27 +351,27 @@ namespace SRS22 {
 		cortex->PostCreate();
 	}
 
-	optional<shared_ptr<ConceptArray>> Brain::FindMap(MapUidE n) {
-		auto m = conceptMaps.find(n);
-		if (m != conceptMaps.end()) {
+	optional<shared_ptr<ConceptArray>> Brain::FindMap(ArrayUidE n) {
+		auto m = conceptArrays.find(n);
+		if (m != conceptArrays.end()) {
 			return m->second;
 		}
 		return std::nullopt;
 	}
 
 	optional<shared_ptr<ConceptArray>> Brain::FindMapByName(string n) {
-		auto m = conceptMapsByName.find(n);
-		if (m != conceptMapsByName.end()) {
+		auto m = conceptArraysByName.find(n);
+		if (m != conceptArraysByName.end()) {
 			return m->second;
 		}
 		return std::nullopt;
 	}
 
-	string Brain::FindMapByCortexIdx(int idx) {
+	string Brain::FindArrayByCortexIdx(int idx) {
 		BrainH b = GlobalWorld::GlobalWorldInstance.brains[0];
-		for (std::pair<MapUidE, std::shared_ptr<ConceptArray>> u : b->conceptMaps) {
+		for (std::pair<ArrayUidE, std::shared_ptr<ConceptArray>> u : b->conceptArrays) {
 			if (idx >= u.second->cortexStartIndex && idx < u.second->cortexStartIndex + u.second->totalSize) {
-				return u.second->MapName;
+				return u.second->ArrayName;
 			}
 		}
 		return std::format("{} index not in any map.", idx);

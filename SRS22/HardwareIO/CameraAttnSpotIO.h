@@ -4,7 +4,7 @@
 
 /// <summary>
 /// Designates the attention spot, much like steering the camera with motors.
-/// Lets the CameraFoveaMap know where we are looking.
+/// Lets the CameraFoveaArray know where we are looking.
 /// </summary>
 namespace SRS22 {
 	class CameraAttnSpotIO : public AttnSpotBaseIO

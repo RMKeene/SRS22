@@ -29,7 +29,7 @@ namespace SRS22 {
 		BrainH b = GlobalWorld::GlobalWorldInstance.brains[0];
 		ViewMapChoice->Clear();
 		ViewMapChoice->AppendString(wxString("None"));
-		for (auto& m : b->conceptMapsByName) {
+		for (auto& m : b->conceptArraysByName) {
 			ViewMapChoice->AppendString(wxString(m.first));
 		}
 	}
@@ -129,8 +129,8 @@ namespace SRS22 {
 				", " << mv->Height() <<
 				", " << mv->Depth() << "]";
 			chosenMapText1->SetLabelText(s);
-			chosenMapText2->SetLabelText(mv->MapName);
-			chosenMapText3->SetLabel(mv->MapDescription);
+			chosenMapText2->SetLabelText(mv->ArrayName);
+			chosenMapText3->SetLabel(mv->ArrayDescription);
 			//SelectedMapDetailLabel->SetLabel(OpenCVHelpers::MapUIText(mv->M));
 		}
 		else {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MapUIDs.h"
+#include "ArrayUIDs.h"
 #include "Brain.h"
 #include "GoodnessFunction.h"
 #include "SRSUnitDisplayModes.h"
@@ -14,8 +14,8 @@ namespace SRS22 {
 	public:
 		Brain* myBrain = NULL;
 
-		std::string MapName;
-		std::string MapDescription;
+		std::string ArrayName;
+		std::string ArrayDescription;
 		const int cols;
 		const int rows;
 		const int depth;
@@ -31,7 +31,7 @@ namespace SRS22 {
 		int dims[3];
 
 		/// <summary>
-		/// The cortex segment allocated to this map extends from cortexStartIndex to cortexStartIndex + totalSize.
+		/// The cortex segment allocated to this array extends from cortexStartIndex to cortexStartIndex + totalSize.
 		/// </summary>
 		int cortexStartIndex = -1;
 
@@ -46,7 +46,7 @@ namespace SRS22 {
 		/// </summary>
 		cv::Mat nextM;
 
-		const MapUidE UID;
+		const ArrayUidE UID;
 
 		/// <summary>
 		/// How the Monitor app should display this  Concept Array.
@@ -75,20 +75,20 @@ namespace SRS22 {
 		const int Depth() const { return depth; }
 
 		/// <summary>
-		/// The MapName is almost always the class name of the sub-class, e.g. "ScreenFoveaMap".
-		/// In the case of cortex maps it may not be the class name.
+		/// The ArrayName is almost always the class name of the sub-class, e.g. "ScreenFoveaArray".
+		/// In the case of cortex arrays it may not be the class name.
 		/// </summary>
-		/// <param name="br">The brain that owns this map. Future feature: Allow  a world with multiple brains.</param>
-		/// <param name="UID">Must be globally unique. See MapUIDs.h</param>
-		/// <param name="MapName"></param>
-		/// <param name="computeNextStateEnabled">Default is true. If the map is in I/O input map then this is false. See NeuronState.PERMANENT_DISABLED</param>
+		/// <param name="br">The brain that owns this array. Future feature: Allow  a world with multiple brains.</param>
+		/// <param name="UID">Must be globally unique. See ArrayUIDs.h</param>
+		/// <param name="ArrayName"></param>
+		/// <param name="computeNextStateEnabled">Default is true. If the array is in I/O input array then this is false. See NeuronState.PERMANENT_DISABLED</param>
 		/// <param name="cols"></param>
 		/// <param name="decayFactor">0.0 means instant decay to zero before every tick. 1.0 is infinite sustain.
 		/// Done with multiplicative decay. In LatchNewState does <code>nextM = M * decayFactor; nextM = 0.0f;</code></param>
-		/// <param name="MapDescription"></param>
-		ConceptArray(Brain* br, MapUidE UID, std::string MapName, bool isInput, int cols, float decayFactor, std::string MapDescription);
-		ConceptArray(Brain* br, MapUidE UID, std::string MapName, bool isInput, int rows, int cols, float decayFactor, std::string MapDescription);
-		ConceptArray(Brain* br, MapUidE UID, std::string MapName, bool isInput, int depth, int rows, int cols, float decayFactor, std::string MapDescription);
+		/// <param name="ArrayDescription"></param>
+		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int cols, float decayFactor, std::string ArrayDescription);
+		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int rows, int cols, float decayFactor, std::string ArrayDescription);
+		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int depth, int rows, int cols, float decayFactor, std::string ArrayDescription);
 
 		~ConceptArray();
 
@@ -201,5 +201,5 @@ namespace SRS22 {
 		virtual std::string Debug();
 	};
 
-	typedef std::shared_ptr<ConceptArray> ConceptMapH;
+	typedef std::shared_ptr<ConceptArray> ConceptArrayH;
 }

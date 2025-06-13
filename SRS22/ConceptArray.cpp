@@ -3,14 +3,14 @@
 #include "Cortex.h"
 #include <string>
 #include <format>
-#include "MapUIDs.h"
+#include "ArrayUIDs.h"
 #include <opencv2/core/mat.hpp>
 #include <opencv2/core/hal/interface.h>
 
 namespace SRS22 {
-	ConceptArray::ConceptArray(Brain* br, MapUidE UID, std::string MapName, bool isInput, int cols, float decayFactor, std::string MapDescription) :
+	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int cols, float decayFactor, std::string ArrayDescription) :
 		myBrain(br),
-		MapName(MapName),
+		ArrayName(ArrayName),
 		_isInput(isInput),
 		UID(UID),
 		cols(cols),
@@ -18,7 +18,7 @@ namespace SRS22 {
 		depth(1),
 		totalSize(cols),
 		decayFactor(decayFactor),
-		MapDescription(MapDescription),
+		ArrayDescription(ArrayDescription),
 		rowsXcols(rows* cols) {
 		dims[0] = depth;
 		dims[1] = rows;
@@ -26,9 +26,9 @@ namespace SRS22 {
 
 	}
 
-	ConceptArray::ConceptArray(Brain* br, MapUidE UID, std::string MapName, bool isInput, int rows, int cols, float decayFactor, std::string MapDescription) :
+	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int rows, int cols, float decayFactor, std::string ArrayDescription) :
 		myBrain(br),
-		MapName(MapName),
+		ArrayName(ArrayName),
 		_isInput(isInput),
 		UID(UID),
 		cols(cols),
@@ -36,16 +36,16 @@ namespace SRS22 {
 		depth(1),
 		totalSize(cols* rows),
 		decayFactor(decayFactor),
-		MapDescription(MapDescription),
+		ArrayDescription(ArrayDescription),
 		rowsXcols(rows* cols) {
 		dims[0] = depth;
 		dims[1] = rows;
 		dims[2] = cols;
 	}
 
-	ConceptArray::ConceptArray(Brain* br, MapUidE UID, std::string MapName, bool isInput, int depth, int rows, int cols, float decayFactor, std::string MapDescription) :
+	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int depth, int rows, int cols, float decayFactor, std::string ArrayDescription) :
 		myBrain(br),
-		MapName(MapName),
+		ArrayName(ArrayName),
 		_isInput(isInput),
 		UID(UID),
 		cols(cols),
@@ -53,7 +53,7 @@ namespace SRS22 {
 		depth(depth),
 		totalSize(cols* rows* depth),
 		decayFactor(decayFactor),
-		MapDescription(MapDescription),
+		ArrayDescription(ArrayDescription),
 		rowsXcols(rows* cols) {
 		dims[0] = depth;
 		dims[1] = rows;

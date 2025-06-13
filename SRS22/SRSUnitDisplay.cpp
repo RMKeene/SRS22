@@ -38,7 +38,7 @@ namespace SRS22 {
 			SolidBrush br(Color::LightBlue);
 			FontFamily ff(L"Arial");
 			Font font(&ff, 12);
-			std::wstring  wst = StringConversionHelpers::str_2_wstr(u->MapName);
+			std::wstring  wst = StringConversionHelpers::str_2_wstr(u->ArrayName);
 			Status st = g.DrawString(wst.c_str(), -1, &font, PointF(0, 0), &br);
 			assert(st == Ok);
 		}

@@ -94,7 +94,7 @@ namespace SRS22 {
 
 		/// <summary>
 		/// The current fovea pixel values in the Camera.
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width (15 x 15)
+		/// Size is 3 (being RGB), CameraFoveaArray_Height, CameraFoveaArray_Width (15 x 15)
 		/// centered in current FoveaRect.
 		/// </summary>
 		cv::Mat fovea;
@@ -102,12 +102,12 @@ namespace SRS22 {
 		cv::Mat foveaBlurred;
 		/// <summary>
 		/// The Canny Edge Detection for the fovea. (or Sobel maybe)
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width  (15 x 15)
+		/// Size is 3 (being RGB), CameraFoveaArray_Height, CameraFoveaArray_Width  (15 x 15)
 		/// </summary>
 		cv::Mat foveaEdges;
 		/// <summary>
 		/// The convolution on rotations of edges in the fovea. There are 5 angles detected, 0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// Size is 3 (being RGB), CameraFoveaArray_Height, CameraFoveaArray_Width
 		/// </summary>
 		cv::Mat foveaAngles000;
 		cv::Mat foveaAngles225;
@@ -120,22 +120,22 @@ namespace SRS22 {
 
 		/// <summary>
 		/// Last frame to current frame difference in the fovea.
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// Size is 3 (being RGB), CameraFoveaArray_Height, CameraFoveaArray_Width
 		/// </summary>
 		cv::Mat foveaAbsDifference;
 		/// <summary>
 		/// How well centered circular features are on the fovea.
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// Size is 3 (being RGB), CameraFoveaArray_Height, CameraFoveaArray_Width
 		/// </summary>
 		cv::Mat foveaCentricity;
 		/// <summary>
 		/// How noisy the fovea is. Sum foveaEdges per pixel.
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// Size is 3 (being RGB), CameraFoveaArray_Height, CameraFoveaArray_Width
 		/// </summary>
 		cv::Mat foveaRoughness;
 		/// <summary>
 		/// A histogram of fovea RGB colors.
-		/// Size is 3 (being RGB), CameraFoveaMap_Height, CameraFoveaMap_Width
+		/// Size is 3 (being RGB), CameraFoveaArray_Height, CameraFoveaArray_Width
 		/// </summary>
 		cv::Mat foveaColorHistogram;
 

@@ -59,7 +59,7 @@ namespace SRS22 {
 			// Inner central detail area.
 			const SRS22::Point ctr = io->GetPt();
 			auto brain = GlobalWorld::GlobalWorldInstance.GetBrain(0);
-			auto cameraFoveaMapOptional = brain->FindMapByName("CameraFoveaMap");
+			auto cameraFoveaMapOptional = brain->FindMapByName("CameraFoveaArray");
 			auto cameraFoveaMap = cameraFoveaMapOptional.value();
 			wxRect cfr(ctr.X - cameraFoveaMap->Width() / 2, ctr.Y - cameraFoveaMap->Height() / 2,
 				cameraFoveaMap->Width(), cameraFoveaMap->Height());

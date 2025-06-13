@@ -293,7 +293,7 @@
     <ClInclude Include="HardwareIO\WhiteboardOutIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\RandomMap.h">
+    <ClInclude Include="Maps\RandomArray.h">
       <Filter>Source\Maps</Filter>
     </ClInclude>
     <ClInclude Include="Win32Helpers.h">
@@ -302,40 +302,40 @@
     <ClInclude Include="HardwareIO\AttnSpotBaseIO.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Text\TextCurrentCharMap.h">
+    <ClInclude Include="Maps\Text\TextCurrentCharArray.h">
       <Filter>Source\Maps\Text</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Camera\CameraAttnSpotMap.h">
+    <ClInclude Include="Maps\Camera\CameraAttnSpotArray.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Camera\CameraDifferenceMap.h">
+    <ClInclude Include="Maps\Camera\CameraDifferenceArray.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Camera\CameraMotionXYMap.h">
+    <ClInclude Include="Maps\Camera\CameraMotionXYArray.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Screen\ScreenAttnSpotMap.h">
+    <ClInclude Include="Maps\Screen\ScreenAttnSpotArray.h">
       <Filter>Source\Maps\Screen</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Screen\ScreenDifferenceMap.h">
+    <ClInclude Include="Maps\Screen\ScreenDifferenceArray.h">
       <Filter>Source\Maps\Screen</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Screen\ScreenFoveaMap.h">
+    <ClInclude Include="Maps\Screen\ScreenFoveaArray.h">
       <Filter>Source\Maps\Screen</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Screen\ScreenMotionXYMap.h">
+    <ClInclude Include="Maps\Screen\ScreenMotionXYArray.h">
       <Filter>Source\Maps\Screen</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Text\TextOutMap.h">
+    <ClInclude Include="Maps\Text\TextOutArray.h">
       <Filter>Source\Maps\Text</Filter>
     </ClInclude>
     <ClInclude Include="HardwareIO\WhiteboardPt.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Draw\DrawOutMap.h">
+    <ClInclude Include="Maps\Draw\DrawOutArray.h">
       <Filter>Source\Maps\Draw</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Draw\DrawInMap.h">
+    <ClInclude Include="Maps\Draw\DrawInArray.h">
       <Filter>Source\Maps\Draw</Filter>
     </ClInclude>
     <ClInclude Include="HardwareIO\PhonemesIO.h">
@@ -344,10 +344,10 @@
     <ClInclude Include="HardwareIO\PhonemesE.h">
       <Filter>Source\HardwareIO</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Voice\PhonemeMap.h">
+    <ClInclude Include="Maps\Voice\PhonemeArray.h">
       <Filter>Source\Maps\Voice</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Hearing\HearingMap.h">
+    <ClInclude Include="Maps\Hearing\HearingArray.h">
       <Filter>Source\Maps\Hearing</Filter>
     </ClInclude>
     <ClInclude Include="HardwareRaw\VideoHelper.h">
@@ -368,7 +368,7 @@
     <ClInclude Include="fit_fft.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="MapUIDs.h">
+    <ClInclude Include="ArrayUIDs.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Cortex.h">
@@ -380,16 +380,16 @@
     <ClInclude Include="SRS22LogTaker.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Camera\CameraFoveaAngleMaps.h">
+    <ClInclude Include="Maps\Camera\CameraFoveaAngleArray.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Camera\CameraFoveaMap.h">
+    <ClInclude Include="Maps\Camera\CameraFoveaArray.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Camera\CameraFoveaEdgesMap.h">
+    <ClInclude Include="Maps\Camera\CameraFoveaEdgesArray.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Maps\Camera\CameraFoveaAbsDiffMap.h">
+    <ClInclude Include="Maps\Camera\CameraFoveaAbsDiffArray.h">
       <Filter>Source\Maps\Camera</Filter>
     </ClInclude>
     <ClInclude Include="SRS22Constants.h">
@@ -517,7 +517,7 @@
     <ClCompile Include="OpenCVHelpers.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\RandomMap.cpp">
+    <ClCompile Include="Maps\RandomArray.cpp">
       <Filter>Source\Maps</Filter>
     </ClCompile>
     <ClCompile Include="Win32Helpers.cpp">
@@ -529,46 +529,46 @@
     <ClCompile Include="HardwareIO\AttnSpotBaseIO.cpp">
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Camera\CameraAttnSpotMap.cpp">
+    <ClCompile Include="Maps\Camera\CameraAttnSpotArray.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Camera\CameraDifferenceMap.cpp">
+    <ClCompile Include="Maps\Camera\CameraDifferenceArray.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Camera\CameraFoveaMap.cpp">
+    <ClCompile Include="Maps\Camera\CameraFoveaArray.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Camera\CameraMotionXYMap.cpp">
+    <ClCompile Include="Maps\Camera\CameraMotionXYArray.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Screen\ScreenAttnSpotMap.cpp">
+    <ClCompile Include="Maps\Screen\ScreenAttnSpotArray.cpp">
       <Filter>Source\Maps\Screen</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Screen\ScreenDifferenceMap.cpp">
+    <ClCompile Include="Maps\Screen\ScreenDifferenceArray.cpp">
       <Filter>Source\Maps\Screen</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Screen\ScreenFoveaMap.cpp">
+    <ClCompile Include="Maps\Screen\ScreenFoveaArray.cpp">
       <Filter>Source\Maps\Screen</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Screen\ScreenMotionXYMap.cpp">
+    <ClCompile Include="Maps\Screen\ScreenMotionXYArray.cpp">
       <Filter>Source\Maps\Screen</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Text\TextCurrentCharMap.cpp">
+    <ClCompile Include="Maps\Text\TextCurrentCharArray.cpp">
       <Filter>Source\Maps\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Text\TextOutMap.cpp">
+    <ClCompile Include="Maps\Text\TextOutArray.cpp">
       <Filter>Source\Maps\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Draw\DrawOutMap.cpp">
+    <ClCompile Include="Maps\Draw\DrawOutArray.cpp">
       <Filter>Source\Maps\Draw</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Draw\DrawInMap.cpp">
+    <ClCompile Include="Maps\Draw\DrawInArray.cpp">
       <Filter>Source\Maps\Draw</Filter>
     </ClCompile>
     <ClCompile Include="HardwareIO\PhonemesIO.cpp">
       <Filter>Source\HardwareIO</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Voice\PhonemeMap.cpp">
+    <ClCompile Include="Maps\Voice\PhonemeArray.cpp">
       <Filter>Source\Maps\Voice</Filter>
     </ClCompile>
     <ClCompile Include="HardwareRaw\VideoHelper.cpp">
@@ -580,7 +580,7 @@
     <ClCompile Include="HardwareRaw\WaveOutputHelper.cpp">
       <Filter>Source\HardwareRaw</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Hearing\HearingMap.cpp">
+    <ClCompile Include="Maps\Hearing\HearingArray.cpp">
       <Filter>Source\Maps\Hearing</Filter>
     </ClCompile>
     <ClCompile Include="SRSMath.cpp">
@@ -596,13 +596,13 @@
     <ClCompile Include="SRS22LogTaker.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Camera\CameraFoveaAngleMaps.cpp">
+    <ClCompile Include="Maps\Camera\CameraFoveaAngleArray.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Camera\CameraFoveaEdgesMap.cpp">
+    <ClCompile Include="Maps\Camera\CameraFoveaEdgesArray.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Maps\Camera\CameraFoveaAbsDiffMap.cpp">
+    <ClCompile Include="Maps\Camera\CameraFoveaAbsDiffArray.cpp">
       <Filter>Source\Maps\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Neurons.cpp">

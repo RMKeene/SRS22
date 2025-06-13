@@ -5,7 +5,7 @@
 
 /// <summary>
 /// Designates an attention spot within some view, much like steering the camera with motors.
-/// Lets the CameraFoveaMap and ScreenFoveaMap know where we are looking.
+/// Lets the CameraFoveaArray and ScreenFoveaArray know where we are looking.
 /// We use "view" here to mean whatever view we are looking at.
 /// It could be a camera, or a screen, or a web browser view etc.
 ///

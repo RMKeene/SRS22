@@ -6,13 +6,13 @@ namespace SRS22 {
 
 	void SRS22DebugBreak(int i, float f)
 	{
-		std::string conceptMap = Brain::FindMapByCortexIdx(i);
+		std::string conceptArray = Brain::FindArrayByCortexIdx(i);
 		__debugbreak();
 	}
 
 	void SRS22DebugBreak(int i)
 	{
-		std::string conceptMap = Brain::FindMapByCortexIdx(i);
+		std::string conceptArray = Brain::FindArrayByCortexIdx(i);
 		__debugbreak();
 	}
 

@@ -38,8 +38,8 @@ namespace SRS22 {
 		/// <summary>
 		/// Never depend on iteration order of maps. They are multi-thread processed and in a hash table.
 		/// </summary>
-		map<MapUidE, std::shared_ptr<ConceptArray>> conceptMaps;
-		map<std::string, std::shared_ptr<ConceptArray>> conceptMapsByName;
+		map<ArrayUidE, std::shared_ptr<ConceptArray>> conceptArrays;
+		map<std::string, std::shared_ptr<ConceptArray>> conceptArraysByName;
 
 		long long tickCount = 0;
 		long long tickCountRecent = 0;
@@ -116,10 +116,10 @@ namespace SRS22 {
 		pair<bool, string> Load(string fileName) const;
 		bool Store(string fileName) const;
 
-		void PostCreateAllConceptMaps();
+		void PostCreateAllConceptArrays();
 		void PostCreateAllCortexChunks();
 
-		optional<shared_ptr<ConceptArray>> FindMap(MapUidE n);
+		optional<shared_ptr<ConceptArray>> FindMap(ArrayUidE n);
 		optional<shared_ptr<ConceptArray>> FindMapByName(string n);
 
 		/// <summary>
@@ -142,7 +142,7 @@ namespace SRS22 {
 		/// </summary>
 		/// <param name="idx"></param>
 		/// <returns></returns>
-		static string FindMapByCortexIdx(int idx);
+		static string FindArrayByCortexIdx(int idx);
 
 
 	private:
@@ -150,7 +150,7 @@ namespace SRS22 {
 		// This is where multiprocessor parallelism happens.
 		void SequenceCoreBrainTick();
 		void TickGoodnessLevels();
-		void TickConceptMaps();
+		void TickConceptArrays();
 		void ReSetupMatrixMirrors();
 		void PreTickHardwareAndIO();
 		void PostTickHardwareAndUI();
@@ -159,7 +159,7 @@ namespace SRS22 {
 		/// Order of adding maps does not matter. Never depend on iteration order.
 		/// </summary>
 		/// <param name="m"></param>
-		void AddMap(std::shared_ptr<ConceptArray> m);
+		void AddArray(std::shared_ptr<ConceptArray> m);
 	};
 
 	typedef std::shared_ptr<Brain> BrainH;

@@ -5,7 +5,7 @@
 
 /// <summary>
 /// Designates the screen attention spot, much like steering the eye around the screen.
-/// Lets the ScreenFoveaMap know where we are looking. Currently 128x128
+/// Lets the ScreenFoveaArray know where we are looking. Currently 128x128
 /// </summary>
 namespace SRS22 {
 	class ScreenAttnSpotIO : public AttnSpotBaseIO

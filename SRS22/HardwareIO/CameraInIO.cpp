@@ -1,7 +1,7 @@
 #include "CameraInIO.h"
 #include "../OpenCVHelpers.h"
 #include "CameraAttnSpotIO.h"
-#include "../Maps/Camera/CameraFoveaMap.h"
+#include "../Maps/Camera/CameraFoveaArray.h"
 #include "../OpenCVHelpers.h"
 
 namespace SRS22 {
@@ -59,7 +59,7 @@ namespace SRS22 {
 		currentAbsDifferenceLowRes = Mat(3, sizesLowRes, CV_32FC1);
 
 		// 3, 15, 15
-		int sizesFovea[3] = { 3, CameraFoveaMap_Height, CameraFoveaMap_Height };
+		int sizesFovea[3] = { 3, CameraFoveaArray_Height, CameraFoveaArray_Height };
 		fovea = Mat(3, sizesFovea, CV_32FC1);
 		foveaBlurred = Mat(3, sizesFovea, CV_32FC1);
 		foveaAbsDifference = Mat(3, sizesFovea, CV_32FC1);
@@ -97,7 +97,7 @@ namespace SRS22 {
 
 		Rect r(foveaIO->GetRect());
 		currentFoveaRect = r;
-		Rect centeredSmallR = Rect(r.CenterX() - CameraFoveaMap_Height / 2, r.CenterY() - CameraFoveaMap_Height / 2, CameraFoveaMap_Height, CameraFoveaMap_Height);
+		Rect centeredSmallR = Rect(r.CenterX() - CameraFoveaArray_Height / 2, r.CenterY() - CameraFoveaArray_Height / 2, CameraFoveaArray_Height, CameraFoveaArray_Height);
 		GetSubRect(fovea, centeredSmallR);
 		fovea = fovea.clone();
 		std::string info = OpenCVHelpers::CVMatrixInfo(fovea);
