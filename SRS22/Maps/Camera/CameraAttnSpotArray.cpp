@@ -8,9 +8,9 @@
 
 namespace SRS22 {
 	CameraAttnSpotArray::CameraAttnSpotArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAATTNSPOT_MAP, "CameraAttnSpotArray", false,
+		ConceptArray(br, ArrayUidE::CAMERAATTNSPOT_MAP, "CameraAttnSpotArray", NeuronType::IS_OUTPUT,
 			CameraAttnSpotArray_Width, 0.0f,
-			"Output where the camera attantion spot is located.") {
+			"Output where the camera attention spot is located.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;
 	}
 

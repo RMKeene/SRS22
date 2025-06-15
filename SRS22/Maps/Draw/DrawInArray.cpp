@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	DrawInArray::DrawInArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::DRAWIN_MAP, "DrawInArray", true,
+		ConceptArray(br, ArrayUidE::DRAWIN_MAP, "DrawInArray", NeuronType::IS_INPUT,
 			DrawInArray_Width, 0.5f,
 			"Whiteboard pen in from screen. The SRS \"feels\" when you draw.") {
 	}

@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	CameraDifferenceArray::CameraDifferenceArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERADIFFERENCE_MAP, "CameraDifferenceArray", true,
+		ConceptArray(br, ArrayUidE::CAMERADIFFERENCE_MAP, "CameraDifferenceArray", NeuronType::IS_INPUT,
 			3, CameraInIO::AbsDiffHeight, CameraInIO::AbsDiffWidth, 0.0f,
 			"A low resolution version of the camera view processed for frame to frame motion differences.") {
 	}

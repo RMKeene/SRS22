@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	DrawOutArray::DrawOutArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::DRAWOUT_MAP, "DrawOutArray", false,
+		ConceptArray(br, ArrayUidE::DRAWOUT_MAP, "DrawOutArray", NeuronType::IS_OUTPUT,
 			DrawOutArray_Width, 0.0f,
 			"Whiteboard pen out to screen.") {
 	}

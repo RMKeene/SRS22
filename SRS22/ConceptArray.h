@@ -30,6 +30,8 @@ namespace SRS22 {
 		/// </summary>
 		int dims[3];
 
+		NeuronType neuronType = NeuronType::REGULAR;
+
 		/// <summary>
 		/// The cortex segment allocated to this array extends from cortexStartIndex to cortexStartIndex + totalSize.
 		/// </summary>
@@ -62,8 +64,6 @@ namespace SRS22 {
 		/// </summary>
 		float decayFactor = 1.0f;
 
-		bool _isInput = true;
-
 	public:
 
 		std::shared_ptr<GoodnessFunction> goodnessFunc;
@@ -81,18 +81,17 @@ namespace SRS22 {
 		/// <param name="br">The brain that owns this array. Future feature: Allow  a world with multiple brains.</param>
 		/// <param name="UID">Must be globally unique. See ArrayUIDs.h</param>
 		/// <param name="ArrayName"></param>
-		/// <param name="computeNextStateEnabled">Default is true. If the array is in I/O input array then this is false. See NeuronState.PERMANENT_DISABLED</param>
+		/// <param name="computeNextStateEnabled">Default is true. If the array is in I/O input array then this is false. 
+		/// See NeuronType.PERMANENT_DISABLED</param>
 		/// <param name="cols"></param>
 		/// <param name="decayFactor">0.0 means instant decay to zero before every tick. 1.0 is infinite sustain.
 		/// Done with multiplicative decay. In LatchNewState does <code>nextM = M * decayFactor; nextM = 0.0f;</code></param>
 		/// <param name="ArrayDescription"></param>
-		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int cols, float decayFactor, std::string ArrayDescription);
-		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int rows, int cols, float decayFactor, std::string ArrayDescription);
-		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int depth, int rows, int cols, float decayFactor, std::string ArrayDescription);
+		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, NeuronType neuronType, int cols, float decayFactor, std::string ArrayDescription);
+		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, NeuronType neuronType, int rows, int cols, float decayFactor, std::string ArrayDescription);
+		ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, NeuronType neuronType, int depth, int rows, int cols, float decayFactor, std::string ArrayDescription);
 
 		~ConceptArray();
-
-		bool isInput() { return _isInput; }
 
 		/// <summary>
 		/// Copy current charge to next charge.

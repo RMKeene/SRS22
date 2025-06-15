@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	ScreenAttnSpotArray::ScreenAttnSpotArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotArray", false,
+		ConceptArray(br, ArrayUidE::SCREENATTNSPOT_MAP, "ScreenAttnSpotArray", NeuronType::IS_OUTPUT,
 			ScreenAttnSpotArray_Width, 0.0f,
 			"Output where the screen attention spot is located.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;

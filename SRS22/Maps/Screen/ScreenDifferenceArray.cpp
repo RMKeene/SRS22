@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	ScreenDifferenceArray::ScreenDifferenceArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::SCREENDIFFERENCE_MAP, "ScreenDifferenceArray", true,
+		ConceptArray(br, ArrayUidE::SCREENDIFFERENCE_MAP, "ScreenDifferenceArray", NeuronType::IS_INPUT,
 			3, ScreenInputIO::AbsDiffHeight, ScreenInputIO::AbsDiffWidth, 0.0f,
 			"A low resolution version of the screen view processed for frame to frame motion differences.") {
 	}

@@ -43,10 +43,14 @@ namespace SRS22 {
 	/// If the neuron is being set by hardware input then this is IS_INPUT and the neuron skips updating state and charge decay and learning etc.
 	/// It is a simple state of input from a input ConceptArray.
 	/// </summary>
-	enum class NeuronState : uint8_t {
-		ENABLED = 0,
-		DISABLED = 1, // Not used
-		IS_INPUT = 2
+	enum class NeuronType : uint8_t {
+		// A Cortex neuron that is neither input nor output. The Regular in "Subsumptive Regular System".
+		REGULAR = 0,
+		// A Cortex neuron that is an input from hardware or software. It does not learn, nor decay charge.
+		// Calculated ArrayTransforms such as FoveaAngle are considered inputs as they are hard coded derrivation from raw inputs.
+		IS_INPUT = 2,
+		// A Cortex neuron that is an output to hardware or software. It does not fatigue.
+		IS_OUTPUT = 3,
 	};
 }
 

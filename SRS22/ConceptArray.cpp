@@ -8,10 +8,10 @@
 #include <opencv2/core/hal/interface.h>
 
 namespace SRS22 {
-	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int cols, float decayFactor, std::string ArrayDescription) :
+	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, NeuronType neuronType, int cols, float decayFactor, std::string ArrayDescription) :
 		myBrain(br),
 		ArrayName(ArrayName),
-		_isInput(isInput),
+		neuronType(neuronType),
 		UID(UID),
 		cols(cols),
 		rows(1),
@@ -26,10 +26,10 @@ namespace SRS22 {
 
 	}
 
-	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int rows, int cols, float decayFactor, std::string ArrayDescription) :
+	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, NeuronType neuronType, int rows, int cols, float decayFactor, std::string ArrayDescription) :
 		myBrain(br),
 		ArrayName(ArrayName),
-		_isInput(isInput),
+		neuronType(neuronType),
 		UID(UID),
 		cols(cols),
 		rows(rows),
@@ -43,10 +43,10 @@ namespace SRS22 {
 		dims[2] = cols;
 	}
 
-	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, bool isInput, int depth, int rows, int cols, float decayFactor, std::string ArrayDescription) :
+	ConceptArray::ConceptArray(Brain* br, ArrayUidE UID, std::string ArrayName, NeuronType neuronType, int depth, int rows, int cols, float decayFactor, std::string ArrayDescription) :
 		myBrain(br),
 		ArrayName(ArrayName),
-		_isInput(isInput),
+		neuronType(neuronType),
 		UID(UID),
 		cols(cols),
 		rows(rows),
@@ -70,11 +70,8 @@ namespace SRS22 {
 
 	void ConceptArray::PostCreate(Brain& b) {
 		Cortex& c = *b.cortex;
-		// all neurons were already set to ranfom ENABLED or DISABLED.
-		if (_isInput) {
-			for (int i = cortexStartIndex; i < cortexStartIndex + totalSize; i++) {
-				c.neurons.state[i] = NeuronState::IS_INPUT;
-			}
+		for (int i = cortexStartIndex; i < cortexStartIndex + totalSize; i++) {
+			c.neurons.state[i] = neuronType;
 		}
 	}
 

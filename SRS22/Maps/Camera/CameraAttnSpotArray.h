@@ -12,14 +12,6 @@ namespace SRS22 {
 	class CameraAttnSpotArray : public ConceptArray
 	{
 	public:
-		/// <summary>
-		/// implemented as
-		/// CameraAttnSpotArray("CameraAttnSpotArray",
-		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
-		/// 	cv::Vec3f(0.0, 0.0, 0.0),
-		/// 	CameraAttnSpotArray_Width,
-		/// 	"Raw pixel map of center of camera fovea in color.")
-		/// </summary>
 		CameraAttnSpotArray(Brain* br);
 		~CameraAttnSpotArray();
 

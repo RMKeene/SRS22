@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	HearingArray::HearingArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::HEARING_MAP, "HearingArray", true,
+		ConceptArray(br, ArrayUidE::HEARING_MAP, "HearingArray", NeuronType::IS_INPUT,
 			HearingArray_Width, 0.98f,
 			"The \"Hearing\" input from the audio system.") {
 		displayMode = SRSUnitDisplayModes::GRAY;

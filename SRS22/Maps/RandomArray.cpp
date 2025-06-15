@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	RandomArray::RandomArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::RANDOM_MAP, "RandomArray", true,
+		ConceptArray(br, ArrayUidE::RANDOM_MAP, "RandomArray", NeuronType::IS_INPUT,
 			RandomArray_Width, RandomArray_Height, 1.0f,
 			"A map that is always randomized every tick. A source of noise if needed.") {
 	}

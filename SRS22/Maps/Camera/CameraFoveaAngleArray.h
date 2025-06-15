@@ -6,7 +6,7 @@
 
 /// <summary>
 /// Concept Maps of the angle of the camera central fovea. E.g. edges slopes.
-/// Zero degrees is to the right (+X) on the camera. 90 degrees is to the botton (+Y) on the camera.
+/// Zero degrees is to the right (+X) on the camera. 90 degrees is to the bottom (+Y) on the camera.
 /// 45 degrees is to the bottom right (+X, +Y) on the camera.
 /// Reverse angles are the same, so 0 is the same as 180, 45 is the same as 225, etc.
 /// We use 22.5 degree increments. So the ranges is from 0 to 157.5 degrees.

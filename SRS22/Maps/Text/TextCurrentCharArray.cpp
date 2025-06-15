@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	TextCurrentCharArray::TextCurrentCharArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharArray", true,
+		ConceptArray(br, ArrayUidE::TEXTCCURRENTCHAR_MAP, "TextCurrentCharArray", NeuronType::IS_INPUT,
 			TextCurrentCharArray_Width,
 			TextCurrentCharArray_Height, 0.98f,
 			"Last entered character ASCII Code.") {

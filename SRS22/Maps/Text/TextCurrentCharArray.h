@@ -12,15 +12,7 @@ namespace SRS22 {
 	class TextCurrentCharArray : public ConceptArray
 	{
 	public:
-		/// <summary>
-		/// implemented as
-		/// ConceptArray("TextCurrentCharArray",
-		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
-		/// 	cv::Vec3f(0.0, 0.0, 0.0),
-		/// 	TextCurrentCharArray_Width,
-		///     TextCurrentCharArray_Height,
-		/// 	"Last entered character ASCII Code")
-		/// </summary>
+
 		TextCurrentCharArray(Brain* br);
 		~TextCurrentCharArray();
 

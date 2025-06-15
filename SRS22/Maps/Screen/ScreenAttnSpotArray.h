@@ -11,14 +11,6 @@ namespace SRS22 {
 	class ScreenAttnSpotArray : public ConceptArray
 	{
 	public:
-		/// <summary>
-		/// implemented as
-		/// ConceptArray("ScreenAttnSpotArray",
-		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
-		/// 	cv::Vec3f(0.0, 0.0, 0.0),
-		/// 	ScreenAttnSpotArray_Width,
-		/// 	"Raw pixel map of center of screen fovea in color.")
-		/// </summary>
 		ScreenAttnSpotArray(Brain* br);
 		~ScreenAttnSpotArray();
 

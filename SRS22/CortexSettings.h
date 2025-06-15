@@ -267,7 +267,7 @@ namespace SRS22 {
 		SRSettingF rerouteThreshold = SRSettingF(0.001f, 0, "rerouteThreshold",
 			"Reroute Threshold",
 			"RertThr",
-			"If confidence falls below this then a reroute might happen.");
+			"If confidence, abs weight, ageLog combined falls below this then a reroute might happen.");
 
 		/// <summary>
 		/// Probability of a reroute on any given tick if confidence is below rerouteThreshold.

@@ -13,14 +13,6 @@ namespace SRS22 {
 	class PhonemeArray : public ConceptArray
 	{
 	public:
-		/// <summary>
-		/// implemented as
-		/// ConceptArray("PhonemeArray",
-		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
-		/// 	cv::Vec3f(0.0, 0.0, 0.0),
-		/// 	PhonemeArray_Width,
-		/// 	"The \"Voice\" out the audio system.")
-		/// </summary>
 		PhonemeArray(Brain* br);
 		~PhonemeArray();
 

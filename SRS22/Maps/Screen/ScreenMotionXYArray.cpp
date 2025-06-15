@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	ScreenMotionXYArray::ScreenMotionXYArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::SCREENMOTION_MAP, "ScreenMotionXYArray", true,
+		ConceptArray(br, ArrayUidE::SCREENMOTION_MAP, "ScreenMotionXYArray", NeuronType::IS_INPUT,
 			ScreenMotionXYArray_Width, 0.0f,
 			"The XY location of the maximum frame to frame difference.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;

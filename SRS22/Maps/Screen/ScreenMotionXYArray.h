@@ -12,14 +12,6 @@ namespace SRS22 {
 	class ScreenMotionXYArray : public ConceptArray
 	{
 	public:
-		/// <summary>
-		/// Implemented as
-		/// ConceptArray("ScreenMotionXYArray",
-		/// ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
-		/// 	cv::Vec3f(0.0, 0.0, 0.0),
-		/// 	ScreenMotionXYArray_Width,
-		/// 	"The XY location of the maximum frame to frame difference.")
-		/// </summary>
 		ScreenMotionXYArray(Brain* br);
 		~ScreenMotionXYArray();
 

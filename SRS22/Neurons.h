@@ -31,7 +31,8 @@ namespace SRS22 {
 		static int GetNeuronChargesNextIdx() { return neuronChargesNextIdx; }
 
 		/// <summary>
-		/// The charge of this neuron. Represent time averaged pulses. (See "The Feathers Problem")
+		/// The charge of this neuron, range 0.0f to 0.0f. 
+		/// Represent time averaged pulses. (See "The Feathers Problem")
 		/// We want to keep a past history of the charge so we can learn relative to what was going to be the future charge.
 		/// neuronChargesCurrentIdx is the current circular index in the history.
 		/// </summary>
@@ -44,17 +45,17 @@ namespace SRS22 {
 
 		/// <summary>
 		/// The limit on charge due to fatigue. Can be greater than 1.0 so there is reserve metabolism, but still
-		/// gets clamped to 1.0. See settings.maxEnergy
+		/// gets clamped to 1.0 for applying as a charge factor. See settings.maxEnergy etc.
 		/// </summary>
 		float energyCeiling[TOTAL_NEURONS];
 
 		/// <summary>
-		/// Either Enabled or Input (receives no charge from Links)
+		/// Either Regular or Input or Output
 		/// </summary>
-		NeuronState state[TOTAL_NEURONS];
+		NeuronType state[TOTAL_NEURONS];
 
 		/// <summary>
-		/// The other neurons used to predict this neurons future state.
+		/// Links to other neurons used to predict this neuron's next state.
 		/// </summary>
 		NeuronLink link[TOTAL_NEURONS][NEURON_UPSTREAM_LINKS];
 

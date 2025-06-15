@@ -13,15 +13,6 @@ namespace SRS22 {
 	class TextOutArray : public ConceptArray
 	{
 	public:
-		/// <summary>
-		/// implemented as
-		/// ConceptArray("TextOutArray",
-		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
-		/// 	cv::Vec3f(0.0, 0.0, 0.0),
-		/// 	TextOutArray_Width,
-		///     TextOutArray_Height,
-		/// 	"The \"Keyboard\" out the text window.")
-		/// </summary>
 		TextOutArray(Brain* br);
 		~TextOutArray();
 

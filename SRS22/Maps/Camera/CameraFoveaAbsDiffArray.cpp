@@ -7,7 +7,7 @@
 
 namespace SRS22 {
 	CameraFoveaAbsDiffArray::CameraFoveaAbsDiffArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::FOVEAABSDIFF_MAP, "CameraFoveaAbsDiffArray", true,
+		ConceptArray(br, ArrayUidE::FOVEAABSDIFF_MAP, "CameraFoveaAbsDiffArray", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Height, 0.0f,
 			"The attention spot of the fovea, diff since last frame.") {
 	}

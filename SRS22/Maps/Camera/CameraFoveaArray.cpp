@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	CameraFoveaArray::CameraFoveaArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEA_MAP, "CameraFoveaArray", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEA_MAP, "CameraFoveaArray", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Raw pixel map of center of camera fovea in color.") {
 	}

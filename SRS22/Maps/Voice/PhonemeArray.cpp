@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	PhonemeArray::PhonemeArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::PHONEME_MAP, "PhonemeArray", false,
+		ConceptArray(br, ArrayUidE::PHONEME_MAP, "PhonemeArray", NeuronType::IS_OUTPUT,
 			PhonemeArray_Width, 0.98f,
 			"The \"Voice\" out the audio system.") {
 		displayMode = SRSUnitDisplayModes::TWOVALUECAMERA;

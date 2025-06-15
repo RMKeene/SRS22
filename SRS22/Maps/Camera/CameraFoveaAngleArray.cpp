@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	CameraFoveaAngleArray000::CameraFoveaAngleArray000(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE000_MAP, "CameraFoveaAngleArray000", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE000_MAP, "CameraFoveaAngleArray000", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera fovea center edge angles. 0 deg.") {
 	}
@@ -26,7 +26,7 @@ namespace SRS22 {
 	}
 
 	CameraFoveaAngleArray225::CameraFoveaAngleArray225(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE225_MAP, "CameraFoveaAngleArray225", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE225_MAP, "CameraFoveaAngleArray225", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera fovea center edge angles. 22.5 deg.") {
 	}
@@ -46,7 +46,7 @@ namespace SRS22 {
 	}
 
 	CameraFoveaAngleArray450::CameraFoveaAngleArray450(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE450_MAP, "CameraFoveaAngleArray450", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE450_MAP, "CameraFoveaAngleArray450", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera fovea center edge angles. 45 deg.") {
 	}
@@ -66,7 +66,7 @@ namespace SRS22 {
 	}
 
 	CameraFoveaAngleArray675::CameraFoveaAngleArray675(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE675_MAP, "CameraFoveaAngleArray675", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE675_MAP, "CameraFoveaAngleArray675", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera fovea center edge angles. 67.5 deg.") {
 	}
@@ -86,7 +86,7 @@ namespace SRS22 {
 	}
 
 	CameraFoveaAngleArray900::CameraFoveaAngleArray900(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE900_MAP, "CameraFoveaAngleArray900", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE900_MAP, "CameraFoveaAngleArray900", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera fovea center edge angles. 90 deg.") {
 	}
@@ -106,7 +106,7 @@ namespace SRS22 {
 	}
 
 	CameraFoveaAngleArray1125::CameraFoveaAngleArray1125(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE1125_MAP, "CameraFoveaAngleArray1125", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE1125_MAP, "CameraFoveaAngleArray1125", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera fovea center edge angles. 112.5 deg.") {
 	}
@@ -126,7 +126,7 @@ namespace SRS22 {
 	}
 
 	CameraFoveaAngleArray1350::CameraFoveaAngleArray1350(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE1350_MAP, "CameraFoveaAngleArray1350", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE1350_MAP, "CameraFoveaAngleArray1350", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera fovea center edge angles. 135 deg.") {
 	}
@@ -146,7 +146,7 @@ namespace SRS22 {
 	}
 
 	CameraFoveaAngleArray1575::CameraFoveaAngleArray1575(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE1575_MAP, "CameraFoveaAngleArray1575", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAANGLE1575_MAP, "CameraFoveaAngleArray1575", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera fovea center edge angles. 157.5 deg.") {
 	}

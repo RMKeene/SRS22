@@ -8,7 +8,7 @@
 
 namespace SRS22 {
 	CameraFoveaEdgesArray::CameraFoveaEdgesArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::CAMERAFOVEAEDGE_MAP, "CameraFoveaEdgesArray", true,
+		ConceptArray(br, ArrayUidE::CAMERAFOVEAEDGE_MAP, "CameraFoveaEdgesArray", NeuronType::IS_INPUT,
 			3, CameraFoveaArray_Height, CameraFoveaArray_Width, 0.0f,
 			"Camera edges in fovea.") {
 	}

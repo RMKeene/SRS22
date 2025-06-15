@@ -6,7 +6,7 @@
 
 namespace SRS22 {
 	ScreenFoveaArray::ScreenFoveaArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::SCREENFOVEA_MAP, "ScreenFoveaArray", true,
+		ConceptArray(br, ArrayUidE::SCREENFOVEA_MAP, "ScreenFoveaArray", NeuronType::IS_INPUT,
 			3, ScreenFoveaArray_Height, ScreenFoveaArray_Width, 0.0f,
 			"Raw pixel map of center of screen fovea in color.") {
 	}

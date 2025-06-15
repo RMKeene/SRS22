@@ -11,11 +11,6 @@ namespace SRS22 {
 	class ScreenFoveaArray : public ConceptArray
 	{
 	public:
-		/// <summary>
-		/// implemented as
-		/// ConceptArray("ScreenFoveaArray", ctrip, location, 3, ScreenFoveaArray_Height, ScreenFoveaArray_Width,
-		///     "Raw pixel map of center of screen fovea in color.") {
-		/// </summary>
 		ScreenFoveaArray(Brain* br);
 		~ScreenFoveaArray();
 

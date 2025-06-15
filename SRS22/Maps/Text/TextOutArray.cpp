@@ -5,7 +5,7 @@
 
 namespace SRS22 {
 	TextOutArray::TextOutArray(Brain* br) :
-		ConceptArray(br, ArrayUidE::TEXTOUT_MAP, "TextOutArray", false,
+		ConceptArray(br, ArrayUidE::TEXTOUT_MAP, "TextOutArray", NeuronType::IS_OUTPUT,
 			TextOutArray_Width,
 			TextOutArray_Height, 0.98f,
 			"The \"Keyboard\" out the text window.") {

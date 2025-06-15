@@ -318,10 +318,12 @@ namespace SRS22 {
 		conceptArrays[m->UID] = m;
 		conceptArraysByName[m->ArrayName] = m;
 		std::string ss;
-		if(m->isInput())
+		if(m->neuronType == NeuronType::IS_INPUT)
 			ss = std::format("Added ConceptArray {} at {} to {} INPUT\n", m->ArrayName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
-		else
+		else if (m->neuronType == NeuronType::IS_OUTPUT)
 			ss = std::format("Added ConceptArray {} at {} to {} OUTPUT\n", m->ArrayName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
+		else
+			ss = std::format("Added ConceptArray {} at {} to {} REGULAR\n", m->ArrayName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
 		f.write(ss.c_str(), ss.size());
 		f.close();
 	}

@@ -30,18 +30,13 @@ namespace SRS22 {
 			// Connect all neuron inputs to random other neurons.
 			for (int i = 0; i < TOTAL_NEURONS; i++) {
 				neurons.energyCeiling[i] = fastRandFloat();
-				neurons.state[i] = NeuronState::ENABLED;
+				// neurons.type[i] defaults to NeuronType::Regular, 
+				// ConceptArrays override their neurons for Input/Output.
 				for (int h = 0; h < NEURON_HISTORY; h++) {
-					neurons.charge[h][i] = fastRandFloat() * 0.5f;
+					neurons.charge[h][i] = 0.0f;
 				}
 				for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
 					neurons.link[i]->otherIdx = NEURON_LINK_UNCONNECTED;
-				}
-				for (int k = 0; k < NEURON_UPSTREAM_LINKS; k++) {
-					NeuronLink& L = neurons.link[i][k];
-					L.otherIdx = GetRandomLinearOffsetExcept(i);
-					L.confidence = fastRandFloat() * 0.01f;
-					L.weight = fastRandFloat();
 				}
 			}
 		}
@@ -212,6 +207,12 @@ namespace SRS22 {
 
 		void DoLearningSingleNeuron(const size_t i, CortexThreadStats& threadStats);
 
+		void RerouteLink(SRS22::NeuronLink& L, const int neuronIdx, CortexThreadStats& threadStats);
+
+		bool ShouldReroute(const int neuronIdx, const SRS22::NeuronLink& L, const int ageLog);
+
+		void DoLinkLearning(const float ageLogInverse, SRS22::NeuronLink& L, const int ageLog, const float CDelta, const float learningRateDueToGoodness);
+
 		inline int GetRandomLinearOffset() {
 			return fastRange0Plus() % TOTAL_NEURONS;
 		}
@@ -235,7 +236,8 @@ namespace SRS22 {
 		}
 
 		/// <summary>
-		/// Gets a random index in TOTAL_NEURONS but never returns notThisIdx, nor any values in neurons.link[notThisIdx][NEURON_UPSTREAM_LINKS].
+		/// Gets a random index in TOTAL_NEURONS but never returns notThisIdx, 
+		/// nor any values in neurons.link[notThisIdx][NEURON_UPSTREAM_LINKS].
 		/// Thus, do not connect to self or duplicate upstream links.
 		/// If links is null it gets ignored.
 		/// </summary>

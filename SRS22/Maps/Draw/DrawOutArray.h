@@ -22,14 +22,6 @@ namespace SRS22 {
 	class DrawOutArray : public ConceptArray
 	{
 	public:
-		/// <summary>
-		/// implemented as
-		/// ConceptArray("DrawOutArray",
-		///     ConnectivityTriple(0.10f, 0.75f, 0.15f, 100),
-		/// 	cv::Vec3f(0.0, 0.0, 0.0),
-		/// 	DrawOutArray_Width,
-		/// 	"Whiteboard pen out to screen.")
-		/// </summary>
 		DrawOutArray(Brain* br);
 		~DrawOutArray();
 
