@@ -9,7 +9,7 @@
         "Tag": "chargeDepletionRate",
         "Type": "F",
         "UILabel": "CgDepRt",
-        "Value": 0.9900000095367432
+        "Value": 0.11999999731779099
     },
     {
         "DefaultValue": 0.9988493919372559,
@@ -21,7 +21,7 @@
         "Tag": "confidenceAdjustmentDownRate",
         "Type": "F",
         "UILabel": "ConfAdjDnRt",
-        "Value": 0.9988489747047424
+        "Value": 0.9988493919372559
     },
     {
         "DefaultValue": 1.0099999904632568,
@@ -189,7 +189,7 @@
         "Tag": "linkActivityDecayRate",
         "Type": "F",
         "UILabel": "LnkActvDcyRt",
-        "Value": 0.8912510275840759
+        "Value": 0.8912509083747864
     },
     {
         "DefaultValue": 1.100000023841858,
@@ -301,7 +301,7 @@
     },
     {
         "DefaultValue": 0.0010000000474974513,
-        "Description": "If confidence falls below this then a reroute might happen.",
+        "Description": "If confidence, abs weight, ageLog combined falls below this then a reroute might happen.",
         "Name": "Reroute Threshold",
         "OriginalValue": 0.0010000000474974513,
         "PreviousValue": 0.0010000000474974513,

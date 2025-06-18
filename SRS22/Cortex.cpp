@@ -44,7 +44,8 @@ namespace SRS22 {
 	void Cortex::ComputeNextStateSingleNeuron(const size_t i, CortexThreadStats& threadStats)
 	{
 		if (neurons.state[i] == NeuronType::IS_INPUT) {
-			// Input neurons are not predicted, they are hard set to a value by hardware IO.  
+			// Input neurons are not predicted, they are hard set to a value by hardware IO or 
+			// ConceptTransform hard coded algorithms. 
 			// Their NeuronLinks are not used. So no learning to do.
 			return;
 		}
@@ -70,7 +71,7 @@ namespace SRS22 {
 				throw std::out_of_range(std::format("L.otherIdx out of range: {0}", L.otherIdx));
 #endif
 
-			if (C > 0.001f)
+			if (C > 0.03f)
 				++threadStats.countOfNeuronsFired;
 
 			// Stimulus. Charge of a Neuron can range between 0.0f and 1.0f
@@ -101,7 +102,7 @@ namespace SRS22 {
 
 	void Cortex::LearningPhase(boolean doParallel) {
 
-		float learnFactor = brain.learningRate;
+		const float learnFactor = brain.learningRate;
 		if (doParallel) {
 			Concurrency::combinable<CortexThreadStats> threadStats;
 
@@ -168,7 +169,7 @@ namespace SRS22 {
 		// Newer links learn much faster
 		const float learningRateDueToNewnessOfL = 1.0f + ageLogInverse * settings.learningRateAgeFactor();
 		// Active link learn a little faster.
-		const float learningRateDueToActivityOfL = 1.0f * L.activity * settings.linkActivityLearningFactor();
+		const float learningRateDueToActivityOfL = L.activity * settings.linkActivityLearningFactor();
 		// How fast to forget. 1 is no forgetting, 0.5 is ultra rapid forgetting. Values lik 0.99999 are good.
 		const float forgetFactor = settings.learningRateForgetFactor() * (1.0f - (1.0 / ((double)ageLog + settings.learningRateForgetLogOffset())));
 
@@ -198,8 +199,13 @@ namespace SRS22 {
 			newOtherIdx = GetRandomLinearOffsetExcept(neuronIdx);
 		}
 		L.otherIdx = newOtherIdx;
-		L.confidence = fastRandFloat() * 0.01f; // Reset confidence to a low value.
-		L.weight = fastRandFloat(); // Reset weight to a random value.
+		L.confidence = 0.01f; // Reset confidence to a low value.
+		// Reset weight to a random value, either -1 or 1.
+		if (fastRandFloat() < 0.5f)
+			L.weight = -1.0f; 
+		else 
+			L.weight = 1.0f; 
+
 		L.age = 0; // Reset age.
 		L.activity = 0.5f; // Reset activity.
 	}
@@ -208,8 +214,8 @@ namespace SRS22 {
 		// TODO - Implement progressive growth where we start off with little of the free cortex available
 		// and then grow slowly.
 	
-		// Reroute Probability is small, like 0.01
-		if (fastRandFloat() > settings.rerouteProbability()) {
+		// Reroute Probability is small, like 0.01. Overall goodness is -1 to +1
+		if (fastRandFloat() > settings.rerouteProbability() * brain.overallGoodness) {
 			return false;
 		}
 		
