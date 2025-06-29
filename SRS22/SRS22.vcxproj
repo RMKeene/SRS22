@@ -331,6 +331,7 @@
     <ClInclude Include="HardwareRaw\WaveInConstants.h" />
     <ClInclude Include="HardwareRaw\WaveInputHelper.h" />
     <ClInclude Include="HardwareRaw\WaveOutputHelper.h" />
+    <ClInclude Include="Histogram.h" />
     <ClInclude Include="ini.h" />
     <ClInclude Include="IOMapToCortext.h" />
     <ClInclude Include="Maps\Camera\CameraAttnSpotArray.h" />
@@ -449,6 +450,7 @@
     <ClCompile Include="HardwareRaw\VideoHelper.cpp" />
     <ClCompile Include="HardwareRaw\WaveInputHelper.cpp" />
     <ClCompile Include="HardwareRaw\WaveOutputHelper.cpp" />
+    <ClCompile Include="Histogram.cpp" />
     <ClCompile Include="Maps\Camera\CameraAttnSpotArray.cpp" />
     <ClCompile Include="Maps\Camera\CameraDifferenceArray.cpp" />
     <ClCompile Include="Maps\Camera\CameraFoveaEdgesArray.cpp" />
