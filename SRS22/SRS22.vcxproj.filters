@@ -416,6 +416,12 @@
     <ClInclude Include="Histogram.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="TopStatsFrame.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="HistogramWidget.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonitorFrame.cpp">
@@ -612,6 +618,12 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Histogram.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TopStatsFrame.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HistogramWidget.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

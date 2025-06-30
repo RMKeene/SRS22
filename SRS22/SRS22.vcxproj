@@ -332,6 +332,7 @@
     <ClInclude Include="HardwareRaw\WaveInputHelper.h" />
     <ClInclude Include="HardwareRaw\WaveOutputHelper.h" />
     <ClInclude Include="Histogram.h" />
+    <ClInclude Include="HistogramWidget.h" />
     <ClInclude Include="ini.h" />
     <ClInclude Include="IOMapToCortext.h" />
     <ClInclude Include="Maps\Camera\CameraAttnSpotArray.h" />
@@ -411,6 +412,7 @@
     <ClInclude Include="Tickable.h" />
     <ClInclude Include="TimeHelpers.h" />
     <ClInclude Include="tinyfloat.h" />
+    <ClInclude Include="TopStatsFrame.h" />
     <ClInclude Include="TopTextFrame.h" />
     <ClInclude Include="TopVideoFrame.h" />
     <ClInclude Include="ui\ColorSquare16Black.bmp.h" />
@@ -451,6 +453,7 @@
     <ClCompile Include="HardwareRaw\WaveInputHelper.cpp" />
     <ClCompile Include="HardwareRaw\WaveOutputHelper.cpp" />
     <ClCompile Include="Histogram.cpp" />
+    <ClCompile Include="HistogramWidget.cpp" />
     <ClCompile Include="Maps\Camera\CameraAttnSpotArray.cpp" />
     <ClCompile Include="Maps\Camera\CameraDifferenceArray.cpp" />
     <ClCompile Include="Maps\Camera\CameraFoveaEdgesArray.cpp" />
@@ -493,6 +496,7 @@
     <ClCompile Include="Tickable.cpp" />
     <ClCompile Include="TimeHelpers.cpp" />
     <ClCompile Include="tinyfloat.cpp" />
+    <ClCompile Include="TopStatsFrame.cpp" />
     <ClCompile Include="TopTextFrame.cpp" />
     <ClCompile Include="TopVideoFrame.cpp" />
     <ClCompile Include="WhiteboardFrame.cpp" />

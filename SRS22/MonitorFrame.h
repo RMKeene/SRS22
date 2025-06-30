@@ -5,6 +5,7 @@
 #include "TopVideoFrame.h"
 #include "source/UISettings.h"
 #include "CortexSettings.h" 
+#include "TopStatsFrame.h"
 
 namespace SRS22 {
 	class MonitorFrame :
@@ -94,6 +95,7 @@ namespace SRS22 {
 		TopTextFrame* topTextFrame;
 		WhiteboardFrame* whiteboardFrame;
 		TopVideoFrame* topVideoFrame;
+		TopStatsFrame* topStatsFrame;
 
 		long long lastMapMonitorRefreshTime = 0;
 

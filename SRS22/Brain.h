@@ -14,6 +14,7 @@
 #include "HardwareIO/ScreenAttnSpotIO.h"
 #include "HardwareIO/CameraAttnSpotIO.h"
 #include "HardwareIO/PhonemesIO.h"
+#include "Histogram.h"
 #include "IOMapToCortext.h"
 #include <rpcndr.h>
 #include <map>
@@ -79,6 +80,13 @@ namespace SRS22 {
 		WhiteboardOutIO whiteboardOut;
 
 		Cortex* cortex;
+
+		Histogram neuronChargeHist;
+		Histogram neuronEnergyHist;
+		Histogram linkWeightHist;
+		Histogram linkActivityHist;
+		Histogram linkAgeHist;
+		Histogram linkConfidenceHist;
 
 		Brain();
 		~Brain();

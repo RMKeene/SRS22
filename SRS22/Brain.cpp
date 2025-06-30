@@ -31,7 +31,14 @@ namespace SRS22 {
 
 	boolean Brain::doParallel = true;
 
-	Brain::Brain() {
+	Brain::Brain() : 
+		neuronChargeHist("Neuron Charge", 10, 0.0f, 1.0f),
+		neuronEnergyHist("Neuron Energy", 10, 0.0f, 1.0f),
+		linkWeightHist("Link Weight", 10, -1.0f, 1.0f),
+		linkActivityHist("Link Activity", 10, 0.0f, 1.0f),
+		linkAgeHist("Link Age (log 2)", 10, 0.0f, 1.0f),
+		linkConfidenceHist("Link Confidence", 10, 0.0f, 1.0f)
+	{
 		remove("cortex_log.txt");
 		overallGoodness = 0;
 		overallGoodnessPrevious = 0;

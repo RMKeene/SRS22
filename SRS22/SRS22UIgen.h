@@ -248,4 +248,22 @@ class WhiteboardFrameGen : public wxFrame
 	
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Class StatsFrameGen
+///////////////////////////////////////////////////////////////////////////////
+class StatsFrameGen : public wxFrame 
+{
+	private:
+	
+	protected:
+	
+	public:
+		wxStaticBoxSizer* m_statsDataLayout;
+		
+		StatsFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Statistical Data"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 628,399 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		
+		~StatsFrameGen();
+	
+};
+
 #endif //__SRS22UIGEN_H__

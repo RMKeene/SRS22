@@ -714,3 +714,20 @@ WhiteboardFrameGen::~WhiteboardFrameGen()
 	this->Disconnect( wxID_ANY, wxEVT_TIMER, wxTimerEventHandler( WhiteboardFrameGen::OnTimerTick ) );
 	
 }
+
+StatsFrameGen::StatsFrameGen( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_statsDataLayout = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxT("Statistics") ), wxVERTICAL );
+	
+	
+	this->SetSizer( m_statsDataLayout );
+	this->Layout();
+	
+	this->Centre( wxBOTH );
+}
+
+StatsFrameGen::~StatsFrameGen()
+{
+}
