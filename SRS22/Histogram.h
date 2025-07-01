@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SRS22pch.h"
+
 namespace SRS22
 {
 
@@ -17,15 +19,34 @@ namespace SRS22
 		std::string name; // Optional name for the histogram, can be used for debugging or logging.
 		Histogram(std::string name, int numBins, double minValue, double maxValue);
 		~Histogram();
-		void addValue(double value);
+		void addValueD(double value);
+		void addValue(float value);
 		void clear();
 		int getBinCount() const;
 		double getBinMin(int binIndex) const;
 		double getBinMax(int binIndex) const;
 		int getBinValue(int binIndex) const;
+		int getMaxBinCount() const {
+			std::lock_guard<std::mutex> lock(binsMutex);
+			int maxCount = 0;
+			for (int i = 0; i < numBins; i++) {
+				if (bins[i] > maxCount) {
+					maxCount = bins[i];
+				}
+			}
+			return maxCount;
+		}
+		int getSumOfBins() const {
+			std::lock_guard<std::mutex> lock(binsMutex);
+			int sum = 0;
+			for (int i = 0; i < numBins; i++) {
+				sum += bins[i];
+			}
+			return sum;
+		}
 		void printHistogram() const;
 	private:
-		std::mutex binsMutex;
+		mutable std::mutex binsMutex;
 		int numBins;
 		double minValue;
 		double maxValue;

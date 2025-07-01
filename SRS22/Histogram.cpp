@@ -12,7 +12,17 @@ namespace SRS22 {
 		delete[] bins;
 	}
 
-	void Histogram::addValue(double value) {
+	void Histogram::addValueD(double value) {
+		if (value < minValue || value > maxValue) return;
+		int binIndex = static_cast<int>((value - minValue) / binWidth);
+		if (binIndex >= numBins) binIndex = numBins - 1;
+		if (binIndex >= 0 && binIndex < numBins) {
+			std::lock_guard<std::mutex> lock(binsMutex);
+			bins[binIndex]++;
+		}
+	}
+
+	void Histogram::addValue(float value) {
 		if (value < minValue || value > maxValue) return;
 		int binIndex = static_cast<int>((value - minValue) / binWidth);
 		if (binIndex >= numBins) binIndex = numBins - 1;

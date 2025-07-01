@@ -31,7 +31,7 @@ namespace SRS22 {
 
 	boolean Brain::doParallel = true;
 
-	Brain::Brain() : 
+	Brain::Brain() :
 		neuronChargeHist("Neuron Charge", 10, 0.0f, 1.0f),
 		neuronEnergyHist("Neuron Energy", 10, 0.0f, 1.0f),
 		linkWeightHist("Link Weight", 10, -1.0f, 1.0f),
@@ -47,6 +47,16 @@ namespace SRS22 {
 		tickCountRecent = 0;
 		SingleStepCount = 0;
 		cortex = new Cortex(*this);
+
+		neuronChargeHist.clear();
+		for (int i = 0; i < 100; i++) {
+			neuronChargeHist.addValue(fastRandFloat());
+			neuronEnergyHist.addValue(fastRandFloat());
+			linkWeightHist.addValue(fastRandFloatPM());
+			linkActivityHist.addValue(fastRandFloat());
+			linkAgeHist.addValue(fastRandFloat());
+			linkConfidenceHist.addValue(fastRandFloat());
+		}
 	}
 
 	Brain::~Brain() {
@@ -325,7 +335,7 @@ namespace SRS22 {
 		conceptArrays[m->UID] = m;
 		conceptArraysByName[m->ArrayName] = m;
 		std::string ss;
-		if(m->neuronType == NeuronType::IS_INPUT)
+		if (m->neuronType == NeuronType::IS_INPUT)
 			ss = std::format("Added ConceptArray {} at {} to {} INPUT\n", m->ArrayName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
 		else if (m->neuronType == NeuronType::IS_OUTPUT)
 			ss = std::format("Added ConceptArray {} at {} to {} OUTPUT\n", m->ArrayName.c_str(), cortexOffsets.first, cortexOffsets.second - 1);
