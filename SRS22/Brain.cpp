@@ -87,8 +87,8 @@ namespace SRS22 {
 	{
 		PreTickHardwareAndIO();
 		TickConceptArrays();
-		cortex->ResetStats();
 
+		cortex->ResetStats();
 		cortex->ComputeNextState(doParallel);
 		cortex->LearningPhase(doParallel);
 		cortex->LatchNewState(doParallel);

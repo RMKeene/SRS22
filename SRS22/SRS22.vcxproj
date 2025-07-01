@@ -493,7 +493,6 @@
     <ClCompile Include="SRSUnitDisplay.cpp" />
     <ClCompile Include="ConceptArray.cpp" />
     <ClCompile Include="StringConversionHelpers.cpp" />
-    <ClCompile Include="Tickable.cpp" />
     <ClCompile Include="TimeHelpers.cpp" />
     <ClCompile Include="tinyfloat.cpp" />
     <ClCompile Include="TopStatsFrame.cpp" />

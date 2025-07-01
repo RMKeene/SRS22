@@ -481,6 +481,7 @@ namespace SRS22 {
 		MonitorStatisticsLine2->SetLabelText(wxString::Format("ReRoutes: %d, Average C: %6.4f, Confidence: %6.4f",
 			cortex->stats.countOfReRoutes, cortex->stats.averageNeuronCharge, cortex->stats.averageConfidence));
 		MonitorStatisticsLine3->SetLabelText("Stats:");
+		topStatsFrame->Refresh();
 	}
 
 	void MonitorFrame::OnTestAClicked(wxCommandEvent& event) {

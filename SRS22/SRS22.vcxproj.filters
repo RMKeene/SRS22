@@ -601,7 +601,6 @@
     <ClCompile Include="Cortex.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Tickable.cpp" />
     <ClCompile Include="SRS22LogTaker.cpp">
       <Filter>Source</Filter>
     </ClCompile>

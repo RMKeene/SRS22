@@ -7,6 +7,7 @@ namespace SRS22 {
 
 	void Cortex::ResetStats() {
 		stats.reset();
+		brain.ResetStats();
 	}
 
 	void Cortex::PostProcessStats() {
@@ -50,6 +51,7 @@ namespace SRS22 {
 			return;
 		}
 		float C = neurons.getCurrent(i);
+		brain.neuronChargeHist.addValue(C);
 
 		UpdateProcessedStatCounts(threadStats, C);
 

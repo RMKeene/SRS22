@@ -6596,7 +6596,7 @@
             <property name="minimum_size"></property>
             <property name="name">StatsFrameGen</property>
             <property name="pos"></property>
-            <property name="size">628,399</property>
+            <property name="size">628,565</property>
             <property name="style">wxDEFAULT_FRAME_STYLE</property>
             <property name="subclass"></property>
             <property name="title">Statistical Data</property>

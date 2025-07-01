@@ -97,6 +97,15 @@ namespace SRS22 {
 		void putNext(int idx, float val);
 		float getNext(int idx);
 
+		void ResetStats() {
+			neuronChargeHist.clear();
+			neuronEnergyHist.clear();
+			linkWeightHist.clear();
+			linkActivityHist.clear();
+			linkAgeHist.clear();
+			linkConfidenceHist.clear();
+		}
+
 		inline boolean ShouldLearn() const { return overallGoodnessRateOfChange >= overallGoodnessRateOfChangeThreshold; }
 
 		/// <summary>

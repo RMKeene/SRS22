@@ -260,7 +260,7 @@ class StatsFrameGen : public wxFrame
 	public:
 		wxStaticBoxSizer* m_statsDataLayout;
 		
-		StatsFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Statistical Data"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 628,399 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		StatsFrameGen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Statistical Data"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 628,565 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~StatsFrameGen();
 	
