@@ -13,6 +13,22 @@ namespace SRS22 {
 		int countFatigued = 0;
 		int countStimulus = 0;
 
+		Histogram neuronChargeHist;
+		Histogram neuronEnergyHist;
+		Histogram linkWeightHist;
+		Histogram linkActivityHist;
+		Histogram linkAgeHist;
+		Histogram linkConfidenceHist;
+
+		CortexThreadStats()
+			: neuronChargeHist("Neuron Charge", 10, 0.0, 1.0),
+			neuronEnergyHist("Neuron Energy", 10, 0.0, 1.0),
+			linkWeightHist("Link Weight", 10, -1.0, 1.0),
+			linkActivityHist("Link Activity", 10, 0.0, 1.0),
+			linkAgeHist("Link Age (log2)", 64, 0.0, 64.0),
+			linkConfidenceHist("Link Confidence", 10, 0.0, 1.0) {
+		}
+
 		void reset() {
 			countOfNeuronsProcessed = 0;
 			sumOfC = 0.0;
@@ -23,6 +39,13 @@ namespace SRS22 {
 			countOfZeros = 0;
 			countFatigued = 0;
 			countStimulus = 0;
+
+			neuronChargeHist.clear();
+			neuronEnergyHist.clear();
+			linkWeightHist.clear();
+			linkActivityHist.clear();
+			linkAgeHist.clear();
+			linkConfidenceHist.clear();
 		}
 
 		void SumIn(CortexThreadStats& threadStats) {
@@ -35,6 +58,13 @@ namespace SRS22 {
 			countOfZeros += threadStats.countOfZeros;
 			countFatigued += threadStats.countFatigued;
 			countStimulus += threadStats.countStimulus;
+
+			neuronChargeHist.SumIn(threadStats.neuronChargeHist);
+			neuronEnergyHist.SumIn(threadStats.neuronEnergyHist);
+			linkWeightHist.SumIn(threadStats.linkWeightHist);
+			linkActivityHist.SumIn(threadStats.linkActivityHist);
+			linkAgeHist.SumIn(threadStats.linkAgeHist);
+			linkConfidenceHist.SumIn(threadStats.linkConfidenceHist);
 		}
 	};
 
@@ -54,6 +84,22 @@ namespace SRS22 {
 		float averageNeuronCharge = 0.0f;
 		float averageConfidence = 0.0f;
 
+		Histogram neuronChargeHist;
+		Histogram neuronEnergyHist;
+		Histogram linkWeightHist;
+		Histogram linkActivityHist;
+		Histogram linkAgeHist;
+		Histogram linkConfidenceHist;
+
+		CortexStats()
+			: neuronChargeHist("Neuron Charge", 10, 0.0, 1.0),
+			neuronEnergyHist("Neuron Energy", 10, 0.0, 1.0),
+			linkWeightHist("Link Weight", 10, -1.0, 1.0),
+			linkActivityHist("Link Activity", 10, 0.0, 1.0),
+			linkAgeHist("Link Age (log2)", 64, 0.0, 64.0),
+			linkConfidenceHist("Link Confidence", 10, 0.0, 1.0) {
+		}
+
 		void reset() {
 			std::lock_guard<std::mutex> lock(mutex);
 			countOfNeuronsProcessed = 0;
@@ -68,22 +114,14 @@ namespace SRS22 {
 			countStimulus = 0;
 			averageNeuronCharge = 0.0f;
 			averageConfidence = 0.0f;
-		}
 
-		//void SumIn(CortexThreadStats& threadStats) {
-		//	std::lock_guard<std::mutex> lock(mutex);
-		//	countOfNeuronsProcessed += threadStats.countOfNeuronsProcessed;
-		//	sumOfC += threadStats.sumOfC;
-		//	countOfConfidence += threadStats.countOfConfidence;
-		//	sumOfConfidence += threadStats.sumOfConfidence;
-		//	countOfNeuronsFired += threadStats.countOfNeuronsFired;
-		//	countOfReRoutes += threadStats.countOfReRoutes;
-		//	countOfOnes += threadStats.countOfOnes;
-		//	countOfZeros += threadStats.countOfZeros;
-		//	countFatigued += threadStats.countFatigued;
-		//	averageNeuronCharge += threadStats.sumOfC;
-		//	averageConfidence += threadStats.sumOfConfidence;
-		//}
+			neuronChargeHist.clear();
+			neuronEnergyHist.clear();
+			linkWeightHist.clear();
+			linkActivityHist.clear();
+			linkAgeHist.clear();
+			linkConfidenceHist.clear();
+		}
 
 		void SumInNoLock(CortexThreadStats& threadStats) {
 			countOfNeuronsProcessed += threadStats.countOfNeuronsProcessed;
@@ -98,6 +136,13 @@ namespace SRS22 {
 			countStimulus += threadStats.countStimulus;
 			averageNeuronCharge += threadStats.sumOfC;
 			averageConfidence += threadStats.sumOfConfidence;
+
+			neuronChargeHist.SumIn(threadStats.neuronChargeHist);
+			neuronEnergyHist.SumIn(threadStats.neuronEnergyHist);
+			linkWeightHist.SumIn(threadStats.linkWeightHist);
+			linkActivityHist.SumIn(threadStats.linkActivityHist);
+			linkAgeHist.SumIn(threadStats.linkAgeHist);
+			linkConfidenceHist.SumIn(threadStats.linkConfidenceHist);
 		}
 	};
 }

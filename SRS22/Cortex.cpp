@@ -7,7 +7,6 @@ namespace SRS22 {
 
 	void Cortex::ResetStats() {
 		stats.reset();
-		brain.ResetStats();
 	}
 
 	void Cortex::PostProcessStats() {
@@ -51,7 +50,7 @@ namespace SRS22 {
 			return;
 		}
 		float C = neurons.getCurrent(i);
-		brain.neuronChargeHist.addValue(C);
+		stats.neuronChargeHist.addValue(C);
 
 		UpdateProcessedStatCounts(threadStats, C);
 
@@ -72,7 +71,7 @@ namespace SRS22 {
 			if (L.otherIdx < 0 || L.otherIdx >= TOTAL_NEURONS)
 				throw std::out_of_range(std::format("L.otherIdx out of range: {0}", L.otherIdx));
 #endif
-
+			stats.linkWeightHist.addValue(L.weight);
 			if (C > 0.03f)
 				++threadStats.countOfNeuronsFired;
 
@@ -84,6 +83,8 @@ namespace SRS22 {
 			stimulusSum += stimulus;
 			// Add into activity for short term general activity level.
 			L.activity = std::clamp(L.activity * linkActivityDecayRate + stimulus * linkStimulusToActivityFactor, 0.0f, 1.0f);
+			stats.linkActivityHist.addValue(L.activity);
+			stats.linkConfidenceHist.addValue(L.confidence);
 		}
 
 		// Now clamp the resulting total stimulus.
@@ -95,10 +96,10 @@ namespace SRS22 {
 	}
 
 	/// <summary>
-	/// Increments the global tick indicies for Neuron. Next becomes current state, current state becomes previous state.
+	/// Increments the global tick indices for Neuron. Next becomes current state, current state becomes previous state.
 	/// </summary>
 	void Cortex::LatchNewState(boolean doParallel) {
-		// Tick the indicies for (static indicies) all neurons.
+		// Tick the indices for (static indices) all neurons.
 		TickIndicies();
 	}
 
@@ -141,6 +142,7 @@ namespace SRS22 {
 				- C * settings.energyDepletionOnFire()
 				// Recover energy
 				+ settings.energyRechargeRate(), 0.0f, settings.maxEnergy());
+			stats.neuronEnergyHist.addValue(neurons.energyCeiling[i]);
 		}
 
 		// Neuroplasticity: Learn to predict the future state of this neuron.
@@ -156,6 +158,7 @@ namespace SRS22 {
 			L.age++;
 			const int ageLog = logBase2_U64(L.age) + 1;
 			const float ageLogInverse = 1.0f / (float)ageLog;
+			stats.linkAgeHist.addValue(ageLog);
 
 			if (ShouldReroute(i, L, ageLog)) {
 				RerouteLink(L, i, threadStats);

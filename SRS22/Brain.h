@@ -81,13 +81,6 @@ namespace SRS22 {
 
 		Cortex* cortex;
 
-		Histogram neuronChargeHist;
-		Histogram neuronEnergyHist;
-		Histogram linkWeightHist;
-		Histogram linkActivityHist;
-		Histogram linkAgeHist;
-		Histogram linkConfidenceHist;
-
 		Brain();
 		~Brain();
 
@@ -96,15 +89,6 @@ namespace SRS22 {
 
 		void putNext(int idx, float val);
 		float getNext(int idx);
-
-		void ResetStats() {
-			neuronChargeHist.clear();
-			neuronEnergyHist.clear();
-			linkWeightHist.clear();
-			linkActivityHist.clear();
-			linkAgeHist.clear();
-			linkConfidenceHist.clear();
-		}
 
 		inline boolean ShouldLearn() const { return overallGoodnessRateOfChange >= overallGoodnessRateOfChangeThreshold; }
 

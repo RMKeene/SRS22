@@ -4,8 +4,29 @@ namespace SRS22 {
 
 	Histogram::Histogram(std::string name, int numBins, double minValue, double maxValue)
 		: name(name), numBins(numBins), minValue(minValue), maxValue(maxValue) {
+		if (numBins <= 0) {
+			throw std::invalid_argument("numBins must be positive");
+		}
 		binWidth = (maxValue - minValue) / numBins;
 		bins = new int[numBins]();
+	}
+
+	Histogram::Histogram(const Histogram& other)
+		: name(other.name),
+		numBins(other.numBins),
+		minValue(other.minValue),
+		maxValue(other.maxValue),
+		binWidth(other.binWidth)
+	{
+		if (other.bins) {
+			bins = new int[numBins];
+			for (int i = 0; i < numBins; ++i) {
+				bins[i] = other.bins[i];
+			}
+		}
+		else {
+			bins = nullptr;
+		}
 	}
 
 	Histogram::~Histogram() {
@@ -17,7 +38,6 @@ namespace SRS22 {
 		int binIndex = static_cast<int>((value - minValue) / binWidth);
 		if (binIndex >= numBins) binIndex = numBins - 1;
 		if (binIndex >= 0 && binIndex < numBins) {
-			std::lock_guard<std::mutex> lock(binsMutex);
 			bins[binIndex]++;
 		}
 	}
@@ -27,9 +47,18 @@ namespace SRS22 {
 		int binIndex = static_cast<int>((value - minValue) / binWidth);
 		if (binIndex >= numBins) binIndex = numBins - 1;
 		if (binIndex >= 0 && binIndex < numBins) {
-			std::lock_guard<std::mutex> lock(binsMutex);
 			bins[binIndex]++;
 		}
+	}
+
+	void Histogram::SumIn(const Histogram& other) {
+		if (numBins != other.numBins || minValue != other.minValue || maxValue != other.maxValue) {
+			throw std::invalid_argument("Histograms must have the same configuration to sum.");
+		}
+		for (int i = 0; i < numBins; i++) {
+			bins[i] += other.bins[i];
+		}
+
 	}
 
 	void Histogram::clear() {

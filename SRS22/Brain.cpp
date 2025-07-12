@@ -31,13 +31,7 @@ namespace SRS22 {
 
 	boolean Brain::doParallel = true;
 
-	Brain::Brain() :
-		neuronChargeHist("Neuron Charge", 10, 0.0f, 1.0f),
-		neuronEnergyHist("Neuron Energy", 10, 0.0f, 1.0f),
-		linkWeightHist("Link Weight", 10, -1.0f, 1.0f),
-		linkActivityHist("Link Activity", 10, 0.0f, 1.0f),
-		linkAgeHist("Link Age (log 2)", 10, 0.0f, 1.0f),
-		linkConfidenceHist("Link Confidence", 10, 0.0f, 1.0f)
+	Brain::Brain() 
 	{
 		remove("cortex_log.txt");
 		overallGoodness = 0;
@@ -47,16 +41,6 @@ namespace SRS22 {
 		tickCountRecent = 0;
 		SingleStepCount = 0;
 		cortex = new Cortex(*this);
-
-		neuronChargeHist.clear();
-		for (int i = 0; i < 100; i++) {
-			neuronChargeHist.addValue(fastRandFloat());
-			neuronEnergyHist.addValue(fastRandFloat());
-			linkWeightHist.addValue(fastRandFloatPM());
-			linkActivityHist.addValue(fastRandFloat());
-			linkAgeHist.addValue(fastRandFloat());
-			linkConfidenceHist.addValue(fastRandFloat());
-		}
 	}
 
 	Brain::~Brain() {

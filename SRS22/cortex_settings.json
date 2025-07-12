@@ -69,7 +69,7 @@
         "Tag": "connectionThrottle",
         "Type": "F",
         "UILabel": "ConnThrtl",
-        "Value": 0.5
+        "Value": 10.0
     },
     {
         "DefaultValue": 0.11249999701976776,
